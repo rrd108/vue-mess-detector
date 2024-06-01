@@ -1,5 +1,5 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET } from '../asceeCodes'
 
 const elseConditionFiles: { fileName: string; elseCount: number }[] = []
 
