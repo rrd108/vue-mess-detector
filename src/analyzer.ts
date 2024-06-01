@@ -5,6 +5,7 @@ import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_OK } from './asce
 import { checkScriptLength, reportScriptLength } from './rules/longScript'
 import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
+import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
 
 export const analyze = (dir: string) => {
   console.log(`${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
@@ -23,17 +24,20 @@ export const analyze = (dir: string) => {
     if (descriptor.scriptSetup) {
       checkScriptLength(descriptor.scriptSetup, file)
       checkElseCondition(descriptor.scriptSetup, file)
+      checkCyclomaticComplexity(descriptor.scriptSetup, file)
     }
 
     if (descriptor.script) {
       checkPlainScript(file)
       checkElseCondition(descriptor.script, file)
+      checkCyclomaticComplexity(descriptor.script, file)
     }
   })
 
   errors += reportScriptLength()
   errors += reportPlainScript()
   errors += reportElseCondition()
+  errors += reportCyclomaticComplexity()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
