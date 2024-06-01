@@ -7,6 +7,17 @@
   "repository": "https://github.com/rrd108/vue-mess-detector",
   "author": "rrd",
   "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "vue",
+    "code",
+    "quality",
+    "analyzis",
+    "static code analizis",
+    "code quality",
+    "code smell",
+    "cli"
+  ],
   "scripts": {
     "build": "vite build",
     "start": "node dist/vue-mess-detector.es.js analyze",
