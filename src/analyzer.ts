@@ -29,6 +29,7 @@ export const analyze = (dir: string) => {
 
     if (descriptor.script) {
       checkPlainScript(filePath)
+      checkScriptLength(descriptor.script, filePath)
       checkElseCondition(descriptor.script, filePath)
       checkCyclomaticComplexity(descriptor.script, filePath)
     }
