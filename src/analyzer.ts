@@ -46,7 +46,11 @@ export const analyze = (dir: string) => {
       `👉 ${TEXT_WARN}Try to refactor out the logic into composition functions or other files and keep the length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
     )
     longScriptFiles.forEach(file => {
-      console.log(`- ${file.name} (${file.scriptLength} lines)`)
+      console.log(
+        `- ${file.name} ${file.scriptLength > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
+          file.scriptLength
+        } lines)${BG_RESET}`
+      )
     })
   }
 
