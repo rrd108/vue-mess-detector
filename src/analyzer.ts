@@ -2,7 +2,7 @@ import { parse, compileScript } from '@vue/compiler-sfc'
 import fs from 'fs'
 import path from 'path'
 
-const MAX_SCRIPT_LENGTH = 100
+const MAX_SCRIPT_LENGTH = 50
 
 const BG_INFO = '\x1b[44m'
 const BG_WARN = '\x1b[43m'
