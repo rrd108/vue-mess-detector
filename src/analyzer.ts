@@ -1,14 +1,14 @@
-import { parse, compileScript } from '@vue/compiler-sfc'
+import { parse } from '@vue/compiler-sfc'
 import fs from 'fs'
 import path from 'path'
-import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_OK } from './asceeCodes'
-import { checkScriptLength, reportScriptLength } from './rules/longScript'
+import { BG_INFO, BG_RESET, BG_OK } from './asceeCodes'
+import { checkScriptLength, reportScriptLength } from './rules/scriptLength'
 import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
 
 export const analyze = (dir: string) => {
-  console.log(`${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
+  console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
 
   const files = fs.readdirSync(dir).filter(file => file.endsWith('.vue'))
 
@@ -22,15 +22,15 @@ export const analyze = (dir: string) => {
     const { descriptor } = parse(content)
 
     if (descriptor.scriptSetup) {
-      checkScriptLength(descriptor.scriptSetup, file)
-      checkElseCondition(descriptor.scriptSetup, file)
-      checkCyclomaticComplexity(descriptor.scriptSetup, file)
+      checkScriptLength(descriptor.scriptSetup, filePath)
+      checkElseCondition(descriptor.scriptSetup, filePath)
+      checkCyclomaticComplexity(descriptor.scriptSetup, filePath)
     }
 
     if (descriptor.script) {
-      checkPlainScript(file)
-      checkElseCondition(descriptor.script, file)
-      checkCyclomaticComplexity(descriptor.script, file)
+      checkPlainScript(filePath)
+      checkElseCondition(descriptor.script, filePath)
+      checkCyclomaticComplexity(descriptor.script, filePath)
     }
   })
 
