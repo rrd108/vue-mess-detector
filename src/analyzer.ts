@@ -58,4 +58,7 @@ export const analyze = (dir: string) => {
     })
   }
 
+  if (!longScriptFiles.length && !plainScriptFiles.length) {
+    console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
+  }
 }
