@@ -1,17 +1,9 @@
 import { parse, compileScript } from '@vue/compiler-sfc'
 import fs from 'fs'
 import path from 'path'
-
-const MAX_SCRIPT_LENGTH = 50
-
-const BG_INFO = '\x1b[44m'
-const BG_WARN = '\x1b[43m'
-const BG_ERR = '\x1b[41m'
-const BG_OK = '\x1b[42m'
-const BG_RESET = '\x1b[0m'
-
-const TEXT_WARN = '\x1b[33m'
-const TEXT_RESET = '\x1b[0m'
+import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_OK } from './asceeCodes'
+import { checkScriptLength, reportScriptLength } from './rules/longScript'
+import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 
 export const analyze = (dir: string) => {
   console.log(`${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
@@ -20,8 +12,7 @@ export const analyze = (dir: string) => {
 
   console.log(`Found ${BG_INFO}${files.length}${BG_RESET} Vue files`)
 
-  const longScriptFiles: { name: string; scriptLength: number }[] = []
-  const plainScriptFiles: string[] = []
+  let errors = 0
 
   files.forEach(file => {
     const filePath = path.join(dir, file)
@@ -29,40 +20,18 @@ export const analyze = (dir: string) => {
     const { descriptor } = parse(content)
 
     if (descriptor.scriptSetup) {
-      const lines = descriptor.scriptSetup.content.split('\n')
-      if (lines.length > MAX_SCRIPT_LENGTH) {
-        longScriptFiles.push({ name: file, scriptLength: lines.length })
-      }
+      checkScriptLength(descriptor.scriptSetup, file)
     }
 
     if (descriptor.script) {
-      plainScriptFiles.push(file)
+      checkPlainScript(file)
     }
   })
 
-  if (longScriptFiles.length > 0) {
-    console.log(`${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`)
-    console.log(
-      `👉 ${TEXT_WARN}Try to refactor out the logic into composition functions or other files and keep the length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
-    )
-    longScriptFiles.forEach(file => {
-      console.log(
-        `- ${file.name} ${file.scriptLength > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
-          file.scriptLength
-        } lines)${BG_RESET}`
-      )
-    })
-  }
+  errors += reportScriptLength()
+  errors += reportPlainScript()
 
-  if (plainScriptFiles.length > 0) {
-    console.log(`${BG_WARN}Plain <script> blocks${BG_RESET} in ${plainScriptFiles.length} files.`)
-    console.log(`👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET}`)
-    plainScriptFiles.forEach(file => {
-      console.log(`- ${file}`)
-    })
-  }
-
-  if (!longScriptFiles.length && !plainScriptFiles.length) {
+  if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
   }
 }
