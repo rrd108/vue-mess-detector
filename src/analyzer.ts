@@ -7,7 +7,11 @@ const MAX_SCRIPT_LENGTH = 100
 const BG_INFO = '\x1b[44m'
 const BG_WARN = '\x1b[43m'
 const BG_ERR = '\x1b[41m'
+const BG_OK = '\x1b[42m'
 const BG_RESET = '\x1b[0m'
+
+const TEXT_WARN = '\x1b[33m'
+const TEXT_RESET = '\x1b[0m'
 
 export const analyze = (dir: string) => {
   console.log(`${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
@@ -37,7 +41,10 @@ export const analyze = (dir: string) => {
   })
 
   if (longScriptFiles.length > 0) {
-    console.log(`${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files`)
+    console.log(`${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`)
+    console.log(
+      `👉 ${TEXT_WARN}Try to refactor out the logic into composition functions or other files and keep the length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
+    )
     longScriptFiles.forEach(file => {
       console.log(`- ${file.name} (${file.scriptLength} lines)`)
     })
