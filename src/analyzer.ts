@@ -17,6 +17,7 @@ export const analyze = (dir: string) => {
   console.log(`Found ${BG_INFO}${files.length}${BG_RESET} Vue files`)
 
   const longScriptFiles: { name: string; scriptLength: number }[] = []
+  const plainScriptFiles: string[] = []
 
   files.forEach(file => {
     const filePath = path.join(dir, file)
@@ -30,8 +31,8 @@ export const analyze = (dir: string) => {
       }
     }
 
-    // TODO add reccomendation for script setup
     if (descriptor.script) {
+      plainScriptFiles.push(file)
     }
   })
 
@@ -41,4 +42,13 @@ export const analyze = (dir: string) => {
       console.log(`- ${file.name} (${file.scriptLength} lines)`)
     })
   }
+
+  if (plainScriptFiles.length > 0) {
+    console.log(`${BG_WARN}Plain <script> blocks${BG_RESET} in ${plainScriptFiles.length} files.`)
+    console.log(`👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET}`)
+    plainScriptFiles.forEach(file => {
+      console.log(`- ${file}`)
+    })
+  }
+
 }
