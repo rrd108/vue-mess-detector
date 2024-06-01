@@ -7,3 +7,7 @@ A static code analysis tool for detecting code smells and best practice violatio
 ```bash
 yarn analyze /path/to/vue/files
 ```
+
+## Example output
+
+![Output Image](output.png)
