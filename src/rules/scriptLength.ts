@@ -16,7 +16,7 @@ const reportScriptLength = () => {
   if (longScriptFiles.length > 0) {
     console.log(`\n${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`)
     console.log(
-      `👉 ${TEXT_WARN}Try to refactor out the logic into composition functions or other files and keep the length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
+      `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
     )
     longScriptFiles.forEach(file => {
       console.log(
