@@ -1,0 +1,9 @@
+{
+  "name": "vue-mess-detector",
+  "version": "0.0.1",
+  "description": "A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects",
+  "main": "analyze.js",
+  "repository": "https://github.com/rrd108/vue-mess-detector",
+  "author": "rrd",
+  "license": "MIT"
+}
