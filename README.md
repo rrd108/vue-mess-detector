@@ -17,8 +17,16 @@ npm install vue-mess-detector --save-dev
 
 ## Usage
 
+If you want to analyze your full `src` directory.
+
 ```bash
-npx vue-mess-detector analyze /path/to/vue/files
+npx vue-mess-detector analyze
+```
+
+If you want to analyze only your `src/components` directory.
+
+```bash
+npx vue-mess-detector analyze ./src/components
 ```
 
 ## Example output
