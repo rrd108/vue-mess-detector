@@ -1,0 +1,5 @@
+{
+  "name": "@rrd/vue-mess-detector",
+  "version": "0.5.0",
+  "exports": "./src/index.ts"
+}
