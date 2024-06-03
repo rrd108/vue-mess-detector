@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Check if a version type (minor or patch) is provided as a command-line argument
-if [ -z "$1" ]; then
-  echo "Usage: $0 patch | minor"
+# Check if a version type (minor or patch) and dry-run flag are provided as command-line arguments
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo "Usage: $0 patch|minor dry-run|publish"
   exit 1
 fi
 
@@ -13,14 +13,18 @@ if [ "$1" != "patch" ] && [ "$1" != "minor" ]; then
   exit 1
 fi
 
+# Check if the provided dry-run flag is valid
+if [ "$2" != "dry-run" ] && [ "$2" != "publish" ]; then
+  echo "Invalid dry-run flag: $2"
+  echo "dry-run flag should be 'dry-run' or 'publish'"
+  exit 1
+fi
+
 # Run git status and capture the output
 git_status=$(git status --porcelain)
 
 # Check if the repository is clean
 if [ -z "$git_status" ]; then
-  # If the repository is clean, run yarn publish with the specified version type
-  yarn publish --new-version "$1"
-
   # Capture the new version number
   new_version=$(node -p "require('./package.json').version")
 
@@ -35,17 +39,21 @@ if [ -z "$git_status" ]; then
 
   echo "Changes committed to Git"
 
-  npx jsr publish
-
-# Collect release notes from commits since the last release
+  # Collect release notes from commits since the last release
   last_release=$(git describe --tags --abbrev=0)
   release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)(\([a-z]+\))?(!\?)?:/{print prefix $0}')
 
-  # Push the new tag and create a release
-  git push origin "v$new_version"
-  gh release create "v$new_version" --notes "Release version $new_version"
+  # Perform publishing, pushing, and release creation only if the dry-run flag is not set
+  if [ "$2" == "publish" ]; then
+    yarn publish --new-version "$1"
+    npx jsr publish
+    git push origin "v$new_version"
+    gh release create "v$new_version" --notes "$release_notes"
+  else
+    echo "Dry run mode. No publishing or pushing will be performed."
+  fi
 
 else
-  echo "Repository is not clean. Please commit or stash your changes before publishing."
+  echo "Repository is not clean. Please commit or stash your changes before running this script."
   exit 1
 fi
