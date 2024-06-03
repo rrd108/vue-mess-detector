@@ -7,17 +7,27 @@ import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
 
+let filesCount = 0
+
+const walkSync = (dir: string, callback: (arg0: string) => void) => {
+  const files = fs.readdirSync(dir)
+  filesCount += files.length
+  for (const file of files) {
+    const filePath = path.join(dir, file)
+    if (fs.statSync(filePath).isDirectory()) {
+      walkSync(filePath, callback) // Recursive call for subdirectories
+    } else if (file.endsWith('.vue')) {
+      callback(filePath)
+    }
+  }
+}
+
 export const analyze = (dir: string) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
 
-  const files = fs.readdirSync(dir).filter(file => file.endsWith('.vue'))
-
-  console.log(`Found ${BG_INFO}${files.length}${BG_RESET} Vue files`)
-
   let errors = 0
 
-  files.forEach(file => {
-    const filePath = path.join(dir, file)
+  walkSync(dir, filePath => {
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
 
@@ -34,6 +44,8 @@ export const analyze = (dir: string) => {
       checkCyclomaticComplexity(descriptor.script, filePath)
     }
   })
+
+  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
 
   errors += reportScriptLength()
   errors += reportPlainScript()
