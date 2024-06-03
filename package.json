@@ -1,6 +1,6 @@
 {
   "name": "vue-mess-detector",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects",
   "type": "module",
   "main": "dist/vue-mess-detector.es.js",
@@ -22,6 +22,9 @@
     "build": "vite build",
     "start": "node dist/vue-mess-detector.es.js analyze",
     "analyze": "yarn build && yarn start"
+  },
+  "bin": {
+    "vue-mess-detector": "dist/vue-mess-detector.es.js"
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.4.27",
