@@ -18,7 +18,7 @@ npm install vue-mess-detector --save-dev
 ## Usage
 
 ```bash
-npx vue-mess-detector start /path/to/vue/files
+npx vue-mess-detector analyze /path/to/vue/files
 ```
 
 ## Example output
