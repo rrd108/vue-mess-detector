@@ -1,5 +1,12 @@
 # Deploy
 
+## NPM
+
+```
+git status
+yarn publish --new-version minor
+```
+
 ## JSR
 
 `jsr.json` version number should be bumped.

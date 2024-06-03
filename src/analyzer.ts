@@ -6,6 +6,7 @@ import { checkScriptLength, reportScriptLength } from './rules/scriptLength'
 import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
+import { checkSingleNameComponent, reportSingleNameComponent } from './rules/singleNameComponent'
 
 let filesCount = 0
 
@@ -31,17 +32,16 @@ export const analyze = (dir: string) => {
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
 
-    if (descriptor.scriptSetup) {
-      checkScriptLength(descriptor.scriptSetup, filePath)
-      checkElseCondition(descriptor.scriptSetup, filePath)
-      checkCyclomaticComplexity(descriptor.scriptSetup, filePath)
-    }
-
     if (descriptor.script) {
       checkPlainScript(filePath)
-      checkScriptLength(descriptor.script, filePath)
-      checkElseCondition(descriptor.script, filePath)
-      checkCyclomaticComplexity(descriptor.script, filePath)
+    }
+
+    const script = descriptor.scriptSetup || descriptor.script
+    if (script) {
+      checkScriptLength(script, filePath)
+      checkElseCondition(script, filePath)
+      checkCyclomaticComplexity(script, filePath)
+      checkSingleNameComponent(filePath)
     }
   })
 
@@ -51,6 +51,7 @@ export const analyze = (dir: string) => {
   errors += reportPlainScript()
   errors += reportElseCondition()
   errors += reportCyclomaticComplexity()
+  errors += reportSingleNameComponent()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
