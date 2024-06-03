@@ -18,10 +18,6 @@ npm install vue-mess-detector --save-dev
 ## Usage
 
 ```bash
-# while it is not released yet
-yarn analyze /path/to/vue/files
-
-# using npx
 npx vue-mess-detector start /path/to/vue/files
 ```
 
