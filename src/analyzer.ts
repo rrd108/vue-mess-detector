@@ -39,9 +39,9 @@ export const analyze = (dir: string) => {
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
       checkScriptLength(script, filePath)
-      checkElseCondition(script, filePath)
-      checkCyclomaticComplexity(script, filePath)
       checkSingleNameComponent(filePath)
+      checkCyclomaticComplexity(script, filePath)
+      checkElseCondition(script, filePath)
     }
   })
 
@@ -49,9 +49,9 @@ export const analyze = (dir: string) => {
 
   errors += reportScriptLength()
   errors += reportPlainScript()
-  errors += reportElseCondition()
   errors += reportCyclomaticComplexity()
   errors += reportSingleNameComponent()
+  errors += reportElseCondition()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
