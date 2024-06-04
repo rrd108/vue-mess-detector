@@ -1,7 +1,7 @@
 import { test, expect, vi } from 'vitest'
 import { checkSingleNameComponent, reportSingleNameComponent } from './singleNameComponent'
 
-const mockConsoleLog = vi.spyOn(console, 'log')
+const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 test('checkSingleNameComponent - ignores pages directory', () => {
   checkSingleNameComponent('pages/SomeComponent.vue')
