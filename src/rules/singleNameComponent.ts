@@ -1,5 +1,5 @@
 import path from 'path'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
 const singleNameComponentFiles: { fileName: string }[] = []
 
