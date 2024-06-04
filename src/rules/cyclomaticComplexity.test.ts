@@ -7,7 +7,10 @@ const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 describe('checkCyclomaticComplexity', () => {
   it('should not report simple scripts', () => {
-    const script = { content: 'const message = "Hello"; console.log(message);' } as SFCScriptBlock
+    const content = `if (condition) {
+        console.log("True");
+      }`.repeat(4)
+    const script = { content } as SFCScriptBlock
     const fileName = 'simple.vue'
     checkCyclomaticComplexity(script, fileName)
     expect(reportCyclomaticComplexity()).toBe(0)
