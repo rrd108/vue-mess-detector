@@ -52,6 +52,11 @@ Checks if the cyclomatic complexity of a component is too high. The default thre
 Checks if the component name is a single word.
 See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names
 
+### Check Global Styles
+
+Checks if the component is using global styles instead of `scoped` styles.
+See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling
+
 ### Check `else` conditions
 
 Checks if there are any `else` condition in the `<script>` block. This is a code smell because it can be hard to read and understand.

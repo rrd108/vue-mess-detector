@@ -7,6 +7,7 @@ import { checkPlainScript, reportPlainScript } from './rules/plainScript'
 import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
 import { checkSingleNameComponent, reportSingleNameComponent } from './rules/singleNameComponent'
+import { checkGlobalStyle, reportGlobalStyle } from './rules/globalStyle'
 
 let filesCount = 0
 
@@ -43,6 +44,10 @@ export const analyze = (dir: string) => {
       checkCyclomaticComplexity(script, filePath)
       checkElseCondition(script, filePath)
     }
+
+    descriptor.styles.forEach(style => {
+      checkGlobalStyle(style, filePath)
+    })
   })
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
@@ -52,6 +57,7 @@ export const analyze = (dir: string) => {
   errors += reportCyclomaticComplexity()
   errors += reportSingleNameComponent()
   errors += reportElseCondition()
+  errors += reportGlobalStyle()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
