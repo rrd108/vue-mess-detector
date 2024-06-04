@@ -4,8 +4,8 @@ const MAX_SCRIPT_LENGTH = 50
 
 const plainScriptFiles: string[] = []
 
-const checkPlainScript = (file: string) => {
-  plainScriptFiles.push(file)
+const checkPlainScript = (filePath: string) => {
+  plainScriptFiles.push(filePath)
 }
 
 const reportPlainScript = () => {
