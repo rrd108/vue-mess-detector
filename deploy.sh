@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RED='\e[1;41m'
+GREEN='\e[1;42m'
+NC='\033[0m' # No Color
+
 # Check if a version type (minor or patch) and dry-run flag are provided as command-line arguments
 if [ -z "$1" ] || [ -z "$2" ]; then
   echo "Usage: $0 patch|minor dry-run|publish"
@@ -20,42 +24,54 @@ if [ "$2" != "dry-run" ] && [ "$2" != "publish" ]; then
   exit 1
 fi
 
-# Run git status and capture the output
-git_status=$(git status --porcelain)
-
-# Check if the repository is clean
-if [ -z "$git_status" ]; then
-  # Collect release notes from commits since the last release
-  last_release=$(git describe --tags --abbrev=0)
-  release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)/{print prefix $0}')
-
-  # Perform publishing, pushing, and release creation only if the dry-run flag is not set
-  if [ "$2" == "publish" ]; then
-    yarn publish --new-version "$1"
-
-    # Capture the new version number
-    new_version=$(node -p "require('./package.json').version")
-    
-    git push vue-mess-detector "$new_version"
-    gh release create "$new_version" --notes "$release_notes"
-
-    # Update the version field in jsr.json
-    jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
-
-    echo "jsr.json updated with the new version: $new_version"
-
-    # Commit the changes to Git
-    git add jsr.json
-    git commit -m "Bump version to $new_version"
-
-    echo "Changes committed to Git"
-
-    npx jsr publish
-  else
-    echo "Dry run mode. No publishing or pushing will be performed."
-  fi
-
+echo $'\n' "Running Frontend Tests" $'\n'
+yarn test
+if [ $? -eq 0 ]; then
+  echo -e $'\n' "${GREEN} \u2714 All frontend tests passed ${NC}" $'\n'
+  PREV_STEP=1
 else
-  echo "Repository is not clean. Please commit or stash your changes before running this script."
-  exit 1
+  echo -e $'\n' "${RED} \u2a2f Some frontend tests failed ${NC}" $'\n'
+  PREV_STEP=0
+fi
+
+if [ $PREV_STEP -eq 1 ];then
+  # Run git status and capture the output
+  git_status=$(git status --porcelain)
+
+  # Check if the repository is clean
+  if [ -z "$git_status" ]; then
+    # Collect release notes from commits since the last release
+    last_release=$(git describe --tags --abbrev=0)
+    release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)/{print prefix $0}')
+
+    # Perform publishing, pushing, and release creation only if the dry-run flag is not set
+    if [ "$2" == "publish" ]; then
+      yarn publish --new-version "$1"
+
+      # Capture the new version number
+      new_version=$(node -p "require('./package.json').version")
+      
+      git push vue-mess-detector "$new_version"
+      gh release create "$new_version" --notes "$release_notes"
+
+      # Update the version field in jsr.json
+      jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
+
+      echo "jsr.json updated with the new version: $new_version"
+
+      # Commit the changes to Git
+      git add jsr.json
+      git commit -m "Bump version to $new_version"
+
+      echo "Changes committed to Git"
+
+      npx jsr publish
+    else
+      echo "Dry run mode. No publishing or pushing will be performed."
+    fi
+
+  else
+    echo "Repository is not clean. Please commit or stash your changes before running this script."
+    exit 1
+  fi
 fi

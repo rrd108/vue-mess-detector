@@ -21,7 +21,7 @@
   "scripts": {
     "build": "vite build && cp ./src/cli.js ./dist/",
     "analyze": "dist/cli.js analyze",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "bin": {
     "vue-mess-detector": "dist/cli.js"
