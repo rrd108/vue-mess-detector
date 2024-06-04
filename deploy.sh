@@ -42,7 +42,7 @@ if [ $PREV_STEP -eq 1 ];then
   if [ -z "$git_status" ]; then
     # Collect release notes from commits since the last release
     last_release=$(git describe --tags --abbrev=0)
-    release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)/{print prefix $0}')
+    release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|docs|test|chore|refactor|style)/{print prefix $0}')
 
     # Perform publishing, pushing, and release creation only if the dry-run flag is not set
     if [ "$2" == "publish" ]; then
