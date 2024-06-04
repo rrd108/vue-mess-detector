@@ -33,11 +33,11 @@ if [ -z "$git_status" ]; then
   if [ "$2" == "publish" ]; then
     yarn publish --new-version "$1"
 
-    git push origin "v$new_version"
-    gh release create "v$new_version" --notes "$release_notes"
-
     # Capture the new version number
     new_version=$(node -p "require('./package.json').version")
+    
+    git push vue-mess-detector "$new_version"
+    gh release create "$new_version" --notes "$release_notes"
 
     # Update the version field in jsr.json
     jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
