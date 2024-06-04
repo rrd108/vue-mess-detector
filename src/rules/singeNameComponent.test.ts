@@ -1,7 +1,6 @@
 import { test, expect, vi } from 'vitest'
 import { checkSingleNameComponent, reportSingleNameComponent } from './singleNameComponent'
 
-// mock console log with vitest
 const mockConsoleLog = vi.spyOn(console, 'log')
 
 test('checkSingleNameComponent - ignores pages directory', () => {
