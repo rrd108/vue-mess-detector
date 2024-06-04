@@ -1,11 +1,23 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
+/**
+ * Defines complexity thresholds.
+ */
 const COMPLEXITY_MODERATE = 5
 const COMPLEXITY_HIGH = 10
 
+/**
+ * Array to store files with medium or high cyclomatic complexity.
+ */
 const cyclomaticComplexityFiles: { fileName: string; cyclomaticComplexity: number }[] = []
 
+/**
+ * Function to check cyclomatic complexity of a SFC script block.
+ *
+ * @param {SFCScriptBlock} script - The SFC script block to analyze.
+ * @param {string} file - The filename of the SFC.
+ */
 const checkCyclomaticComplexity = (script: SFCScriptBlock, file: string) => {
   const _if = /\bif\b/gi
   const _else = /\belse\b/gi
@@ -31,6 +43,11 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock, file: string) => {
   }
 }
 
+/**
+ * Function to report files with medium or high cyclomatic complexity.
+ *
+ * @returns {number} The number of files with high cyclomatic complexity.
+ */
 const reportCyclomaticComplexity = () => {
   if (cyclomaticComplexityFiles.length > 0) {
     console.log(
