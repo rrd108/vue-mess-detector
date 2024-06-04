@@ -25,30 +25,32 @@ git_status=$(git status --porcelain)
 
 # Check if the repository is clean
 if [ -z "$git_status" ]; then
-  # Capture the new version number
-  new_version=$(node -p "require('./package.json').version")
-
-  # Update the version field in jsr.json
-  jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
-
-  echo "jsr.json updated with the new version: $new_version"
-
-  # Commit the changes to Git
-  git add jsr.json
-  git commit -m "Bump version to $new_version"
-
-  echo "Changes committed to Git"
-
   # Collect release notes from commits since the last release
   last_release=$(git describe --tags --abbrev=0)
-  release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)(\([a-z]+\))?(!\?)?:/{print prefix $0}')
+  release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|perf|docs|test|chore|refactor|style|build|ci|revert)/{print prefix $0}')
 
   # Perform publishing, pushing, and release creation only if the dry-run flag is not set
   if [ "$2" == "publish" ]; then
     yarn publish --new-version "$1"
-    npx jsr publish
+
     git push origin "v$new_version"
     gh release create "v$new_version" --notes "$release_notes"
+
+    # Capture the new version number
+    new_version=$(node -p "require('./package.json').version")
+
+    # Update the version field in jsr.json
+    jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
+
+    echo "jsr.json updated with the new version: $new_version"
+
+    # Commit the changes to Git
+    git add jsr.json
+    git commit -m "Bump version to $new_version"
+
+    echo "Changes committed to Git"
+
+    npx jsr publish
   else
     echo "Dry run mode. No publishing or pushing will be performed."
   fi
