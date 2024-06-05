@@ -40,15 +40,20 @@ npx vue-mess-detector analyze ./src/components
 Checks if the component name is a single word.
 See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names
 
-### Check Global Styles (vue-essential)
-
-Checks if the component is using global styles instead of `scoped` styles.
-See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling
-
 ### Check Simple Props Definitions (vue-essential)
 
 Checks if the component is using simple props definitions.
 See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
+
+### Check `v-if` with `v-for` (vue-essential)
+
+Checks if the component is using `v-if` with `v-for`.
+See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for
+
+### Check Global Styles (vue-essential)
+
+Checks if the component is using global styles instead of `scoped` styles.
+See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling
 
 ### Check Script Length (rrd)
 

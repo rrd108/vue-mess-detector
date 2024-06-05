@@ -9,6 +9,7 @@ import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/c
 import { checkSingleNameComponent, reportSingleNameComponent } from './rules/singleNameComponent'
 import { checkGlobalStyle, reportGlobalStyle } from './rules/globalStyle'
 import { checkSimpleProp, reportSimpleProp } from './rules/simpleProp'
+import { checkVifWithVfor, reportVifWithVfor } from './rules/vifWithVfor'
 
 let filesCount = 0
 
@@ -51,6 +52,10 @@ export const analyze = (dir: string) => {
     descriptor.styles.forEach(style => {
       checkGlobalStyle(style, filePath)
     })
+
+    if (descriptor.template) {
+      checkVifWithVfor(descriptor.template, filePath)
+    }
   })
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
@@ -59,6 +64,7 @@ export const analyze = (dir: string) => {
   errors += reportSingleNameComponent()
   errors += reportSimpleProp()
   errors += reportGlobalStyle()
+  errors += reportVifWithVfor()
 
   // vue-strong rules
   // vue-reccomended rules
