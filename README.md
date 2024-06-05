@@ -48,7 +48,7 @@ See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-sty
 ### Check Simple Props Definitions (vue-essential)
 
 Checks if the component is using simple props definitions.
-See: See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
+See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
 
 ### Check Script Length (rrd)
 
