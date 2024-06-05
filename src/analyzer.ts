@@ -8,6 +8,7 @@ import { checkElseCondition, reportElseCondition } from './rules/elseCondition'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/cyclomaticComplexity'
 import { checkSingleNameComponent, reportSingleNameComponent } from './rules/singleNameComponent'
 import { checkGlobalStyle, reportGlobalStyle } from './rules/globalStyle'
+import { checkSimpleProp, reportSimpleProp } from './rules/simpleProp'
 
 let filesCount = 0
 
@@ -39,8 +40,10 @@ export const analyze = (dir: string) => {
 
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
-      checkScriptLength(script, filePath)
       checkSingleNameComponent(filePath)
+      checkSimpleProp(script, filePath)
+
+      checkScriptLength(script, filePath)
       checkCyclomaticComplexity(script, filePath)
       checkElseCondition(script, filePath)
     }
@@ -52,12 +55,20 @@ export const analyze = (dir: string) => {
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
 
+  // vue-essential rules
+  errors += reportSingleNameComponent()
+  errors += reportSimpleProp()
+  errors += reportGlobalStyle()
+
+  // vue-strong rules
+  // vue-reccomended rules
+  // vue-caution rules
+
+  // rrd rules
   errors += reportScriptLength()
   errors += reportPlainScript()
   errors += reportCyclomaticComplexity()
-  errors += reportSingleNameComponent()
   errors += reportElseCondition()
-  errors += reportGlobalStyle()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
