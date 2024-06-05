@@ -53,10 +53,10 @@ if [ $PREV_STEP -eq 1 ];then
       new_version=$(node -p "require('./package.json').version")
       
       echo "👉 Pushing new version to git: $new_version"
-      git push vue-mess-detector "$new_version"
+      git push vue-mess-detector "v$new_version"
 
       echo "👉 Creating a new release on GitHub"
-      gh release create "$new_version" --notes "$release_notes"
+      gh release create "v$new_version" --notes "$release_notes"
 
       # Update the version field in jsr.json
       jq ".version = \"$new_version\"" jsr.json > tmp.json && mv tmp.json jsr.json
