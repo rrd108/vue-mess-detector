@@ -71,7 +71,7 @@ if [ $PREV_STEP -eq 1 ];then
     fi
 
   else
-    echo "Repository is not clean. Please commit or stash your changes before running this script."
+    echo -e $'\n' "${RED} \u2a2f Repository is not clean. ${NC} Please commit or stash your changes before running this script." $'\n'
     exit 1
   fi
 fi
