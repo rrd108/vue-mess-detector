@@ -1,11 +1,11 @@
 import { SFCStyleBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 
-const globalStyleFiles: { fileName: string }[] = []
+const globalStyleFiles: { filePath: string }[] = []
 
 const checkGlobalStyle = (style: SFCStyleBlock, filePath: string) => {
   if (!style.scoped) {
-    globalStyleFiles.push({ fileName: filePath })
+    globalStyleFiles.push({ filePath })
   }
 }
 

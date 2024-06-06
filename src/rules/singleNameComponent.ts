@@ -1,7 +1,7 @@
 import path from 'path'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
-const singleNameComponentFiles: { fileName: string }[] = []
+const singleNameComponentFiles: { filePath: string }[] = []
 
 const checkSingleNameComponent = (filePath: string) => {
   // in the pages directory this rule does not apply
@@ -16,7 +16,7 @@ const checkSingleNameComponent = (filePath: string) => {
   const matches = fileName.slice(1).match(regex) // ignore the first character
 
   if (!matches?.length) {
-    singleNameComponentFiles.push({ fileName: filePath })
+    singleNameComponentFiles.push({ filePath })
   }
 }
 

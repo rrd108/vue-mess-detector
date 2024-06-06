@@ -1,7 +1,7 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
-const vforNoKeyFiles: { fileName: string }[] = []
+const vforNoKeyFiles: { filePath: string }[] = []
 
 const checkVforNoKey = (template: SFCTemplateBlock, filePath: string) => {
   const regex = /<[^>]+ v-for[^>]+>/gi
@@ -10,7 +10,7 @@ const checkVforNoKey = (template: SFCTemplateBlock, filePath: string) => {
   if (matches?.length) {
     const hasKey = matches.some(match => match.includes(':key'))
     if (!hasKey) {
-      vforNoKeyFiles.push({ fileName: filePath })
+      vforNoKeyFiles.push({ filePath })
     }
   }
 }

@@ -1,14 +1,14 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
-const simplePropFiles: { fileName: string }[] = []
+const simplePropFiles: { filePath: string }[] = []
 
 const checkSimpleProp = (script: SFCScriptBlock, filePath: string) => {
   const regex = /defineProps\(\[/gi
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    simplePropFiles.push({ fileName: filePath })
+    simplePropFiles.push({ filePath })
   }
 }
 

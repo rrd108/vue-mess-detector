@@ -1,7 +1,7 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
 
-const vifWithVforFiles: { fileName: string }[] = []
+const vifWithVforFiles: { filePath: string }[] = []
 
 const checkVifWithVfor = (template: SFCTemplateBlock, filePath: string) => {
   const regex1 = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi
@@ -10,7 +10,7 @@ const checkVifWithVfor = (template: SFCTemplateBlock, filePath: string) => {
   const matches2 = template.content.match(regex2)
 
   if (matches1?.length || matches2?.length) {
-    vifWithVforFiles.push({ fileName: filePath })
+    vifWithVforFiles.push({ filePath })
   }
 }
 
