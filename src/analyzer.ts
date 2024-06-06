@@ -10,6 +10,7 @@ import { checkSingleNameComponent, reportSingleNameComponent } from './rules/sin
 import { checkGlobalStyle, reportGlobalStyle } from './rules/globalStyle'
 import { checkSimpleProp, reportSimpleProp } from './rules/simpleProp'
 import { checkVifWithVfor, reportVifWithVfor } from './rules/vifWithVfor'
+import { checkVforNoKey, reportVforNoKey } from './rules/vforNoKey'
 
 let filesCount = 0
 
@@ -54,6 +55,7 @@ export const analyze = (dir: string) => {
     })
 
     if (descriptor.template) {
+      checkVforNoKey(descriptor.template, filePath)
       checkVifWithVfor(descriptor.template, filePath)
     }
   })
@@ -63,8 +65,9 @@ export const analyze = (dir: string) => {
   // vue-essential rules
   errors += reportSingleNameComponent()
   errors += reportSimpleProp()
-  errors += reportGlobalStyle()
+  errors += reportVforNoKey()
   errors += reportVifWithVfor()
+  errors += reportGlobalStyle()
 
   // vue-strong rules
   // vue-reccomended rules

@@ -45,6 +45,11 @@ See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component
 Checks if the component is using simple props definitions.
 See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
 
+### Check for keyed `v-for` (vue-essential)
+
+Checks if the component is using `v-for` without a `key` property.
+See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for
+
 ### Check `v-if` with `v-for` (vue-essential)
 
 Checks if the component is using `v-if` with `v-for`.
