@@ -1,7 +1,5 @@
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET } from '../asceeCodes'
 
-const MAX_SCRIPT_LENGTH = 50
-
 const plainScriptFiles: string[] = []
 
 const checkPlainScript = (filePath: string) => {

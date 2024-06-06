@@ -11,6 +11,7 @@ import { checkGlobalStyle, reportGlobalStyle } from './rules/globalStyle'
 import { checkSimpleProp, reportSimpleProp } from './rules/simpleProp'
 import { checkVifWithVfor, reportVifWithVfor } from './rules/vifWithVfor'
 import { checkVforNoKey, reportVforNoKey } from './rules/vforNoKey'
+import { checkComponentFilenameCasing, reportComponentFilenameCasing } from './rules/componentFilenameCasing'
 
 let filesCount = 0
 
@@ -36,13 +37,15 @@ export const analyze = (dir: string) => {
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
 
+    checkSingleNameComponent(filePath)
+    checkComponentFilenameCasing(filePath)
+
     if (descriptor.script) {
       checkPlainScript(filePath)
     }
 
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
-      checkSingleNameComponent(filePath)
       checkSimpleProp(script, filePath)
 
       checkScriptLength(script, filePath)
@@ -70,6 +73,8 @@ export const analyze = (dir: string) => {
   errors += reportGlobalStyle()
 
   // vue-strong rules
+  errors += reportComponentFilenameCasing()
+
   // vue-reccomended rules
   // vue-caution rules
 
