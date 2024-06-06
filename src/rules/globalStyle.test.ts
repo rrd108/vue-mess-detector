@@ -20,6 +20,6 @@ describe('checkGlobalStyle', () => {
     checkGlobalStyle(style, filePath)
     expect(reportGlobalStyle()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_ERR}${filePath}${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${filePath} 🚨`)
   })
 })

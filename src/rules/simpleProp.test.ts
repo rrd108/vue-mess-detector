@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { checkSimpleProp, reportSimpleProp } from './simpleProp'
-import { BG_ERR, BG_RESET, BG_WARN } from '../asceeCodes'
 
 const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
@@ -30,6 +29,6 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     expect(reportSimpleProp()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_ERR}${fileName}${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
   })
 })

@@ -21,7 +21,7 @@ const reportVifWithVfor = () => {
       `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
     )
     vifWithVforFiles.forEach(file => {
-      console.log(`- ${BG_ERR}${file.fileName}${BG_RESET}`)
+      console.log(`- ${file.filePath} 🚨`)
     })
   }
   return vifWithVforFiles.length

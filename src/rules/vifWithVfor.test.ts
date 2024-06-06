@@ -42,6 +42,6 @@ describe('checkVifWithVfor', () => {
     checkVifWithVfor(script, fileName)
     expect(reportVifWithVfor()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_ERR}${fileName}${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
   })
 })

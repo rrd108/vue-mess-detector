@@ -19,7 +19,7 @@ const reportSimpleProp = () => {
       `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
     )
     simplePropFiles.forEach(file => {
-      console.log(`- ${BG_ERR}${file.fileName}${BG_RESET}`)
+      console.log(`- ${file.filePath} 🚨`)
     })
   }
   return simplePropFiles.length

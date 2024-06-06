@@ -39,6 +39,6 @@ describe('checkVforNoKey', () => {
     checkVforNoKey(script, fileName)
     expect(reportVforNoKey()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_ERR}${fileName}${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
   })
 })

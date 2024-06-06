@@ -22,7 +22,7 @@ const reportVforNoKey = () => {
       `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
     )
     vforNoKeyFiles.forEach(file => {
-      console.log(`- ${BG_ERR}${file.fileName}${BG_RESET}`)
+      console.log(`- ${file.filePath} 🚨`)
     })
   }
   return vforNoKeyFiles.length

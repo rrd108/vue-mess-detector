@@ -27,7 +27,7 @@ const reportSingleNameComponent = () => {
       `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`
     )
     singleNameComponentFiles.forEach(file => {
-      console.log(`- ${BG_ERR}${file.fileName}${BG_RESET}`)
+      console.log(`- ${file.filePath} 🚨`)
     })
   }
   return singleNameComponentFiles.length

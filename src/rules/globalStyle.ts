@@ -16,7 +16,7 @@ const reportGlobalStyle = () => {
       `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
     )
     globalStyleFiles.forEach(file => {
-      console.log(`- ${BG_ERR}${file.fileName}${BG_RESET}`)
+      console.log(`- ${file.filePath} 🚨`)
     })
   }
   return globalStyleFiles.length
