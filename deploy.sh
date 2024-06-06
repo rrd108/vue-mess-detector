@@ -35,6 +35,11 @@ else
 fi
 
 if [ $PREV_STEP -eq 1 ];then
+  echo $'\n' "Run build to generate dist files" $'\n'
+  yarn build
+fi
+
+if [ $PREV_STEP -eq 1 ];then
   # Run git status and capture the output
   git_status=$(git status --porcelain)
 
