@@ -12,6 +12,7 @@ import { checkSimpleProp, reportSimpleProp } from './rules/simpleProp'
 import { checkVifWithVfor, reportVifWithVfor } from './rules/vifWithVfor'
 import { checkVforNoKey, reportVforNoKey } from './rules/vforNoKey'
 import { checkComponentFilenameCasing, reportComponentFilenameCasing } from './rules/componentFilenameCasing'
+import { checkPropNameCasing, reportPropNameCasing } from './rules/propNameCasing'
 
 let filesCount = 0
 
@@ -32,10 +33,13 @@ export const analyze = (dir: string) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
 
   let errors = 0
+  const files: string[] = []
 
   walkSync(dir, filePath => {
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
+
+    files.push(filePath)
 
     checkSingleNameComponent(filePath)
     checkComponentFilenameCasing(filePath)
@@ -47,6 +51,8 @@ export const analyze = (dir: string) => {
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
       checkSimpleProp(script, filePath)
+
+      checkPropNameCasing(script, filePath)
 
       checkScriptLength(script, filePath)
       checkCyclomaticComplexity(script, filePath)
@@ -74,6 +80,7 @@ export const analyze = (dir: string) => {
 
   // vue-strong rules
   errors += reportComponentFilenameCasing()
+  errors += reportPropNameCasing()
 
   // vue-reccomended rules
   // vue-caution rules

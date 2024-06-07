@@ -63,7 +63,12 @@ See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-sty
 ### Check Component File Name Casing (vue-strong)
 
 Checks if the component file name is in PascalCase or kebab-case.
-see: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing
+
+### Check Prop Name Casing (vue-strong)
+
+Checks if the props name is in camelCase.
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing
 
 ### Check Script Length (rrd)
 
