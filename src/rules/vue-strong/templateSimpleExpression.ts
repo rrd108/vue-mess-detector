@@ -11,7 +11,10 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock, filePath: str
 
   matches.forEach(expression => {
     if (expression.length > MAX_EXPRESSION_LENGTH) {
-      templateSimpleExpressionFiles.push({ filePath })
+      //if this file is not in the array yet, push it
+      if (!templateSimpleExpressionFiles.some(file => file.filePath === filePath)) {
+        templateSimpleExpressionFiles.push({ filePath })
+      }
     }
   })
 }

@@ -1,6 +1,6 @@
 import rt from "yargs";
 import { format as ze, inspect as ct } from "util";
-import Ce, { normalize as at, resolve as M, dirname as _e, basename as lt, extname as ft, relative as ut } from "path";
+import Ce, { normalize as at, resolve as G, dirname as _e, basename as lt, extname as ft, relative as ut } from "path";
 import Oe, { readFileSync as je, statSync as Me, readdirSync as ht, writeFile as pt } from "fs";
 import { notStrictEqual as dt, strictEqual as gt } from "assert";
 import { fileURLToPath as mt } from "url";
@@ -30,7 +30,7 @@ function At() {
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-function U(n) {
+function D(n) {
   if (n !== n.toLowerCase() && n !== n.toUpperCase() || (n = n.toLowerCase()), n.indexOf("-") === -1 && n.indexOf("_") === -1)
     return n;
   {
@@ -233,13 +233,13 @@ class Ot {
         ge(i);
     }
     ve(A, !0), ve(A, !1), He(A), Ze(), Le(A, l.aliases, E, !0), Xe(A), m["set-placeholder-key"] && Je(A), Object.keys(l.counts).forEach(function(t) {
-      G(A, t.split(".")) || y(t, 0);
+      V(A, t.split(".")) || y(t, 0);
     }), W && ce.length && (A[B] = []), ce.forEach(function(t) {
       A[B].push(t);
     }), m["camel-case-expansion"] && m["strip-dashed"] && Object.keys(A).filter((t) => t !== "--" && t.includes("-")).forEach((t) => {
       delete A[t];
     }), m["strip-aliased"] && [].concat(...Object.keys(d).map((t) => d[t])).forEach((t) => {
-      m["camel-case-expansion"] && t.includes("-") && delete A[t.split(".").map((i) => U(i)).join(".")], delete A[t];
+      m["camel-case-expansion"] && t.includes("-") && delete A[t.split(".").map((i) => D(i)).join(".")], delete A[t];
     });
     function ge(t) {
       const i = fe("_", t);
@@ -282,18 +282,18 @@ class Ot {
     function y(t, i, u = f) {
       if (/-/.test(t) && m["camel-case-expansion"]) {
         const p = t.split(".").map(function(h) {
-          return U(h);
+          return D(h);
         }).join(".");
         Fe(t, p);
       }
       const c = me(t, i, u), o = t.split(".");
-      V(A, o, c), l.aliases[t] && l.aliases[t].forEach(function(p) {
+      U(A, o, c), l.aliases[t] && l.aliases[t].forEach(function(p) {
         const h = p.split(".");
-        V(A, h, c);
+        U(A, h, c);
       }), o.length > 1 && m["dot-notation"] && (l.aliases[o[0]] || []).forEach(function(p) {
         let h = p.split(".");
         const g = [].concat(o);
-        g.shift(), h = h.concat(g), (l.aliases[t] || []).includes(h.join(".")) || V(A, h, c);
+        g.shift(), h = h.concat(g), (l.aliases[t] || []).includes(h.join(".")) || U(A, h, c);
       }), b(t, l.normalize) && !b(t, l.arrays) && [t].concat(l.aliases[t] || []).forEach(function(h) {
         Object.defineProperty(Se, h, {
           enumerable: !0,
@@ -348,7 +348,7 @@ class Ot {
     function be(t, i) {
       Object.keys(t).forEach(function(u) {
         const c = t[u], o = i ? i + "." + u : u;
-        typeof c == "object" && c !== null && !Array.isArray(c) && m["dot-notation"] ? be(c, o) : (!G(A, o.split(".")) || b(o, l.arrays) && m["combine-arrays"]) && y(o, c);
+        typeof c == "object" && c !== null && !Array.isArray(c) && m["dot-notation"] ? be(c, o) : (!V(A, o.split(".")) || b(o, l.arrays) && m["combine-arrays"]) && y(o, c);
       });
     }
     function Ze() {
@@ -363,9 +363,9 @@ class Ot {
       Object.keys(c).forEach(function(o) {
         if (u === "" || o.lastIndexOf(u, 0) === 0) {
           const p = o.split("__").map(function(h, g) {
-            return g === 0 && (h = h.substring(u.length)), U(h);
+            return g === 0 && (h = h.substring(u.length)), D(h);
           });
-          (i && l.configs[p.join(".")] || !i) && !G(t, p) && y(p.join("."), c[o]);
+          (i && l.configs[p.join(".")] || !i) && !V(t, p) && y(p.join("."), c[o]);
         }
       });
     }
@@ -391,12 +391,12 @@ class Ot {
     }
     function Le(t, i, u, c = !1) {
       Object.keys(u).forEach(function(o) {
-        G(t, o.split(".")) || (V(t, o.split("."), u[o]), c && (Ne[o] = !0), (i[o] || []).forEach(function(p) {
-          G(t, p.split(".")) || V(t, p.split("."), u[o]);
+        V(t, o.split(".")) || (U(t, o.split("."), u[o]), c && (Ne[o] = !0), (i[o] || []).forEach(function(p) {
+          V(t, p.split(".")) || U(t, p.split("."), u[o]);
         }));
       });
     }
-    function G(t, i) {
+    function V(t, i) {
       let u = t;
       m["dot-notation"] || (i = [i.join(".")]), i.slice(0, -1).forEach(function(o) {
         u = u[o] || {};
@@ -404,7 +404,7 @@ class Ot {
       const c = i[i.length - 1];
       return typeof u != "object" ? !1 : c in u;
     }
-    function V(t, i, u) {
+    function U(t, i, u) {
       let c = t;
       m["dot-notation"] || (i = [i.join(".")]), i.slice(0, -1).forEach(function(O) {
         O = We(O), typeof c == "object" && c[O] === void 0 && (c[O] = {}), typeof c[O] != "object" || Array.isArray(c[O]) ? (Array.isArray(c[O]) ? c[O].push({}) : c[O] = [c[O], {}], c = c[O][c[O].length - 1]) : c = c[O];
@@ -418,7 +418,7 @@ class Ot {
         Object.keys(i || {}).forEach(function(u) {
           l.aliases[u] || (l.aliases[u] = [].concat(d[u] || []), l.aliases[u].concat(u).forEach(function(c) {
             if (/-/.test(c) && m["camel-case-expansion"]) {
-              const o = U(c);
+              const o = D(c);
               o !== u && l.aliases[u].indexOf(o) === -1 && (l.aliases[u].push(o), re[o] = !0);
             }
           }), l.aliases[u].concat(u).forEach(function(c) {
@@ -552,7 +552,7 @@ const Ct = process ? process.env : {}, De = new Ot({
   env: () => Ct,
   format: ze,
   normalize: at,
-  resolve: M,
+  resolve: G,
   // TODO: figure  out a  way to combine ESM and CJS coverage, such  that
   // we can exercise all the lines below:
   require: (n) => {
@@ -568,7 +568,7 @@ const Ct = process ? process.env : {}, De = new Ot({
 ie.detailed = function(n, e) {
   return De.parse(n.slice(), e);
 };
-ie.camelCase = U;
+ie.camelCase = D;
 ie.decamelize = Ve;
 ie.looksLikeNumber = Ue;
 const jt = {
@@ -729,10 +729,10 @@ function Bt(n) {
   });
 }
 function It(n, e) {
-  let s = M(".", n), r;
+  let s = G(".", n), r;
   for (Me(s).isDirectory() || (s = _e(s)); ; ) {
     if (r = e(s, ht(s)), r)
-      return M(s, r);
+      return G(s, r);
     if (s = _e(r = s), r === s)
       break;
   }
@@ -743,7 +743,7 @@ const zt = {
     writeFile: pt
   },
   format: ze,
-  resolve: M,
+  resolve: G,
   exists: (n) => {
     try {
       return Me(n).isFile();
@@ -859,117 +859,117 @@ try {
   se = process.cwd();
 }
 const Dt = se.substring(0, se.lastIndexOf("node_modules"));
-dt, gt, ct, Dt || process.cwd(), lt, _e, ft, ut, M, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, je, Vt({
-  directory: M(se, "../../../locales"),
+dt, gt, ct, Dt || process.cwd(), lt, _e, ft, ut, G, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, je, Vt({
+  directory: G(se, "../../../locales"),
   updateFiles: !1
 });
-const we = "\x1B[44m", oe = "\x1B[43m", j = "\x1B[41m", Kt = "\x1B[42m", _ = "\x1B[0m", N = "\x1B[33m", S = "\x1B[0m", xe = 50, D = [], Qt = (n, e) => {
+const we = "\x1B[44m", oe = "\x1B[43m", j = "\x1B[41m", Kt = "\x1B[42m", _ = "\x1B[0m", N = "\x1B[33m", S = "\x1B[0m", xe = 50, K = [], Qt = (n, e) => {
   const s = n.content.split(`
 `);
-  s.length > xe && D.push({ fileName: e, scriptLength: s.length });
-}, Yt = () => (D.length > 0 && (console.log(`
-${j}Long <script> blocks${_} in ${D.length} files.`), console.log(
+  s.length > xe && K.push({ fileName: e, scriptLength: s.length });
+}, Yt = () => (K.length > 0 && (console.log(`
+${j}Long <script> blocks${_} in ${K.length} files.`), console.log(
   `👉 ${N}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${xe} lines.${S}`
-), D.forEach((n) => {
+), K.forEach((n) => {
   console.log(
     `- ${n.fileName} ${n.scriptLength > xe * 2 ? j : oe}(${n.scriptLength} lines)${_}`
   );
-})), D.length), K = [], qt = (n) => {
-  K.push(n);
-}, Ht = () => (K.length > 0 && (console.log(`
-${oe}Plain <script> blocks${_} in ${K.length} files.`), console.log(`👉 ${N} Consider using <script setup> to leverage the new SFC <script> syntax.${S}`), K.forEach((n) => {
+})), K.length), Q = [], qt = (n) => {
+  Q.push(n);
+}, Ht = () => (Q.length > 0 && (console.log(`
+${oe}Plain <script> blocks${_} in ${Q.length} files.`), console.log(`👉 ${N} Consider using <script setup> to leverage the new SFC <script> syntax.${S}`), Q.forEach((n) => {
   console.log(`- ${n}`);
-})), K.length), Q = [], Zt = (n, e) => {
+})), Q.length), Y = [], Zt = (n, e) => {
   const s = /\belse\b/gi, r = n.content.match(s);
-  r?.length && Q.push({ fileName: e, elseCount: r.length });
-}, Xt = () => (Q.length > 0 && (console.log(`
-${oe}else conditions${_} are used in ${Q.length} files.`), console.log(`👉 ${N}Try to rewrite the conditions in a way that the else clause is not necessary.${S}`), Q.forEach((n) => {
+  r?.length && Y.push({ fileName: e, elseCount: r.length });
+}, Xt = () => (Y.length > 0 && (console.log(`
+${oe}else conditions${_} are used in ${Y.length} files.`), console.log(`👉 ${N}Try to rewrite the conditions in a way that the else clause is not necessary.${S}`), Y.forEach((n) => {
   console.log(`- ${n.fileName} ${oe}(${n.elseCount})${_}`);
-})), Q.length), Jt = 5, kt = 10, Y = [], en = (n, e) => {
+})), Y.length), Jt = 5, kt = 10, q = [], en = (n, e) => {
   const s = /\bif\b/gi, r = /\belse\b/gi, a = /\bfor\b/gi, f = /\bwhile\b/gi, d = /\bcase\b/gi, m = n.content.match(s), E = n.content.match(r), x = n.content.match(a), $ = n.content.match(f), W = n.content.match(d), B = (m?.length || 0) + (E?.length || 0) + (x?.length || 0) + ($?.length || 0) + (W?.length || 0);
-  B > Jt && Y.push({ fileName: e, cyclomaticComplexity: B });
-}, tn = () => (Y.length > 0 && (console.log(
+  B > Jt && q.push({ fileName: e, cyclomaticComplexity: B });
+}, tn = () => (q.length > 0 && (console.log(
   `
-${we}cyclomaticComplexity${_} is above moderate in ${Y.length} files.`
-), console.log(`👉 ${N}Try to reduce complexity.${S}`), Y.forEach((n) => {
+${we}cyclomaticComplexity${_} is above moderate in ${q.length} files.`
+), console.log(`👉 ${N}Try to reduce complexity.${S}`), q.forEach((n) => {
   console.log(
     `- ${n.fileName} ${n.cyclomaticComplexity > kt ? j : oe}(${n.cyclomaticComplexity})${_}`
   );
-})), Y.length), q = [], nn = (n) => {
+})), q.length), H = [], nn = (n) => {
   if (n.includes("pages"))
     return;
   const e = Ce.basename(n);
   if (e === "App.vue")
     return;
   const s = /[A-Z]/;
-  e.slice(1).match(s)?.length || q.push({ filePath: n });
-}, sn = () => (q.length > 0 && (console.log(`
-${j}single name component${_} is used in ${q.length} files.`), console.log(
+  e.slice(1).match(s)?.length || H.push({ filePath: n });
+}, sn = () => (H.length > 0 && (console.log(`
+${j}single name component${_} is used in ${H.length} files.`), console.log(
   `👉 ${N}Rename the component to use multi-word name.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`
-), q.forEach((n) => {
-  console.log(`- ${n.filePath} 🚨`);
-})), q.length), H = [], on = (n, e) => {
-  n.scoped || H.push({ filePath: e });
-}, rn = () => (H.length > 0 && (console.log(`
-${j}Global style ${_} is used in ${H.length} files.`), console.log(
-  `👉 ${N}Use <style scoped>.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
 ), H.forEach((n) => {
   console.log(`- ${n.filePath} 🚨`);
-})), H.length), Z = [], cn = (n, e) => {
-  const s = /defineProps\(\[/gi;
-  n.content.match(s)?.length && Z.push({ filePath: e });
-}, an = () => (Z.length > 0 && (console.log(`
-${j}simple prop${_} is used in ${Z.length} files.`), console.log(
-  `👉 ${N}Add at least type definition.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
+})), H.length), Z = [], on = (n, e) => {
+  n.scoped || Z.push({ filePath: e });
+}, rn = () => (Z.length > 0 && (console.log(`
+${j}Global style ${_} is used in ${Z.length} files.`), console.log(
+  `👉 ${N}Use <style scoped>.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
 ), Z.forEach((n) => {
   console.log(`- ${n.filePath} 🚨`);
-})), Z.length), X = [], ln = (n, e) => {
-  const s = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi, r = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi, a = n.content.match(s), f = n.content.match(r);
-  (a?.length || f?.length) && X.push({ filePath: e });
-}, fn = () => (X.length > 0 && (console.log(`
-${j}v-if used with v-for${_} in ${X.length} files.`), console.log(
-  `👉 ${N}Move out the v-if to a computed property.${S} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
+})), Z.length), X = [], cn = (n, e) => {
+  const s = /defineProps\(\[/gi;
+  n.content.match(s)?.length && X.push({ filePath: e });
+}, an = () => (X.length > 0 && (console.log(`
+${j}simple prop${_} is used in ${X.length} files.`), console.log(
+  `👉 ${N}Add at least type definition.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
 ), X.forEach((n) => {
   console.log(`- ${n.filePath} 🚨`);
-})), X.length), J = [], un = (n, e) => {
-  const s = /<[^>]+ v-for[^>]+>/gi, r = n.content.match(s);
-  r?.length && (r.some((f) => f.includes(":key")) || J.push({ filePath: e }));
-}, hn = () => (J.length > 0 && (console.log(`
-${j}v-for has no key${_} in ${J.length} files.`), console.log(
-  `👉 ${N}Add a \`:key\` property to all v-for.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
+})), X.length), J = [], ln = (n, e) => {
+  const s = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi, r = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi, a = n.content.match(s), f = n.content.match(r);
+  (a?.length || f?.length) && J.push({ filePath: e });
+}, fn = () => (J.length > 0 && (console.log(`
+${j}v-if used with v-for${_} in ${J.length} files.`), console.log(
+  `👉 ${N}Move out the v-if to a computed property.${S} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
 ), J.forEach((n) => {
   console.log(`- ${n.filePath} 🚨`);
-})), J.length), k = [], pn = (n) => {
+})), J.length), k = [], un = (n, e) => {
+  const s = /<[^>]+ v-for[^>]+>/gi, r = n.content.match(s);
+  r?.length && (r.some((f) => f.includes(":key")) || k.push({ filePath: e }));
+}, hn = () => (k.length > 0 && (console.log(`
+${j}v-for has no key${_} in ${k.length} files.`), console.log(
+  `👉 ${N}Add a \`:key\` property to all v-for.${S} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
+), k.forEach((n) => {
+  console.log(`- ${n.filePath} 🚨`);
+})), k.length), ee = [], pn = (n) => {
   const e = Ce.basename(n), s = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, r = e.match(s), a = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, f = e.match(a);
-  !r?.length && !f?.length && k.push({ fileName: n });
-}, dn = () => (k.length > 0 && (console.log(
+  !r?.length && !f?.length && ee.push({ fileName: n });
+}, dn = () => (ee.length > 0 && (console.log(
   `
-${j}component name is not PascalCase and not kebab-abse${_} in ${k.length} files.`
+${j}component name is not PascalCase and not kebab-abse${_} in ${ee.length} files.`
 ), console.log(
   `👉 ${N}Rename the component to use PascalCase or kebab-case file name.${S} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`
-), k.forEach((n) => {
+), ee.forEach((n) => {
   console.log(`- ${j}${n.fileName}${_}`);
-})), k.length), ee = [], gn = /^[a-z]+([A-Z][a-z]*)+$/, mn = (n, e) => {
+})), ee.length), te = [], gn = /^[a-z]+([A-Z][a-z]*)+$/, mn = (n, e) => {
   const s = /defineProps\({([^}]+)/g;
   let r;
   for (; (r = s.exec(n.content)) !== null; )
-    r[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((f) => f.split(":")[0]).filter((f) => f.length).filter((f) => !gn.test(f)).length && ee.push({ filePath: e });
-}, bn = () => (ee.length > 0 && (console.log(`
-${j}prop names are not camelCased${_} in ${ee.length} files.`), console.log(
+    r[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((f) => f.split(":")[0]).filter((f) => f.length).filter((f) => !gn.test(f)).length && te.push({ filePath: e });
+}, bn = () => (te.length > 0 && (console.log(`
+${j}prop names are not camelCased${_} in ${te.length} files.`), console.log(
   `👉 ${N}Rename the props to camelCase.${S} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`
-), ee.forEach((n) => {
-  console.log(`- ${n.filePath} 🚨`);
-})), ee.length), te = [], yn = 40, En = (n, e) => {
-  const s = /{{\s*([\s\S]*?)\s*}}/g;
-  [...n.content.matchAll(s)].map((a) => a[1].trim()).forEach((a) => {
-    a.length > yn && te.push({ filePath: e });
-  });
-}, $n = () => (te.length > 0 && (console.log(`
-${j}Lengthy template expression${_} found in ${te.length} files.`), console.log(
-  `👉 ${N}Refactor the expression into a computed property.${S} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
 ), te.forEach((n) => {
   console.log(`- ${n.filePath} 🚨`);
-})), te.length);
+})), te.length), M = [], yn = 40, En = (n, e) => {
+  const s = /{{\s*([\s\S]*?)\s*}}/g;
+  [...n.content.matchAll(s)].map((a) => a[1].trim()).forEach((a) => {
+    a.length > yn && (M.some((f) => f.filePath === e) || M.push({ filePath: e }));
+  });
+}, $n = () => (M.length > 0 && (console.log(`
+${j}Lengthy template expression${_} found in ${M.length} files.`), console.log(
+  `👉 ${N}Refactor the expression into a computed property.${S} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
+), M.forEach((n) => {
+  console.log(`- ${n.filePath} 🚨`);
+})), M.length);
 let Ye = 0;
 const qe = (n, e) => {
   const s = Oe.readdirSync(n);
