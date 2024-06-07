@@ -13,6 +13,7 @@ import { checkVifWithVfor, reportVifWithVfor } from './rules/vue-essential/vifWi
 import { checkVforNoKey, reportVforNoKey } from './rules/vue-essential/vforNoKey'
 import { checkComponentFilenameCasing, reportComponentFilenameCasing } from './rules/vue-strong/componentFilenameCasing'
 import { checkPropNameCasing, reportPropNameCasing } from './rules/vue-strong/propNameCasing'
+import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './rules/vue-strong/templateSimpleExpression'
 
 let filesCount = 0
 
@@ -66,6 +67,7 @@ export const analyze = (dir: string) => {
     if (descriptor.template) {
       checkVforNoKey(descriptor.template, filePath)
       checkVifWithVfor(descriptor.template, filePath)
+      checkTemplateSimpleExpression(descriptor.template, filePath)
     }
   })
 
@@ -81,6 +83,7 @@ export const analyze = (dir: string) => {
   // vue-strong rules
   errors += reportComponentFilenameCasing()
   errors += reportPropNameCasing()
+  errors += reportTemplateSimpleExpression()
 
   // vue-reccomended rules
   // vue-caution rules
