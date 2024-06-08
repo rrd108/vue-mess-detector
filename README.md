@@ -45,12 +45,12 @@ See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component
 Checks if the component is using simple props definitions.
 See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
 
-### for keyed `v-for` (vue-essential)
+### Keyed `v-for` (vue-essential)
 
 Checks if the component is using `v-for` without a `key` property.
 See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for
 
-### `v-if` with `v-for` (vue-essential)
+### `v-if` With `v-for` (vue-essential)
 
 Checks if the component is using `v-if` with `v-for`.
 See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for
@@ -69,6 +69,16 @@ See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-c
 
 Checks if the props name is in camelCase.
 See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing
+
+### Template Simple Expressions (vue-strong)
+
+Checks if the template is using only simple expressions.
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates
+
+### Quoted Attribute Values (vue-strong)
+
+Checks if the template is using quoted attribute values.
+See:https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values
 
 ### Script Length (rrd)
 
