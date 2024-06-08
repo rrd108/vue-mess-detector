@@ -1,4 +1,4 @@
-import { SFCDescriptor, SFCTemplateBlock } from '@vue/compiler-sfc'
+import { SFCDescriptor } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN } from '../asceeCodes'
 import { createRegExp, charIn, charNotIn, oneOrMore, maybe, wordChar } from 'magic-regexp'
 
