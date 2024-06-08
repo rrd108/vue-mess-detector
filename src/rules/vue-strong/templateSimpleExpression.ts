@@ -1,5 +1,5 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
 
 const templateSimpleExpressionFiles: { filePath: string }[] = []
 
@@ -21,7 +21,9 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock, filePath: str
 
 const reportTemplateSimpleExpression = () => {
   if (templateSimpleExpressionFiles.length > 0) {
-    console.log(`\n${BG_ERR}Lengthy template expression${BG_RESET} found in ${templateSimpleExpressionFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}Lengthy template expression${BG_RESET} found in ${templateSimpleExpressionFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
     )

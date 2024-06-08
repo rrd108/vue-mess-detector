@@ -1,5 +1,5 @@
 import { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN, TEXT_INFO } from '../asceeCodes'
 import { createRegExp, charIn, charNotIn, oneOrMore, maybe, wordChar } from 'magic-regexp'
 import getLineNumber from '../getLineNumber'
 
@@ -39,7 +39,9 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor, filePath: string)
 
 const reportQuotedAttributeValues = () => {
   if (unquotedAttributeValuesFiles.length > 0) {
-    console.log(`\n${BG_ERR}Attribute value is not quoted${BG_RESET} in ${unquotedAttributeValuesFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}Attribute value is not quoted${BG_RESET} in ${unquotedAttributeValuesFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`
     )

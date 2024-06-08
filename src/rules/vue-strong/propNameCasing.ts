@@ -1,5 +1,5 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
 
 const propNameCasingFiles: { filePath: string }[] = []
 
@@ -25,7 +25,9 @@ const checkPropNameCasing = (script: SFCScriptBlock, filePath: string) => {
 
 const reportPropNameCasing = () => {
   if (propNameCasingFiles.length > 0) {
-    console.log(`\n${BG_ERR}prop names are not camelCased${BG_RESET} in ${propNameCasingFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}prop names are not camelCased${BG_RESET} in ${propNameCasingFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`
     )
