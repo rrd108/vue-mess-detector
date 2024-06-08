@@ -1,5 +1,5 @@
 import path from 'path'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
 
 const singleNameComponentFiles: { filePath: string }[] = []
 
@@ -22,7 +22,9 @@ const checkSingleNameComponent = (filePath: string) => {
 
 const reportSingleNameComponent = () => {
   if (singleNameComponentFiles.length > 0) {
-    console.log(`\n${BG_ERR}single name component${BG_RESET} is used in ${singleNameComponentFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-essential${TEXT_RESET} ${BG_ERR}single name component${BG_RESET} is used in ${singleNameComponentFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`
     )

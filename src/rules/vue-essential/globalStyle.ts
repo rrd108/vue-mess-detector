@@ -1,5 +1,5 @@
 import { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 
 const globalStyleFiles: { filePath: string }[] = []
 
@@ -11,7 +11,9 @@ const checkGlobalStyle = (style: SFCStyleBlock, filePath: string) => {
 
 const reportGlobalStyle = () => {
   if (globalStyleFiles.length > 0) {
-    console.log(`\n${BG_ERR}Global style ${BG_RESET} is used in ${globalStyleFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-essential${TEXT_RESET} ${BG_ERR}Global style ${BG_RESET} is used in ${globalStyleFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
     )

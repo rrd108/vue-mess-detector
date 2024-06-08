@@ -1,5 +1,5 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
 
 const simplePropFiles: { filePath: string }[] = []
 
@@ -14,7 +14,9 @@ const checkSimpleProp = (script: SFCScriptBlock, filePath: string) => {
 
 const reportSimpleProp = () => {
   if (simplePropFiles.length > 0) {
-    console.log(`\n${BG_ERR}simple prop${BG_RESET} is used in ${simplePropFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}vue-essential${TEXT_RESET} ${BG_ERR}simple prop${BG_RESET} is used in ${simplePropFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
     )
