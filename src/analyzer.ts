@@ -15,6 +15,7 @@ import { checkComponentFilenameCasing, reportComponentFilenameCasing } from './r
 import { checkPropNameCasing, reportPropNameCasing } from './rules/vue-strong/propNameCasing'
 import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './rules/vue-strong/templateSimpleExpression'
 import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
+import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 
 let filesCount = 0
 
@@ -68,6 +69,8 @@ export const analyze = (dir: string) => {
     if (descriptor.template) {
       checkVforNoKey(descriptor.template, filePath)
       checkVifWithVfor(descriptor.template, filePath)
+
+      checkSelfClosingComponents(descriptor, filePath)
       checkTemplateSimpleExpression(descriptor.template, filePath)
       checkQuotedAttributeValues(descriptor, filePath)
     }
@@ -84,6 +87,7 @@ export const analyze = (dir: string) => {
 
   // vue-strong rules
   errors += reportComponentFilenameCasing()
+  errors += reportSelfClosingComponents()
   errors += reportPropNameCasing()
   errors += reportTemplateSimpleExpression()
   errors += reportQuotedAttributeValues()

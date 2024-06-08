@@ -5,4 +5,5 @@ export const BG_OK = '\x1b[42m'
 export const BG_RESET = '\x1b[0m'
 
 export const TEXT_WARN = '\x1b[33m'
+export const TEXT_INFO = '\x1b[36m'
 export const TEXT_RESET = '\x1b[0m'

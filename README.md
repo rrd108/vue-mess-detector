@@ -65,6 +65,11 @@ See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-sty
 Checks if the component file name is in PascalCase or kebab-case.
 See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing
 
+### Self Closing Components (vue-strong)
+
+Checks if the template is using self-closing components.
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components
+
 ### Prop Name Casing (vue-strong)
 
 Checks if the props name is in camelCase.
