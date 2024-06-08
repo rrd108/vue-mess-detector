@@ -35,53 +35,53 @@ npx vue-mess-detector analyze ./src/components
 
 ## Rules
 
-### Check Single Name Component (vue-essential)
+### Single Name Component (vue-essential)
 
 Checks if the component name is a single word.
 See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names
 
-### Check Simple Props Definitions (vue-essential)
+### Simple Props Definitions (vue-essential)
 
 Checks if the component is using simple props definitions.
 See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions
 
-### Check for keyed `v-for` (vue-essential)
+### for keyed `v-for` (vue-essential)
 
 Checks if the component is using `v-for` without a `key` property.
 See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for
 
-### Check `v-if` with `v-for` (vue-essential)
+### `v-if` with `v-for` (vue-essential)
 
 Checks if the component is using `v-if` with `v-for`.
 See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for
 
-### Check Global Styles (vue-essential)
+### Global Styles (vue-essential)
 
 Checks if the component is using global styles instead of `scoped` styles.
 See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling
 
-### Check Component File Name Casing (vue-strong)
+### Component File Name Casing (vue-strong)
 
 Checks if the component file name is in PascalCase or kebab-case.
 See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing
 
-### Check Prop Name Casing (vue-strong)
+### Prop Name Casing (vue-strong)
 
 Checks if the props name is in camelCase.
 See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing
 
-### Check Script Length (rrd)
+### Script Length (rrd)
 
 Checks if the script section of a Vue component is too long. The default threshold is 100 lines. Between 100 and 200 lines you get a warning, above 200 lines you get an error.
 
-### Check Plain Script (rrd)
+### Plain Script (rrd)
 
 Checks if the script section of a Vue component is not using `<script setup>`
 
-### Check Cyclomatic Complexity (rrd)
+### Cyclomatic Complexity (rrd)
 
 Checks if the cyclomatic complexity of a component is too high. The default threshold is 5. Between 5 and 10 you get a warning, above 10 you get an error.
 
-### Check `else` conditions (rrd)
+### `else` conditions (rrd)
 
 Checks if there are any `else` condition in the `<script>` block. This is a code smell because it can be hard to read and understand.
