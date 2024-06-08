@@ -1,5 +1,5 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR } from '../asceeCodes'
+import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
 
 /**
  * Defines complexity thresholds.
@@ -51,7 +51,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock, file: string) => {
 const reportCyclomaticComplexity = () => {
   if (cyclomaticComplexityFiles.length > 0) {
     console.log(
-      `\n${BG_INFO}cyclomaticComplexity${BG_RESET} is above moderate in ${cyclomaticComplexityFiles.length} files.`
+      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_INFO}cyclomaticComplexity${BG_RESET} is above moderate in ${cyclomaticComplexityFiles.length} files.`
     )
     console.log(`👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`)
     cyclomaticComplexityFiles.forEach(file => {

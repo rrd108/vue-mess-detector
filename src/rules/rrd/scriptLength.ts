@@ -1,5 +1,5 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
 
 const MAX_SCRIPT_LENGTH = 50
 
@@ -14,7 +14,9 @@ const checkScriptLength = (script: SFCScriptBlock, file: string) => {
 
 const reportScriptLength = () => {
   if (longScriptFiles.length > 0) {
-    console.log(`\n${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`)
+    console.log(
+      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`
+    )
     console.log(
       `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
     )
