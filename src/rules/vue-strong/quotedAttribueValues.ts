@@ -25,7 +25,6 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor, filePath: string)
     'g',
   ])
 
-  const script = descriptor.scriptSetup || descriptor.script
   matches.forEach(templateTag => {
     if (!templateTag.includes(':')) return // check if it contains a colon
 
