@@ -1,6 +1,7 @@
 import { SFCDescriptor } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN } from '../asceeCodes'
 import { createRegExp, charIn, charNotIn, oneOrMore, maybe, wordChar } from 'magic-regexp'
+import getLineNumber from '../getLineNumber'
 
 const unquotedAttributeValuesFiles: { message: string }[] = []
 
@@ -30,8 +31,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor, filePath: string)
 
     const match = templateTag.match(regexUnquotedAttributeValue)
     if (match?.length) {
-      const lines = descriptor.source.split('\n')
-      const lineNumber = lines.findIndex(line => line.includes(match[0])) + 1
+      const lineNumber = getLineNumber(descriptor.source, templateTag)
       unquotedAttributeValuesFiles.push({ message: `${filePath}#${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
     }
   })
