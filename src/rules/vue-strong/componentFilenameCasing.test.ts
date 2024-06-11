@@ -19,6 +19,18 @@ describe('checkComponentFilenameCasing', () => {
     expect(mockConsoleLog).not.toHaveBeenCalled()
   })
 
+  it('ignores components in pages folder', () => {
+    checkComponentFilenameCasing('pages/gauranga.vue')
+    expect(reportComponentFilenameCasing()).toBe(0)
+    expect(mockConsoleLog).not.toHaveBeenCalled()
+  })
+
+  it('ignores components in layouts folder', () => {
+    checkComponentFilenameCasing('layouts/gauranga.vue')
+    expect(reportComponentFilenameCasing()).toBe(0)
+    expect(mockConsoleLog).not.toHaveBeenCalled()
+  })
+
   it('ignores kebab-case component file names', () => {
     checkComponentFilenameCasing('components/app-header.vue')
     expect(reportComponentFilenameCasing()).toBe(0)
