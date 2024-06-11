@@ -4,6 +4,8 @@ import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCode
 const componentFilenameCasingFiles: { fileName: string }[] = []
 
 const checkComponentFilenameCasing = (filePath: string) => {
+  if (filePath.includes('pages/') || filePath.includes('layouts/')) return
+
   const fileName = path.basename(filePath)
 
   const regexPascalCase = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/
