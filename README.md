@@ -107,7 +107,14 @@ See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expres
 ### Quoted Attribute Values (vue-strong)
 
 Checks if the template is using quoted attribute values.
-See:https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values
+
+### Directive Shorthands (vue-strong)
+
+Checks if the template is using directive shorthands.
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands
+
+> This rule enforces using directive shorthands for better readability. While the official style guide allows using shorthands "**always** or **never**", this rule will flag non-shorthands as code smell.
 
 ### Script Length (rrd)
 

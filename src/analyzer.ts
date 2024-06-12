@@ -16,6 +16,7 @@ import { checkPropNameCasing, reportPropNameCasing } from './rules/vue-strong/pr
 import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './rules/vue-strong/templateSimpleExpression'
 import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
 import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
+import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 
 let filesCount = 0
 
@@ -54,7 +55,6 @@ export const analyze = (dir: string) => {
   const files: string[] = []
 
   walkSync(dir, filePath => {
-    // skip app.vue and App.vue
     if (filePath.includes('App.vue') || filePath.includes('app.vue')) {
       return
     }
@@ -93,6 +93,7 @@ export const analyze = (dir: string) => {
       checkSelfClosingComponents(descriptor, filePath)
       checkTemplateSimpleExpression(descriptor.template, filePath)
       checkQuotedAttributeValues(descriptor, filePath)
+      checkDirectiveShorthands(descriptor, filePath)
     }
   })
 
@@ -111,6 +112,7 @@ export const analyze = (dir: string) => {
   errors += reportPropNameCasing()
   errors += reportTemplateSimpleExpression()
   errors += reportQuotedAttributeValues()
+  errors += reportDirectiveShorthands()
 
   // vue-reccomended rules
   // vue-caution rules
