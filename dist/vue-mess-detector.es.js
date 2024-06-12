@@ -1,7 +1,7 @@
 import yt from "yargs";
 import { format as Xe, inspect as Et } from "util";
-import Te, { normalize as At, resolve as Z, dirname as Fe, basename as _t, extname as wt, relative as Ot } from "path";
-import Re, { readFileSync as Ie, statSync as Je, readdirSync as Ct, writeFile as xt } from "fs";
+import Te, { normalize as At, resolve as Z, dirname as Fe, basename as _t, extname as wt, relative as Ct } from "path";
+import Re, { readFileSync as Ie, statSync as Je, readdirSync as Ot, writeFile as xt } from "fs";
 import { notStrictEqual as jt, strictEqual as St } from "assert";
 import { fileURLToPath as Nt } from "url";
 import { parse as vt } from "@vue/compiler-sfc";
@@ -180,14 +180,14 @@ class Bt {
     let R = null;
     bt();
     let de = [];
-    const O = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), Me = {};
+    const C = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), Me = {};
     for (let s = 0; s < c.length; s++) {
       const r = c[s], u = r.replace(/^-{3,}/, "---");
-      let l, o, g, h, m, C;
+      let l, o, g, h, m, O;
       if (r !== "--" && /^-/.test(r) && ye(r))
-        Oe(r);
+        Ce(r);
       else if (u.match(/^---+(=|$)/)) {
-        Oe(r);
+        Ce(r);
         continue;
       } else if (r.match(/^--.+=/) || !d["short-option-groups"] && r.match(/^-.+=/))
         h = r.match(/^--?([^=]+)=([\s\S]*)$/), h !== null && Array.isArray(h) && h.length >= 3 && (b(h[1], a.arrays) ? s = $e(s, h[1], c, h[2]) : b(h[1], a.nargs) !== !1 ? s = me(s, h[1], c, h[2]) : E(h[1], h[2], !0));
@@ -203,7 +203,7 @@ class Bt {
         g = r.slice(1, -1).split(""), l = !1;
         for (let x = 0; x < g.length; x++) {
           if (m = r.slice(x + 2), g[x + 1] && g[x + 1] === "=") {
-            C = r.slice(x + 3), o = g[x], b(o, a.arrays) ? s = $e(s, o, c, C) : b(o, a.nargs) !== !1 ? s = me(s, o, c, C) : E(o, C), l = !0;
+            O = r.slice(x + 3), o = g[x], b(o, a.arrays) ? s = $e(s, o, c, O) : b(o, a.nargs) !== !1 ? s = me(s, o, c, O) : E(o, O), l = !0;
             break;
           }
           if (m === "-") {
@@ -230,20 +230,20 @@ class Bt {
         de = c.slice(s);
         break;
       } else
-        Oe(r);
+        Ce(r);
     }
-    Ge(O, !0), Ge(O, !1), lt(O), at(), Ue(O, a.aliases, A, !0), ft(O), d["set-placeholder-key"] && ut(O), Object.keys(a.counts).forEach(function(s) {
-      Y(O, s.split(".")) || E(s, 0);
-    }), B && de.length && (O[G] = []), de.forEach(function(s) {
-      O[G].push(s);
-    }), d["camel-case-expansion"] && d["strip-dashed"] && Object.keys(O).filter((s) => s !== "--" && s.includes("-")).forEach((s) => {
-      delete O[s];
+    Ge(C, !0), Ge(C, !1), lt(C), at(), Ue(C, a.aliases, A, !0), ft(C), d["set-placeholder-key"] && ut(C), Object.keys(a.counts).forEach(function(s) {
+      Y(C, s.split(".")) || E(s, 0);
+    }), B && de.length && (C[G] = []), de.forEach(function(s) {
+      C[G].push(s);
+    }), d["camel-case-expansion"] && d["strip-dashed"] && Object.keys(C).filter((s) => s !== "--" && s.includes("-")).forEach((s) => {
+      delete C[s];
     }), d["strip-aliased"] && [].concat(...Object.keys(p).map((s) => p[s])).forEach((s) => {
-      d["camel-case-expansion"] && s.includes("-") && delete O[s.split(".").map((r) => X(r)).join(".")], delete O[s];
+      d["camel-case-expansion"] && s.includes("-") && delete C[s.split(".").map((r) => X(r)).join(".")], delete C[s];
     });
-    function Oe(s) {
+    function Ce(s) {
       const r = be("_", s);
-      (typeof r == "string" || typeof r == "number") && O._.push(r);
+      (typeof r == "string" || typeof r == "number") && C._.push(r);
     }
     function me(s, r, u, l) {
       let o, g = b(r, a.nargs);
@@ -273,9 +273,9 @@ class Bt {
           o = Array.isArray(m) ? m : [m];
         }
       } else {
-        T(l) || o.push(Ce(r, l, !0));
+        T(l) || o.push(Oe(r, l, !0));
         for (let m = s + 1; m < u.length && !(!d["greedy-arrays"] && o.length > 0 || h && typeof h == "number" && o.length >= h || (g = u[m], /^-/.test(g) && !P.test(g) && !ye(g))); m++)
-          s = m, o.push(Ce(r, g, f));
+          s = m, o.push(Oe(r, g, f));
       }
       return typeof h == "number" && (h && o.length < h || isNaN(h) && o.length === 0) && (R = Error(U("Not enough arguments following: %s", r))), E(r, o), s;
     }
@@ -286,14 +286,14 @@ class Bt {
         }).join(".");
         Ve(s, g);
       }
-      const l = Ce(s, r, u), o = s.split(".");
-      H(O, o, l), a.aliases[s] && a.aliases[s].forEach(function(g) {
+      const l = Oe(s, r, u), o = s.split(".");
+      H(C, o, l), a.aliases[s] && a.aliases[s].forEach(function(g) {
         const h = g.split(".");
-        H(O, h, l);
+        H(C, h, l);
       }), o.length > 1 && d["dot-notation"] && (a.aliases[o[0]] || []).forEach(function(g) {
         let h = g.split(".");
         const m = [].concat(o);
-        m.shift(), h = h.concat(m), (a.aliases[s] || []).includes(h.join(".")) || H(O, h, l);
+        m.shift(), h = h.concat(m), (a.aliases[s] || []).includes(h.join(".")) || H(C, h, l);
       }), b(s, a.normalize) && !b(s, a.arrays) && [s].concat(a.aliases[s] || []).forEach(function(h) {
         Object.defineProperty(Me, h, {
           enumerable: !0,
@@ -309,7 +309,7 @@ class Bt {
     function Ve(s, r) {
       a.aliases[s] && a.aliases[s].length || (a.aliases[s] = [r], ge[r] = !0), a.aliases[r] && a.aliases[r].length || Ve(r, s);
     }
-    function Ce(s, r, u) {
+    function Oe(s, r, u) {
       u && (r = It(r)), (b(s, a.bools) || b(s, a.counts)) && typeof r == "string" && (r = r === "true");
       let l = Array.isArray(r) ? r.map(function(o) {
         return be(s, o);
@@ -348,7 +348,7 @@ class Bt {
     function xe(s, r) {
       Object.keys(s).forEach(function(u) {
         const l = s[u], o = r ? r + "." + u : u;
-        typeof l == "object" && l !== null && !Array.isArray(l) && d["dot-notation"] ? xe(l, o) : (!Y(O, o.split(".")) || b(o, a.arrays) && d["combine-arrays"]) && E(o, l);
+        typeof l == "object" && l !== null && !Array.isArray(l) && d["dot-notation"] ? xe(l, o) : (!Y(C, o.split(".")) || b(o, a.arrays) && d["combine-arrays"]) && E(o, l);
       });
     }
     function at() {
@@ -406,8 +406,8 @@ class Bt {
     }
     function H(s, r, u) {
       let l = s;
-      d["dot-notation"] || (r = [r.join(".")]), r.slice(0, -1).forEach(function(C) {
-        C = qe(C), typeof l == "object" && l[C] === void 0 && (l[C] = {}), typeof l[C] != "object" || Array.isArray(l[C]) ? (Array.isArray(l[C]) ? l[C].push({}) : l[C] = [l[C], {}], l = l[C][l[C].length - 1]) : l = l[C];
+      d["dot-notation"] || (r = [r.join(".")]), r.slice(0, -1).forEach(function(O) {
+        O = qe(O), typeof l == "object" && l[O] === void 0 && (l[O] = {}), typeof l[O] != "object" || Array.isArray(l[O]) ? (Array.isArray(l[O]) ? l[O].push({}) : l[O] = [l[O], {}], l = l[O][l[O].length - 1]) : l = l[O];
       });
       const o = qe(r[r.length - 1]), g = b(r.join("."), a.arrays), h = Array.isArray(u);
       let m = d["duplicate-arguments-array"];
@@ -494,7 +494,7 @@ class Bt {
     }
     return {
       aliases: Object.assign({}, a.aliases),
-      argv: Object.assign(Me, O),
+      argv: Object.assign(Me, C),
       configuration: d,
       defaulted: Object.assign({}, ze),
       error: R,
@@ -731,7 +731,7 @@ function Ht(e) {
 function Xt(e, t) {
   let n = Z(".", e), i;
   for (Je(n).isDirectory() || (n = Fe(n)); ; ) {
-    if (i = t(n, Ct(n)), i)
+    if (i = t(n, Ot(n)), i)
       return Z(n, i);
     if (n = Fe(i = n), i === n)
       break;
@@ -859,7 +859,7 @@ try {
   he = process.cwd();
 }
 const sn = he.substring(0, he.lastIndexOf("node_modules"));
-jt, St, Et, sn || process.cwd(), _t, Fe, wt, Ot, Z, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, Ie, tn({
+jt, St, Et, sn || process.cwd(), _t, Fe, wt, Ct, Z, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, Ie, tn({
   directory: Z(he, "../../../locales"),
   updateFiles: !1
 });
@@ -945,10 +945,10 @@ ${N}vue-essential${y} ${j}v-if used with v-for${_} in ${re.length} files.`
   `👉 ${S}Move out the v-if to a computed property.${y} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
 ), re.forEach((e) => {
   console.log(`- ${e.filePath} 🚨`);
-})), re.length), ie = [], On = (e, t) => {
+})), re.length), ie = [], Cn = (e, t) => {
   const n = /<[^>]+ v-for[^>]+>/gi, i = e.content.match(n);
   i?.length && (i.some((f) => f.includes(":key")) || ie.push({ filePath: t }));
-}, Cn = () => (ie.length > 0 && (console.log(
+}, On = () => (ie.length > 0 && (console.log(
   `
 ${N}vue-essential${y} ${j}v-for has no key${_} in ${ie.length} files.`
 ), console.log(
@@ -1129,26 +1129,38 @@ ${N}vue-strong${y} - ${j}Component is not self closing${_} in ${fe.length} files
   console.log(`- ${e.message} 🚨`);
 })), fe.length);
 let it = 0;
-const ct = (e, t) => {
+const qn = [
+  "src",
+  "components",
+  "pages",
+  "layouts",
+  "server",
+  "composables",
+  "store",
+  "utils",
+  "plugins",
+  "middleware"
+], ct = (e, t) => {
   const n = Re.readdirSync(e);
   it += n.length;
   for (const i of n) {
     const c = Te.join(e, i);
-    Re.statSync(c).isDirectory() ? ct(c, t) : i.endsWith(".vue") && t(c);
+    Re.statSync(c).isDirectory() ? qn.some((f) => c.includes(f)) && ct(c, t) : i.endsWith(".vue") && t(c);
   }
-}, qn = (e) => {
+}, Qn = (e) => {
   console.log(`
 
 ${Le}Analyzing Vue files in ${e}${_}`);
   let t = 0;
   ct(e, (n) => {
+    console.log(`Analyzing ${n}`);
     const i = Re.readFileSync(n, "utf-8"), { descriptor: c } = vt(i);
     mn(n), xn(n), c.script && ln(n);
     const f = c.scriptSetup || c.script;
     f && (En(f, n), Nn(f, n), rn(f, n), gn(f, n), fn(f, n)), c.styles.forEach((p) => {
       bn(p, n);
-    }), c.template && (On(c.template, n), _n(c.template, n), Un(c, n), Rn(c.template, n), Vn(c, n));
-  }), console.log(`Found ${Le}${it}${_} Vue files`), t += $n(), t += An(), t += Cn(), t += wn(), t += yn(), t += jn(), t += Dn(), t += vn(), t += Ln(), t += Gn(), t += cn(), t += an(), t += dn(), t += un(), t || console.log(`${on}No code smells detected!${_}`);
+    }), c.template && (Cn(c.template, n), _n(c.template, n), Un(c, n), Rn(c.template, n), Vn(c, n));
+  }), console.log(`Found ${Le}${it}${_} Vue files`), t += $n(), t += An(), t += On(), t += wn(), t += yn(), t += jn(), t += Dn(), t += vn(), t += Ln(), t += Gn(), t += cn(), t += an(), t += dn(), t += un(), t || console.log(`${on}No code smells detected!${_}`);
 };
 yt(Lt(process.argv)).command(
   "analyze [path]",
@@ -1159,6 +1171,6 @@ yt(Lt(process.argv)).command(
     default: "./src"
   }),
   (e) => {
-    qn(e.path);
+    Qn(e.path);
   }
 ).help().argv;

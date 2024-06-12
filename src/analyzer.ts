@@ -19,13 +19,28 @@ import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules
 
 let filesCount = 0
 
+const dirs2Check = [
+  'src',
+  'components',
+  'pages',
+  'layouts',
+  'server',
+  'composables',
+  'store',
+  'utils',
+  'plugins',
+  'middleware',
+]
+
 const walkSync = (dir: string, callback: (arg0: string) => void) => {
   const files = fs.readdirSync(dir)
   filesCount += files.length
   for (const file of files) {
     const filePath = path.join(dir, file)
     if (fs.statSync(filePath).isDirectory()) {
-      walkSync(filePath, callback) // Recursive call for subdirectories
+      if (dirs2Check.some(dir => filePath.includes(dir))) {
+        walkSync(filePath, callback) // Recursive call for subdirectories
+      }
     } else if (file.endsWith('.vue')) {
       callback(filePath)
     }
