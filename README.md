@@ -4,6 +4,8 @@ A static code analysis tool for detecting code smells and best practice violatio
 
 ## Installation
 
+### From npm registry
+
 ```bash
 # using pnpm
 pnpm add vue-mess-detector -D
@@ -13,6 +15,28 @@ yarn add vue-mess-detector -D
 
 # using npm
 npm install vue-mess-detector --save-dev
+
+# using bun
+bun add @rrd/vue-mess-detector --dev
+```
+
+### From JSR registry
+
+```bash
+# using deno
+deno add @rrd/vue-mess-detector
+
+# using pnpm
+pnpm pnpm dlx jsr add @rrd/vue-mess-detector -D
+
+# using yarn
+yarn dlx jsr add @rrd/vue-mess-detector -D
+
+# using npm
+npx jsr add @rrd/vue-mess-detector --save-dev
+
+# using bun
+bunx jsr add @rrd/vue-mess-detector --dev
 ```
 
 ## Usage
