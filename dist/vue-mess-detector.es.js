@@ -1153,6 +1153,8 @@ const qn = [
 ${Le}Analyzing Vue files in ${e}${_}`);
   let t = 0;
   ct(e, (n) => {
+    if (n.includes("App.vue") || n.includes("app.vue"))
+      return;
     const i = Re.readFileSync(n, "utf-8"), { descriptor: c } = vt(i);
     mn(n), xn(n), c.script && ln(n);
     const f = c.scriptSetup || c.script;

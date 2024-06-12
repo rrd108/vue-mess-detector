@@ -54,6 +54,11 @@ export const analyze = (dir: string) => {
   const files: string[] = []
 
   walkSync(dir, filePath => {
+    // skip app.vue and App.vue
+    if (filePath.includes('App.vue') || filePath.includes('app.vue')) {
+      return
+    }
+
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
 
