@@ -10,7 +10,7 @@ yargs(hideBin(process.argv))
       return yargs.positional('path', {
         describe: 'path to the Vue files',
         type: 'string',
-        default: './src',
+        default: './',
       })
     },
     argv => {

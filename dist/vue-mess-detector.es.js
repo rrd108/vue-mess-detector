@@ -1167,7 +1167,7 @@ yt(Lt(process.argv)).command(
   (e) => e.positional("path", {
     describe: "path to the Vue files",
     type: "string",
-    default: "./src"
+    default: "./"
   }),
   (e) => {
     Qn(e.path);
