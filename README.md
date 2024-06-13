@@ -4,6 +4,16 @@ A static code analysis tool for detecting code smells and best practice violatio
 
 ## Installation
 
+### As a vscode extension
+
+Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
+
+```
+ext install WebMania.vue-mess-detector
+```
+
+More info: https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector
+
 ### From npm registry
 
 ```bash
