@@ -41,7 +41,7 @@ bunx jsr add @rrd/vue-mess-detector --dev
 
 ## Usage
 
-If you want to analyze your full `src` directory.
+If you want to analyze your full project directory.
 
 ```bash
 npx vue-mess-detector analyze
