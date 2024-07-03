@@ -128,7 +128,7 @@ See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-sho
 
 ### Script Length (rrd)
 
-Checks if the script section of a Vue component is too long. The default threshold is 100 lines. Between 100 and 200 lines you get a warning, above 200 lines you get an error.
+Checks if the script section of a Vue component is too long. The default threshold is 50 lines. Between 50 and 100 lines you get a warning, above 100 lines you get an error.
 
 ### Plain Script (rrd)
 
