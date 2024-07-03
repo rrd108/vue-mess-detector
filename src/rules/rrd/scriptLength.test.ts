@@ -16,7 +16,7 @@ describe('checkScriptLength', () => {
 
   it('should report long scripts for a long script', () => {
     let content = '<scritp setup>'
-    for (let i = 0; i < 52; i++) {
+    for (let i = 0; i < 102; i++) {
       content += `\nconsole.log("Hello ${i}")`
     }
     content += '\n</script>'
@@ -25,6 +25,6 @@ describe('checkScriptLength', () => {
     checkScriptLength(longScript, fileName)
     expect(reportScriptLength()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- long.vue ${BG_WARN}(54 lines)${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- long.vue ${BG_WARN}(104 lines)${BG_RESET}`)
   })
 })
