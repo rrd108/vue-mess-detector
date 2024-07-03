@@ -863,7 +863,7 @@ vt, Nt, _t, rn || process.cwd(), Ct, Re, Ot, xt, Z, process.cwd, process.exit, p
   directory: Z(he, "../../../locales"),
   updateFiles: !1
 });
-const We = "\x1B[44m", U = "\x1B[43m", j = "\x1B[41m", cn = "\x1B[42m", E = "\x1B[0m", S = "\x1B[33m", v = "\x1B[36m", y = "\x1B[0m", Pe = 50, J = [], ln = (e, t) => {
+const We = "\x1B[44m", U = "\x1B[43m", j = "\x1B[41m", cn = "\x1B[42m", E = "\x1B[0m", S = "\x1B[33m", v = "\x1B[36m", y = "\x1B[0m", Pe = 100, J = [], ln = (e, t) => {
   const n = e.content.split(`
 `);
   n.length > Pe && J.push({ fileName: t, scriptLength: n.length });
