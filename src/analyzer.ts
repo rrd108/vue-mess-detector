@@ -17,6 +17,7 @@ import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from '.
 import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
 import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
+import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
 
 let filesCount = 0
 
@@ -80,6 +81,7 @@ export const analyze = (dir: string) => {
       checkScriptLength(script, filePath)
       checkCyclomaticComplexity(script, filePath)
       checkElseCondition(script, filePath)
+      checkTooManyProps(script, filePath)
     }
 
     descriptor.styles.forEach(style => {
@@ -122,6 +124,7 @@ export const analyze = (dir: string) => {
   errors += reportPlainScript()
   errors += reportCyclomaticComplexity()
   errors += reportElseCondition()
+  errors += reportTooManyProps()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
