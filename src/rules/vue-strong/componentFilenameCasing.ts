@@ -22,7 +22,7 @@ const checkComponentFilenameCasing = (filePath: string) => {
 const reportComponentFilenameCasing = () => {
   if (componentFilenameCasingFiles.length > 0) {
     console.log(
-      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}component name is not PascalCase and not kebab-abse${BG_RESET} in ${componentFilenameCasingFiles.length} files.`
+      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}component name is not PascalCase and not kebab-case${BG_RESET} in ${componentFilenameCasingFiles.length} files.`
     )
     console.log(
       `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`
