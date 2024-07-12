@@ -142,6 +142,6 @@ Checks if the cyclomatic complexity of a component is too high. The default thre
 
 Checks if there are any `else` condition in the `<script>` block. This is a code smell because it can be hard to read and understand.
 
-### Too many props conditions (rrd)
+### Too many props (rrd)
 
 Checks if the component got more then 5 props.
