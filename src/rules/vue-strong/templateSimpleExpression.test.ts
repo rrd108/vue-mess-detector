@@ -22,17 +22,20 @@ describe('checkTemplateSimpleExpression', () => {
   it('should report files where template expression is not simple', () => {
     const script = {
       content: `<template>
-      {{
-        fullName.split(' ').map((word) => {
-            return word[0].toUpperCase() + word.slice(1)
-        }).join(' ')
-      }}
-    </template>`,
+        <div>
+          {{
+            fullName.split(' ').filter((word, idx) => word).map((word) => {
+                return word[0].toUpperCase() + word.slice(1)
+            }).join(' ')
+          }}
+        </div>
+      </template>`,
     } as SFCTemplateBlock
     const fileName = 'not-simple-expression.vue'
+    const lineNumber = 4;
     checkTemplateSimpleExpression(script, fileName)
     expect(reportTemplateSimpleExpression()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} (Line ${lineNumber}) 🚨`)
   })
 })
