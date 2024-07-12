@@ -3,7 +3,7 @@ import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO, BG_WARN } from '../
 import getLineNumber from '../getLineNumber'
 
 const directiveShorthandsTargets: { message: string }[] = []
-const directiveShorthandsFiles: { filrPath: string }[] = []
+const directiveShorthandsFiles: { filePath: string }[] = []
 
 const directivesToCheck = ['v-slot', 'v-bind', 'v-on']
 
@@ -15,8 +15,8 @@ const checkDirectiveShorthands = (descriptor: SFCDescriptor, filePath: string) =
       const lineNumber = getLineNumber(descriptor.source, directive)
       directiveShorthandsTargets.push({ message: `${filePath}:${lineNumber} ${BG_WARN}${directive}${BG_RESET}` })
 
-      if (!directiveShorthandsFiles.some(file => file.filrPath === filePath)) {
-        directiveShorthandsFiles.push({ filrPath: filePath })
+      if (!directiveShorthandsFiles.some(file => file.filePath === filePath)) {
+        directiveShorthandsFiles.push({ filePath: filePath })
       }
     }
   })
