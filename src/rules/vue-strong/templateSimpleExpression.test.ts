@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN } from '../asceeCodes'
 import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './templateSimpleExpression'
 
 const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
@@ -33,6 +33,8 @@ describe('checkTemplateSimpleExpression', () => {
     checkTemplateSimpleExpression(script, fileName)
     expect(reportTemplateSimpleExpression()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(
+      `- ${fileName}#5 ${BG_WARN}fullName.split(' ').map((word) => {${BG_RESET} 🚨`
+    )
   })
 })
