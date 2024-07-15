@@ -3,8 +3,9 @@
 ## NPM
 
 ```
+yarn build
 git status
-yarn publish --new-version minor
+./deploy.sh minor publish
 ```
 
 ## JSR
