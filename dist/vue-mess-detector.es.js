@@ -962,7 +962,7 @@ ${j}vue-essential${y} ${v}v-for has no key${E} in ${ie.length} files.`
   !i?.length && !a?.length && ce.push({ fileName: e });
 }, Nn = () => (ce.length > 0 && (console.log(
   `
-${j}vue-strong${y} ${v}component name is not PascalCase and not kebab-abse${E} in ${ce.length} files.`
+${j}vue-strong${y} ${v}component name is not PascalCase and not kebab-case${E} in ${ce.length} files.`
 ), console.log(
   `👉 ${x}Rename the component to use PascalCase or kebab-case file name.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`
 ), ce.forEach((e) => {
@@ -1132,7 +1132,7 @@ ${j}vue-strong${y} - ${v}Component is not self closing${E} in ${fe.length} files
   Zn.forEach((i) => {
     if (n.content.includes(`${i}:`)) {
       const c = Ue(e.source, i);
-      we.push({ message: `${t}:${c} ${T}${i}${E}` }), ze.some((a) => a.filrPath === t) || ze.push({ filrPath: t });
+      we.push({ message: `${t}:${c} ${T}${i}${E}` }), ze.some((a) => a.filePath === t) || ze.push({ filePath: t });
     }
   });
 }, Xn = () => (we.length > 0 && (console.log(
