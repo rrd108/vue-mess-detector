@@ -14,7 +14,7 @@ const checkFunctionSize = (script: SFCScriptBlock, filePath: string) => {
     const functionName = match[1] || match[5];
     const functionBody = match[2] || match[6];
     
-    // Check if the function block has more than 20 lines
+    // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
     const splittedBody = functionBody.split('\n');
     const lineCount = splittedBody.length;
     if (lineCount > MAX_FUNCTION_LENGTH) {
@@ -28,7 +28,7 @@ const reportFunctionSize = () => {
     console.log(
       `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}function size${BG_RESET} exceeds recommended limit in ${functionSizeFiles.length} files.`
     )
-    console.log(`👉 ${TEXT_WARN}Functions must be shorter than 20 lines${TEXT_RESET}`)
+    console.log(`👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`)
     functionSizeFiles.forEach(file => {
       console.log(`- ${file.filename} 🚨 ${BG_WARN}(${file.funcName})${BG_RESET}`)
     })
