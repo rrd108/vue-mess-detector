@@ -34,7 +34,7 @@ const reportParameterCount = () => {
     )
     console.log(`👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`);
     parameterCountFiles.forEach(file => {
-      console.log(`- ${file.funcName} in file ${file.filename} 🚨 ${BG_WARN}(${file.paramsCount})${BG_RESET}`);
+      console.log(`- ${BG_WARN}${file.funcName}${BG_RESET} in file ${file.filename} 🚨 ${BG_WARN}(${file.paramsCount})${BG_RESET}`);
     })
   }
   
