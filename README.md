@@ -145,3 +145,7 @@ Checks if there are any `else` condition in the `<script>` block. This is a code
 ### Too many props (rrd)
 
 Checks if the component got more then 5 props.
+
+### Parameter Count (rrd)
+
+Checks if functions inside `<script setup>` block have less than 4 parameters. It handles regular and arrow functions.
