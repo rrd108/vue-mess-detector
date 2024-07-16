@@ -7,18 +7,21 @@ const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
 const checkFunctionSize = (script: SFCScriptBlock, filePath: string) => {
   // Regular expression to match function definitions (both regular and arrow functions)
-  const functionRegex = /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g;
+  const regex = /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g;
   let match;
 
-  while ((match = functionRegex.exec(script.content)) !== null) {
-    const functionName = match[1] || match[5];
-    const functionBody = match[2] || match[6];
+  while ((match = regex.exec(script.content)) !== null) {
+    /*
+      We use match[1] and match[2] for regular functions
+      and match[5] and match[6] for arrow functions
+    */
+    const funcName = match[1] || match[5]; 
+    const funcBody = match[2] || match[6];
     
     // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
-    const splittedBody = functionBody.split('\n');
-    const lineCount = splittedBody.length;
+    const lineCount = funcBody.split('\n').length;
     if (lineCount > MAX_FUNCTION_LENGTH) {
-      functionSizeFiles.push({ filename: filePath, funcName: functionName });
+      functionSizeFiles.push({ filename: filePath, funcName });
     }
   }
 }
