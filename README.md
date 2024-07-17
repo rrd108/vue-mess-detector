@@ -146,6 +146,10 @@ Checks if there are any `else` condition in the `<script>` block. This is a code
 
 Checks if the component got more then 5 props.
 
+### Function Size (rrd)
+
+Checks if functions inside `<script setup>` block are less than 20 lines of code. It handles regular and arrow functions.
+
 ### Parameter Count (rrd)
 
 Checks if functions inside `<script setup>` block have less than 4 parameters. It handles regular and arrow functions.

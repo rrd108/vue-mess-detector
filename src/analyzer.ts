@@ -18,6 +18,7 @@ import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './rules
 import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
+import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
 
 let filesCount = 0
@@ -83,6 +84,7 @@ export const analyze = (dir: string) => {
       checkCyclomaticComplexity(script, filePath)
       checkElseCondition(script, filePath)
       checkTooManyProps(script, filePath)
+      checkFunctionSize(script, filePath)
       checkParameterCount(script, filePath)
     }
 
@@ -127,6 +129,7 @@ export const analyze = (dir: string) => {
   errors += reportCyclomaticComplexity()
   errors += reportElseCondition()
   errors += reportTooManyProps()
+  errors += reportFunctionSize()
   errors += reportParameterCount()
 
   if (!errors) {
