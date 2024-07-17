@@ -19,6 +19,7 @@ import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules
 import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
+import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
 
 let filesCount = 0
 
@@ -84,6 +85,7 @@ export const analyze = (dir: string) => {
       checkElseCondition(script, filePath)
       checkTooManyProps(script, filePath)
       checkFunctionSize(script, filePath)
+      checkParameterCount(script, filePath)
     }
 
     descriptor.styles.forEach(style => {
@@ -128,6 +130,7 @@ export const analyze = (dir: string) => {
   errors += reportElseCondition()
   errors += reportTooManyProps()
   errors += reportFunctionSize()
+  errors += reportParameterCount()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
