@@ -38,10 +38,10 @@ const reportShortVariableName = () => {
     const fileCount = getUniqueFilenameCount(shortVariableNameFile);
 
     console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}variable name${BG_RESET} too short in ${fileCount} files.`
+      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}variable names${BG_RESET} are too short in ${fileCount} files.`
     );
     console.log(
-      `👉 ${TEXT_WARN}Variables name must be minimum ${MIN_VARIABLE_NAME} chars${TEXT_RESET}`
+      `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`
     );
     shortVariableNameFile.forEach((file) => {
       console.log(`- ${file.filename} 🚨 ${BG_WARN}(${file.variable})${BG_RESET}`);
