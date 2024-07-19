@@ -153,3 +153,7 @@ Checks if functions inside `<script setup>` block are less than 20 lines of code
 ### Parameter Count (rrd)
 
 Checks if functions inside `<script setup>` block have less than 4 parameters. It handles regular and arrow functions.
+
+### Short Variable Name (rrd)
+
+Checks if variable names inside `<script setup>` block have less than 4 chars.
