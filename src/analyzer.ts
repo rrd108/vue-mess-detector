@@ -20,6 +20,7 @@ import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue
 import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
+import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
 
 let filesCount = 0
 
@@ -86,6 +87,7 @@ export const analyze = (dir: string) => {
       checkTooManyProps(script, filePath)
       checkFunctionSize(script, filePath)
       checkParameterCount(script, filePath)
+      checkShortVariableName(script, filePath)
     }
 
     descriptor.styles.forEach(style => {
@@ -131,6 +133,7 @@ export const analyze = (dir: string) => {
   errors += reportTooManyProps()
   errors += reportFunctionSize()
   errors += reportParameterCount()
+  errors += reportShortVariableName()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
