@@ -18,16 +18,15 @@ const getUniqueFilenameCount = (arr: ShortVariableNameFile[]) => {
 
 const checkShortVariableName = (script: SFCScriptBlock, filePath: string) => {
   // Regular expression to match variable names
-  const regex = /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\b/g;
+  const regex = /\b(?:const|var|let)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
 
-  const matches = script.content.match(regex);
+  let match;
+  while ((match = regex.exec(script.content)) !== null) {
+    const variable = match[1];
 
-  if (matches) {
-    matches.forEach((variable) => {
-      if (variable.length < MIN_VARIABLE_NAME) {
-        shortVariableNameFile.push({ filename: filePath, variable });
-      }
-    });
+    if (variable.length < MIN_VARIABLE_NAME) {
+      shortVariableNameFile.push({ filename: filePath, variable });
+    }
   }
 };
 
