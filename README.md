@@ -2,6 +2,19 @@
 
 A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects.
 
+## Contributors
+
+<div style="display: flex; gap: 10px;">
+  <a href="https://github.com/rrd108" style="display:flex;flex-direction:column;align-items:center;">
+    <img src="https://github.com/rrd108.png" width="100px;" alt="rrd" style="border-radius: 50%; object-fit: cover;"/>
+    rrd
+  </a>
+  <a href="https://github.com/David-Pena" style="display:flex;flex-direction:column;align-items:center;">
+    <img src="https://github.com/David-Pena.png" width="100px;" alt="David-Pena" style="border-radius: 50%; object-fit: cover;"/>
+    David Pena
+  </a>
+</div>
+
 ## Installation
 
 ### As a vscode extension
