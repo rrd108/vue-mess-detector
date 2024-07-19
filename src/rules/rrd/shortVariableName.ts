@@ -6,7 +6,7 @@ type ShortVariableNameFile = {
   variable: string;
 };
 
-const MIN_VARIABLE_NAME = 4;
+const MIN_VARIABLE_NAME = 4; // completely rrd made-up number
 
 const shortVariableNameFile: ShortVariableNameFile[] = [];
 
