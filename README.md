@@ -8,14 +8,14 @@ A static code analysis tool for detecting code smells and best practice violatio
   <tr>
     <td align="center">
       <a href="https://github.com/rrd108">
-        <img src="https://github.com/rrd108.png" width="100px;" alt="rrd" style="border-radius:50%;"/>
+        <img src="https://github.com/rrd108.png" width="100px;" alt="rrd" class="avatar circle"/>
         <br />
         <sub><b>rrd</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/David-Pena">
-        <img src="https://github.com/David-Pena.png" width="100px;" alt="David-Pena" style="border-radius:50%;"/>
+        <img src="https://github.com/David-Pena.png" width="100px;" alt="David-Pena" class="avatar circle"/>
         <br />
         <sub><b>David Pena</b></sub>
       </a>
