@@ -21,6 +21,7 @@ import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
 import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
+import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 
 let filesCount = 0
 
@@ -88,6 +89,7 @@ export const analyze = (dir: string) => {
       checkFunctionSize(script, filePath)
       checkParameterCount(script, filePath)
       checkShortVariableName(script, filePath)
+      checkSimpleComputed(script, filePath)
     }
 
     descriptor.styles.forEach(style => {
@@ -121,6 +123,7 @@ export const analyze = (dir: string) => {
   errors += reportTemplateSimpleExpression()
   errors += reportQuotedAttributeValues()
   errors += reportDirectiveShorthands()
+  errors += reportSimpleComputed()
 
   // vue-reccomended rules
   // vue-caution rules
