@@ -4,16 +4,24 @@ A static code analysis tool for detecting code smells and best practice violatio
 
 ## Contributors
 
-<div style="display: flex; gap: 10px;">
-  <a href="https://github.com/rrd108" style="display:flex;flex-direction:column;align-items:center;">
-    <img src="https://github.com/rrd108.png" width="100px;" alt="rrd" style="border-radius: 50%; object-fit: cover;"/>
-    rrd
-  </a>
-  <a href="https://github.com/David-Pena" style="display:flex;flex-direction:column;align-items:center;">
-    <img src="https://github.com/David-Pena.png" width="100px;" alt="David-Pena" style="border-radius: 50%; object-fit: cover;"/>
-    David Pena
-  </a>
-</div>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/rrd108">
+        <img src="https://github.com/rrd108.png" width="100px;" alt="rrd" style="border-radius:50%;"/>
+        <br />
+        <sub><b>rrd</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/David-Pena">
+        <img src="https://github.com/David-Pena.png" width="100px;" alt="David-Pena" style="border-radius:50%;"/>
+        <br />
+        <sub><b>David Pena</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
