@@ -5,17 +5,24 @@ import getLineNumber from '../getLineNumber'
 const complicatedComputedTargets: { message: string }[] = []
 const complicatedComputedFiles: { filePath: string }[] = []
 
+const MAX_COMPUTED_LENGTH = 5 // completely rrd made-up number
+
 const checkSimpleComputed = (script: SFCScriptBlock, filePath: string) => {
   const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
 
   const matches = script.content.match(regex)
   if (matches?.length) {
-    const lineNumber = getLineNumber(script.content, 'computed')
-    complicatedComputedTargets.push({ message: `${filePath}:${lineNumber} ${BG_WARN}computed${BG_RESET}` })
-    complicatedComputedFiles.push({ filePath })
-    if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
-      complicatedComputedFiles.push({ filePath: filePath })
-    }
+    matches.forEach(match => {
+      if (match.split('\n').length > MAX_COMPUTED_LENGTH) {
+        const firstLine = match.split('\n')[0]
+        const lineNumber = getLineNumber(script.content, firstLine)
+        complicatedComputedTargets.push({ message: `${filePath}:${lineNumber} ${BG_WARN}computed${BG_RESET}` })
+        complicatedComputedFiles.push({ filePath })
+        if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
+          complicatedComputedFiles.push({ filePath: filePath })
+        }
+      }
+    })
   }
 }
 
