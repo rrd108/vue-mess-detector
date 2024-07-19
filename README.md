@@ -139,6 +139,11 @@ See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-sho
 
 > This rule enforces using directive shorthands for better readability. While the official style guide allows using shorthands "**always** or **never**", this rule will flag non-shorthands as code smell.
 
+### Simple computed properties (vue-strong)
+
+Checks if any computed properties are bigger then 5 lines
+See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties
+
 ### Script Length (rrd)
 
 Checks if the script section of a Vue component is too long. The default threshold is 100 lines. Between 100 and 200 lines you get a warning, above 200 lines you get an error.
