@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { checkSimpleComputed, reportSimpleComputed } from './simpleComputed'
+import { BG_RESET, BG_WARN } from '../asceeCodes'
 
 const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
@@ -50,6 +51,6 @@ describe('checkSimpleComputed', () => {
     checkSimpleComputed(script, fileName)
     expect(reportSimpleComputed()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}:2 ${BG_WARN}computed${BG_RESET} 🚨`)
   })
 })
