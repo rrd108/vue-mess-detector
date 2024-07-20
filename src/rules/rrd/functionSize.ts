@@ -1,7 +1,13 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc';
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
+import { getUniqueFilenameCount } from '../../helpers';
 
-const functionSizeFiles: { filename: string, funcName: string }[] = [];
+type FunctionSizeFile = {
+  filename: string;
+  funcName: string
+};
+
+const functionSizeFiles: FunctionSizeFile[] = [];
 
 const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
@@ -28,8 +34,11 @@ const checkFunctionSize = (script: SFCScriptBlock, filePath: string) => {
 
 const reportFunctionSize = () => {
   if (functionSizeFiles.length > 0) {
+    // Count only non duplicated objects (by its `filename` property)
+    const fileCount = getUniqueFilenameCount<FunctionSizeFile>(functionSizeFiles, 'filename');
+
     console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}function size${BG_RESET} exceeds recommended limit in ${functionSizeFiles.length} files.`
+      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}function size${BG_RESET} exceeds recommended limit in ${fileCount} files.`
     )
     console.log(`👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`)
     functionSizeFiles.forEach(file => {
