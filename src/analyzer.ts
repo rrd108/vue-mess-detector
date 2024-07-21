@@ -22,6 +22,7 @@ import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
 import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
 import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
+import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 
 let filesCount = 0
 
@@ -90,6 +91,7 @@ export const analyze = (dir: string) => {
       checkParameterCount(script, filePath)
       checkShortVariableName(script, filePath)
       checkSimpleComputed(script, filePath)
+      checkImplicitParentChildCommunication(script, filePath)
     }
 
     descriptor.styles.forEach(style => {
@@ -126,7 +128,9 @@ export const analyze = (dir: string) => {
   errors += reportSimpleComputed()
 
   // vue-reccomended rules
+
   // vue-caution rules
+  errors += reportImplicitParentChildCommunication()
 
   // rrd rules
   errors += reportScriptLength()
