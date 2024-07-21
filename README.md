@@ -84,6 +84,9 @@ If you want to analyze only your `src/components` directory.
 npx vue-mess-detector analyze ./src/components
 ```
 
+## How to contribute?
+See [CONTRIBUTING.md](https://github.com/David-Pena/vue-mess-detector/blob/contribution-guide/CONTRIBUTING.md) file.
+
 ## Example output
 
 ![Output Image](output.png)
