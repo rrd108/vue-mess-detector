@@ -85,7 +85,8 @@ npx vue-mess-detector analyze ./src/components
 ```
 
 ## How to contribute?
-See [CONTRIBUTING.md](https://github.com/David-Pena/vue-mess-detector/blob/contribution-guide/CONTRIBUTING.md) file.
+
+See [CONTRIBUTING.md](https://github.com/rrd108/vue-mess-detector/blob/main/CONTRIBUTING.md) file.
 
 ## Example output
 
