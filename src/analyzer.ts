@@ -75,6 +75,8 @@ export const analyze = (dir: string, ignore: Array<RuleSetType> = []) => {
 
     files.push(filePath)
 
+    // TODO we should get rid of these if chcks for the ignores
+
     if (!ignore.includes('vue-essential')) {
       checkSingleNameComponent(filePath)
     }
