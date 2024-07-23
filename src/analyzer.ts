@@ -23,7 +23,10 @@ import { checkParameterCount, reportParameterCount } from './rules/rrd/parameter
 import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
 import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { checkComponentFiles, reportComponentFiles } from './rules/vue-strong/componentFiles'
-import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
+import {
+  checkImplicitParentChildCommunication,
+  reportImplicitParentChildCommunication,
+} from './rules/vue-caution/implicitParentChildCommunication'
 import { RuleType } from './rules/rules'
 
 let filesCount = 0
@@ -72,43 +75,62 @@ export const analyze = (dir: string, ignore: Array<RuleType> = []) => {
 
     files.push(filePath)
 
-    checkSingleNameComponent(filePath)
-    checkComponentFilenameCasing(filePath)
+    if (!ignore.includes('vue-essential')) {
+      checkSingleNameComponent(filePath)
+    }
+    if (!ignore.includes('vue-strong')) {
+      checkComponentFilenameCasing(filePath)
+    }
 
-    if (descriptor.script) {
+    if (!ignore.includes('rrd') && descriptor.script) {
       checkPlainScript(filePath)
     }
 
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
-      checkSimpleProp(script, filePath)
+      if (!ignore.includes('vue-essential')) {
+        checkSimpleProp(script, filePath)
+      }
 
-      checkPropNameCasing(script, filePath)
-      checkComponentFiles(script, filePath)
+      if (!ignore.includes('vue-strong')) {
+        checkPropNameCasing(script, filePath)
+        checkComponentFiles(script, filePath)
+        checkSimpleComputed(script, filePath)
+      }
 
-      checkScriptLength(script, filePath)
-      checkCyclomaticComplexity(script, filePath)
-      checkElseCondition(script, filePath)
-      checkTooManyProps(script, filePath)
-      checkFunctionSize(script, filePath)
-      checkParameterCount(script, filePath)
-      checkShortVariableName(script, filePath)
-      checkSimpleComputed(script, filePath)
-      checkImplicitParentChildCommunication(script, filePath)
+      if (!ignore.includes('vue-caution')) {
+        checkImplicitParentChildCommunication(script, filePath)
+      }
+
+      if (!ignore.includes('rrd')) {
+        checkScriptLength(script, filePath)
+        checkCyclomaticComplexity(script, filePath)
+        checkElseCondition(script, filePath)
+        checkTooManyProps(script, filePath)
+        checkFunctionSize(script, filePath)
+        checkParameterCount(script, filePath)
+        checkShortVariableName(script, filePath)
+      }
     }
 
     descriptor.styles.forEach(style => {
-      checkGlobalStyle(style, filePath)
+      if (!ignore.includes('vue-essential')) {
+        checkGlobalStyle(style, filePath)
+      }
     })
 
     if (descriptor.template) {
-      checkVforNoKey(descriptor.template, filePath)
-      checkVifWithVfor(descriptor.template, filePath)
+      if (!ignore.includes('vue-essential')) {
+        checkVforNoKey(descriptor.template, filePath)
+        checkVifWithVfor(descriptor.template, filePath)
+      }
 
-      checkSelfClosingComponents(descriptor, filePath)
-      checkTemplateSimpleExpression(descriptor.template, filePath)
-      checkQuotedAttributeValues(descriptor, filePath)
-      checkDirectiveShorthands(descriptor, filePath)
+      if (!ignore.includes('vue-strong')) {
+        checkSelfClosingComponents(descriptor, filePath)
+        checkTemplateSimpleExpression(descriptor.template, filePath)
+        checkQuotedAttributeValues(descriptor, filePath)
+        checkDirectiveShorthands(descriptor, filePath)
+      }
     }
   })
 
