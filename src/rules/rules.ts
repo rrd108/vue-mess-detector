@@ -1,2 +1,29 @@
-export const RULES = new Set(['vue-essential', 'vue-strong', 'vue-reccomended', 'vue-caution', 'rrd'])
-export type RuleType = typeof RULES extends Set<infer T> ? T : never
+export const RULES = {
+  'vue-caution': ['implicitParentChildCommunication'],
+  'vue-essential': ['globalStyle', 'simpleProp', 'singleNameComponent', 'vforNoKey', 'vifWithVfor'],
+  'vue-reccomended': [],
+  'vue-strong': [
+    'componentFilenameCasing',
+    'componentFiles',
+    'directiveShorthands',
+    'propNameCasing',
+    'quotedAttributeValues',
+    'selfClosingComponents',
+    'simpleComputed',
+    'templateSimpleExpression',
+  ],
+  rrd: [
+    'cyclomaticComplexity',
+    'elseCondition',
+    'functionSize',
+    'parameterCount',
+    'plainScript',
+    'scriptLenght',
+    'shortVariableName',
+    'tooManyProps',
+  ],
+}
+export type RuleType = typeof RULES
+
+export const RULESETS = Object.keys(RULES) as Array<keyof typeof RULES>
+export type RuleSetType = keyof RuleType

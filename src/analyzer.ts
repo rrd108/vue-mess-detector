@@ -2,7 +2,32 @@ import { parse } from '@vue/compiler-sfc'
 import fs from 'fs'
 import path from 'path'
 import { BG_INFO, BG_RESET, BG_OK } from './rules/asceeCodes'
-import * as rules from './rules'
+import { checkScriptLength, reportScriptLength } from './rules/rrd/scriptLength'
+import { checkPlainScript, reportPlainScript } from './rules/rrd/plainScript'
+import { checkElseCondition, reportElseCondition } from './rules/rrd/elseCondition'
+import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './rules/rrd/cyclomaticComplexity'
+import { checkSingleNameComponent, reportSingleNameComponent } from './rules/vue-essential/singleNameComponent'
+import { checkGlobalStyle, reportGlobalStyle } from './rules/vue-essential/globalStyle'
+import { checkSimpleProp, reportSimpleProp } from './rules/vue-essential/simpleProp'
+import { checkVifWithVfor, reportVifWithVfor } from './rules/vue-essential/vifWithVfor'
+import { checkVforNoKey, reportVforNoKey } from './rules/vue-essential/vforNoKey'
+import { checkComponentFilenameCasing, reportComponentFilenameCasing } from './rules/vue-strong/componentFilenameCasing'
+import { checkPropNameCasing, reportPropNameCasing } from './rules/vue-strong/propNameCasing'
+import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './rules/vue-strong/templateSimpleExpression'
+import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
+import { checkSelfClosingComponents, reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
+import { checkDirectiveShorthands, reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
+import { checkTooManyProps, reportTooManyProps } from './rules/rrd/tooManyProps'
+import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
+import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
+import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
+import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
+import { checkComponentFiles, reportComponentFiles } from './rules/vue-strong/componentFiles'
+import {
+  checkImplicitParentChildCommunication,
+  reportImplicitParentChildCommunication,
+} from './rules/vue-caution/implicitParentChildCommunication'
+import { RuleSetType } from './rules/rules'
 
 let filesCount = 0
 
@@ -34,7 +59,7 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
   }
 }
 
-export const analyze = (dir: string, ignore: Array<rules.RuleType> = []) => {
+export const analyze = (dir: string, ignore: Array<RuleSetType> = []) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
 
   let errors = 0
@@ -51,60 +76,60 @@ export const analyze = (dir: string, ignore: Array<rules.RuleType> = []) => {
     files.push(filePath)
 
     if (!ignore.includes('vue-essential')) {
-      rules.checkSingleNameComponent(filePath)
+      checkSingleNameComponent(filePath)
     }
     if (!ignore.includes('vue-strong')) {
-      rules.checkComponentFilenameCasing(filePath)
+      checkComponentFilenameCasing(filePath)
     }
 
     if (!ignore.includes('rrd') && descriptor.script) {
-      rules.checkPlainScript(filePath)
+      checkPlainScript(filePath)
     }
 
     const script = descriptor.scriptSetup || descriptor.script
     if (script) {
       if (!ignore.includes('vue-essential')) {
-        rules.checkSimpleProp(script, filePath)
+        checkSimpleProp(script, filePath)
       }
 
       if (!ignore.includes('vue-strong')) {
-        rules.checkPropNameCasing(script, filePath)
-        rules.checkComponentFiles(script, filePath)
-        rules.checkSimpleComputed(script, filePath)
+        checkPropNameCasing(script, filePath)
+        checkComponentFiles(script, filePath)
+        checkSimpleComputed(script, filePath)
       }
 
       if (!ignore.includes('vue-caution')) {
-        rules.checkImplicitParentChildCommunication(script, filePath)
+        checkImplicitParentChildCommunication(script, filePath)
       }
 
       if (!ignore.includes('rrd')) {
-        rules.checkScriptLength(script, filePath)
-        rules.checkCyclomaticComplexity(script, filePath)
-        rules.checkElseCondition(script, filePath)
-        rules.checkTooManyProps(script, filePath)
-        rules.checkFunctionSize(script, filePath)
-        rules.checkParameterCount(script, filePath)
-        rules.checkShortVariableName(script, filePath)
+        checkScriptLength(script, filePath)
+        checkCyclomaticComplexity(script, filePath)
+        checkElseCondition(script, filePath)
+        checkTooManyProps(script, filePath)
+        checkFunctionSize(script, filePath)
+        checkParameterCount(script, filePath)
+        checkShortVariableName(script, filePath)
       }
     }
 
     descriptor.styles.forEach(style => {
       if (!ignore.includes('vue-essential')) {
-        rules.checkGlobalStyle(style, filePath)
+        checkGlobalStyle(style, filePath)
       }
     })
 
     if (descriptor.template) {
       if (!ignore.includes('vue-essential')) {
-        rules.checkVforNoKey(descriptor.template, filePath)
-        rules.checkVifWithVfor(descriptor.template, filePath)
+        checkVforNoKey(descriptor.template, filePath)
+        checkVifWithVfor(descriptor.template, filePath)
       }
 
       if (!ignore.includes('vue-strong')) {
-        rules.checkSelfClosingComponents(descriptor, filePath)
-        rules.checkTemplateSimpleExpression(descriptor.template, filePath)
-        rules.checkQuotedAttributeValues(descriptor, filePath)
-        rules.checkDirectiveShorthands(descriptor, filePath)
+        checkSelfClosingComponents(descriptor, filePath)
+        checkTemplateSimpleExpression(descriptor.template, filePath)
+        checkQuotedAttributeValues(descriptor, filePath)
+        checkDirectiveShorthands(descriptor, filePath)
       }
     }
   })
@@ -112,36 +137,36 @@ export const analyze = (dir: string, ignore: Array<rules.RuleType> = []) => {
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
 
   // vue-essential rules
-  errors += rules.reportSingleNameComponent()
-  errors += rules.reportSimpleProp()
-  errors += rules.reportVforNoKey()
-  errors += rules.reportVifWithVfor()
-  errors += rules.reportGlobalStyle()
+  errors += reportSingleNameComponent()
+  errors += reportSimpleProp()
+  errors += reportVforNoKey()
+  errors += reportVifWithVfor()
+  errors += reportGlobalStyle()
 
   // vue-strong rules
-  errors += rules.reportComponentFilenameCasing()
-  errors += rules.reportSelfClosingComponents()
-  errors += rules.reportPropNameCasing()
-  errors += rules.reportTemplateSimpleExpression()
-  errors += rules.reportQuotedAttributeValues()
-  errors += rules.reportDirectiveShorthands()
-  errors += rules.reportSimpleComputed()
-  errors += rules.reportComponentFiles()
+  errors += reportComponentFilenameCasing()
+  errors += reportSelfClosingComponents()
+  errors += reportPropNameCasing()
+  errors += reportTemplateSimpleExpression()
+  errors += reportQuotedAttributeValues()
+  errors += reportDirectiveShorthands()
+  errors += reportSimpleComputed()
+  errors += reportComponentFiles()
 
   // vue-reccomended rules
 
   // vue-caution rules
-  errors += rules.reportImplicitParentChildCommunication()
+  errors += reportImplicitParentChildCommunication()
 
   // rrd rules
-  errors += rules.reportScriptLength()
-  errors += rules.reportPlainScript()
-  errors += rules.reportCyclomaticComplexity()
-  errors += rules.reportElseCondition()
-  errors += rules.reportTooManyProps()
-  errors += rules.reportFunctionSize()
-  errors += rules.reportParameterCount()
-  errors += rules.reportShortVariableName()
+  errors += reportScriptLength()
+  errors += reportPlainScript()
+  errors += reportCyclomaticComplexity()
+  errors += reportElseCondition()
+  errors += reportTooManyProps()
+  errors += reportFunctionSize()
+  errors += reportParameterCount()
+  errors += reportShortVariableName()
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)

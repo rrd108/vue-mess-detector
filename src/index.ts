@@ -2,7 +2,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
-import { RULES, RuleType } from './rules/rules'
+import { RULESETS, RuleSetType } from './rules/rules'
 
 yargs(hideBin(process.argv))
   .command(
@@ -20,21 +20,21 @@ yargs(hideBin(process.argv))
           type: 'string',
           coerce: (arg: string) => {
             const values = arg.split(',')
-            const invalidValues = values.filter(value => !RULES.has(value))
+            const invalidValues = values.filter(value => !RULESETS.includes(value as RuleSetType))
             if (invalidValues.length > 0) {
               console.error(
                 `\n${BG_ERR}Invalid ignore values: ${invalidValues.join(
                   ', '
-                )}${BG_RESET}. \n${TEXT_WARN}Allowed values are: ${[...RULES].join(', ')}${TEXT_RESET}\n\n`
+                )}${BG_RESET}. \n${TEXT_WARN}Allowed values are: ${[...RULESETS].join(', ')}${TEXT_RESET}\n\n`
               )
               process.exit(1)
             }
-            return values
+            return values as RuleSetType[]
           },
         })
     },
     argv => {
-      analyze(argv.path as string, argv.ignore as RuleType[])
+      analyze(argv.path as string, argv.ignore)
     }
   )
   .help().argv
