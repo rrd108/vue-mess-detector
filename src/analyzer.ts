@@ -22,6 +22,7 @@ import { checkFunctionSize, reportFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount, reportParameterCount } from './rules/rrd/parameterCount'
 import { checkShortVariableName, reportShortVariableName } from './rules/rrd/shortVariableName'
 import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
+import { checkComponentFiles, reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 
 let filesCount = 0
@@ -82,6 +83,7 @@ export const analyze = (dir: string) => {
       checkSimpleProp(script, filePath)
 
       checkPropNameCasing(script, filePath)
+      checkComponentFiles(script, filePath)
 
       checkScriptLength(script, filePath)
       checkCyclomaticComplexity(script, filePath)
@@ -126,6 +128,7 @@ export const analyze = (dir: string) => {
   errors += reportQuotedAttributeValues()
   errors += reportDirectiveShorthands()
   errors += reportSimpleComputed()
+  errors += reportComponentFiles()
 
   // vue-reccomended rules
 
