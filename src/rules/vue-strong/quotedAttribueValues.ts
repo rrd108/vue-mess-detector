@@ -5,7 +5,10 @@ import getLineNumber from '../getLineNumber'
 
 const unquotedAttributeValuesFiles: { message: string }[] = []
 
-const checkQuotedAttributeValues = (descriptor: SFCDescriptor, filePath: string) => {
+const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: string) => {
+  if (!descriptor) {
+    return
+  }
   const template = descriptor.template! // it is exists otherwise the function is not called at all
 
   const regexTempltaTag = createRegExp(

@@ -3,7 +3,10 @@ import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCode
 
 const vforNoKeyFiles: { filePath: string }[] = []
 
-const checkVforNoKey = (template: SFCTemplateBlock, filePath: string) => {
+const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => {
+  if (!template) {
+    return
+  }
   const regex = /<[^>]+ v-for[^>]+>/gi
   const matches = template.content.match(regex)
 

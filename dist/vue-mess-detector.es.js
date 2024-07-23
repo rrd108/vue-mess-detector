@@ -1,59 +1,59 @@
-import Ft from "yargs";
-import { format as ct, inspect as Rt } from "util";
-import qe, { normalize as Lt, resolve as Q, dirname as Ie, basename as Tt, extname as Wt, relative as zt } from "path";
-import Me, { readFileSync as Qe, statSync as lt, readdirSync as Pt, writeFile as Bt } from "fs";
-import { notStrictEqual as It, strictEqual as Mt } from "assert";
-import { fileURLToPath as Vt } from "url";
-import { parse as Ut } from "@vue/compiler-sfc";
-class de extends Error {
+import Wt from "yargs";
+import { format as ft, inspect as Pt } from "util";
+import Ye, { normalize as zt, resolve as Y, dirname as Ue, basename as It, extname as Bt, relative as Mt } from "path";
+import De, { readFileSync as Xe, statSync as ht, readdirSync as Vt, writeFile as Ut } from "fs";
+import { notStrictEqual as Dt, strictEqual as Gt } from "assert";
+import { fileURLToPath as Zt } from "url";
+import { parse as qt } from "@vue/compiler-sfc";
+class be extends Error {
   constructor(t) {
-    super(t || "yargs error"), this.name = "YError", Error.captureStackTrace && Error.captureStackTrace(this, de);
+    super(t || "yargs error"), this.name = "YError", Error.captureStackTrace && Error.captureStackTrace(this, be);
   }
 }
-function at() {
-  return Dt() ? 0 : 1;
+function pt() {
+  return Kt() ? 0 : 1;
 }
-function Dt() {
-  return Gt() && !process.defaultApp;
+function Kt() {
+  return Qt() && !process.defaultApp;
 }
-function Gt() {
+function Qt() {
   return !!process.versions.electron;
 }
-function Zt(e) {
-  return e.slice(at() + 1);
+function Yt(e) {
+  return e.slice(pt() + 1);
 }
-function qt() {
-  return process.argv[at()];
+function Xt() {
+  return process.argv[pt()];
 }
 /**
  * @license
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-function X(e) {
+function k(e) {
   if (e !== e.toLowerCase() && e !== e.toUpperCase() || (e = e.toLowerCase()), e.indexOf("-") === -1 && e.indexOf("_") === -1)
     return e;
   {
-    let n = "", r = !1;
+    let n = "", s = !1;
     const c = e.match(/^-+/);
     for (let a = c ? c[0].length : 0; a < e.length; a++) {
       let h = e.charAt(a);
-      r && (r = !1, h = h.toUpperCase()), a !== 0 && (h === "-" || h === "_") ? r = !0 : h !== "-" && h !== "_" && (n += h);
+      s && (s = !1, h = h.toUpperCase()), a !== 0 && (h === "-" || h === "_") ? s = !0 : h !== "-" && h !== "_" && (n += h);
     }
     return n;
   }
 }
-function ut(e, t) {
+function gt(e, t) {
   const n = e.toLowerCase();
   t = t || "-";
-  let r = "";
+  let s = "";
   for (let c = 0; c < e.length; c++) {
     const a = n.charAt(c), h = e.charAt(c);
-    a !== h && c > 0 ? r += `${t}${n.charAt(c)}` : r += h;
+    a !== h && c > 0 ? s += `${t}${n.charAt(c)}` : s += h;
   }
-  return r;
+  return s;
 }
-function ft(e) {
+function dt(e) {
   return e == null ? !1 : typeof e == "number" || /^0x[0-9a-f]+$/i.test(e) ? !0 : /^0[^.]/.test(e) ? !1 : /^[-]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(e);
 }
 /**
@@ -61,18 +61,18 @@ function ft(e) {
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-function Qt(e) {
+function Ht(e) {
   if (Array.isArray(e))
     return e.map((h) => typeof h != "string" ? h + "" : h);
   e = e.trim();
-  let t = 0, n = null, r = null, c = null;
+  let t = 0, n = null, s = null, c = null;
   const a = [];
   for (let h = 0; h < e.length; h++) {
-    if (n = r, r = e.charAt(h), r === " " && !c) {
+    if (n = s, s = e.charAt(h), s === " " && !c) {
       n !== " " && t++;
       continue;
     }
-    r === c ? c = null : (r === "'" || r === '"') && !c && (c = r), a[t] || (a[t] = ""), a[t] += r;
+    s === c ? c = null : (s === "'" || s === '"') && !c && (c = s), a[t] || (a[t] = ""), a[t] += s;
   }
   return a;
 }
@@ -90,13 +90,13 @@ var W;
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-let I;
-class Kt {
+let B;
+class kt {
   constructor(t) {
-    I = t;
+    B = t;
   }
   parse(t, n) {
-    const r = Object.assign({
+    const s = Object.assign({
       alias: void 0,
       array: void 0,
       boolean: void 0,
@@ -113,7 +113,7 @@ class Kt {
       number: void 0,
       __: void 0,
       key: void 0
-    }, n), c = Qt(t), a = typeof t == "string", h = Yt(Object.assign(/* @__PURE__ */ Object.create(null), r.alias)), d = Object.assign({
+    }, n), c = Ht(t), a = typeof t == "string", h = Jt(Object.assign(/* @__PURE__ */ Object.create(null), s.alias)), g = Object.assign({
       "boolean-negation": !0,
       "camel-case-expansion": !0,
       "combine-arrays": !1,
@@ -132,7 +132,7 @@ class Kt {
       "strip-aliased": !1,
       "strip-dashed": !1,
       "unknown-options-as-args": !1
-    }, r.configuration), _ = Object.assign(/* @__PURE__ */ Object.create(null), r.default), F = r.configObjects || [], O = r.envPrefix, P = d["populate--"], G = P ? "--" : "_", Ee = /* @__PURE__ */ Object.create(null), Ke = /* @__PURE__ */ Object.create(null), Z = r.__ || I.format, u = {
+    }, s.configuration), A = Object.assign(/* @__PURE__ */ Object.create(null), s.default), j = s.configObjects || [], x = s.envPrefix, z = g["populate--"], Z = z ? "--" : "_", _e = /* @__PURE__ */ Object.create(null), He = /* @__PURE__ */ Object.create(null), q = s.__ || B.format, u = {
       aliases: /* @__PURE__ */ Object.create(null),
       arrays: /* @__PURE__ */ Object.create(null),
       bools: /* @__PURE__ */ Object.create(null),
@@ -144,395 +144,395 @@ class Kt {
       nargs: /* @__PURE__ */ Object.create(null),
       coercions: /* @__PURE__ */ Object.create(null),
       keys: []
-    }, z = /^-([0-9]+(\.[0-9]+)?|\.[0-9]+)$/, Fe = new RegExp("^--" + d["negation-prefix"] + "(.+)");
-    [].concat(r.array || []).filter(Boolean).forEach(function(s) {
-      const i = typeof s == "object" ? s.key : s, f = Object.keys(s).map(function(l) {
+    }, P = /^-([0-9]+(\.[0-9]+)?|\.[0-9]+)$/, Te = new RegExp("^--" + g["negation-prefix"] + "(.+)");
+    [].concat(s.array || []).filter(Boolean).forEach(function(o) {
+      const r = typeof o == "object" ? o.key : o, f = Object.keys(o).map(function(l) {
         return {
           boolean: "bools",
           string: "strings",
           number: "numbers"
         }[l];
       }).filter(Boolean).pop();
-      f && (u[f][i] = !0), u.arrays[i] = !0, u.keys.push(i);
-    }), [].concat(r.boolean || []).filter(Boolean).forEach(function(s) {
-      u.bools[s] = !0, u.keys.push(s);
-    }), [].concat(r.string || []).filter(Boolean).forEach(function(s) {
-      u.strings[s] = !0, u.keys.push(s);
-    }), [].concat(r.number || []).filter(Boolean).forEach(function(s) {
-      u.numbers[s] = !0, u.keys.push(s);
-    }), [].concat(r.count || []).filter(Boolean).forEach(function(s) {
-      u.counts[s] = !0, u.keys.push(s);
-    }), [].concat(r.normalize || []).filter(Boolean).forEach(function(s) {
-      u.normalize[s] = !0, u.keys.push(s);
-    }), typeof r.narg == "object" && Object.entries(r.narg).forEach(([s, i]) => {
-      typeof i == "number" && (u.nargs[s] = i, u.keys.push(s));
-    }), typeof r.coerce == "object" && Object.entries(r.coerce).forEach(([s, i]) => {
-      typeof i == "function" && (u.coercions[s] = i, u.keys.push(s));
-    }), typeof r.config < "u" && (Array.isArray(r.config) || typeof r.config == "string" ? [].concat(r.config).filter(Boolean).forEach(function(s) {
-      u.configs[s] = !0;
-    }) : typeof r.config == "object" && Object.entries(r.config).forEach(([s, i]) => {
-      (typeof i == "boolean" || typeof i == "function") && (u.configs[s] = i);
-    })), wt(r.key, h, r.default, u.arrays), Object.keys(_).forEach(function(s) {
-      (u.aliases[s] || []).forEach(function(i) {
-        _[i] = _[s];
+      f && (u[f][r] = !0), u.arrays[r] = !0, u.keys.push(r);
+    }), [].concat(s.boolean || []).filter(Boolean).forEach(function(o) {
+      u.bools[o] = !0, u.keys.push(o);
+    }), [].concat(s.string || []).filter(Boolean).forEach(function(o) {
+      u.strings[o] = !0, u.keys.push(o);
+    }), [].concat(s.number || []).filter(Boolean).forEach(function(o) {
+      u.numbers[o] = !0, u.keys.push(o);
+    }), [].concat(s.count || []).filter(Boolean).forEach(function(o) {
+      u.counts[o] = !0, u.keys.push(o);
+    }), [].concat(s.normalize || []).filter(Boolean).forEach(function(o) {
+      u.normalize[o] = !0, u.keys.push(o);
+    }), typeof s.narg == "object" && Object.entries(s.narg).forEach(([o, r]) => {
+      typeof r == "number" && (u.nargs[o] = r, u.keys.push(o));
+    }), typeof s.coerce == "object" && Object.entries(s.coerce).forEach(([o, r]) => {
+      typeof r == "function" && (u.coercions[o] = r, u.keys.push(o));
+    }), typeof s.config < "u" && (Array.isArray(s.config) || typeof s.config == "string" ? [].concat(s.config).filter(Boolean).forEach(function(o) {
+      u.configs[o] = !0;
+    }) : typeof s.config == "object" && Object.entries(s.config).forEach(([o, r]) => {
+      (typeof r == "boolean" || typeof r == "function") && (u.configs[o] = r);
+    })), St(s.key, h, s.default, u.arrays), Object.keys(A).forEach(function(o) {
+      (u.aliases[o] || []).forEach(function(r) {
+        A[r] = A[o];
       });
     });
     let L = null;
-    jt();
-    let Ae = [];
-    const x = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), Ye = {};
-    for (let s = 0; s < c.length; s++) {
-      const i = c[s], f = i.replace(/^-{3,}/, "---");
-      let l, o, g, p, m, S;
-      if (i !== "--" && /^-/.test(i) && Oe(i))
-        Re(i);
+    Tt();
+    let ve = [];
+    const O = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), ke = {};
+    for (let o = 0; o < c.length; o++) {
+      const r = c[o], f = r.replace(/^-{3,}/, "---");
+      let l, i, d, p, m, S;
+      if (r !== "--" && /^-/.test(r) && Se(r))
+        We(r);
       else if (f.match(/^---+(=|$)/)) {
-        Re(i);
+        We(r);
         continue;
-      } else if (i.match(/^--.+=/) || !d["short-option-groups"] && i.match(/^-.+=/))
-        p = i.match(/^--?([^=]+)=([\s\S]*)$/), p !== null && Array.isArray(p) && p.length >= 3 && (b(p[1], u.arrays) ? s = Ce(s, p[1], c, p[2]) : b(p[1], u.nargs) !== !1 ? s = _e(s, p[1], c, p[2]) : A(p[1], p[2], !0));
-      else if (i.match(Fe) && d["boolean-negation"])
-        p = i.match(Fe), p !== null && Array.isArray(p) && p.length >= 2 && (o = p[1], A(o, b(o, u.arrays) ? [!1] : !1));
-      else if (i.match(/^--.+/) || !d["short-option-groups"] && i.match(/^-[^-]+/))
-        p = i.match(/^--?(.+)/), p !== null && Array.isArray(p) && p.length >= 2 && (o = p[1], b(o, u.arrays) ? s = Ce(s, o, c) : b(o, u.nargs) !== !1 ? s = _e(s, o, c) : (m = c[s + 1], m !== void 0 && (!m.match(/^-/) || m.match(z)) && !b(o, u.bools) && !b(o, u.counts) || /^(true|false)$/.test(m) ? (A(o, m), s++) : A(o, q(o))));
-      else if (i.match(/^-.\..+=/))
-        p = i.match(/^-([^=]+)=([\s\S]*)$/), p !== null && Array.isArray(p) && p.length >= 3 && A(p[1], p[2]);
-      else if (i.match(/^-.\..+/) && !i.match(z))
-        m = c[s + 1], p = i.match(/^-(.\..+)/), p !== null && Array.isArray(p) && p.length >= 2 && (o = p[1], m !== void 0 && !m.match(/^-/) && !b(o, u.bools) && !b(o, u.counts) ? (A(o, m), s++) : A(o, q(o)));
-      else if (i.match(/^-[^-]+/) && !i.match(z)) {
-        g = i.slice(1, -1).split(""), l = !1;
-        for (let j = 0; j < g.length; j++) {
-          if (m = i.slice(j + 2), g[j + 1] && g[j + 1] === "=") {
-            S = i.slice(j + 3), o = g[j], b(o, u.arrays) ? s = Ce(s, o, c, S) : b(o, u.nargs) !== !1 ? s = _e(s, o, c, S) : A(o, S), l = !0;
+      } else if (r.match(/^--.+=/) || !g["short-option-groups"] && r.match(/^-.+=/))
+        p = r.match(/^--?([^=]+)=([\s\S]*)$/), p !== null && Array.isArray(p) && p.length >= 3 && (y(p[1], u.arrays) ? o = xe(o, p[1], c, p[2]) : y(p[1], u.nargs) !== !1 ? o = we(o, p[1], c, p[2]) : C(p[1], p[2], !0));
+      else if (r.match(Te) && g["boolean-negation"])
+        p = r.match(Te), p !== null && Array.isArray(p) && p.length >= 2 && (i = p[1], C(i, y(i, u.arrays) ? [!1] : !1));
+      else if (r.match(/^--.+/) || !g["short-option-groups"] && r.match(/^-[^-]+/))
+        p = r.match(/^--?(.+)/), p !== null && Array.isArray(p) && p.length >= 2 && (i = p[1], y(i, u.arrays) ? o = xe(o, i, c) : y(i, u.nargs) !== !1 ? o = we(o, i, c) : (m = c[o + 1], m !== void 0 && (!m.match(/^-/) || m.match(P)) && !y(i, u.bools) && !y(i, u.counts) || /^(true|false)$/.test(m) ? (C(i, m), o++) : C(i, K(i))));
+      else if (r.match(/^-.\..+=/))
+        p = r.match(/^-([^=]+)=([\s\S]*)$/), p !== null && Array.isArray(p) && p.length >= 3 && C(p[1], p[2]);
+      else if (r.match(/^-.\..+/) && !r.match(P))
+        m = c[o + 1], p = r.match(/^-(.\..+)/), p !== null && Array.isArray(p) && p.length >= 2 && (i = p[1], m !== void 0 && !m.match(/^-/) && !y(i, u.bools) && !y(i, u.counts) ? (C(i, m), o++) : C(i, K(i)));
+      else if (r.match(/^-[^-]+/) && !r.match(P)) {
+        d = r.slice(1, -1).split(""), l = !1;
+        for (let F = 0; F < d.length; F++) {
+          if (m = r.slice(F + 2), d[F + 1] && d[F + 1] === "=") {
+            S = r.slice(F + 3), i = d[F], y(i, u.arrays) ? o = xe(o, i, c, S) : y(i, u.nargs) !== !1 ? o = we(o, i, c, S) : C(i, S), l = !0;
             break;
           }
           if (m === "-") {
-            A(g[j], m);
+            C(d[F], m);
             continue;
           }
-          if (/[A-Za-z]/.test(g[j]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(m) && b(m, u.bools) === !1) {
-            A(g[j], m), l = !0;
+          if (/[A-Za-z]/.test(d[F]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(m) && y(m, u.bools) === !1) {
+            C(d[F], m), l = !0;
             break;
           }
-          if (g[j + 1] && g[j + 1].match(/\W/)) {
-            A(g[j], m), l = !0;
+          if (d[F + 1] && d[F + 1].match(/\W/)) {
+            C(d[F], m), l = !0;
             break;
           } else
-            A(g[j], q(g[j]));
+            C(d[F], K(d[F]));
         }
-        o = i.slice(-1)[0], !l && o !== "-" && (b(o, u.arrays) ? s = Ce(s, o, c) : b(o, u.nargs) !== !1 ? s = _e(s, o, c) : (m = c[s + 1], m !== void 0 && (!/^(-|--)[^-]/.test(m) || m.match(z)) && !b(o, u.bools) && !b(o, u.counts) || /^(true|false)$/.test(m) ? (A(o, m), s++) : A(o, q(o))));
-      } else if (i.match(/^-[0-9]$/) && i.match(z) && b(i.slice(1), u.bools))
-        o = i.slice(1), A(o, q(o));
-      else if (i === "--") {
-        Ae = c.slice(s + 1);
+        i = r.slice(-1)[0], !l && i !== "-" && (y(i, u.arrays) ? o = xe(o, i, c) : y(i, u.nargs) !== !1 ? o = we(o, i, c) : (m = c[o + 1], m !== void 0 && (!/^(-|--)[^-]/.test(m) || m.match(P)) && !y(i, u.bools) && !y(i, u.counts) || /^(true|false)$/.test(m) ? (C(i, m), o++) : C(i, K(i))));
+      } else if (r.match(/^-[0-9]$/) && r.match(P) && y(r.slice(1), u.bools))
+        i = r.slice(1), C(i, K(i));
+      else if (r === "--") {
+        ve = c.slice(o + 1);
         break;
-      } else if (d["halt-at-non-option"]) {
-        Ae = c.slice(s);
+      } else if (g["halt-at-non-option"]) {
+        ve = c.slice(o);
         break;
       } else
-        Re(i);
+        We(r);
     }
-    He(x, !0), He(x, !1), Et(x), At(), Je(x, u.aliases, _, !0), _t(x), d["set-placeholder-key"] && Ct(x), Object.keys(u.counts).forEach(function(s) {
-      K(x, s.split(".")) || A(s, 0);
-    }), P && Ae.length && (x[G] = []), Ae.forEach(function(s) {
-      x[G].push(s);
-    }), d["camel-case-expansion"] && d["strip-dashed"] && Object.keys(x).filter((s) => s !== "--" && s.includes("-")).forEach((s) => {
-      delete x[s];
-    }), d["strip-aliased"] && [].concat(...Object.keys(h).map((s) => h[s])).forEach((s) => {
-      d["camel-case-expansion"] && s.includes("-") && delete x[s.split(".").map((i) => X(i)).join(".")], delete x[s];
+    et(O, !0), et(O, !1), vt(O), wt(), tt(O, u.aliases, A, !0), xt(O), g["set-placeholder-key"] && Ot(O), Object.keys(u.counts).forEach(function(o) {
+      X(O, o.split(".")) || C(o, 0);
+    }), z && ve.length && (O[Z] = []), ve.forEach(function(o) {
+      O[Z].push(o);
+    }), g["camel-case-expansion"] && g["strip-dashed"] && Object.keys(O).filter((o) => o !== "--" && o.includes("-")).forEach((o) => {
+      delete O[o];
+    }), g["strip-aliased"] && [].concat(...Object.keys(h).map((o) => h[o])).forEach((o) => {
+      g["camel-case-expansion"] && o.includes("-") && delete O[o.split(".").map((r) => k(r)).join(".")], delete O[o];
     });
-    function Re(s) {
-      const i = we("_", s);
-      (typeof i == "string" || typeof i == "number") && x._.push(i);
+    function We(o) {
+      const r = Oe("_", o);
+      (typeof r == "string" || typeof r == "number") && O._.push(r);
     }
-    function _e(s, i, f, l) {
-      let o, g = b(i, u.nargs);
-      if (g = typeof g != "number" || isNaN(g) ? 1 : g, g === 0)
-        return B(l) || (L = Error(Z("Argument unexpected for: %s", i))), A(i, q(i)), s;
-      let p = B(l) ? 0 : 1;
-      if (d["nargs-eats-options"])
-        f.length - (s + 1) + p < g && (L = Error(Z("Not enough arguments following: %s", i))), p = g;
+    function we(o, r, f, l) {
+      let i, d = y(r, u.nargs);
+      if (d = typeof d != "number" || isNaN(d) ? 1 : d, d === 0)
+        return I(l) || (L = Error(q("Argument unexpected for: %s", r))), C(r, K(r)), o;
+      let p = I(l) ? 0 : 1;
+      if (g["nargs-eats-options"])
+        f.length - (o + 1) + p < d && (L = Error(q("Not enough arguments following: %s", r))), p = d;
       else {
-        for (o = s + 1; o < f.length && (!f[o].match(/^-[^0-9]/) || f[o].match(z) || Oe(f[o])); o++)
+        for (i = o + 1; i < f.length && (!f[i].match(/^-[^0-9]/) || f[i].match(P) || Se(f[i])); i++)
           p++;
-        p < g && (L = Error(Z("Not enough arguments following: %s", i)));
+        p < d && (L = Error(q("Not enough arguments following: %s", r)));
       }
-      let m = Math.min(p, g);
-      for (!B(l) && m > 0 && (A(i, l), m--), o = s + 1; o < m + s + 1; o++)
-        A(i, f[o]);
-      return s + m;
+      let m = Math.min(p, d);
+      for (!I(l) && m > 0 && (C(r, l), m--), i = o + 1; i < m + o + 1; i++)
+        C(r, f[i]);
+      return o + m;
     }
-    function Ce(s, i, f, l) {
-      let o = [], g = l || f[s + 1];
-      const p = b(i, u.nargs);
-      if (b(i, u.bools) && !/^(true|false)$/.test(g))
-        o.push(!0);
-      else if (B(g) || B(l) && /^-/.test(g) && !z.test(g) && !Oe(g)) {
-        if (_[i] !== void 0) {
-          const m = _[i];
-          o = Array.isArray(m) ? m : [m];
+    function xe(o, r, f, l) {
+      let i = [], d = l || f[o + 1];
+      const p = y(r, u.nargs);
+      if (y(r, u.bools) && !/^(true|false)$/.test(d))
+        i.push(!0);
+      else if (I(d) || I(l) && /^-/.test(d) && !P.test(d) && !Se(d)) {
+        if (A[r] !== void 0) {
+          const m = A[r];
+          i = Array.isArray(m) ? m : [m];
         }
       } else {
-        B(l) || o.push(Le(i, l, !0));
-        for (let m = s + 1; m < f.length && !(!d["greedy-arrays"] && o.length > 0 || p && typeof p == "number" && o.length >= p || (g = f[m], /^-/.test(g) && !z.test(g) && !Oe(g))); m++)
-          s = m, o.push(Le(i, g, a));
+        I(l) || i.push(Pe(r, l, !0));
+        for (let m = o + 1; m < f.length && !(!g["greedy-arrays"] && i.length > 0 || p && typeof p == "number" && i.length >= p || (d = f[m], /^-/.test(d) && !P.test(d) && !Se(d))); m++)
+          o = m, i.push(Pe(r, d, a));
       }
-      return typeof p == "number" && (p && o.length < p || isNaN(p) && o.length === 0) && (L = Error(Z("Not enough arguments following: %s", i))), A(i, o), s;
+      return typeof p == "number" && (p && i.length < p || isNaN(p) && i.length === 0) && (L = Error(q("Not enough arguments following: %s", r))), C(r, i), o;
     }
-    function A(s, i, f = a) {
-      if (/-/.test(s) && d["camel-case-expansion"]) {
-        const g = s.split(".").map(function(p) {
-          return X(p);
+    function C(o, r, f = a) {
+      if (/-/.test(o) && g["camel-case-expansion"]) {
+        const d = o.split(".").map(function(p) {
+          return k(p);
         }).join(".");
-        Xe(s, g);
+        Je(o, d);
       }
-      const l = Le(s, i, f), o = s.split(".");
-      Y(x, o, l), u.aliases[s] && u.aliases[s].forEach(function(g) {
-        const p = g.split(".");
-        Y(x, p, l);
-      }), o.length > 1 && d["dot-notation"] && (u.aliases[o[0]] || []).forEach(function(g) {
-        let p = g.split(".");
-        const m = [].concat(o);
-        m.shift(), p = p.concat(m), (u.aliases[s] || []).includes(p.join(".")) || Y(x, p, l);
-      }), b(s, u.normalize) && !b(s, u.arrays) && [s].concat(u.aliases[s] || []).forEach(function(p) {
-        Object.defineProperty(Ye, p, {
+      const l = Pe(o, r, f), i = o.split(".");
+      H(O, i, l), u.aliases[o] && u.aliases[o].forEach(function(d) {
+        const p = d.split(".");
+        H(O, p, l);
+      }), i.length > 1 && g["dot-notation"] && (u.aliases[i[0]] || []).forEach(function(d) {
+        let p = d.split(".");
+        const m = [].concat(i);
+        m.shift(), p = p.concat(m), (u.aliases[o] || []).includes(p.join(".")) || H(O, p, l);
+      }), y(o, u.normalize) && !y(o, u.arrays) && [o].concat(u.aliases[o] || []).forEach(function(p) {
+        Object.defineProperty(ke, p, {
           enumerable: !0,
           get() {
-            return i;
+            return r;
           },
           set(m) {
-            i = typeof m == "string" ? I.normalize(m) : m;
+            r = typeof m == "string" ? B.normalize(m) : m;
           }
         });
       });
     }
-    function Xe(s, i) {
-      u.aliases[s] && u.aliases[s].length || (u.aliases[s] = [i], Ee[i] = !0), u.aliases[i] && u.aliases[i].length || Xe(i, s);
+    function Je(o, r) {
+      u.aliases[o] && u.aliases[o].length || (u.aliases[o] = [r], _e[r] = !0), u.aliases[r] && u.aliases[r].length || Je(r, o);
     }
-    function Le(s, i, f) {
-      f && (i = Xt(i)), (b(s, u.bools) || b(s, u.counts)) && typeof i == "string" && (i = i === "true");
-      let l = Array.isArray(i) ? i.map(function(o) {
-        return we(s, o);
-      }) : we(s, i);
-      return b(s, u.counts) && (B(l) || typeof l == "boolean") && (l = We()), b(s, u.normalize) && b(s, u.arrays) && (Array.isArray(i) ? l = i.map((o) => I.normalize(o)) : l = I.normalize(i)), l;
+    function Pe(o, r, f) {
+      f && (r = en(r)), (y(o, u.bools) || y(o, u.counts)) && typeof r == "string" && (r = r === "true");
+      let l = Array.isArray(r) ? r.map(function(i) {
+        return Oe(o, i);
+      }) : Oe(o, r);
+      return y(o, u.counts) && (I(l) || typeof l == "boolean") && (l = Ie()), y(o, u.normalize) && y(o, u.arrays) && (Array.isArray(r) ? l = r.map((i) => B.normalize(i)) : l = B.normalize(r)), l;
     }
-    function we(s, i) {
-      return !d["parse-positional-numbers"] && s === "_" || !b(s, u.strings) && !b(s, u.bools) && !Array.isArray(i) && (ft(i) && d["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${i}`))) || !B(i) && b(s, u.numbers)) && (i = Number(i)), i;
+    function Oe(o, r) {
+      return !g["parse-positional-numbers"] && o === "_" || !y(o, u.strings) && !y(o, u.bools) && !Array.isArray(r) && (dt(r) && g["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${r}`))) || !I(r) && y(o, u.numbers)) && (r = Number(r)), r;
     }
-    function Et(s) {
-      const i = /* @__PURE__ */ Object.create(null);
-      Je(i, u.aliases, _), Object.keys(u.configs).forEach(function(f) {
-        const l = s[f] || i[f];
+    function vt(o) {
+      const r = /* @__PURE__ */ Object.create(null);
+      tt(r, u.aliases, A), Object.keys(u.configs).forEach(function(f) {
+        const l = o[f] || r[f];
         if (l)
           try {
-            let o = null;
-            const g = I.resolve(I.cwd(), l), p = u.configs[f];
+            let i = null;
+            const d = B.resolve(B.cwd(), l), p = u.configs[f];
             if (typeof p == "function") {
               try {
-                o = p(g);
+                i = p(d);
               } catch (m) {
-                o = m;
+                i = m;
               }
-              if (o instanceof Error) {
-                L = o;
+              if (i instanceof Error) {
+                L = i;
                 return;
               }
             } else
-              o = I.require(g);
-            Te(o);
-          } catch (o) {
-            o.name === "PermissionDenied" ? L = o : s[f] && (L = Error(Z("Invalid JSON config file: %s", l)));
+              i = B.require(d);
+            ze(i);
+          } catch (i) {
+            i.name === "PermissionDenied" ? L = i : o[f] && (L = Error(q("Invalid JSON config file: %s", l)));
           }
       });
     }
-    function Te(s, i) {
-      Object.keys(s).forEach(function(f) {
-        const l = s[f], o = i ? i + "." + f : f;
-        typeof l == "object" && l !== null && !Array.isArray(l) && d["dot-notation"] ? Te(l, o) : (!K(x, o.split(".")) || b(o, u.arrays) && d["combine-arrays"]) && A(o, l);
+    function ze(o, r) {
+      Object.keys(o).forEach(function(f) {
+        const l = o[f], i = r ? r + "." + f : f;
+        typeof l == "object" && l !== null && !Array.isArray(l) && g["dot-notation"] ? ze(l, i) : (!X(O, i.split(".")) || y(i, u.arrays) && g["combine-arrays"]) && C(i, l);
       });
     }
-    function At() {
-      typeof F < "u" && F.forEach(function(s) {
-        Te(s);
+    function wt() {
+      typeof j < "u" && j.forEach(function(o) {
+        ze(o);
       });
     }
-    function He(s, i) {
-      if (typeof O > "u")
+    function et(o, r) {
+      if (typeof x > "u")
         return;
-      const f = typeof O == "string" ? O : "", l = I.env();
-      Object.keys(l).forEach(function(o) {
-        if (f === "" || o.lastIndexOf(f, 0) === 0) {
-          const g = o.split("__").map(function(p, m) {
-            return m === 0 && (p = p.substring(f.length)), X(p);
+      const f = typeof x == "string" ? x : "", l = B.env();
+      Object.keys(l).forEach(function(i) {
+        if (f === "" || i.lastIndexOf(f, 0) === 0) {
+          const d = i.split("__").map(function(p, m) {
+            return m === 0 && (p = p.substring(f.length)), k(p);
           });
-          (i && u.configs[g.join(".")] || !i) && !K(s, g) && A(g.join("."), l[o]);
+          (r && u.configs[d.join(".")] || !r) && !X(o, d) && C(d.join("."), l[i]);
         }
       });
     }
-    function _t(s) {
-      let i;
+    function xt(o) {
+      let r;
       const f = /* @__PURE__ */ new Set();
-      Object.keys(s).forEach(function(l) {
-        if (!f.has(l) && (i = b(l, u.coercions), typeof i == "function"))
+      Object.keys(o).forEach(function(l) {
+        if (!f.has(l) && (r = y(l, u.coercions), typeof r == "function"))
           try {
-            const o = we(l, i(s[l]));
-            [].concat(u.aliases[l] || [], l).forEach((g) => {
-              f.add(g), s[g] = o;
+            const i = Oe(l, r(o[l]));
+            [].concat(u.aliases[l] || [], l).forEach((d) => {
+              f.add(d), o[d] = i;
             });
-          } catch (o) {
-            L = o;
+          } catch (i) {
+            L = i;
           }
       });
     }
-    function Ct(s) {
-      return u.keys.forEach((i) => {
-        ~i.indexOf(".") || typeof s[i] > "u" && (s[i] = void 0);
-      }), s;
+    function Ot(o) {
+      return u.keys.forEach((r) => {
+        ~r.indexOf(".") || typeof o[r] > "u" && (o[r] = void 0);
+      }), o;
     }
-    function Je(s, i, f, l = !1) {
-      Object.keys(f).forEach(function(o) {
-        K(s, o.split(".")) || (Y(s, o.split("."), f[o]), l && (Ke[o] = !0), (i[o] || []).forEach(function(g) {
-          K(s, g.split(".")) || Y(s, g.split("."), f[o]);
+    function tt(o, r, f, l = !1) {
+      Object.keys(f).forEach(function(i) {
+        X(o, i.split(".")) || (H(o, i.split("."), f[i]), l && (He[i] = !0), (r[i] || []).forEach(function(d) {
+          X(o, d.split(".")) || H(o, d.split("."), f[i]);
         }));
       });
     }
-    function K(s, i) {
-      let f = s;
-      d["dot-notation"] || (i = [i.join(".")]), i.slice(0, -1).forEach(function(o) {
-        f = f[o] || {};
+    function X(o, r) {
+      let f = o;
+      g["dot-notation"] || (r = [r.join(".")]), r.slice(0, -1).forEach(function(i) {
+        f = f[i] || {};
       });
-      const l = i[i.length - 1];
+      const l = r[r.length - 1];
       return typeof f != "object" ? !1 : l in f;
     }
-    function Y(s, i, f) {
-      let l = s;
-      d["dot-notation"] || (i = [i.join(".")]), i.slice(0, -1).forEach(function(S) {
-        S = et(S), typeof l == "object" && l[S] === void 0 && (l[S] = {}), typeof l[S] != "object" || Array.isArray(l[S]) ? (Array.isArray(l[S]) ? l[S].push({}) : l[S] = [l[S], {}], l = l[S][l[S].length - 1]) : l = l[S];
+    function H(o, r, f) {
+      let l = o;
+      g["dot-notation"] || (r = [r.join(".")]), r.slice(0, -1).forEach(function(S) {
+        S = ot(S), typeof l == "object" && l[S] === void 0 && (l[S] = {}), typeof l[S] != "object" || Array.isArray(l[S]) ? (Array.isArray(l[S]) ? l[S].push({}) : l[S] = [l[S], {}], l = l[S][l[S].length - 1]) : l = l[S];
       });
-      const o = et(i[i.length - 1]), g = b(i.join("."), u.arrays), p = Array.isArray(f);
-      let m = d["duplicate-arguments-array"];
-      !m && b(o, u.nargs) && (m = !0, (!B(l[o]) && u.nargs[o] === 1 || Array.isArray(l[o]) && l[o].length === u.nargs[o]) && (l[o] = void 0)), f === We() ? l[o] = We(l[o]) : Array.isArray(l[o]) ? m && g && p ? l[o] = d["flatten-duplicate-arrays"] ? l[o].concat(f) : (Array.isArray(l[o][0]) ? l[o] : [l[o]]).concat([f]) : !m && !!g == !!p ? l[o] = f : l[o] = l[o].concat([f]) : l[o] === void 0 && g ? l[o] = p ? f : [f] : m && !(l[o] === void 0 || b(o, u.counts) || b(o, u.bools)) ? l[o] = [l[o], f] : l[o] = f;
+      const i = ot(r[r.length - 1]), d = y(r.join("."), u.arrays), p = Array.isArray(f);
+      let m = g["duplicate-arguments-array"];
+      !m && y(i, u.nargs) && (m = !0, (!I(l[i]) && u.nargs[i] === 1 || Array.isArray(l[i]) && l[i].length === u.nargs[i]) && (l[i] = void 0)), f === Ie() ? l[i] = Ie(l[i]) : Array.isArray(l[i]) ? m && d && p ? l[i] = g["flatten-duplicate-arrays"] ? l[i].concat(f) : (Array.isArray(l[i][0]) ? l[i] : [l[i]]).concat([f]) : !m && !!d == !!p ? l[i] = f : l[i] = l[i].concat([f]) : l[i] === void 0 && d ? l[i] = p ? f : [f] : m && !(l[i] === void 0 || y(i, u.counts) || y(i, u.bools)) ? l[i] = [l[i], f] : l[i] = f;
     }
-    function wt(...s) {
-      s.forEach(function(i) {
-        Object.keys(i || {}).forEach(function(f) {
+    function St(...o) {
+      o.forEach(function(r) {
+        Object.keys(r || {}).forEach(function(f) {
           u.aliases[f] || (u.aliases[f] = [].concat(h[f] || []), u.aliases[f].concat(f).forEach(function(l) {
-            if (/-/.test(l) && d["camel-case-expansion"]) {
-              const o = X(l);
-              o !== f && u.aliases[f].indexOf(o) === -1 && (u.aliases[f].push(o), Ee[o] = !0);
+            if (/-/.test(l) && g["camel-case-expansion"]) {
+              const i = k(l);
+              i !== f && u.aliases[f].indexOf(i) === -1 && (u.aliases[f].push(i), _e[i] = !0);
             }
           }), u.aliases[f].concat(f).forEach(function(l) {
-            if (l.length > 1 && /[A-Z]/.test(l) && d["camel-case-expansion"]) {
-              const o = ut(l, "-");
-              o !== f && u.aliases[f].indexOf(o) === -1 && (u.aliases[f].push(o), Ee[o] = !0);
+            if (l.length > 1 && /[A-Z]/.test(l) && g["camel-case-expansion"]) {
+              const i = gt(l, "-");
+              i !== f && u.aliases[f].indexOf(i) === -1 && (u.aliases[f].push(i), _e[i] = !0);
             }
           }), u.aliases[f].forEach(function(l) {
-            u.aliases[l] = [f].concat(u.aliases[f].filter(function(o) {
-              return l !== o;
+            u.aliases[l] = [f].concat(u.aliases[f].filter(function(i) {
+              return l !== i;
             }));
           }));
         });
       });
     }
-    function b(s, i) {
-      const f = [].concat(u.aliases[s] || [], s), l = Object.keys(i), o = f.find((g) => l.includes(g));
-      return o ? i[o] : !1;
+    function y(o, r) {
+      const f = [].concat(u.aliases[o] || [], o), l = Object.keys(r), i = f.find((d) => l.includes(d));
+      return i ? r[i] : !1;
     }
-    function ke(s) {
-      const i = Object.keys(u);
-      return [].concat(i.map((l) => u[l])).some(function(l) {
-        return Array.isArray(l) ? l.includes(s) : l[s];
+    function nt(o) {
+      const r = Object.keys(u);
+      return [].concat(r.map((l) => u[l])).some(function(l) {
+        return Array.isArray(l) ? l.includes(o) : l[o];
       });
     }
-    function Ot(s, ...i) {
-      return [].concat(...i).some(function(l) {
-        const o = s.match(l);
-        return o && ke(o[1]);
+    function Nt(o, ...r) {
+      return [].concat(...r).some(function(l) {
+        const i = o.match(l);
+        return i && nt(i[1]);
       });
     }
-    function xt(s) {
-      if (s.match(z) || !s.match(/^-[^-]+/))
+    function jt(o) {
+      if (o.match(P) || !o.match(/^-[^-]+/))
         return !1;
-      let i = !0, f;
-      const l = s.slice(1).split("");
-      for (let o = 0; o < l.length; o++) {
-        if (f = s.slice(o + 2), !ke(l[o])) {
-          i = !1;
+      let r = !0, f;
+      const l = o.slice(1).split("");
+      for (let i = 0; i < l.length; i++) {
+        if (f = o.slice(i + 2), !nt(l[i])) {
+          r = !1;
           break;
         }
-        if (l[o + 1] && l[o + 1] === "=" || f === "-" || /[A-Za-z]/.test(l[o]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(f) || l[o + 1] && l[o + 1].match(/\W/))
+        if (l[i + 1] && l[i + 1] === "=" || f === "-" || /[A-Za-z]/.test(l[i]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(f) || l[i + 1] && l[i + 1].match(/\W/))
           break;
       }
-      return i;
+      return r;
     }
-    function Oe(s) {
-      return d["unknown-options-as-args"] && Nt(s);
+    function Se(o) {
+      return g["unknown-options-as-args"] && Ft(o);
     }
-    function Nt(s) {
-      return s = s.replace(/^-{3,}/, "--"), s.match(z) || xt(s) ? !1 : !Ot(s, /^-+([^=]+?)=[\s\S]*$/, Fe, /^-+([^=]+?)$/, /^-+([^=]+?)-$/, /^-+([^=]+?\d+)$/, /^-+([^=]+?)\W+.*$/);
+    function Ft(o) {
+      return o = o.replace(/^-{3,}/, "--"), o.match(P) || jt(o) ? !1 : !Nt(o, /^-+([^=]+?)=[\s\S]*$/, Te, /^-+([^=]+?)$/, /^-+([^=]+?)-$/, /^-+([^=]+?\d+)$/, /^-+([^=]+?)\W+.*$/);
     }
-    function q(s) {
-      return !b(s, u.bools) && !b(s, u.counts) && `${s}` in _ ? _[s] : St(vt(s));
+    function K(o) {
+      return !y(o, u.bools) && !y(o, u.counts) && `${o}` in A ? A[o] : Rt(Lt(o));
     }
-    function St(s) {
+    function Rt(o) {
       return {
         [W.BOOLEAN]: !0,
         [W.STRING]: "",
         [W.NUMBER]: void 0,
         [W.ARRAY]: []
-      }[s];
+      }[o];
     }
-    function vt(s) {
-      let i = W.BOOLEAN;
-      return b(s, u.strings) ? i = W.STRING : b(s, u.numbers) ? i = W.NUMBER : b(s, u.bools) ? i = W.BOOLEAN : b(s, u.arrays) && (i = W.ARRAY), i;
+    function Lt(o) {
+      let r = W.BOOLEAN;
+      return y(o, u.strings) ? r = W.STRING : y(o, u.numbers) ? r = W.NUMBER : y(o, u.bools) ? r = W.BOOLEAN : y(o, u.arrays) && (r = W.ARRAY), r;
     }
-    function B(s) {
-      return s === void 0;
+    function I(o) {
+      return o === void 0;
     }
-    function jt() {
-      Object.keys(u.counts).find((s) => b(s, u.arrays) ? (L = Error(Z("Invalid configuration: %s, opts.count excludes opts.array.", s)), !0) : b(s, u.nargs) ? (L = Error(Z("Invalid configuration: %s, opts.count excludes opts.narg.", s)), !0) : !1);
+    function Tt() {
+      Object.keys(u.counts).find((o) => y(o, u.arrays) ? (L = Error(q("Invalid configuration: %s, opts.count excludes opts.array.", o)), !0) : y(o, u.nargs) ? (L = Error(q("Invalid configuration: %s, opts.count excludes opts.narg.", o)), !0) : !1);
     }
     return {
       aliases: Object.assign({}, u.aliases),
-      argv: Object.assign(Ye, x),
-      configuration: d,
-      defaulted: Object.assign({}, Ke),
+      argv: Object.assign(ke, O),
+      configuration: g,
+      defaulted: Object.assign({}, He),
       error: L,
-      newAliases: Object.assign({}, Ee)
+      newAliases: Object.assign({}, _e)
     };
   }
 }
-function Yt(e) {
+function Jt(e) {
   const t = [], n = /* @__PURE__ */ Object.create(null);
-  let r = !0;
+  let s = !0;
   for (Object.keys(e).forEach(function(c) {
     t.push([].concat(e[c], c));
-  }); r; ) {
-    r = !1;
+  }); s; ) {
+    s = !1;
     for (let c = 0; c < t.length; c++)
       for (let a = c + 1; a < t.length; a++)
-        if (t[c].filter(function(d) {
-          return t[a].indexOf(d) !== -1;
+        if (t[c].filter(function(g) {
+          return t[a].indexOf(g) !== -1;
         }).length) {
-          t[c] = t[c].concat(t[a]), t.splice(a, 1), r = !0;
+          t[c] = t[c].concat(t[a]), t.splice(a, 1), s = !0;
           break;
         }
   }
   return t.forEach(function(c) {
-    c = c.filter(function(h, d, _) {
-      return _.indexOf(h) === d;
+    c = c.filter(function(h, g, A) {
+      return A.indexOf(h) === g;
     });
     const a = c.pop();
     a !== void 0 && typeof a == "string" && (n[a] = c);
   }), n;
 }
-function We(e) {
+function Ie(e) {
   return e !== void 0 ? e + 1 : 1;
 }
-function et(e) {
+function ot(e) {
   return e === "__proto__" ? "___proto___" : e;
 }
-function Xt(e) {
+function en(e) {
   return typeof e == "string" && (e[0] === "'" || e[0] === '"') && e[e.length - 1] === e[0] ? e.substring(1, e.length - 1) : e;
 }
 /**
@@ -543,39 +543,39 @@ function Xt(e) {
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-var ze, Pe, Be;
-const tt = process && process.env && process.env.YARGS_MIN_NODE_VERSION ? Number(process.env.YARGS_MIN_NODE_VERSION) : 12, nt = (Pe = (ze = process == null ? void 0 : process.versions) === null || ze === void 0 ? void 0 : ze.node) !== null && Pe !== void 0 ? Pe : (Be = process == null ? void 0 : process.version) === null || Be === void 0 ? void 0 : Be.slice(1);
-if (nt && Number(nt.match(/^([^.]+)/)[1]) < tt)
-  throw Error(`yargs parser supports a minimum Node.js version of ${tt}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
-const Ht = process ? process.env : {}, ht = new Kt({
+var Be, Me, Ve;
+const st = process && process.env && process.env.YARGS_MIN_NODE_VERSION ? Number(process.env.YARGS_MIN_NODE_VERSION) : 12, it = (Me = (Be = process == null ? void 0 : process.versions) === null || Be === void 0 ? void 0 : Be.node) !== null && Me !== void 0 ? Me : (Ve = process == null ? void 0 : process.version) === null || Ve === void 0 ? void 0 : Ve.slice(1);
+if (it && Number(it.match(/^([^.]+)/)[1]) < st)
+  throw Error(`yargs parser supports a minimum Node.js version of ${st}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
+const tn = process ? process.env : {}, mt = new kt({
   cwd: process.cwd,
-  env: () => Ht,
-  format: ct,
-  normalize: Lt,
-  resolve: Q,
+  env: () => tn,
+  format: ft,
+  normalize: zt,
+  resolve: Y,
   // TODO: figure  out a  way to combine ESM and CJS coverage, such  that
   // we can exercise all the lines below:
   require: (e) => {
     if (typeof require < "u")
       return require(e);
     if (e.match(/\.json$/))
-      return JSON.parse(Qe(e, "utf8"));
+      return JSON.parse(Xe(e, "utf8"));
     throw Error("only .json config files are supported in ESM");
   }
-}), be = function(t, n) {
-  return ht.parse(t.slice(), n).argv;
+}), Ae = function(t, n) {
+  return mt.parse(t.slice(), n).argv;
 };
-be.detailed = function(e, t) {
-  return ht.parse(e.slice(), t);
+Ae.detailed = function(e, t) {
+  return mt.parse(e.slice(), t);
 };
-be.camelCase = X;
-be.decamelize = ut;
-be.looksLikeNumber = ft;
-const Jt = {
-  right: on,
-  center: rn
-}, kt = 0, xe = 1, en = 2, Ne = 3;
-class tn {
+Ae.camelCase = k;
+Ae.decamelize = gt;
+Ae.looksLikeNumber = dt;
+const nn = {
+  right: an,
+  center: un
+}, on = 0, Ne = 1, sn = 2, je = 3;
+class rn {
   constructor(t) {
     var n;
     this.width = t.width, this.wrap = (n = t.wrap) !== null && n !== void 0 ? n : !0, this.rows = [];
@@ -590,7 +590,7 @@ class tn {
   div(...t) {
     if (t.length === 0 && this.div(""), this.wrap && this.shouldApplyLayoutDSL(...t) && typeof t[0] == "string")
       return this.applyLayoutDSL(t[0]);
-    const n = t.map((r) => typeof r == "string" ? this.colFromString(r) : r);
+    const n = t.map((s) => typeof s == "string" ? this.colFromString(s) : s);
     return this.rows.push(n), n;
   }
   shouldApplyLayoutDSL(...t) {
@@ -599,14 +599,14 @@ class tn {
   applyLayoutDSL(t) {
     const n = t.split(`
 `).map((c) => c.split("	"));
-    let r = 0;
+    let s = 0;
     return n.forEach((c) => {
-      c.length > 1 && R.stringWidth(c[0]) > r && (r = Math.min(Math.floor(this.width * 0.5), R.stringWidth(c[0])));
+      c.length > 1 && R.stringWidth(c[0]) > s && (s = Math.min(Math.floor(this.width * 0.5), R.stringWidth(c[0])));
     }), n.forEach((c) => {
       this.div(...c.map((a, h) => ({
         text: a.trim(),
         padding: this.measurePadding(a),
-        width: h === 0 && c.length > 1 ? r : void 0
+        width: h === 0 && c.length > 1 ? s : void 0
       })));
     }), this.rows[this.rows.length - 1];
   }
@@ -628,17 +628,17 @@ class tn {
 `);
   }
   rowToString(t, n) {
-    return this.rasterize(t).forEach((r, c) => {
+    return this.rasterize(t).forEach((s, c) => {
       let a = "";
-      r.forEach((h, d) => {
-        const { width: _ } = t[d], F = this.negatePadding(t[d]);
-        let O = h;
-        if (F > R.stringWidth(h) && (O += " ".repeat(F - R.stringWidth(h))), t[d].align && t[d].align !== "left" && this.wrap) {
-          const G = Jt[t[d].align];
-          O = G(O, F), R.stringWidth(O) < F && (O += " ".repeat((_ || 0) - R.stringWidth(O) - 1));
+      s.forEach((h, g) => {
+        const { width: A } = t[g], j = this.negatePadding(t[g]);
+        let x = h;
+        if (j > R.stringWidth(h) && (x += " ".repeat(j - R.stringWidth(h))), t[g].align && t[g].align !== "left" && this.wrap) {
+          const Z = nn[t[g].align];
+          x = Z(x, j), R.stringWidth(x) < j && (x += " ".repeat((A || 0) - R.stringWidth(x) - 1));
         }
-        const P = t[d].padding || [0, 0, 0, 0];
-        P[Ne] && (a += " ".repeat(P[Ne])), a += st(t[d], O, "| "), a += O, a += st(t[d], O, " |"), P[xe] && (a += " ".repeat(P[xe])), c === 0 && n.length > 0 && (a = this.renderInline(a, n[n.length - 1]));
+        const z = t[g].padding || [0, 0, 0, 0];
+        z[je] && (a += " ".repeat(z[je])), a += rt(t[g], x, "| "), a += x, a += rt(t[g], x, " |"), z[Ne] && (a += " ".repeat(z[Ne])), c === 0 && n.length > 0 && (a = this.renderInline(a, n[n.length - 1]));
       }), n.push({
         text: a.replace(/ +$/, ""),
         span: t.span
@@ -648,112 +648,112 @@ class tn {
   // if the full 'source' can render in
   // the target line, do so.
   renderInline(t, n) {
-    const r = t.match(/^ */), c = r ? r[0].length : 0, a = n.text, h = R.stringWidth(a.trimRight());
+    const s = t.match(/^ */), c = s ? s[0].length : 0, a = n.text, h = R.stringWidth(a.trimRight());
     return n.span ? this.wrap ? c < h ? t : (n.hidden = !0, a.trimRight() + " ".repeat(c - h) + t.trimLeft()) : (n.hidden = !0, a + t) : t;
   }
   rasterize(t) {
-    const n = [], r = this.columnWidths(t);
+    const n = [], s = this.columnWidths(t);
     let c;
     return t.forEach((a, h) => {
-      a.width = r[h], this.wrap ? c = R.wrap(a.text, this.negatePadding(a), { hard: !0 }).split(`
+      a.width = s[h], this.wrap ? c = R.wrap(a.text, this.negatePadding(a), { hard: !0 }).split(`
 `) : c = a.text.split(`
-`), a.border && (c.unshift("." + "-".repeat(this.negatePadding(a) + 2) + "."), c.push("'" + "-".repeat(this.negatePadding(a) + 2) + "'")), a.padding && (c.unshift(...new Array(a.padding[kt] || 0).fill("")), c.push(...new Array(a.padding[en] || 0).fill(""))), c.forEach((d, _) => {
-        n[_] || n.push([]);
-        const F = n[_];
-        for (let O = 0; O < h; O++)
-          F[O] === void 0 && F.push("");
-        F.push(d);
+`), a.border && (c.unshift("." + "-".repeat(this.negatePadding(a) + 2) + "."), c.push("'" + "-".repeat(this.negatePadding(a) + 2) + "'")), a.padding && (c.unshift(...new Array(a.padding[on] || 0).fill("")), c.push(...new Array(a.padding[sn] || 0).fill(""))), c.forEach((g, A) => {
+        n[A] || n.push([]);
+        const j = n[A];
+        for (let x = 0; x < h; x++)
+          j[x] === void 0 && j.push("");
+        j.push(g);
       });
     }), n;
   }
   negatePadding(t) {
     let n = t.width || 0;
-    return t.padding && (n -= (t.padding[Ne] || 0) + (t.padding[xe] || 0)), t.border && (n -= 4), n;
+    return t.padding && (n -= (t.padding[je] || 0) + (t.padding[Ne] || 0)), t.border && (n -= 4), n;
   }
   columnWidths(t) {
     if (!this.wrap)
       return t.map((h) => h.width || R.stringWidth(h.text));
-    let n = t.length, r = this.width;
+    let n = t.length, s = this.width;
     const c = t.map((h) => {
       if (h.width)
-        return n--, r -= h.width, h.width;
-    }), a = n ? Math.floor(r / n) : 0;
-    return c.map((h, d) => h === void 0 ? Math.max(a, nn(t[d])) : h);
+        return n--, s -= h.width, h.width;
+    }), a = n ? Math.floor(s / n) : 0;
+    return c.map((h, g) => h === void 0 ? Math.max(a, cn(t[g])) : h);
   }
 }
-function st(e, t, n) {
+function rt(e, t, n) {
   return e.border ? /[.']-+[.']/.test(t) ? "" : t.trim().length !== 0 ? n : "  " : "";
 }
-function nn(e) {
-  const t = e.padding || [], n = 1 + (t[Ne] || 0) + (t[xe] || 0);
+function cn(e) {
+  const t = e.padding || [], n = 1 + (t[je] || 0) + (t[Ne] || 0);
   return e.border ? n + 4 : n;
 }
-function sn() {
+function ln() {
   return typeof process == "object" && process.stdout && process.stdout.columns ? process.stdout.columns : 80;
 }
-function on(e, t) {
+function an(e, t) {
   e = e.trim();
   const n = R.stringWidth(e);
   return n < t ? " ".repeat(t - n) + e : e;
 }
-function rn(e, t) {
+function un(e, t) {
   e = e.trim();
   const n = R.stringWidth(e);
   return n >= t ? e : " ".repeat(t - n >> 1) + e;
 }
 let R;
-function cn(e, t) {
-  return R = t, new tn({
-    width: e?.width || sn(),
+function fn(e, t) {
+  return R = t, new rn({
+    width: e?.width || ln(),
     wrap: e?.wrap
   });
 }
-const pt = new RegExp("\x1B(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|\\d+;\\d+;\\d+m|6n|s|u|\\?25[lh])|\\w)", "g");
-function gt(e) {
-  return e.replace(pt, "");
+const $t = new RegExp("\x1B(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|\\d+;\\d+;\\d+m|6n|s|u|\\?25[lh])|\\w)", "g");
+function bt(e) {
+  return e.replace($t, "");
 }
-function ln(e, t) {
-  const [n, r] = e.match(pt) || ["", ""];
-  e = gt(e);
+function hn(e, t) {
+  const [n, s] = e.match($t) || ["", ""];
+  e = bt(e);
   let c = "";
   for (let a = 0; a < e.length; a++)
     a !== 0 && a % t === 0 && (c += `
 `), c += e.charAt(a);
-  return n && r && (c = `${n}${c}${r}`), c;
+  return n && s && (c = `${n}${c}${s}`), c;
 }
-function an(e) {
-  return cn(e, {
+function pn(e) {
+  return fn(e, {
     stringWidth: (t) => [...t].length,
-    stripAnsi: gt,
-    wrap: ln
+    stripAnsi: bt,
+    wrap: hn
   });
 }
-function un(e, t) {
-  let n = Q(".", e), r;
-  for (lt(n).isDirectory() || (n = Ie(n)); ; ) {
-    if (r = t(n, Pt(n)), r)
-      return Q(n, r);
-    if (n = Ie(r = n), r === n)
+function gn(e, t) {
+  let n = Y(".", e), s;
+  for (ht(n).isDirectory() || (n = Ue(n)); ; ) {
+    if (s = t(n, Vt(n)), s)
+      return Y(n, s);
+    if (n = Ue(s = n), s === n)
       break;
   }
 }
-const fn = {
+const dn = {
   fs: {
-    readFileSync: Qe,
-    writeFile: Bt
+    readFileSync: Xe,
+    writeFile: Ut
   },
-  format: ct,
-  resolve: Q,
+  format: ft,
+  resolve: Y,
   exists: (e) => {
     try {
-      return lt(e).isFile();
+      return ht(e).isFile();
     } catch {
       return !1;
     }
   }
 };
 let T;
-class hn {
+class mn {
   constructor(t) {
     t = t || {}, this.directory = t.directory || "./locales", this.updateFiles = typeof t.updateFiles == "boolean" ? t.updateFiles : !0, this.locale = t.locale || "en", this.fallbackToLanguage = typeof t.fallbackToLanguage == "boolean" ? t.fallbackToLanguage : !0, this.cache = /* @__PURE__ */ Object.create(null), this.writeQueue = [];
   }
@@ -761,31 +761,31 @@ class hn {
     if (typeof arguments[0] != "string")
       return this._taggedLiteral(arguments[0], ...arguments);
     const n = t.shift();
-    let r = function() {
+    let s = function() {
     };
-    return typeof t[t.length - 1] == "function" && (r = t.pop()), r = r || function() {
+    return typeof t[t.length - 1] == "function" && (s = t.pop()), s = s || function() {
     }, this.cache[this.locale] || this._readLocaleFile(), !this.cache[this.locale][n] && this.updateFiles ? (this.cache[this.locale][n] = n, this._enqueueWrite({
       directory: this.directory,
       locale: this.locale,
-      cb: r
-    })) : r(), T.format.apply(T.format, [this.cache[this.locale][n] || n].concat(t));
+      cb: s
+    })) : s(), T.format.apply(T.format, [this.cache[this.locale][n] || n].concat(t));
   }
   __n() {
-    const t = Array.prototype.slice.call(arguments), n = t.shift(), r = t.shift(), c = t.shift();
+    const t = Array.prototype.slice.call(arguments), n = t.shift(), s = t.shift(), c = t.shift();
     let a = function() {
     };
     typeof t[t.length - 1] == "function" && (a = t.pop()), this.cache[this.locale] || this._readLocaleFile();
-    let h = c === 1 ? n : r;
+    let h = c === 1 ? n : s;
     this.cache[this.locale][n] && (h = this.cache[this.locale][n][c === 1 ? "one" : "other"]), !this.cache[this.locale][n] && this.updateFiles ? (this.cache[this.locale][n] = {
       one: n,
-      other: r
+      other: s
     }, this._enqueueWrite({
       directory: this.directory,
       locale: this.locale,
       cb: a
     })) : a();
-    const d = [h];
-    return ~h.indexOf("%d") && d.push(c), T.format.apply(T.format, d.concat(t));
+    const g = [h];
+    return ~h.indexOf("%d") && g.push(c), T.format.apply(T.format, g.concat(t));
   }
   setLocale(t) {
     this.locale = t;
@@ -799,19 +799,19 @@ class hn {
       Object.prototype.hasOwnProperty.call(t, n) && (this.cache[this.locale][n] = t[n]);
   }
   _taggedLiteral(t, ...n) {
-    let r = "";
+    let s = "";
     return t.forEach(function(c, a) {
       const h = n[a + 1];
-      r += c, typeof h < "u" && (r += "%s");
-    }), this.__.apply(this, [r].concat([].slice.call(n, 1)));
+      s += c, typeof h < "u" && (s += "%s");
+    }), this.__.apply(this, [s].concat([].slice.call(n, 1)));
   }
   _enqueueWrite(t) {
     this.writeQueue.push(t), this.writeQueue.length === 1 && this._processWriteQueue();
   }
   _processWriteQueue() {
-    const t = this, n = this.writeQueue[0], r = n.directory, c = n.locale, a = n.cb, h = this._resolveLocaleFile(r, c), d = JSON.stringify(this.cache[c], null, 2);
-    T.fs.writeFile(h, d, "utf-8", function(_) {
-      t.writeQueue.shift(), t.writeQueue.length > 0 && t._processWriteQueue(), a(_);
+    const t = this, n = this.writeQueue[0], s = n.directory, c = n.locale, a = n.cb, h = this._resolveLocaleFile(s, c), g = JSON.stringify(this.cache[c], null, 2);
+    T.fs.writeFile(h, g, "utf-8", function(A) {
+      t.writeQueue.shift(), t.writeQueue.length > 0 && t._processWriteQueue(), a(A);
     });
   }
   _readLocaleFile() {
@@ -819,29 +819,29 @@ class hn {
     const n = this._resolveLocaleFile(this.directory, this.locale);
     try {
       T.fs.readFileSync && (t = JSON.parse(T.fs.readFileSync(n, "utf-8")));
-    } catch (r) {
-      if (r instanceof SyntaxError && (r.message = "syntax error in " + n), r.code === "ENOENT")
+    } catch (s) {
+      if (s instanceof SyntaxError && (s.message = "syntax error in " + n), s.code === "ENOENT")
         t = {};
       else
-        throw r;
+        throw s;
     }
     this.cache[this.locale] = t;
   }
   _resolveLocaleFile(t, n) {
-    let r = T.resolve(t, "./", n + ".json");
-    if (this.fallbackToLanguage && !this._fileExistsSync(r) && ~n.lastIndexOf("_")) {
+    let s = T.resolve(t, "./", n + ".json");
+    if (this.fallbackToLanguage && !this._fileExistsSync(s) && ~n.lastIndexOf("_")) {
       const c = T.resolve(t, "./", n.split("_")[0] + ".json");
-      this._fileExistsSync(c) && (r = c);
+      this._fileExistsSync(c) && (s = c);
     }
-    return r;
+    return s;
   }
   _fileExistsSync(t) {
     return T.exists(t);
   }
 }
-function pn(e, t) {
+function $n(e, t) {
   T = t;
-  const n = new hn(e);
+  const n = new mn(e);
   return {
     __: n.__.bind(n),
     __n: n.__n.bind(n),
@@ -851,167 +851,198 @@ function pn(e, t) {
     locale: n.locale
   };
 }
-const gn = (e) => pn(e, fn), dn = "require is not supported by ESM", ot = "loading a directory of commands is not supported yet for ESM";
-let $e;
+const bn = (e) => $n(e, dn), yn = "require is not supported by ESM", ct = "loading a directory of commands is not supported yet for ESM";
+let Ee;
 try {
-  $e = Vt(import.meta.url);
+  Ee = Zt(import.meta.url);
 } catch {
-  $e = process.cwd();
+  Ee = process.cwd();
 }
-const mn = $e.substring(0, $e.lastIndexOf("node_modules"));
-It, Mt, Rt, mn || process.cwd(), Tt, Ie, Wt, zt, Q, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, Qe, gn({
-  directory: Q($e, "../../../locales"),
+const En = Ee.substring(0, Ee.lastIndexOf("node_modules"));
+Dt, Gt, Pt, En || process.cwd(), It, Ue, Bt, Mt, Y, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, Xe, bn({
+  directory: Y(Ee, "../../../locales"),
   updateFiles: !1
 });
-const Ve = "\x1B[44m", N = "\x1B[43m", v = "\x1B[41m", $n = "\x1B[42m", E = "\x1B[0m", C = "\x1B[33m", w = "\x1B[36m", y = "\x1B[0m", Ue = 100, H = [], bn = (e, t) => {
+const Ge = "\x1B[44m", _ = "\x1B[43m", N = "\x1B[41m", An = "\x1B[42m", E = "\x1B[0m", v = "\x1B[33m", w = "\x1B[36m", b = "\x1B[0m", Ze = 100, J = [], Cn = (e, t) => {
+  if (!e)
+    return;
   const n = e.content.split(`
 `);
-  n.length > Ue && H.push({ fileName: t, scriptLength: n.length });
-}, yn = () => (H.length > 0 && (console.log(
+  n.length > Ze && J.push({ fileName: t, scriptLength: n.length });
+}, _n = () => (J.length > 0 && (console.log(
   `
-${w}rrd${y} ${v}Long <script> blocks${E} in ${H.length} files.`
+${w}rrd${b} ${N}Long <script> blocks${E} in ${J.length} files.`
 ), console.log(
-  `👉 ${C}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Ue} lines.${y}`
-), H.forEach((e) => {
+  `👉 ${v}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Ze} lines.${b}`
+), J.forEach((e) => {
   console.log(
-    `- ${e.fileName} ${e.scriptLength > Ue * 2 ? v : N}(${e.scriptLength} lines)${E}`
+    `- ${e.fileName} ${e.scriptLength > Ze * 2 ? N : _}(${e.scriptLength} lines)${E}`
   );
-})), H.length), J = [], En = (e) => {
-  J.push(e);
-}, An = () => (J.length > 0 && (console.log(
+})), J.length), ee = [], vn = (e, t) => {
+  !e || !e.setup || ee.push(t);
+}, wn = () => (ee.length > 0 && (console.log(
   `
-${w}rrd${y} ${N}Plain <script> blocks${E} in ${J.length} files.`
-), console.log(`👉 ${C} Consider using <script setup> to leverage the new SFC <script> syntax.${y}`), J.forEach((e) => {
+${w}rrd${b} ${_}Plain <script> blocks${E} in ${ee.length} files.`
+), console.log(`👉 ${v} Consider using <script setup> to leverage the new SFC <script> syntax.${b}`), ee.forEach((e) => {
   console.log(`- ${e}`);
-})), J.length), k = [], _n = (e, t) => {
-  const n = /\belse\b/gi, r = e.content.match(n);
-  r?.length && k.push({ fileName: t, elseCount: r.length });
-}, Cn = () => (k.length > 0 && (console.log(
+})), ee.length), te = [], xn = (e, t) => {
+  if (!e)
+    return;
+  const n = /\belse\b/gi, s = e.content.match(n);
+  s?.length && te.push({ fileName: t, elseCount: s.length });
+}, On = () => (te.length > 0 && (console.log(
   `
-${w}rrd${y} ${N}else conditions${E} are used in ${k.length} files.`
-), console.log(`👉 ${C}Try to rewrite the conditions in a way that the else clause is not necessary.${y}`), k.forEach((e) => {
-  console.log(`- ${e.fileName} ${N}(${e.elseCount})${E}`);
-})), k.length), wn = 5, On = 10, ee = [], xn = (e, t) => {
-  const n = /\bif\b/gi, r = /\belse\b/gi, c = /\bfor\b/gi, a = /\bwhile\b/gi, h = /\bcase\b/gi, d = e.content.match(n), _ = e.content.match(r), F = e.content.match(c), O = e.content.match(a), P = e.content.match(h), G = (d?.length || 0) + (_?.length || 0) + (F?.length || 0) + (O?.length || 0) + (P?.length || 0);
-  G > wn && ee.push({ fileName: t, cyclomaticComplexity: G });
-}, Nn = () => (ee.length > 0 && (console.log(
+${w}rrd${b} ${_}else conditions${E} are used in ${te.length} files.`
+), console.log(`👉 ${v}Try to rewrite the conditions in a way that the else clause is not necessary.${b}`), te.forEach((e) => {
+  console.log(`- ${e.fileName} ${_}(${e.elseCount})${E}`);
+})), te.length), Sn = 5, Nn = 10, ne = [], jn = (e, t) => {
+  if (!e)
+    return;
+  const n = /\bif\b/gi, s = /\belse\b/gi, c = /\bfor\b/gi, a = /\bwhile\b/gi, h = /\bcase\b/gi, g = e.content.match(n), A = e.content.match(s), j = e.content.match(c), x = e.content.match(a), z = e.content.match(h), Z = (g?.length || 0) + (A?.length || 0) + (j?.length || 0) + (x?.length || 0) + (z?.length || 0);
+  Z > Sn && ne.push({ fileName: t, cyclomaticComplexity: Z });
+}, Fn = () => (ne.length > 0 && (console.log(
   `
-${w}rrd${y} ${Ve}cyclomaticComplexity${E} is above moderate in ${ee.length} files.`
-), console.log(`👉 ${C}Try to reduce complexity.${y}`), ee.forEach((e) => {
+${w}rrd${b} ${Ge}cyclomaticComplexity${E} is above moderate in ${ne.length} files.`
+), console.log(`👉 ${v}Try to reduce complexity.${b}`), ne.forEach((e) => {
   console.log(
-    `- ${e.fileName} ${e.cyclomaticComplexity > On ? v : N}(${e.cyclomaticComplexity})${E}`
+    `- ${e.fileName} ${e.cyclomaticComplexity > Nn ? N : _}(${e.cyclomaticComplexity})${E}`
   );
-})), ee.length), te = [], Sn = (e) => {
+})), ne.length), oe = [], Rn = (e) => {
   if (e.includes("pages"))
     return;
-  const t = qe.basename(e);
+  const t = Ye.basename(e);
   if (t === "App.vue")
     return;
   const n = /[A-Z]/;
-  t.slice(1).match(n)?.length || te.push({ filePath: e });
-}, vn = () => (te.length > 0 && (console.log(
+  t.slice(1).match(n)?.length || oe.push({ filePath: e });
+}, Ln = () => (oe.length > 0 && (console.log(
   `
-${w}vue-essential${y} ${v}single name component${E} is used in ${te.length} files.`
+${w}vue-essential${b} ${N}single name component${E} is used in ${oe.length} files.`
 ), console.log(
-  `👉 ${C}Rename the component to use multi-word name.${y} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`
-), te.forEach((e) => {
-  console.log(`- ${e.filePath} 🚨`);
-})), te.length), ne = [], jn = (e, t) => {
-  e.scoped || ne.push({ filePath: t });
-}, Fn = () => (ne.length > 0 && (console.log(
-  `
-${w}vue-essential${y} ${v}Global style ${E} is used in ${ne.length} files.`
-), console.log(
-  `👉 ${C}Use <style scoped>.${y} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
-), ne.forEach((e) => {
-  console.log(`- ${e.filePath} 🚨`);
-})), ne.length), se = [], Rn = (e, t) => {
-  const n = /defineProps\(\[/gi;
-  e.content.match(n)?.length && se.push({ filePath: t });
-}, Ln = () => (se.length > 0 && (console.log(
-  `
-${w}vue-essential${y} ${v}simple prop${E} is used in ${se.length} files.`
-), console.log(
-  `👉 ${C}Add at least type definition.${y} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
-), se.forEach((e) => {
-  console.log(`- ${e.filePath} 🚨`);
-})), se.length), oe = [], Tn = (e, t) => {
-  const n = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi, r = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi, c = e.content.match(n), a = e.content.match(r);
-  (c?.length || a?.length) && oe.push({ filePath: t });
-}, Wn = () => (oe.length > 0 && (console.log(
-  `
-${w}vue-essential${y} ${v}v-if used with v-for${E} in ${oe.length} files.`
-), console.log(
-  `👉 ${C}Move out the v-if to a computed property.${y} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
+  `👉 ${v}Rename the component to use multi-word name.${b} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`
 ), oe.forEach((e) => {
   console.log(`- ${e.filePath} 🚨`);
-})), oe.length), re = [], zn = (e, t) => {
-  const n = /<[^>]+ v-for[^>]+>/gi, r = e.content.match(n);
-  r?.length && (r.some((a) => a.includes(":key")) || re.push({ filePath: t }));
-}, Pn = () => (re.length > 0 && (console.log(
+})), oe.length), se = [], Tn = (e, t) => {
+  e.forEach((n) => {
+    n.scoped || se.push({ filePath: t });
+  });
+}, Wn = () => (se.length > 0 && (console.log(
   `
-${w}vue-essential${y} ${v}v-for has no key${E} in ${re.length} files.`
+${w}vue-essential${b} ${N}Global style ${E} is used in ${se.length} files.`
 ), console.log(
-  `👉 ${C}Add a \`:key\` property to all v-for.${y} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
+  `👉 ${v}Use <style scoped>.${b} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`
+), se.forEach((e) => {
+  console.log(`- ${e.filePath} 🚨`);
+})), se.length), ie = [], Pn = (e, t) => {
+  if (!e)
+    return;
+  const n = /defineProps\(\[/gi;
+  e.content.match(n)?.length && ie.push({ filePath: t });
+}, zn = () => (ie.length > 0 && (console.log(
+  `
+${w}vue-essential${b} ${N}simple prop${E} is used in ${ie.length} files.`
+), console.log(
+  `👉 ${v}Add at least type definition.${b} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`
+), ie.forEach((e) => {
+  console.log(`- ${e.filePath} 🚨`);
+})), ie.length), re = [], In = (e, t) => {
+  if (!e)
+    return;
+  const n = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi, s = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi, c = e.content.match(n), a = e.content.match(s);
+  (c?.length || a?.length) && re.push({ filePath: t });
+}, Bn = () => (re.length > 0 && (console.log(
+  `
+${w}vue-essential${b} ${N}v-if used with v-for${E} in ${re.length} files.`
+), console.log(
+  `👉 ${v}Move out the v-if to a computed property.${b} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`
 ), re.forEach((e) => {
   console.log(`- ${e.filePath} 🚨`);
-})), re.length), ie = [], Bn = (e) => {
-  if (e.includes("pages/") || e.includes("layouts/"))
+})), re.length), ce = [], Mn = (e, t) => {
+  if (!e)
     return;
-  const t = qe.basename(e), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, r = t.match(n), c = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, a = t.match(c);
-  !r?.length && !a?.length && ie.push({ fileName: e });
-}, In = () => (ie.length > 0 && (console.log(
+  const n = /<[^>]+ v-for[^>]+>/gi, s = e.content.match(n);
+  s?.length && (s.some((a) => a.includes(":key")) || ce.push({ filePath: t }));
+}, Vn = () => (ce.length > 0 && (console.log(
   `
-${w}vue-strong${y} ${v}component name is not PascalCase and not kebab-case${E} in ${ie.length} files.`
+${w}vue-essential${b} ${N}v-for has no key${E} in ${ce.length} files.`
 ), console.log(
-  `👉 ${C}Rename the component to use PascalCase or kebab-case file name.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`
-), ie.forEach((e) => {
-  console.log(`- ${v}${e.fileName}${E}`);
-})), ie.length), ce = [], Mn = /^[a-z]+([A-Z][a-z]*)+$/, Vn = (e, t) => {
-  const n = /defineProps\({([^}]+)/g;
-  let r;
-  for (; (r = n.exec(e.content)) !== null; )
-    r[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((a) => a.split(":")[0]).filter((a) => a.length).filter((a) => !Mn.test(a)).length && ce.push({ filePath: t });
-}, Un = () => (ce.length > 0 && (console.log(
-  `
-${w}vue-strong${y} ${v}prop names are not camelCased${E} in ${ce.length} files.`
-), console.log(
-  `👉 ${C}Rename the props to camelCase.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`
+  `👉 ${v}Add a \`:key\` property to all v-for.${b} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
 ), ce.forEach((e) => {
   console.log(`- ${e.filePath} 🚨`);
-})), ce.length), ye = (e, t) => {
+})), ce.length), le = [], Un = (e) => {
+  if (e.includes("pages/") || e.includes("layouts/"))
+    return;
+  const t = Ye.basename(e), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = t.match(n), c = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, a = t.match(c);
+  !s?.length && !a?.length && le.push({ fileName: e });
+}, Dn = () => (le.length > 0 && (console.log(
+  `
+${w}vue-strong${b} ${N}component name is not PascalCase and not kebab-case${E} in ${le.length} files.`
+), console.log(
+  `👉 ${v}Rename the component to use PascalCase or kebab-case file name.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`
+), le.forEach((e) => {
+  console.log(`- ${N}${e.fileName}${E}`);
+})), le.length), ae = [], Gn = /^[a-z]+([A-Z][a-z]*)+$/, Zn = (e, t) => {
+  if (!e)
+    return;
+  const n = /defineProps\({([^}]+)/g;
+  let s;
+  for (; (s = n.exec(e.content)) !== null; )
+    s[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((a) => a.split(":")[0]).filter((a) => a.length).filter((a) => !Gn.test(a)).length && ae.push({ filePath: t });
+}, qn = () => (ae.length > 0 && (console.log(
+  `
+${w}vue-strong${b} ${N}prop names are not camelCased${E} in ${ae.length} files.`
+), console.log(
+  `👉 ${v}Rename the props to camelCase.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`
+), ae.forEach((e) => {
+  console.log(`- ${e.filePath} 🚨`);
+})), ae.length), G = (e, t) => {
   if (!t.includes(`
 `))
     return e.split(`
 `).findIndex((h) => h.includes(t)) + 1;
-  const n = e.indexOf(t), r = e.slice(0, n).split(`
+  const n = e.indexOf(t), s = e.slice(0, n).split(`
 `).length, c = t.split(`
 `).length;
-  return r + c - 1;
-}, le = [], Dn = 40, Gn = (e, t) => {
+  return s + c - 1;
+};
+function Ce(e, t) {
+  return new Set(e.map((s) => s[t])).size;
+}
+const ue = [], Kn = 40, Qn = (e, t) => {
+  if (!e)
+    return;
   const n = /{{\s*([\s\S]*?)\s*}}/g;
   [...e.content.matchAll(n)].map((c) => c[1].trim()).forEach((c) => {
-    if (c.length > Dn) {
-      const a = ye(e.content, c), h = c.split(`
+    if (c.length > Kn) {
+      const a = G(e.content, c), h = c.split(`
 `).at(0)?.trim() || "";
-      le.push({ message: `${t}#${a} ${N}${h}${E}` });
+      ue.push({
+        filename: t,
+        message: `${t}#${a} ${_}${h}${E}`
+      });
     }
   });
-}, Zn = () => (le.length > 0 && (console.log(
-  `
-${w}vue-strong${y} ${v}Lengthy template expression${E} found in ${le.length} files.`
-), console.log(
-  `👉 ${C}Refactor the expression into a computed property.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
-), le.forEach((e) => {
-  console.log(`- ${e.message} 🚨`);
-})), le.length), qn = /^(\(.*\)|\\?.)$/;
+}, Yn = () => {
+  if (ue.length > 0) {
+    const e = Ce(ue, "filename");
+    console.log(
+      `
+${w}vue-strong${b} ${N}Lengthy template expression${E} found in ${e} files.`
+    ), console.log(
+      `👉 ${v}Refactor the expression into a computed property.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
+    ), ue.forEach((t) => {
+      console.log(`- ${t.message} 🚨`);
+    });
+  }
+  return ue.length;
+}, Xn = /^(\(.*\)|\\?.)$/;
 function D(e) {
   const t = e.toString();
-  return qn.test(t) ? t : `(?:${t})`;
+  return Xn.test(t) ? t : `(?:${t})`;
 }
-const Qn = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/, Kn = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/;
+const Hn = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/, kn = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/;
 function $(e) {
-  const t = (n) => $(`(?<${n}>${`${e}`.replace(Qn, "$1$2")})`);
+  const t = (n) => $(`(?<${n}>${`${e}`.replace(Hn, "$1$2")})`);
   return {
     toString: () => e.toString(),
     and: Object.assign((...n) => $(`${e}${M(...n)}`), {
@@ -1026,35 +1057,35 @@ function $(e) {
       any: () => $(`${D(e)}*`),
       atLeast: (n) => $(`${D(e)}{${n},}`),
       atMost: (n) => $(`${D(e)}{0,${n}}`),
-      between: (n, r) => $(`${D(e)}{${n},${r}}`)
+      between: (n, s) => $(`${D(e)}{${n},${s}}`)
     }),
     optionally: () => $(`${D(e)}?`),
     as: t,
     groupedAs: t,
-    grouped: () => $(`${e}`.replace(Kn, "($1$3)$2")),
+    grouped: () => $(`${e}`.replace(kn, "($1$3)$2")),
     at: {
       lineStart: () => $(`^${e}`),
       lineEnd: () => $(`${e}$`)
     }
   };
 }
-const Yn = /[.*+?^${}()|[\]\\/]/g;
-function rt(e) {
+const Jn = /[.*+?^${}()|[\]\\/]/g;
+function lt(e) {
   return $(`[${e.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
-function De(e) {
+function qe(e) {
   return $(`[^${e.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
-const Xn = $(".");
+const eo = $(".");
 $("\\b\\w+\\b");
-const ve = $("\\w");
+const Re = $("\\w");
 $("\\b");
 $("\\d");
 $("\\s");
-const Hn = Object.assign($("[a-zA-Z]"), {
+const to = Object.assign($("[a-zA-Z]"), {
   lowercase: $("[a-z]"),
   uppercase: $("[A-Z]")
-}), Jn = $("\\t"), kn = $("\\n");
+}), no = $("\\t"), oo = $("\\n");
 $("\\r");
 $("\\W+"), $("\\W"), $("\\B"), $("\\D"), $("\\S"), Object.assign($("[^a-zA-Z]"), {
   lowercase: $("[^a-z]"),
@@ -1065,164 +1096,248 @@ function V(...e) {
 }
 function M(...e) {
   return $(
-    e.map((t) => typeof t == "string" ? t.replace(Yn, "\\$&") : t).join("")
+    e.map((t) => typeof t == "string" ? t.replace(Jn, "\\$&") : t).join("")
   );
 }
 function U(...e) {
   return $(`${D(M(...e))}+`);
 }
-const je = (...e) => {
+const Le = (...e) => {
   const t = e.length > 1 && (Array.isArray(e[e.length - 1]) || e[e.length - 1] instanceof Set) ? e.pop() : void 0;
   return new RegExp(M(...e).toString(), [...t || ""].join(""));
-}, ae = [], es = (e, t) => {
-  const n = e.template, r = je(
+}, fe = [], so = (e, t) => {
+  if (!e)
+    return;
+  const n = e.template, s = Le(
     "<",
-    U(ve),
-    V(U(rt(` 	
+    U(Re),
+    V(U(lt(` 	
 \r`))),
-    U(De("/>")),
-    V(U(rt(` 	
+    U(qe("/>")),
+    V(U(lt(` 	
 \r`))),
     V("/"),
     ">",
     ["g"]
-  ), c = n.content.match(r);
+  ), c = n.content.match(s);
   if (c === null)
     return;
-  const a = je(":", U(ve), V(" "), "=", V(" "), De(`'"`), [
+  const a = Le(":", U(Re), V(" "), "=", V(" "), qe(`'"`), [
     "g"
   ]);
   c.forEach((h) => {
     if (!h.includes(":"))
       return;
-    const d = h.match(a);
-    if (d?.length) {
-      const _ = ye(e.source, h);
-      ae.push({ message: `${t}#${_} ${N}${d}${E}` });
+    const g = h.match(a);
+    if (g?.length) {
+      const A = G(e.source, h);
+      fe.push({ message: `${t}#${A} ${_}${g}${E}` });
     }
   });
-}, ts = () => (ae.length > 0 && (console.log(
+}, io = () => (fe.length > 0 && (console.log(
   `
-${w}vue-strong${y} ${v}Attribute value is not quoted${E} in ${ae.length} files.`
+${w}vue-strong${b} ${N}Attribute value is not quoted${E} in ${fe.length} files.`
 ), console.log(
-  `👉 ${C}Use quotes for attribute values.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`
-), ae.forEach((e) => {
+  `👉 ${v}Use quotes for attribute values.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`
+), fe.forEach((e) => {
   console.log(`- ${e.message} 🚨`);
-})), ae.length), ue = [], ns = (e, t) => {
-  const n = e.template, r = je(
+})), fe.length), he = [], ro = (e, t) => {
+  if (!e)
+    return;
+  const n = e.template, s = Le(
     "<",
-    U(Hn.uppercase, ve),
-    V(kn, Jn),
-    V(U(De(">"))),
+    U(to.uppercase, Re),
+    V(oo, no),
+    V(U(qe(">"))),
     "></",
-    U(ve),
+    U(Re),
     ">",
     ["g"]
-  ), c = n.content.match(r);
+  ), c = n.content.match(s);
   c !== null && c.forEach((a) => {
-    const h = ye(e.source, a), d = a.split(`
+    const h = G(e.source, a), g = a.split(`
 `).at(-1)?.trim() || "";
-    ue.push({ message: `${t}#${h} ${N}${d}${E}` });
+    he.push({ message: `${t}#${h} ${_}${g}${E}` });
   });
-}, ss = () => (ue.length > 0 && (console.log(
+}, co = () => (he.length > 0 && (console.log(
   `
-${w}vue-strong${y} - ${v}Component is not self closing${E} in ${ue.length} files.`
+${w}vue-strong${b} - ${N}Component is not self closing${E} in ${he.length} files.`
 ), console.log(
-  `👉 ${C}Components with no content should be self-closing.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`
-), ue.forEach((e) => {
+  `👉 ${v}Components with no content should be self-closing.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`
+), he.forEach((e) => {
   console.log(`- ${e.message} 🚨`);
-})), ue.length), Se = [], Ge = [], os = ["v-slot", "v-bind", "v-on"], rs = (e, t) => {
+})), he.length), Fe = [], Ke = [], lo = ["v-slot", "v-bind", "v-on"], ao = (e, t) => {
+  if (!e)
+    return;
   const n = e.template;
-  os.forEach((r) => {
-    if (n.content.includes(`${r}:`)) {
-      const c = ye(e.source, r);
-      Se.push({ message: `${t}:${c} ${N}${r}${E}` }), Ge.some((a) => a.filePath === t) || Ge.push({ filePath: t });
+  lo.forEach((s) => {
+    if (n.content.includes(`${s}:`)) {
+      const c = G(e.source, s);
+      Fe.push({ message: `${t}:${c} ${_}${s}${E}` }), Ke.some((a) => a.filePath === t) || Ke.push({ filePath: t });
     }
   });
-}, is = () => (Se.length > 0 && (console.log(
+}, uo = () => (Fe.length > 0 && (console.log(
   `
-${w}vue-strong${y} ${v}Directive shorthands not used${E} in ${Ge.length} files.`
+${w}vue-strong${b} ${N}Directive shorthands not used${E} in ${Ke.length} files.`
 ), console.log(
-  `👉 ${C}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`
-), Se.forEach((e) => {
+  `👉 ${v}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`
+), Fe.forEach((e) => {
   console.log(`- ${e.message} 🚨`);
-})), Se.length), fe = [], cs = 5, ls = (e, t) => {
-  const n = je("defineProps", V("<"), V("("), "{", U(Xn), "}", ["g", "s"]), r = e.content.match(n);
-  if (r?.length) {
-    const c = r[0].split(",").length;
-    c > cs && fe.push({ fileName: t, propsCount: c });
+})), Fe.length), pe = [], fo = 5, ho = (e, t) => {
+  if (!e)
+    return;
+  const n = Le("defineProps", V("<"), V("("), "{", U(eo), "}", ["g", "s"]), s = e.content.match(n);
+  if (s?.length) {
+    const c = s[0].split(",").length;
+    c > fo && pe.push({ fileName: t, propsCount: c });
   }
-}, as = () => (fe.length > 0 && (console.log(
+}, po = () => (pe.length > 0 && (console.log(
   `
-${w}rrd${y} ${N}too many props${E} are used in ${fe.length} files.`
-), console.log(`👉 ${C}Try to refactor your code to use less properties.${y}`), fe.forEach((e) => {
-  console.log(`- ${e.fileName} ${N}(${e.propsCount})${E}`);
-})), fe.length), he = [], dt = 20, us = (e, t) => {
+${w}rrd${b} ${_}too many props${E} are used in ${pe.length} files.`
+), console.log(`👉 ${v}Try to refactor your code to use less properties.${b}`), pe.forEach((e) => {
+  console.log(`- ${e.fileName} ${_}(${e.propsCount})${E}`);
+})), pe.length), ge = [], yt = 20, go = (e, t) => {
+  if (!e)
+    return;
   const n = /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g;
-  let r;
-  for (; (r = n.exec(e.content)) !== null; ) {
-    const c = r[1] || r[5];
-    (r[2] || r[6]).split(`
-`).length > dt && he.push({ filename: t, funcName: c });
+  let s;
+  for (; (s = n.exec(e.content)) !== null; ) {
+    const c = s[1] || s[5];
+    (s[2] || s[6]).split(`
+`).length > yt && ge.push({ filename: t, funcName: c });
   }
-}, fs = () => (he.length > 0 && (console.log(
-  `
-${w}rrd${y} ${N}function size${E} exceeds recommended limit in ${he.length} files.`
-), console.log(`👉 ${C}Functions must be shorter than ${dt} lines${y}`), he.forEach((e) => {
-  console.log(`- ${e.filename} 🚨 ${N}(${e.funcName})${E}`);
-})), he.length), pe = [], mt = 3, it = (e, t, n) => {
-  const r = t.split(",").map((c) => c.trim()).filter((c) => c.length > 0);
-  r.length > mt && pe.push({ filename: n, funcName: e, paramsCount: r.length });
-}, hs = (e, t) => {
-  const n = /function\s+([a-zA-Z0-9_$]+)\s*\(([^)]*)\)\s*{|const\s+([a-zA-Z0-9_$]+)\s*=\s*\(([^)]*)\)\s*=>\s*{/g;
-  let r;
-  for (; (r = n.exec(e.content)) !== null; )
-    r[1] ? it(r[1], r[2], t) : r[3] && it(r[3], r[4], t);
-}, ps = () => (pe.length > 0 && (console.log(
-  `
-${w}rrd${y} ${N}parameter count${E} exceeds recommended limit in ${pe.length} files.`
-), console.log(`👉 ${C}Max number of function parameters should be ${mt}${y}`), pe.forEach((e) => {
-  console.log(`- ${N}${e.funcName}${E} in file ${e.filename} 🚨 ${N}(${e.paramsCount})${E}`);
-})), pe.length), $t = 4, ge = [], gs = (e) => new Set(e.map((n) => n.filename)).size, ds = (e, t) => {
-  const n = /\b(?:const|var|let)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
-  let r;
-  for (; (r = n.exec(e.content)) !== null; ) {
-    const c = r[1];
-    c.length < $t && ge.push({ filename: t, variable: c });
-  }
-}, ms = () => {
+}, mo = () => {
   if (ge.length > 0) {
-    const e = gs(ge);
+    const e = Ce(ge, "filename");
     console.log(
       `
-${w}rrd${y} ${N}variable names${E} are too short in ${e} files.`
-    ), console.log(
-      `👉 ${C}Variable names must have a minimum length of ${$t}${y}`
-    ), ge.forEach((t) => {
-      console.log(`- ${t.filename} 🚨 ${N}(${t.variable})${E}`);
+${w}rrd${b} ${_}function size${E} exceeds recommended limit in ${e} files.`
+    ), console.log(`👉 ${v}Functions must be shorter than ${yt} lines${b}`), ge.forEach((t) => {
+      console.log(`- ${t.filename} 🚨 ${_}(${t.funcName})${E}`);
     });
   }
   return ge.length;
-}, Ze = [], me = [], $s = 5, bs = (e, t) => {
-  const n = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, r = e.content.match(n);
-  r?.length && r.forEach((c) => {
+}, de = [], Et = 3, at = (e, t, n) => {
+  const s = t.split(",").map((c) => c.trim()).filter((c) => c.length > 0);
+  s.length > Et && de.push({ filename: n, funcName: e, paramsCount: s.length });
+}, $o = (e, t) => {
+  if (!e)
+    return;
+  const n = /function\s+([a-zA-Z0-9_$]+)\s*\(([^)]*)\)\s*{|const\s+([a-zA-Z0-9_$]+)\s*=\s*\(([^)]*)\)\s*=>\s*{/g;
+  let s;
+  for (; (s = n.exec(e.content)) !== null; )
+    s[1] ? at(s[1], s[2], t) : s[3] && at(s[3], s[4], t);
+}, bo = () => (de.length > 0 && (console.log(
+  `
+${w}rrd${b} ${_}parameter count${E} exceeds recommended limit in ${de.length} files.`
+), console.log(`👉 ${v}Max number of function parameters should be ${Et}${b}`), de.forEach((e) => {
+  console.log(
+    `- ${_}${e.funcName}${E} in file ${e.filename} 🚨 ${_}(${e.paramsCount})${E}`
+  );
+})), de.length), At = 4, me = [], yo = (e, t) => {
+  if (!e)
+    return;
+  const n = /\b(?:const|var|let)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+  let s;
+  for (; (s = n.exec(e.content)) !== null; ) {
+    const c = s[1];
+    c.length < At && me.push({ filename: t, variable: c });
+  }
+}, Eo = () => {
+  if (me.length > 0) {
+    const e = Ce(me, "filename");
+    console.log(`
+${w}rrd${b} ${_}variable names${E} are too short in ${e} files.`), console.log(`👉 ${v}Variable names must have a minimum length of ${At}${b}`), me.forEach((t) => {
+      console.log(`- ${t.filename} 🚨 ${_}(${t.variable})${E}`);
+    });
+  }
+  return me.length;
+}, Qe = [], ye = [], Ao = 5, Co = (e, t) => {
+  if (!e)
+    return;
+  const n = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, s = e.content.match(n);
+  s?.length && s.forEach((c) => {
     if (c.split(`
-`).length > $s) {
+`).length > Ao) {
       const a = c.split(`
-`)[0], h = ye(e.content, a);
-      Ze.push({ message: `${t}:${h} ${N}computed${E}` }), me.push({ filePath: t }), me.some((d) => d.filePath === t) || me.push({ filePath: t });
+`)[0], h = G(e.content, a);
+      Qe.push({ message: `${t}:${h} ${_}computed${E}` }), ye.push({ filePath: t }), ye.some((g) => g.filePath === t) || ye.push({ filePath: t });
     }
   });
-}, ys = () => (me.length > 0 && (console.log(
+}, _o = () => (ye.length > 0 && (console.log(
   `
-${w}vue-strong${y} ${v}complicated computed property ${E} in ${me.length} files.`
+${w}vue-strong${b} ${N}complicated computed property ${E} in ${ye.length} files.`
 ), console.log(
-  `👉 ${C}Refactor the computed properties to smaller ones.${y} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`
-), Ze.forEach((e) => {
+  `👉 ${v}Refactor the computed properties to smaller ones.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`
+), Qe.forEach((e) => {
   console.log(`- ${e.message} 🚨`);
-})), Ze.length);
-let bt = 0;
-const Es = [
+})), Qe.length), $e = [], vo = (e, t) => {
+  if (!e)
+    return;
+  const n = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g;
+  [...e.content.matchAll(n)].map((c) => c[1].trim()).forEach((c) => {
+    const a = G(e.content.trim(), c), h = c.split(`
+`).at(0)?.trim() || "";
+    $e.push({ filename: t, message: `${t}#${a} ${_}(${h})${E}` });
+  });
+}, wo = () => {
+  if ($e.length > 0) {
+    const e = Ce($e, "filename");
+    console.log(`
+${w}vue-strong${b} ${N}component files${E} detected in ${e} files.`), console.log(
+      `👉 ${v}Whenever a build system is available to concatenate files, each component should be in its own file.${b} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`
+    ), $e.forEach((t) => {
+      console.log(`- ${t.message} 🚨`);
+    });
+  }
+  return $e.length;
+}, Q = [], xo = (e, t) => {
+  if (!e)
+    return;
+  const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, c = /\$parent|getCurrentInstance/g, a = e.content.match(n), h = e.content.match(s);
+  if (h) {
+    const A = h[1].split(".")[0], j = a ? a[1] : "";
+    if (j.includes(A)) {
+      const x = G(e.content.trim(), j);
+      Q.push({
+        filename: t,
+        message: `${t}#${x} ${_}(${A})${E}`
+      });
+    }
+  }
+  const g = e.content.match(c);
+  if (g) {
+    const A = G(e.content.trim(), g[0]);
+    Q.push({
+      filename: t,
+      message: `${t}#${A} ${_}(${g[0]})${E}`
+    });
+  }
+}, Oo = () => {
+  if (Q.length > 0) {
+    const e = Ce(
+      Q,
+      "filename"
+    );
+    console.log(
+      `
+${w}vue-caution${b} ${_}implicit parent-child communication${E} detected in ${e} files.`
+    ), console.log(
+      `👉 ${v}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${b} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`
+    ), Q.forEach((t) => {
+      console.log(`- ${t.message} 🚨`);
+    });
+  }
+  return Q.length;
+}, So = () => {
+  let e = 0;
+  return e += Ln(), e += zn(), e += Vn(), e += Bn(), e += Wn(), e += Dn(), e += co(), e += qn(), e += Yn(), e += io(), e += uo(), e += _o(), e += wo(), e += Oo(), e += _n(), e += wn(), e += Fn(), e += On(), e += po(), e += mo(), e += bo(), e += Eo(), e;
+}, No = (e, t, n) => {
+  const s = e.scriptSetup || e.script;
+  n.includes("vue-essential") || (Rn(t), Pn(s, t), Tn(e.styles, t), Mn(e.template, t), In(e.template, t)), n.includes("vue-strong") || (Un(t), Zn(s, t), vo(s, t), Co(s, t), ro(e, t), Qn(e.template, t), so(e, t), ao(e, t)), n.includes("vue-caution") || xo(s, t), n.includes("rrd") || (vn(e.script, t), Cn(s, t), jn(s, t), xn(s, t), ho(s, t), go(s, t), $o(s, t), yo(s, t));
+};
+let Ct = 0;
+const jo = [
   "src",
   "components",
   "pages",
@@ -1233,38 +1348,71 @@ const Es = [
   "utils",
   "plugins",
   "middleware"
-], yt = (e, t) => {
-  const n = Me.readdirSync(e);
-  bt += n.length;
-  for (const r of n) {
-    const c = qe.join(e, r);
-    Me.statSync(c).isDirectory() ? Es.some((a) => c.includes(a)) && yt(c, t) : r.endsWith(".vue") && t(c);
+], _t = (e, t) => {
+  const n = De.readdirSync(e);
+  Ct += n.length;
+  for (const s of n) {
+    const c = Ye.join(e, s);
+    De.statSync(c).isDirectory() ? jo.some((a) => c.includes(a)) && _t(c, t) : s.endsWith(".vue") && t(c);
   }
-}, As = (e) => {
+}, Fo = (e, t = []) => {
   console.log(`
 
-${Ve}Analyzing Vue files in ${e}${E}`);
-  let t = 0;
-  yt(e, (n) => {
+${Ge}Analyzing Vue files in ${e}${E}`), _t(e, (n) => {
     if (n.includes("App.vue") || n.includes("app.vue"))
       return;
-    const r = Me.readFileSync(n, "utf-8"), { descriptor: c } = Ut(r);
-    Sn(n), Bn(n), c.script && En(n);
-    const a = c.scriptSetup || c.script;
-    a && (Rn(a, n), Vn(a, n), bn(a, n), xn(a, n), _n(a, n), ls(a, n), us(a, n), hs(a, n), ds(a, n), bs(a, n)), c.styles.forEach((h) => {
-      jn(h, n);
-    }), c.template && (zn(c.template, n), Tn(c.template, n), ns(c, n), Gn(c.template, n), es(c, n), rs(c, n));
-  }), console.log(`Found ${Ve}${bt}${E} Vue files`), t += vn(), t += Ln(), t += Pn(), t += Wn(), t += Fn(), t += In(), t += ss(), t += Un(), t += Zn(), t += ts(), t += is(), t += ys(), t += yn(), t += An(), t += Nn(), t += Cn(), t += as(), t += fs(), t += ps(), t += ms(), t || console.log(`${$n}No code smells detected!${E}`);
-};
-Ft(Zt(process.argv)).command(
+    const s = De.readFileSync(n, "utf-8"), { descriptor: c } = qt(s);
+    No(c, n, t);
+  }), console.log(`Found ${Ge}${Ct}${E} Vue files`), So() || console.log(`${An}No code smells detected!${E}`);
+}, Ro = {
+  "vue-caution": ["implicitParentChildCommunication"],
+  "vue-essential": ["globalStyle", "simpleProp", "singleNameComponent", "vforNoKey", "vifWithVfor"],
+  "vue-reccomended": [],
+  "vue-strong": [
+    "componentFilenameCasing",
+    "componentFiles",
+    "directiveShorthands",
+    "propNameCasing",
+    "quotedAttributeValues",
+    "selfClosingComponents",
+    "simpleComputed",
+    "templateSimpleExpression"
+  ],
+  rrd: [
+    "cyclomaticComplexity",
+    "elseCondition",
+    "functionSize",
+    "parameterCount",
+    "plainScript",
+    "scriptLenght",
+    "shortVariableName",
+    "tooManyProps"
+  ]
+}, ut = Object.keys(Ro);
+Wt(Yt(process.argv)).command(
   "analyze [path]",
   "Analyze Vue files for code smells",
   (e) => e.positional("path", {
     describe: "path to the Vue files",
     type: "string",
     default: "./"
+  }).option("ignore", {
+    describe: "Comma-separated list of rules to ignore",
+    type: "string",
+    coerce: (t) => {
+      const n = t.split(","), s = n.filter((c) => !ut.includes(c));
+      return s.length > 0 && (console.error(
+        `
+${N}Invalid ignore values: ${s.join(
+          ", "
+        )}${E}. 
+${v}Allowed values are: ${[...ut].join(", ")}${b}
+
+`
+      ), process.exit(1)), n;
+    }
   }),
   (e) => {
-    As(e.path);
+    Fo(e.path, e.ignore);
   }
 ).help().argv;

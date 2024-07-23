@@ -1,33 +1,37 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc';
+import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers';
+import { getUniqueFilenameCount } from '../../helpers'
 
 type FunctionSizeFile = {
-  filename: string;
+  filename: string
   funcName: string
-};
+}
 
-const functionSizeFiles: FunctionSizeFile[] = [];
+const functionSizeFiles: FunctionSizeFile[] = []
 
 const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
-const checkFunctionSize = (script: SFCScriptBlock, filePath: string) => {
+const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script) {
+    return
+  }
   // Regular expression to match function definitions (both regular and arrow functions)
-  const regex = /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g;
-  let match;
+  const regex =
+    /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g
+  let match
 
   while ((match = regex.exec(script.content)) !== null) {
     /*
       We use match[1] and match[2] for regular functions
       and match[5] and match[6] for arrow functions
     */
-    const funcName = match[1] || match[5]; 
-    const funcBody = match[2] || match[6];
-    
+    const funcName = match[1] || match[5]
+    const funcBody = match[2] || match[6]
+
     // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
-    const lineCount = funcBody.split('\n').length;
+    const lineCount = funcBody.split('\n').length
     if (lineCount > MAX_FUNCTION_LENGTH) {
-      functionSizeFiles.push({ filename: filePath, funcName });
+      functionSizeFiles.push({ filename: filePath, funcName })
     }
   }
 }
@@ -35,7 +39,7 @@ const checkFunctionSize = (script: SFCScriptBlock, filePath: string) => {
 const reportFunctionSize = () => {
   if (functionSizeFiles.length > 0) {
     // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<FunctionSizeFile>(functionSizeFiles, 'filename');
+    const fileCount = getUniqueFilenameCount<FunctionSizeFile>(functionSizeFiles, 'filename')
 
     console.log(
       `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}function size${BG_RESET} exceeds recommended limit in ${fileCount} files.`
@@ -48,4 +52,4 @@ const reportFunctionSize = () => {
   return functionSizeFiles.length
 }
 
-export { checkFunctionSize, reportFunctionSize };
+export { checkFunctionSize, reportFunctionSize }

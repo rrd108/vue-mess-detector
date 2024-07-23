@@ -3,7 +3,10 @@ import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCode
 
 const simplePropFiles: { filePath: string }[] = []
 
-const checkSimpleProp = (script: SFCScriptBlock, filePath: string) => {
+const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script) {
+    return
+  }
   const regex = /defineProps\(\[/gi
   const matches = script.content.match(regex)
 

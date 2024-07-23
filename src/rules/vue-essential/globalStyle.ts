@@ -3,10 +3,15 @@ import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCode
 
 const globalStyleFiles: { filePath: string }[] = []
 
-const checkGlobalStyle = (style: SFCStyleBlock, filePath: string) => {
-  if (!style.scoped) {
-    globalStyleFiles.push({ filePath })
+const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
+  if (!styles) {
+    return
   }
+  styles.forEach(style => {
+    if (!style.scoped) {
+      globalStyleFiles.push({ filePath })
+    }
+  })
 }
 
 const reportGlobalStyle = () => {

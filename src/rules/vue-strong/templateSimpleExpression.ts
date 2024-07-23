@@ -1,15 +1,18 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO, BG_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import { getUniqueFilenameCount } from '../../helpers';
+import { getUniqueFilenameCount } from '../../helpers'
 
-type TemplateSimpleExpressionFile = { filename: string, message: string };
+type TemplateSimpleExpressionFile = { filename: string; message: string }
 
 const templateSimpleExpressionFiles: TemplateSimpleExpressionFile[] = []
 
 const MAX_EXPRESSION_LENGTH = 40 // completely rrd made-up number
 
-const checkTemplateSimpleExpression = (template: SFCTemplateBlock, filePath: string) => {
+const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePath: string) => {
+  if (!template) {
+    return
+  }
   const regex = /{{\s*([\s\S]*?)\s*}}/g
   const matches = [...template.content.matchAll(regex)].map(match => match[1].trim())
 
@@ -17,7 +20,10 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock, filePath: str
     if (expression.length > MAX_EXPRESSION_LENGTH) {
       const lineNumber = getLineNumber(template.content, expression)
       const firstPart = expression.split('\n').at(0)?.trim() || ''
-      templateSimpleExpressionFiles.push({ filename: filePath, message: `${filePath}#${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}` })
+      templateSimpleExpressionFiles.push({
+        filename: filePath,
+        message: `${filePath}#${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
+      })
     }
   })
 }

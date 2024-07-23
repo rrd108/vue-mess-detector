@@ -7,7 +7,10 @@ const directiveShorthandsFiles: { filePath: string }[] = []
 
 const directivesToCheck = ['v-slot', 'v-bind', 'v-on']
 
-const checkDirectiveShorthands = (descriptor: SFCDescriptor, filePath: string) => {
+const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: string) => {
+  if (!descriptor) {
+    return
+  }
   const template = descriptor.template! // it is exists otherwise the function is not called at all
 
   directivesToCheck.forEach(directive => {

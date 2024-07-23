@@ -3,7 +3,10 @@ import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCode
 
 const vifWithVforFiles: { filePath: string }[] = []
 
-const checkVifWithVfor = (template: SFCTemplateBlock, filePath: string) => {
+const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) => {
+  if (!template) {
+    return
+  }
   const regex1 = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi
   const regex2 = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi
   const matches1 = template.content.match(regex1)

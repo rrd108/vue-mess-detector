@@ -5,7 +5,10 @@ import { char, charNotIn, createRegExp, exactly, maybe, oneOrMore, whitespace } 
 const tooManyPropsFiles: { fileName: string; propsCount: number }[] = []
 const TOO_MANY_PROPS = 5
 
-const checkTooManyProps = (script: SFCScriptBlock, file: string) => {
+const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
+  if (!script) {
+    return
+  }
   const regex = createRegExp('defineProps', maybe('<'), maybe('('), '{', oneOrMore(char), '}', ['g', 's'])
   const matches = script.content.match(regex)
   if (matches?.length) {

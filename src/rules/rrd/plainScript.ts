@@ -1,8 +1,12 @@
+import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
 
 const plainScriptFiles: string[] = []
 
-const checkPlainScript = (filePath: string) => {
+const checkPlainScript = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script || !script.setup) {
+    return
+  }
   plainScriptFiles.push(filePath)
 }
 

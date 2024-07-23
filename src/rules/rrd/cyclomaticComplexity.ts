@@ -18,7 +18,10 @@ const cyclomaticComplexityFiles: { fileName: string; cyclomaticComplexity: numbe
  * @param {SFCScriptBlock} script - The SFC script block to analyze.
  * @param {string} file - The filename of the SFC.
  */
-const checkCyclomaticComplexity = (script: SFCScriptBlock, file: string) => {
+const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) => {
+  if (!script) {
+    return
+  }
   const _if = /\bif\b/gi
   const _else = /\belse\b/gi
   const _for = /\bfor\b/gi

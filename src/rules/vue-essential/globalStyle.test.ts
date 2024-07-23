@@ -7,17 +7,17 @@ const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 describe('checkGlobalStyle', () => {
   it('should not report scoped styles', () => {
-    const style = { content: '<style scoped>h3{background:pink}</style>', scoped: true } as SFCStyleBlock
+    const styles = [{ content: '<style scoped>h3{background:pink}</style>', scoped: true }] as SFCStyleBlock[]
     const filePath = 'scoped-style.vue'
-    checkGlobalStyle(style, filePath)
+    checkGlobalStyle(styles, filePath)
     expect(reportGlobalStyle()).toBe(0)
     expect(mockConsoleLog).not.toHaveBeenCalled()
   })
 
   it('should report global styles', () => {
-    const style = { content: '<style>h3{background:pink}</style>' } as SFCStyleBlock
+    const styles = [{ content: '<style>h3{background:pink}</style>' }] as SFCStyleBlock[]
     const filePath = 'global-style.vue'
-    checkGlobalStyle(style, filePath)
+    checkGlobalStyle(styles, filePath)
     expect(reportGlobalStyle()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
     expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${filePath} 🚨`)

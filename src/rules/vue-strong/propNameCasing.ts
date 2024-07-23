@@ -5,7 +5,10 @@ const propNameCasingFiles: { filePath: string }[] = []
 
 const camelCasePattern = /^[a-z]+([A-Z][a-z]*)+$/
 
-const checkPropNameCasing = (script: SFCScriptBlock, filePath: string) => {
+const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script) {
+    return
+  }
   const regex = /defineProps\({([^}]+)/g
   let match
   while ((match = regex.exec(script.content)) !== null) {

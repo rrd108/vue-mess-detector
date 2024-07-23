@@ -7,7 +7,11 @@ const complicatedComputedFiles: { filePath: string }[] = []
 
 const MAX_COMPUTED_LENGTH = 5 // completely rrd made-up number
 
-const checkSimpleComputed = (script: SFCScriptBlock, filePath: string) => {
+const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script) {
+    return
+  }
+
   const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
 
   const matches = script.content.match(regex)

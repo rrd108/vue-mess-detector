@@ -5,7 +5,10 @@ const MAX_SCRIPT_LENGTH = 100
 
 const longScriptFiles: { fileName: string; scriptLength: number }[] = []
 
-const checkScriptLength = (script: SFCScriptBlock, file: string) => {
+const checkScriptLength = (script: SFCScriptBlock | null, file: string) => {
+  if (!script) {
+    return
+  }
   const lines = script.content.split('\n')
   if (lines.length > MAX_SCRIPT_LENGTH) {
     longScriptFiles.push({ fileName: file, scriptLength: lines.length })

@@ -28,55 +28,35 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
 
   if (!ignore.includes('vue-essential')) {
     checkSingleNameComponent(filePath)
-
-    if (script) {
-      checkSimpleProp(script, filePath)
-    }
-
-    descriptor.styles.forEach(style => checkGlobalStyle(style, filePath))
-
-    if (descriptor.template) {
-      checkVforNoKey(descriptor.template, filePath)
-      checkVifWithVfor(descriptor.template, filePath)
-    }
+    checkSimpleProp(script, filePath)
+    checkGlobalStyle(descriptor.styles, filePath)
+    checkVforNoKey(descriptor.template, filePath)
+    checkVifWithVfor(descriptor.template, filePath)
   }
 
   if (!ignore.includes('vue-strong')) {
     checkComponentFilenameCasing(filePath)
-
-    if (script) {
-      checkPropNameCasing(script, filePath)
-      checkComponentFiles(script, filePath)
-      checkSimpleComputed(script, filePath)
-    }
-
-    if (descriptor.template) {
-      checkSelfClosingComponents(descriptor, filePath)
-      checkTemplateSimpleExpression(descriptor.template, filePath)
-      checkQuotedAttributeValues(descriptor, filePath)
-      checkDirectiveShorthands(descriptor, filePath)
-    }
+    checkPropNameCasing(script, filePath)
+    checkComponentFiles(script, filePath)
+    checkSimpleComputed(script, filePath)
+    checkSelfClosingComponents(descriptor, filePath)
+    checkTemplateSimpleExpression(descriptor.template, filePath)
+    checkQuotedAttributeValues(descriptor, filePath)
+    checkDirectiveShorthands(descriptor, filePath)
   }
 
   if (!ignore.includes('vue-caution')) {
-    if (script) {
-      checkImplicitParentChildCommunication(script, filePath)
-    }
+    checkImplicitParentChildCommunication(script, filePath)
   }
 
   if (!ignore.includes('rrd')) {
-    if (descriptor.script) {
-      checkPlainScript(filePath)
-    }
-
-    if (script) {
-      checkScriptLength(script, filePath)
-      checkCyclomaticComplexity(script, filePath)
-      checkElseCondition(script, filePath)
-      checkTooManyProps(script, filePath)
-      checkFunctionSize(script, filePath)
-      checkParameterCount(script, filePath)
-      checkShortVariableName(script, filePath)
-    }
+    checkPlainScript(descriptor.script, filePath)
+    checkScriptLength(script, filePath)
+    checkCyclomaticComplexity(script, filePath)
+    checkElseCondition(script, filePath)
+    checkTooManyProps(script, filePath)
+    checkFunctionSize(script, filePath)
+    checkParameterCount(script, filePath)
+    checkShortVariableName(script, filePath)
   }
 }

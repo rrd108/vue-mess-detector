@@ -5,7 +5,10 @@ import getLineNumber from '../getLineNumber'
 
 const selfClosingComponentsFiles: { message: string }[] = []
 
-const checkSelfClosingComponents = (descriptor: SFCDescriptor, filePath: string) => {
+const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: string) => {
+  if (!descriptor) {
+    return
+  }
   const template = descriptor.template! // it is exists otherwise the function is not called at all
 
   const regexSelfClosingComponent = createRegExp(
