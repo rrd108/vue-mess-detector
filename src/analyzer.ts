@@ -72,39 +72,54 @@ export const analyze = (dir: string, ignore: Array<RuleSetType> = []) => {
 
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
+    const script = descriptor.scriptSetup || descriptor.script
 
     files.push(filePath)
 
-    // TODO we should get rid of these if chcks for the ignores
-
     if (!ignore.includes('vue-essential')) {
       checkSingleNameComponent(filePath)
-    }
-    if (!ignore.includes('vue-strong')) {
-      checkComponentFilenameCasing(filePath)
-    }
 
-    if (!ignore.includes('rrd') && descriptor.script) {
-      checkPlainScript(filePath)
-    }
-
-    const script = descriptor.scriptSetup || descriptor.script
-    if (script) {
-      if (!ignore.includes('vue-essential')) {
+      if (script) {
         checkSimpleProp(script, filePath)
       }
 
-      if (!ignore.includes('vue-strong')) {
+      descriptor.styles.forEach(style => checkGlobalStyle(style, filePath))
+
+      if (descriptor.template) {
+        checkVforNoKey(descriptor.template, filePath)
+        checkVifWithVfor(descriptor.template, filePath)
+      }
+    }
+
+    if (!ignore.includes('vue-strong')) {
+      checkComponentFilenameCasing(filePath)
+
+      if (script) {
         checkPropNameCasing(script, filePath)
         checkComponentFiles(script, filePath)
         checkSimpleComputed(script, filePath)
       }
 
-      if (!ignore.includes('vue-caution')) {
+      if (descriptor.template) {
+        checkSelfClosingComponents(descriptor, filePath)
+        checkTemplateSimpleExpression(descriptor.template, filePath)
+        checkQuotedAttributeValues(descriptor, filePath)
+        checkDirectiveShorthands(descriptor, filePath)
+      }
+    }
+
+    if (!ignore.includes('vue-caution')) {
+      if (script) {
         checkImplicitParentChildCommunication(script, filePath)
       }
+    }
 
-      if (!ignore.includes('rrd')) {
+    if (!ignore.includes('rrd')) {
+      if (descriptor.script) {
+        checkPlainScript(filePath)
+      }
+
+      if (script) {
         checkScriptLength(script, filePath)
         checkCyclomaticComplexity(script, filePath)
         checkElseCondition(script, filePath)
@@ -112,26 +127,6 @@ export const analyze = (dir: string, ignore: Array<RuleSetType> = []) => {
         checkFunctionSize(script, filePath)
         checkParameterCount(script, filePath)
         checkShortVariableName(script, filePath)
-      }
-    }
-
-    descriptor.styles.forEach(style => {
-      if (!ignore.includes('vue-essential')) {
-        checkGlobalStyle(style, filePath)
-      }
-    })
-
-    if (descriptor.template) {
-      if (!ignore.includes('vue-essential')) {
-        checkVforNoKey(descriptor.template, filePath)
-        checkVifWithVfor(descriptor.template, filePath)
-      }
-
-      if (!ignore.includes('vue-strong')) {
-        checkSelfClosingComponents(descriptor, filePath)
-        checkTemplateSimpleExpression(descriptor.template, filePath)
-        checkQuotedAttributeValues(descriptor, filePath)
-        checkDirectiveShorthands(descriptor, filePath)
       }
     }
   })
