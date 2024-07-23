@@ -24,6 +24,7 @@ import { checkShortVariableName, reportShortVariableName } from './rules/rrd/sho
 import { checkSimpleComputed, reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { checkComponentFiles, reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
+import { RuleType } from './rules/rules'
 
 let filesCount = 0
 
@@ -55,7 +56,7 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
   }
 }
 
-export const analyze = (dir: string) => {
+export const analyze = (dir: string, ignore: Array<RuleType> = []) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
 
   let errors = 0
