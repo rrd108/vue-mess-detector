@@ -28,26 +28,28 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
 5. **Create Your Rule**
 
-   - Create a new file for your rule, following the naming convention `ruleName.ts`.
+   - Create a new file for your rule at `src/rules/RULESET/`, following the naming convention `ruleName.ts`.
    - Use existing rules as a reference for implementing your new rule.
    - We use Regular Expressions `regex` extensively in our rules. As [magic-regexp](https://regexp.dev/) offers a significantly easier to read, understand, and maintain syntax compared to plain regex, we prefer its use. If you submit a contribution using plain regex, we will handle the conversion to magic-regexp if necessary.
 
 6. **Create Tests for Your Rule**
 
-   - Create a test file named `ruleName.test.ts`.
+   - Create a test file named `ruleName.test.ts` at `src/rules/RULESET/`.
    - Add at least two tests: one that demonstrates a case where no problems are found and one that highlights an issue.
    - Run your tests to ensure they pass:
      ```bash
      yarn test
      ```
 
-7. **Update the `analyze` File**
+7. **Add the new rule to the analizer**
 
-   - Add the necessary `checkRuleName` and `reportRuleName` function calls in the `analyze` file.
+   - Add your new `checkRuleName` function call to `src/rulesCheck.ts`
+   - Add your new `reportRuleName` function call to `src/rulesReport.ts`
 
 8. **Create the PR**
    - Create the PR from your fork to the original repository.
    - Mention your PR in the issue you chose.
+   - Some automatic checks will run on your PR. If they fail, you can check the logs to see what went wrong.
 
 ## 🐞 Debugging Your Code
 
