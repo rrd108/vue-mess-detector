@@ -20,6 +20,7 @@ import { reportShortVariableName } from './rules/rrd/shortVariableName'
 import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
+import { reportDeepIndentation } from './rules/rrd/deepIndentation'
 
 export const reportRules = () => {
   let errors = 0
@@ -45,14 +46,15 @@ export const reportRules = () => {
   errors += reportImplicitParentChildCommunication()
 
   // rrd rules
-  errors += reportScriptLength()
-  errors += reportPlainScript()
   errors += reportCyclomaticComplexity()
+  errors += reportDeepIndentation()
   errors += reportElseCondition()
-  errors += reportTooManyProps()
   errors += reportFunctionSize()
   errors += reportParameterCount()
+  errors += reportPlainScript()
+  errors += reportScriptLength()
   errors += reportShortVariableName()
+  errors += reportTooManyProps()
 
   return errors
 }
