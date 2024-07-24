@@ -46,7 +46,17 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
    - Add your new `checkRuleName` function call to `src/rulesCheck.ts`
    - Add your new `reportRuleName` function call to `src/rulesReport.ts`
 
-8. **Create the PR**
+8. **Add the rule to the README**
+
+   - Add your new rule to the README file under the `Rules` section marking the ruleset it belongs to. You can use the following template:
+
+     ```markdown
+     ### Rule Name (RULESET)
+
+     Description of the rule.
+     ```
+
+9. **Create the PR**
    - Create the PR from your fork to the original repository.
    - Mention your PR in the issue you chose.
    - Some automatic checks will run on your PR. If they fail, you can check the logs to see what went wrong.
