@@ -1,5 +1,6 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
+import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 
 const elseConditionFiles: { fileName: string; elseCount: number }[] = []
 
@@ -7,7 +8,7 @@ const checkElseCondition = (script: SFCScriptBlock | null, file: string) => {
   if (!script) {
     return
   }
-  const regex = /\belse\b/gi
+  const regex = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
   const matches = script.content.match(regex)
 
   if (matches?.length) {
