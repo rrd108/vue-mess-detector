@@ -26,13 +26,13 @@ describe('checkDeepIndentation', () => {
     checkDeepIndentation(script, fileName)
     expect(reportDeepIndentation()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} ${BG_WARN}(1)${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}#1 ${BG_WARN}indentation: 5${BG_RESET} 🚨`)
 
     script = { content: '               if (true) { ... } else { ... }' } as SFCScriptBlock
     fileName = 'with-deep-indentation-space.vue'
     checkDeepIndentation(script, fileName)
     expect(reportDeepIndentation()).toBe(2)
     expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} ${BG_WARN}(1)${BG_RESET}`)
+    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}#1 ${BG_WARN}indentation: 15${BG_RESET} 🚨`)
   })
 })
