@@ -1,5 +1,6 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 
 /**
  * Defines complexity thresholds.
@@ -22,11 +23,11 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
   if (!script) {
     return
   }
-  const _if = /\bif\b/gi
-  const _else = /\belse\b/gi
-  const _for = /\bfor\b/gi
-  const _while = /\bwhile\b/gi
-  const _case = /\bcase\b/gi
+  const _if = createRegExp(wordBoundary, 'if', wordBoundary, [global, caseInsensitive])
+  const _else = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
+  const _for = createRegExp(wordBoundary, 'for', wordBoundary, [global, caseInsensitive])
+  const _while = createRegExp(wordBoundary, 'while', wordBoundary, [global, caseInsensitive])
+  const _case = createRegExp(wordBoundary, 'case', wordBoundary, [global, caseInsensitive])
 
   const _ifCount = script.content.match(_if)
   const _elseCount = script.content.match(_else)
