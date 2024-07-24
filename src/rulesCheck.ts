@@ -22,6 +22,7 @@ import { checkComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { SFCDescriptor } from '@vue/compiler-sfc'
 import { RuleSetType } from './rules/rules'
+import { checkDeepIndentation } from './rules/rrd/deepIndentation'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -50,13 +51,14 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
   }
 
   if (!ignore.includes('rrd')) {
-    checkPlainScript(descriptor.script, filePath)
-    checkScriptLength(script, filePath)
     checkCyclomaticComplexity(script, filePath)
+    checkDeepIndentation(script, filePath)
     checkElseCondition(script, filePath)
-    checkTooManyProps(script, filePath)
     checkFunctionSize(script, filePath)
     checkParameterCount(script, filePath)
+    checkPlainScript(descriptor.script, filePath)
+    checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
+    checkTooManyProps(script, filePath)
   }
 }
