@@ -1,5 +1,6 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
 
 const vforNoKeyFiles: { filePath: string }[] = []
 
@@ -7,7 +8,10 @@ const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => 
   if (!template) {
     return
   }
-  const regex = /<[^>]+ v-for[^>]+>/gi
+  const regex = createRegExp('<', oneOrMore(charNotIn('>')), ' v-for', oneOrMore(charNotIn('>')), '>', [
+    global,
+    caseInsensitive,
+  ])
   const matches = template.content.match(regex)
 
   if (matches?.length) {

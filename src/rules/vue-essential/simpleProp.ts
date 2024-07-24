@@ -1,5 +1,6 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { caseInsensitive, createRegExp, global } from 'magic-regexp'
 
 const simplePropFiles: { filePath: string }[] = []
 
@@ -7,7 +8,7 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
-  const regex = /defineProps\(\[/gi
+  const regex = createRegExp('defineProps([', [global, caseInsensitive])
   const matches = script.content.match(regex)
 
   if (matches?.length) {

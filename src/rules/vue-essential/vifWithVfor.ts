@@ -1,5 +1,6 @@
 import { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
 
 const vifWithVforFiles: { filePath: string }[] = []
 
@@ -7,8 +8,26 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
   if (!template) {
     return
   }
-  const regex1 = /<[^>]+ v-if[^>]+ v-for[^>]+>/gi
-  const regex2 = /<[^>]+ v-for[^>]+ v-if[^>]+>/gi
+  const regex1 = createRegExp(
+    '<',
+    oneOrMore(charNotIn('>')),
+    ' v-if',
+    oneOrMore(charNotIn('>')),
+    ' v-for',
+    oneOrMore(charNotIn('>')),
+    '>',
+    [global, caseInsensitive]
+  )
+  const regex2 = createRegExp(
+    '<',
+    oneOrMore(charNotIn('>')),
+    ' v-for',
+    oneOrMore(charNotIn('>')),
+    ' v-if',
+    oneOrMore(charNotIn('>')),
+    '>',
+    [global, caseInsensitive]
+  )
   const matches1 = template.content.match(regex1)
   const matches2 = template.content.match(regex2)
 

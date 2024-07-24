@@ -1,9 +1,13 @@
 import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { global, charNotIn, createRegExp, letter, oneOrMore } from 'magic-regexp'
 
 const propNameCasingFiles: { filePath: string }[] = []
 
-const camelCasePattern = /^[a-z]+([A-Z][a-z]*)+$/
+const camelCasePattern = createRegExp(
+  oneOrMore(letter.lowercase).at.lineStart(),
+  oneOrMore(letter.uppercase, letter.lowercase.times.any().grouped()).at.lineEnd()
+)
 
 const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {

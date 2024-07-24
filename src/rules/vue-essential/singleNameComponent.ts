@@ -1,5 +1,6 @@
 import path from 'path'
 import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import { createRegExp, letter } from 'magic-regexp'
 
 const singleNameComponentFiles: { filePath: string }[] = []
 
@@ -12,7 +13,7 @@ const checkSingleNameComponent = (filePath: string) => {
   const fileName = path.basename(filePath)
   if (fileName === 'App.vue') return
 
-  const regex = /[A-Z]/
+  const regex = createRegExp(letter.uppercase)
   const matches = fileName.slice(1).match(regex) // ignore the first character
 
   if (!matches?.length) {
