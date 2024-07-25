@@ -1059,7 +1059,7 @@ ${w}vue-essential${$} ${j}v-for has no key${y} in ${pe.length} files.`
 ), pe.forEach((e) => {
   console.log(`- ${e.filePath} 🚨`);
 })), pe.length), ge = [], no = (e) => {
-  if (e.includes("pages/") || e.includes("layouts/"))
+  if (e.includes("pages") || e.includes("layouts"))
     return;
   const t = et.basename(e), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = t.match(n), c = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, a = t.match(c);
   !s?.length && !a?.length && ge.push({ fileName: e });
