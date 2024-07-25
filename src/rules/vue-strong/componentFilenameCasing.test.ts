@@ -19,8 +19,13 @@ describe('checkComponentFilenameCasing', () => {
     expect(mockConsoleLog).not.toHaveBeenCalled()
   })
 
-  it('ignores components in pages folder', () => {
+  it('ignores components in pages folder - Linux', () => {
     checkComponentFilenameCasing('pages/gauranga.vue')
+    expect(reportComponentFilenameCasing()).toBe(0)
+    expect(mockConsoleLog).not.toHaveBeenCalled()
+  })
+  it('ignores components in pages folder - Windows', () => {
+    checkComponentFilenameCasing(`pages\gauranga.vue`)
     expect(reportComponentFilenameCasing()).toBe(0)
     expect(mockConsoleLog).not.toHaveBeenCalled()
   })
