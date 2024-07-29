@@ -2,6 +2,7 @@ import { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import { getUniqueFilenameCount } from '../../helpers'
+import { createRegExp, exactly, global } from 'magic-regexp'
 
 type ImplicitParentChildCommunicationFile = { filename: string; message: string }
 
@@ -13,7 +14,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
   }
   const propsRegex = /defineProps\(([^)]+)\)/
   const vModelRegex = /v-model\s*=\s*"([^"]+)"/
-  const parentRegex = /\$parent|getCurrentInstance/g
+  const parentRegex = createRegExp(exactly("$parent").or("getCurrentInstance"), [global]);
 
   // Extract defined props
   const propsMatch = script.content.match(propsRegex)
