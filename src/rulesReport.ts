@@ -13,6 +13,7 @@ import { reportTemplateSimpleExpression } from './rules/vue-strong/templateSimpl
 import { reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
 import { reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
+import { reportFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
 import { reportTooManyProps } from './rules/rrd/tooManyProps'
 import { reportFunctionSize } from './rules/rrd/functionSize'
 import { reportParameterCount } from './rules/rrd/parameterCount'
@@ -41,6 +42,7 @@ export const reportRules = () => {
   errors += reportDirectiveShorthands()
   errors += reportSimpleComputed()
   errors += reportComponentFiles()
+  errors += reportFullWordComponentName()
 
   // vue-caution rules
   errors += reportImplicitParentChildCommunication()
