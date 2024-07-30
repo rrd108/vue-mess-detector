@@ -14,6 +14,7 @@ import { reportQuotedAttributeValues } from './rules/vue-strong/quotedAttribueVa
 import { reportSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { reportFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
+import { reportTopLevelElementOrder } from './rules/vue-recommended/topLevelElementOrder'
 import { reportTooManyProps } from './rules/rrd/tooManyProps'
 import { reportFunctionSize } from './rules/rrd/functionSize'
 import { reportParameterCount } from './rules/rrd/parameterCount'
@@ -43,6 +44,9 @@ export const reportRules = () => {
   errors += reportSimpleComputed()
   errors += reportComponentFiles()
   errors += reportFullWordComponentName()
+
+  // vue-recommended rules
+  errors += reportTopLevelElementOrder()
 
   // vue-caution rules
   errors += reportImplicitParentChildCommunication()

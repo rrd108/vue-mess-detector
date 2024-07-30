@@ -14,6 +14,7 @@ import { checkQuotedAttributeValues } from './rules/vue-strong/quotedAttribueVal
 import { checkSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { checkDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { checkFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
+import { checkTopLevelElementOrder } from './rules/vue-recommended/topLevelElementOrder'
 import { checkTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount } from './rules/rrd/parameterCount'
@@ -46,6 +47,10 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
     checkQuotedAttributeValues(descriptor, filePath)
     checkDirectiveShorthands(descriptor, filePath)
     checkFullWordComponentName(filePath)
+  }
+
+  if (!ignore.includes('vue-recommended')) {
+    checkTopLevelElementOrder(descriptor.source, filePath)
   }
 
   if (!ignore.includes('vue-caution')) {
