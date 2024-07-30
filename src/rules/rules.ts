@@ -11,6 +11,7 @@ export const RULES = {
     'selfClosingComponents',
     'simpleComputed',
     'templateSimpleExpression',
+    'fullWordComponentName'
   ],
   rrd: [
     'cyclomaticComplexity',

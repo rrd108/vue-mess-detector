@@ -13,6 +13,7 @@ import { checkTemplateSimpleExpression } from './rules/vue-strong/templateSimple
 import { checkQuotedAttributeValues } from './rules/vue-strong/quotedAttribueValues'
 import { checkSelfClosingComponents } from './rules/vue-strong/selfClosingComponents'
 import { checkDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
+import { checkFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
 import { checkTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount } from './rules/rrd/parameterCount'
@@ -44,6 +45,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
     checkTemplateSimpleExpression(descriptor.template, filePath)
     checkQuotedAttributeValues(descriptor, filePath)
     checkDirectiveShorthands(descriptor, filePath)
+    checkFullWordComponentName(filePath)
   }
 
   if (!ignore.includes('vue-caution')) {
