@@ -1,7 +1,7 @@
 export const RULES = {
   'vue-caution': ['implicitParentChildCommunication'],
   'vue-essential': ['globalStyle', 'simpleProp', 'singleNameComponent', 'vforNoKey', 'vifWithVfor'],
-  'vue-reccomended': [],
+  'vue-recommended': ['topLevelElementOrder'],
   'vue-strong': [
     'componentFilenameCasing',
     'componentFiles',
