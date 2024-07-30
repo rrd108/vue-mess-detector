@@ -8,4 +8,4 @@ git status
 ./deploy.sh minor publish
 ```
 
-TODO: for JSR: set up GH Action https://jsr.io/docs/publishing-packages#publishing-from-github-actions
+TODO: for JSR: set up GH Action see: https://github.com/rrd108/vue-mess-detector/issues/77
