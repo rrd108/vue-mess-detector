@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    // Linting / Formatting
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+    "yoavbls.pretty-ts-errors",
+    // PR management / Reviewing
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    // Showing todo comments
+    "gruntfuggly.todo-tree",
+    "aaron-bond.better-comments",
+    // Collaborating
+    "ms-vsliveshare.vsliveshare",
+    // Language Support
+    "VisualStudioExptTeam.vscodeintellicode",
+    // Test
+    "vitest.explorer"
+  ]
+}

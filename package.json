@@ -21,7 +21,9 @@
   "scripts": {
     "build": "vite build && cp ./src/cli.js ./dist/",
     "analyze": "dist/cli.js analyze",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "bin": {
     "vue-mess-detector": "dist/cli.js"
@@ -32,12 +34,13 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.24.0",
     "@types/node": "^20.13.0",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "@vitejs/plugin-vue": "^4.5.0",
-    "eslint": "^8.42.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.12.0",
     "pkg": "^5.8.1",
     "pkg-install": "^1.0.0",
