@@ -84,7 +84,7 @@ If you want to analyze only your `src/components` directory.
 npx vue-mess-detector analyze ./src/components
 ```
 
-If you want to ignore some rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
+If you want to ignore *some* rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
 
 ```bash
 npx vue-mess-detector analyze ./src --ignore=vue-caution,rrd
