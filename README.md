@@ -87,7 +87,13 @@ npx vue-mess-detector analyze ./src/components
 If you want to ignore some rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
 
 ```bash
-npx vue-mess-detector analyze ./src --ignore=vue-caution,rrd 
+npx vue-mess-detector analyze ./src --ignore=vue-caution,rrd
+```
+
+If you want to apply *only* some rulesets add the `--apply` flag with comma separated list of rulesets to apply.
+
+```bash
+npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 ```
 
 ## How to contribute?

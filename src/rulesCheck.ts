@@ -1,3 +1,4 @@
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { checkScriptLength } from './rules/rrd/scriptLength'
 import { checkPlainScript } from './rules/rrd/plainScript'
 import { checkElseCondition } from './rules/rrd/elseCondition'
@@ -22,14 +23,13 @@ import { checkShortVariableName } from './rules/rrd/shortVariableName'
 import { checkSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { checkComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
-import { SFCDescriptor } from '@vue/compiler-sfc'
-import { RuleSetType } from './rules/rules'
+import type { RuleSetType } from './rules/rules'
 import { checkDeepIndentation } from './rules/rrd/deepIndentation'
 
-export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: Array<RuleSetType>) => {
+export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
 
-  if (!ignore.includes('vue-essential')) {
+  if (apply.includes('vue-essential')) {
     checkSingleNameComponent(filePath)
     checkSimpleProp(script, filePath)
     checkGlobalStyle(descriptor.styles, filePath)
@@ -37,7 +37,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
     checkVifWithVfor(descriptor.template, filePath)
   }
 
-  if (!ignore.includes('vue-strong')) {
+  if (apply.includes('vue-strong')) {
     checkComponentFilenameCasing(filePath)
     checkPropNameCasing(script, filePath)
     checkComponentFiles(script, filePath)
@@ -49,15 +49,15 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, ignore: 
     checkFullWordComponentName(filePath)
   }
 
-  if (!ignore.includes('vue-recommended')) {
+  if (apply.includes('vue-recommended')) {
     checkTopLevelElementOrder(descriptor.source, filePath)
   }
 
-  if (!ignore.includes('vue-caution')) {
+  if (apply.includes('vue-caution')) {
     checkImplicitParentChildCommunication(script, filePath)
   }
 
-  if (!ignore.includes('rrd')) {
+  if (apply.includes('rrd')) {
     checkCyclomaticComplexity(script, filePath)
     checkDeepIndentation(script, filePath)
     checkElseCondition(script, filePath)

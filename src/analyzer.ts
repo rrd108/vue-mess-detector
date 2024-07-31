@@ -1,8 +1,10 @@
-import { parse } from '@vue/compiler-sfc'
+// eslint-disable-next-line unicorn/prefer-node-protocol
 import fs from 'fs'
+// eslint-disable-next-line unicorn/prefer-node-protocol
 import path from 'path'
-import { BG_INFO, BG_RESET, BG_OK } from './rules/asceeCodes'
-import { RuleSetType } from './rules/rules'
+import { parse } from '@vue/compiler-sfc'
+import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
+import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
 
@@ -30,23 +32,25 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
       if (dirs2Check.some(dir => filePath.includes(dir))) {
         walkSync(filePath, callback) // Recursive call for subdirectories
       }
-    } else if (file.endsWith('.vue')) {
+    }
+    else if (file.endsWith('.vue')) {
       callback(filePath)
     }
   }
 }
 
-export const analyze = (dir: string, ignore: Array<RuleSetType> = []) => {
+export const analyze = (dir: string, apply: Array<RuleSetType> = []) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
+  console.log(`Applying ${BG_INFO}${apply}${BG_RESET} and ignoring ${BG_INFO}${RULESETS.filter(rule => !apply.includes(rule))}${BG_RESET} rulesets`)
 
-  walkSync(dir, filePath => {
+  walkSync(dir, (filePath) => {
     if (filePath.includes('App.vue') || filePath.includes('app.vue')) {
       return
     }
 
     const content = fs.readFileSync(filePath, 'utf-8')
     const { descriptor } = parse(content)
-    checkRules(descriptor, filePath, ignore)
+    checkRules(descriptor, filePath, apply)
   })
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
