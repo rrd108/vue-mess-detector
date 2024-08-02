@@ -12,10 +12,19 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: 'Examples',
         items: [
           { text: 'Get Started', link: '/get-started' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
+          {
+            text: 'Rulesets',
+            items: [
+              { text: 'Vue Essential', link: '/rules/vue-essential' },
+              { text: 'Vue Strong', link: '/rules/vue-strong' },
+              { text: 'Vue Reccomended', link: '/rules/vue-reccomended' },
+              { text: 'Vue Caution', link: '/rules/vue-caution' },
+              { text: 'rrd', link: '/rules/rrd' },
+            ],
+          },
+          { text: 'Contribute', link: '/contribute' },
         ],
       },
     ],
@@ -23,5 +32,5 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/rrd108/vue-mess-detector' },
     ],
-  }
+  },
 })
