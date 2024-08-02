@@ -6,6 +6,9 @@ export default defineConfig({
   description: 'A static code analysis tool for detecting code smells and best practice violations in **Vue** and **Nuxt** projects.',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    search: {
+      provider: 'local'
+    },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Get Started', link: '/get-started' },
