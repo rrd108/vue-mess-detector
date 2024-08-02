@@ -1,4 +1,4 @@
-# rrd Rules
+# 💻 rrd Rules
 
 ## Cyclomatic Complexity
 

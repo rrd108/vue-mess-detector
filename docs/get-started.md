@@ -1,8 +1,8 @@
-# Getting Started
+#  Getting Started
 
 Check your Vue and Nuxt projects for code smells and best practice violations with Vue Mess Detector.
 
-## Installation
+## ⬇️ Installation
 
 ### As a vscode extension
 
@@ -12,7 +12,7 @@ Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter
 ext install WebMania.vue-mess-detector
 ```
 
-More info: https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector
+👉 https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector
 
 ### From npm registry
 
@@ -66,7 +66,7 @@ bunx jsr add @rrd/vue-mess-detector --dev
 ✨ Well done! A browser window should automatically open for `http://localhost:3000`
 :::
 
-## Usage
+## ⚙️ Usage
 
 If you want to analyze your full project directory.
 
@@ -92,26 +92,26 @@ If you want to apply *only* some rulesets add the `--apply` flag with comma sepa
 npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 ```
 
-## Rulesets
+## 📋 Rulesets
 
 There are five rulesets available in Vue Mess Detector. Each ruleset has a different purpose and level of strictness.
 
-### Vue Essential Ruleset
+### ⭐ Vue Essential Ruleset ~ [vue-essential](/rules/vue-essential)
 
-[vue-essential](/rules/vue-essential) - These rules help prevent errors, so learn and abide by them at all costs. Exceptions may exist, but should be very rare and only be made by those with expert knowledge of both JavaScript and Vue.
+These rules help prevent errors, so learn and abide by them at all costs. Exceptions may exist, but should be very rare and only be made by those with expert knowledge of both JavaScript and Vue.
 
-### Vue Strongly Recommended Ruleset
+### 👍 Vue Strongly Recommended Ruleset ~ [vue-strong](/rules/vue-strong)
 
-[vue-strong](/rules/vue-strong) - **Strongly Recommended** rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
+**Strongly Recommended** rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
 
-### Vue Recommended Ruleset
+### ✅ Vue Recommended Ruleset ~ [vue-recommended](/rules/vue-recommended)
 
-[vue-recommended](/rules/vue-reccomended) - Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though!
+Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though!
 
-### Vue Caution Ruleset
+### ⚠️ Vue Caution Ruleset ~ [vue-caution](/rules/vue-caution)
 
-[vue-caution](/rules/vue-caution) - Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
+Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
 
-### rrd Ruleset
+### 💻 rrd Ruleset ~ [rrd](/rules/rrd)
 
-[rrd](/rules/rrd) - Opinionated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.
+Opinionated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.
