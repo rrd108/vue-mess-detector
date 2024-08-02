@@ -63,7 +63,7 @@ bunx jsr add @rrd/vue-mess-detector --dev
 :::
 
 ::: tip
-✨ Well done! A browser window should automatically open for <http://localhost:3000>
+✨ Well done! A browser window should automatically open for `http://localhost:3000`
 :::
 
 ## Usage
@@ -106,7 +106,7 @@ There are five rulesets available in Vue Mess Detector. Each ruleset has a diffe
 
 ### Vue Recommended Ruleset
 
-[vue-recommended](/rules/vue-recommended) - Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though!
+[vue-recommended](/rules/vue-reccomended) - Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though!
 
 ### Vue Caution Ruleset
 
