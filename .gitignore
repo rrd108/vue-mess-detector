@@ -1,3 +1,4 @@
 node_modules
 test
 docs/.vitepress/cache
+docs/.vitepress/dist
