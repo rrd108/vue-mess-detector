@@ -114,4 +114,4 @@ There are five rulesets available in Vue Mess Detector. Each ruleset has a diffe
 
 ### rrd Ruleset
 
-[rrd](/rules/rrd) - Opiniated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.
+[rrd](/rules/rrd) - Opinionated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.

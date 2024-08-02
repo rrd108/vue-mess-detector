@@ -22,7 +22,7 @@ export default defineConfig({
             items: [
               { text: 'Vue Essential', link: '/rules/vue-essential' },
               { text: 'Vue Strong', link: '/rules/vue-strong' },
-              { text: 'Vue Reccomended', link: '/rules/vue-reccomended' },
+              { text: 'Vue Recommended', link: '/rules/vue-recommended' },
               { text: 'Vue Caution', link: '/rules/vue-caution' },
               { text: 'rrd', link: '/rules/rrd' },
             ],
