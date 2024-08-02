@@ -15,12 +15,18 @@ hero:
       link: https://github.com/rrd108/vue-mess-detector
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 🛸 Vscode Extension
+    details: Available as a vscode extension
+  - title: 😻 NPM and JSR Support
+    details: Install from your favourite JavaScript package registry
+  - title: 🤖 PNPM, Bun, Yarn and NPM
+    details: Use with your favourite package manager
+  - title: 👉🏻 The Folders You Want
+    details: Check your whole project or just a folder
+  - title: 🧲 The Rules You Want
+    details: Run all checks or ignore the ones you don't like, or apply only the ones you want
+  - title: 🔩 Focus on Important Rules
+    details: 20+ rules supported
 ---
 
 <Contributors />
