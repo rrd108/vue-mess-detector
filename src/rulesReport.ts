@@ -15,6 +15,7 @@ import { reportSelfClosingComponents } from './rules/vue-strong/selfClosingCompo
 import { reportDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { reportFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
 import { reportTopLevelElementOrder } from './rules/vue-recommended/topLevelElementOrder'
+import { reportElementAttributeOrder } from './rules/vue-recommended/elementAttributeOrder'
 import { reportTooManyProps } from './rules/rrd/tooManyProps'
 import { reportFunctionSize } from './rules/rrd/functionSize'
 import { reportParameterCount } from './rules/rrd/parameterCount'
@@ -47,6 +48,7 @@ export const reportRules = () => {
 
   // vue-recommended rules
   errors += reportTopLevelElementOrder()
+  errors += reportElementAttributeOrder()
 
   // vue-caution rules
   errors += reportImplicitParentChildCommunication()
