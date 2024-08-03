@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Vue Mess Detector',
   description: 'A static code analysis tool for detecting code smells and best practice violations in **Vue** and **Nuxt** projects.',
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }], ['link', { rel: 'stylesheet', href: '/styles.css' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     search: {

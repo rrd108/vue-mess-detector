@@ -29,5 +29,7 @@ features:
     details: 20+ rules supported
 ---
 
+<span id="morphBlur"></span>
+
 <Contributors />
 
