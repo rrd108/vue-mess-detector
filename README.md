@@ -58,7 +58,7 @@ bun add @rrd/vue-mess-detector --dev
 deno add @rrd/vue-mess-detector
 
 # using pnpm
-pnpm pnpm dlx jsr add @rrd/vue-mess-detector -D
+pnpm dlx jsr add @rrd/vue-mess-detector -D
 
 # using yarn
 yarn dlx jsr add @rrd/vue-mess-detector -D
