@@ -4,7 +4,7 @@
 Checks if props and events are used for parent-child component communication, instead of this.$parent or mutating props. &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication
 
-## Why it's good to follow this rule?
+## ❓ Why it's good to follow this rule?
 
 - **Predictability:** Using props and events for parent-child communication makes the data flow predictable. Developers can easily trace the flow of data between components, leading to fewer bugs and easier debugging.
 - **Encapsulation:** Components remain more encapsulated, with clear interfaces for data input (props) and output (events).
