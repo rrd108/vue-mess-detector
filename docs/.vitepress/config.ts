@@ -23,7 +23,9 @@ export default defineConfig({
               { text: 'Vue Essential', link: '/rules/vue-essential' },
               { text: 'Vue Strong', link: '/rules/vue-strong' },
               { text: 'Vue Recommended', link: '/rules/vue-recommended' },
-              { text: 'Vue Caution', link: '/rules/vue-caution' },
+              { text: 'Vue Caution', link: '/rules/vue-caution', items:[
+                { text: 'Implicit parent-child communication', link: '/rules/vue-caution/implicit-parent-child-communication' },
+              ] },
               { text: 'rrd', link: '/rules/rrd' },
             ],
           },
