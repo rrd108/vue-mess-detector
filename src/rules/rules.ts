@@ -1,7 +1,7 @@
 export const RULES = {
   'vue-caution': ['implicitParentChildCommunication'],
   'vue-essential': ['globalStyle', 'simpleProp', 'singleNameComponent', 'vforNoKey', 'vifWithVfor'],
-  'vue-recommended': ['topLevelElementOrder'],
+  'vue-recommended': ['topLevelElementOrder', 'elementAttributeOrder'],
   'vue-strong': [
     'componentFilenameCasing',
     'componentFiles',
@@ -11,9 +11,9 @@ export const RULES = {
     'selfClosingComponents',
     'simpleComputed',
     'templateSimpleExpression',
-    'fullWordComponentName'
+    'fullWordComponentName',
   ],
-  rrd: [
+  'rrd': [
     'cyclomaticComplexity',
     'elseCondition',
     'functionSize',

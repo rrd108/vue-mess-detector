@@ -1,4 +1,5 @@
 node_modules
 test
+.idea
 docs/.vitepress/cache
 docs/.vitepress/dist
