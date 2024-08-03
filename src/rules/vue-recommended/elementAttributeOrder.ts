@@ -71,7 +71,7 @@ const reportElementAttributeOrder = () => {
 
     console.log(`\n${TEXT_INFO}vue-recommended${TEXT_RESET} ${BG_ERR}element attribute order ${BG_RESET} detected in ${fileCount} files.`)
     console.log(
-            `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
+            `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
     )
     elementAttributeOrderFiles.forEach((file) => {
       console.log(`- ${file.message} 🚨`)
