@@ -10,7 +10,7 @@ describe('checkElementAttributeOrder', () => {
     const template = {
       content: `
                 <template>
-                    <div id="app" v-if="isVisible" ref="myDiv" v-on:click="handleClick"></div>
+                    <div v-if="isVisible" id="app" ref="myDiv" v-on:click="handleClick"></div>
                 </template>
             `,
     } as SFCTemplateBlock
@@ -33,24 +33,24 @@ describe('checkElementAttributeOrder', () => {
     expect(reportElementAttributeOrder()).toBe(1)
     expect(mockConsoleLog).toHaveBeenCalled()
     expect(mockConsoleLog).toHaveBeenLastCalledWith(
-            `- ${filename} tag has attributes out of order ${BG_WARN}(input)${BG_RESET}`,
+            `- ${filename} tag has attributes out of order ${BG_WARN}(input)${BG_RESET} 🚨`,
     )
   })
 
-  it('should not report files where elements attribute order is incorrect', () => {
+  it('should not report files where elements attribute order is incorrect 2', () => {
     const template = {
       content: `
                 <template>
-                    <div v-if="isVisible" id="app" ref="myDiv" v-on:click="handleClick"></div>
+                    <div id="app" v-if="isVisible" ref="myDiv" v-on:click="handleClick"></div>
                 </template>
             `,
     } as SFCTemplateBlock
     const filename = 'element-attribute-order-incorrect-2.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder()).toBe(1)
+    expect(reportElementAttributeOrder()).toBe(2)
     expect(mockConsoleLog).toHaveBeenCalled()
     expect(mockConsoleLog).toHaveBeenLastCalledWith(
-            `- ${filename} tag has attributes out of order ${BG_WARN}(div)${BG_RESET}`,
+            `- ${filename} tag has attributes out of order ${BG_WARN}(div)${BG_RESET} 🚨`,
     )
   })
 })

@@ -1,6 +1,6 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_INFO, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import { BG_ERR, BG_INFO, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 
 /**
  * Defines complexity thresholds.
@@ -11,7 +11,7 @@ const COMPLEXITY_HIGH = 10
 /**
  * Array to store files with medium or high cyclomatic complexity.
  */
-const cyclomaticComplexityFiles: { fileName: string; cyclomaticComplexity: number }[] = []
+const cyclomaticComplexityFiles: { fileName: string, cyclomaticComplexity: number }[] = []
 
 /**
  * Function to check cyclomatic complexity of a SFC script block.
@@ -35,12 +35,12 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
   const _whileCount = script.content.match(_while)
   const _caseCount = script.content.match(_case)
 
-  const cyclomaticComplexity =
-    (_ifCount?.length || 0) +
-    (_elseCount?.length || 0) +
-    (_forCount?.length || 0) +
-    (_whileCount?.length || 0) +
-    (_caseCount?.length || 0)
+  const cyclomaticComplexity
+    = (_ifCount?.length || 0)
+    + (_elseCount?.length || 0)
+    + (_forCount?.length || 0)
+    + (_whileCount?.length || 0)
+    + (_caseCount?.length || 0)
 
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
     cyclomaticComplexityFiles.push({ fileName: file, cyclomaticComplexity })
@@ -55,14 +55,14 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
 const reportCyclomaticComplexity = () => {
   if (cyclomaticComplexityFiles.length > 0) {
     console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_INFO}cyclomaticComplexity${BG_RESET} is above moderate in ${cyclomaticComplexityFiles.length} files.`
+      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_INFO}cyclomaticComplexity${BG_RESET} is above moderate in ${cyclomaticComplexityFiles.length} files.`,
     )
     console.log(`👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`)
-    cyclomaticComplexityFiles.forEach(file => {
+    cyclomaticComplexityFiles.forEach((file) => {
       console.log(
         `- ${file.fileName} ${file.cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
           file.cyclomaticComplexity
-        })${BG_RESET}`
+        })${BG_RESET}`,
       )
     })
   }

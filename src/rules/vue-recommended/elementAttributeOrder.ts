@@ -30,22 +30,26 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
   if (!template)
     return
 
+  // Remove the <template> tags to avoid checking them
+  const innerTemplate = template.content.replace(/<\/?template>/g, '')
+
   const tagRegex = /<(\w+)(\s[^>]+)?>/g
-  const attributeRegex = /(\w+(-\w+)*="[^"]*")/g
+  const attributeRegex = /(\w+(?:-\w+)*)(?:="[^"]*")?/g
 
   let match
-  while ((match = tagRegex.exec(template.content)) !== null) {
+  while ((match = tagRegex.exec(innerTemplate)) !== null) {
     const tagName = match[1]
     const attributeString = match[2]
 
     if (attributeString) {
-      const attributes = Array.from(
-        attributeString.matchAll(attributeRegex),
-        attr => attr[0].split('=')[0],
-      )
+      // Extract attribute names from the attribute string
+      const attributes = Array.from(attributeString.matchAll(attributeRegex), attr => attr[1])
+
+      // Filter attributes to only includes those that are in the ATTRIBUTE_ORDER constant array
+      const filteredAttrs = attributes.filter(item => ATTRIBUTE_ORDER.includes((item)))
 
       let lastIdx = -1
-      for (const attr of attributes) {
+      for (const attr of filteredAttrs) {
         const currIdx = ATTRIBUTE_ORDER.indexOf(attr)
         if (currIdx !== -1 && currIdx < lastIdx) {
           elementAttributeOrderFiles.push({
