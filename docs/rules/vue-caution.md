@@ -1,3 +1,3 @@
-# Vue Caution Rules
+# ⚠️ Vue Caution Rules
 
 TODO In progress
