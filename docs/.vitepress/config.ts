@@ -38,6 +38,7 @@ export default defineConfig({
                 { text: 'Template Simple Expressions', link: '/rules/vue-strong/template-simple-expression' },
               ] },
               { text: 'Vue Recommended', link: '/rules/vue-recommended', collapsed: true, items: [
+                { text: 'Element Attribute Order', link: '/rules/vue-recommended/element-attribute-order' },
                 { text: 'SFC Top-level Element Order', link: '/rules/vue-recommended/top-level-element-order' },
               ] },
               { text: 'Vue Caution', link: '/rules/vue-caution', collapsed: true, items: [
