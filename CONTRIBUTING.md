@@ -91,7 +91,7 @@ If you want to test your feature with your own set of files:
 2. **Run the Analyzer**
    - Execute the analyzer on your specified path:
      ```bash
-     npx vue-mess-detector analyze path/to/files
+     yarn analyze path/to/files
      ```
 
 ---
