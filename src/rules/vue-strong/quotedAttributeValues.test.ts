@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { SFCDescriptor } from '@vue/compiler-sfc'
-import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './quotedAttribueValues'
+import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './quotedAttributeValues'
 import { BG_RESET, BG_WARN } from '../asceeCodes'
 
 const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
