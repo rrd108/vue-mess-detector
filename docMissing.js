@@ -1,11 +1,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-function camelToKebab(str) {
-    return str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
-}
+const camelToKebab = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
-async function checkDocumentation(srcDir, docsDir) {
+const checkDocumentation = async (srcDir, docsDir) => {
     const missingDocs = [];
 
     async function traverse(currentPath) {
@@ -41,7 +39,7 @@ async function checkDocumentation(srcDir, docsDir) {
 const srcDirectory = './src/rules';
 const docsDirectory = './docs/rules';
 
-async function main() {
+const checkDocs = async () => {
     try {
         const missingDocumentation = await checkDocumentation(srcDirectory, docsDirectory);
 
@@ -58,4 +56,4 @@ async function main() {
     }
 }
 
-main();
+checkDocs()
