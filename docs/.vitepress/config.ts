@@ -30,6 +30,7 @@ export default defineConfig({
               ] },
               { text: 'Vue Strong', link: '/rules/vue-strong', collapsed: true, items: [
                 { text: 'Component Filename Casing', link: '/rules/vue-strong/component-filename-casing' },
+                { text: 'Component Files', link: '/rules/vue-strong/component-files' },
                 { text: 'Directive Shorthands', link: '/rules/vue-strong/directive-shorthands' },
                 { text: 'Full-word component names', link: '/rules/vue-strong/full-word-component-name' },
                 { text: 'Prop Name Casing', link: '/rules/vue-strong/prop-name-casing' },
