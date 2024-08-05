@@ -26,6 +26,7 @@ export default defineConfig({
                 { text: 'Global Style', link: '/rules/vue-essential/global-style' },
                 { text: 'Keyed v-for', link: '/rules/vue-essential/vfor-no-key' },
                 { text: 'Simple Props Definition', link: '/rules/vue-essential/simple-prop' },
+                { text: 'Single Name Components', link: '/rules/vue-essential/single-name-component' },
                 { text: 'v-if With v-for', link: '/rules/vue-essential/vif-with-vfor' },
               ] },
               { text: 'Vue Strong', link: '/rules/vue-strong', collapsed: true, items: [
