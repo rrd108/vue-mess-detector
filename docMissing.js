@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-function camelToSnake(str) {
+function camelToKebab(str) {
     return str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 }
 
@@ -19,10 +19,10 @@ async function checkDocumentation(srcDir, docsDir) {
                 await traverse(fullPath);
             } else if (currentPath != './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')) {
                 const baseName = path.basename(file, '.ts');
-                const snakeCaseName = camelToSnake(baseName) + '.md';
+                const kebabCaseName = camelToKebab(baseName) + '.md';
 
                 const relativePath = path.relative(srcDir, currentPath);
-                const expectedDocPath = path.join(docsDir, relativePath, snakeCaseName);
+                const expectedDocPath = path.join(docsDir, relativePath, kebabCaseName);
 
                 try {
                     await fs.access(expectedDocPath);
