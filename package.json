@@ -29,6 +29,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "docs:dev": "vitepress dev docs",
+    "docs:missing": "node ./docMissing.js",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
