@@ -1,6 +1,8 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
+const allRules = []
+
 const camelToKebab = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
 const checkDocumentation = async (srcDir, docsDir) => {
@@ -19,8 +21,9 @@ const checkDocumentation = async (srcDir, docsDir) => {
       else if (currentPath != './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')) {
         const baseName = path.basename(file, '.ts')
         const kebabCaseName = `${camelToKebab(baseName)}.md`
-
+        
         const relativePath = path.relative(srcDir, currentPath)
+        allRules.push(`${relativePath}/${kebabCaseName}`)
         const expectedDocPath = path.join(docsDir, relativePath, kebabCaseName)
 
         try {
@@ -60,4 +63,49 @@ const checkDocs = async () => {
   }
 }
 
-checkDocs()
+await checkDocs()
+
+// check if any rules missing from the docs' sidebar
+const configString = await fs.readFile('./docs/.vitepress/config.ts', 'utf-8')
+
+const extractSidebar = (configString) => {    // TODO replace with regex
+  const start = configString.indexOf('sidebar: [')
+  if (start === -1)
+    return null
+
+  let end = start + 'sidebar: ['.length
+  let openBrackets = 1
+
+  while (openBrackets > 0 && end < configString.length) {
+    if (configString[end] === '[')
+      openBrackets++
+    if (configString[end] === ']')
+      openBrackets--
+    end++
+  }
+
+  return configString.slice(start + 'sidebar: '.length, end)
+}
+
+const sidebarArray = extractSidebar(configString)
+// eslint-disable-next-line no-eval
+const sidebar = eval(sidebarArray)
+const sidebarRules = []
+sidebar[0].items.find(item => item.text == 'Rulesets').items.forEach(ruleset => {
+  ruleset.items.forEach(rule => {
+    sidebarRules.push(`${rule.link.replace('/rules/','')}.md`)
+  })
+})
+const sidebarMissingRules = []
+allRules.forEach(rule => {
+  if (!sidebarRules.includes(rule)) {
+    sidebarMissingRules.push(rule)
+  }
+})
+
+if (sidebarMissingRules.length > 0) {
+  console.log(`Missing ${sidebarMissingRules.length} rules from the sidebar:`)
+  sidebarMissingRules.forEach(rule => {
+    console.log(`- ${rule}`)
+  })
+}
