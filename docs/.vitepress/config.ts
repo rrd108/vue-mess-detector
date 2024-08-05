@@ -31,6 +31,7 @@ export default defineConfig({
               { text: 'Vue Strong', link: '/rules/vue-strong', collapsed: true, items: [
                 { text: 'Component Filename Casing', link: '/rules/vue-strong/component-filename-casing' },
                 { text: 'Directive Shorthands', link: '/rules/vue-strong/directive-shorthands' },
+                { text: 'Full-word component names', link: '/rules/vue-strong/full-word-component-name' },
                 { text: 'Prop Name Casing', link: '/rules/vue-strong/prop-name-casing' },
                 { text: 'Quoted Attribute Values', link: '/rules/vue-strong/quoted-attribute-values' },
                 { text: 'Self Closing Components', link: '/rules/vue-strong/self-closing-components' },
