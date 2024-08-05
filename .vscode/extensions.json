@@ -10,8 +10,6 @@
     // Showing todo comments
     "gruntfuggly.todo-tree",
     "aaron-bond.better-comments",
-    // Collaborating
-    "ms-vsliveshare.vsliveshare",
     // Language Support
     "VisualStudioExptTeam.vscodeintellicode",
     // Test
