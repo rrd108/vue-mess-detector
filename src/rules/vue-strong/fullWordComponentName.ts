@@ -5,6 +5,7 @@ import { getUniqueFilenameCount } from "../../helpers";
 type FullWordComponentNames = { filename: string, filePath: string };
 
 const fullWordComponentNames: FullWordComponentNames[] = [];
+const MINIMAL_CONSONANTS = 3
 
 const checkFullWordComponentName = (filePath: string) => {
   // regular expression to match `filename.vue` pattern
@@ -26,7 +27,7 @@ const checkFullWordComponentName = (filePath: string) => {
 
     const consonantsMatch = filename.match(consonantsRegex);
 
-    if (!consonantsMatch || consonantsMatch.length < 3) {
+    if (!consonantsMatch || consonantsMatch.length < MINIMAL_CONSONANTS) {
       fullWordComponentNames.push({ filename, filePath });
     }
   }
