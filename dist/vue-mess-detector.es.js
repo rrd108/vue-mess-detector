@@ -1518,7 +1518,7 @@ const Ho = [
 
 ${re}Analyzing Vue files in ${e}${$}`);
   const n = Le.filter((o) => !t.includes(o));
-  console.log(`Applying ${t.length} rules ${re}${t}${$} and ignoring ${n.length} rules ${re}${n}${$} rulesets`), Wt(e, (o) => {
+  console.log(`Applying ${t.length} rulesets ${re}${t}${$} and ignoring ${n.length} rulesets ${re}${n}${$} `), Wt(e, (o) => {
     if (o.includes("App.vue") || o.includes("app.vue"))
       return;
     const c = et.readFileSync(o, "utf-8"), { descriptor: a } = sn(c);
