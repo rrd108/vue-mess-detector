@@ -41,7 +41,8 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
 
 export const analyze = (dir: string, apply: Array<RuleSetType> = []) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
-  console.log(`Applying ${BG_INFO}${apply}${BG_RESET} and ignoring ${BG_INFO}${RULESETS.filter(rule => !apply.includes(rule))}${BG_RESET} rulesets`)
+  const ignore = RULESETS.filter(rule => !apply.includes(rule))
+  console.log(`Applying ${apply.length} rulesets ${BG_INFO}${apply}${BG_RESET} and ignoring ${ignore.length} rulesets ${BG_INFO}${ignore}${BG_RESET} `)
 
   walkSync(dir, (filePath) => {
     if (filePath.includes('App.vue') || filePath.includes('app.vue')) {
