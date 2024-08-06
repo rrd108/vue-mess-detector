@@ -119,20 +119,20 @@ const main = async () => {
     const { allRules, missingDocs, rulesetIndexes } = await findMissingDocs(srcDirectory, docsDirectory)
 
     if (missingDocs.length > 0) {
-      console.log(`Missing ${missingDocs.length} documentation files:`)
+      console.log(`🙀 Missing ${missingDocs.length} documentation files:`)
       missingDocs.forEach(({ srcFile, expectedDoc }) => {
         console.log(`- ${srcFile} -> ${expectedDoc}`)
       })
     }
     else {
-      console.log('All documentation files are present.')
+      console.log('👉 All documentation files are present.')
     }
 
     const sidebarRules = await extractSidebarRules(configPath)
     const sidebarMissingRules = allRules.filter(rule => !sidebarRules.includes(rule))
 
     if (sidebarMissingRules.length > 0) {
-      console.log(`Missing ${sidebarMissingRules.length} rules from the sidebar:`)
+      console.log(`🙀 Missing ${sidebarMissingRules.length} rules from the sidebar:`)
       sidebarMissingRules.forEach((rule) => {
         console.log(`- ${rule}`)
       })
@@ -140,7 +140,7 @@ const main = async () => {
 
     const missingFromIndex = await checkIndexFiles(docsDirectory, rulesetIndexes);
     if (missingFromIndex.length > 0) {
-      console.log('Missing rules from index files:');
+      console.log('🙀 Missing rules from index files:');
       missingFromIndex.forEach(({ rulesetName, missingRules, indexMissing }) => {
         if (indexMissing) {
           console.log(`- ${rulesetName}: index.md file is missing`);
@@ -150,11 +150,11 @@ const main = async () => {
         }
       });
     } else {
-      console.log('All rules are properly listed in their respective index files.');
+      console.log('👉 All rules are properly listed in their respective index files.');
     }
   }
   catch (error) {
-    console.error('An error occurred:', error)
+    console.error('🙀 An error occurred:', error)
   }
 }
 
