@@ -18,6 +18,7 @@ const fileExists = async (filePath) => {
 const findMissingDocs = async (srcDir, docsDir) => {
   const allRules = []
   const missingDocs = []
+  const rulesetIndexes = new Map();
 
   async function traverseDirectory(currentPath) {
     const files = await fs.readdir(currentPath)
@@ -40,12 +41,18 @@ const findMissingDocs = async (srcDir, docsDir) => {
         if (!await fileExists(expectedDocPath)) {
           missingDocs.push({ srcFile: fullPath, expectedDoc: expectedDocPath })
         }
+
+        const rulesetName = path.basename(relativePath);
+        if (!rulesetIndexes.has(rulesetName)) {
+          rulesetIndexes.set(rulesetName, []);
+        }
+        rulesetIndexes.get(rulesetName).push(kebabCaseName);
       }
     }
   }
 
   await traverseDirectory(srcDir)
-  return { allRules, missingDocs }
+  return { allRules, missingDocs, rulesetIndexes }
 }
 
 const extractSidebarString = (configString) => {
@@ -80,13 +87,36 @@ const extractSidebarRules = async (configPath) => {
     )
 }
 
+const checkIndexFiles = async (docsDir, rulesetIndexes) => {
+  const missingFromIndex = [];
+
+  for (const [rulesetName, rules] of rulesetIndexes) {
+    const indexPath = path.join(docsDir, rulesetName, 'index.md');
+    
+    if (await fileExists(indexPath)) {
+      const indexContent = await fs.readFile(indexPath, 'utf-8');
+      const indexLinks = indexContent.match(/\[.+?\]\(\.\/(.+?\.md)\)/g) || [];
+      const indexedRules = indexLinks.map(link => link.match(/\(\.\/(.+?\.md)\)/)[1]);
+
+      const missingRules = rules.filter(rule => !indexedRules.includes(rule));
+      if (missingRules.length > 0) {
+        missingFromIndex.push({ rulesetName, missingRules });
+      }
+    } else {
+      missingFromIndex.push({ rulesetName, missingRules: rules, indexMissing: true });
+    }
+  }
+
+  return missingFromIndex;
+}
+
 const main = async () => {
   const srcDirectory = './src/rules'
   const docsDirectory = './docs/rules'
   const configPath = './docs/.vitepress/config.ts'
 
   try {
-    const { allRules, missingDocs } = await findMissingDocs(srcDirectory, docsDirectory)
+    const { allRules, missingDocs, rulesetIndexes } = await findMissingDocs(srcDirectory, docsDirectory)
 
     if (missingDocs.length > 0) {
       console.log(`Missing ${missingDocs.length} documentation files:`)
@@ -106,6 +136,21 @@ const main = async () => {
       sidebarMissingRules.forEach((rule) => {
         console.log(`- ${rule}`)
       })
+    }
+
+    const missingFromIndex = await checkIndexFiles(docsDirectory, rulesetIndexes);
+    if (missingFromIndex.length > 0) {
+      console.log('Missing rules from index files:');
+      missingFromIndex.forEach(({ rulesetName, missingRules, indexMissing }) => {
+        if (indexMissing) {
+          console.log(`- ${rulesetName}: index.md file is missing`);
+        } else {
+          console.log(`- ${rulesetName}:`);
+          missingRules.forEach(rule => console.log(`  - ${rule}`));
+        }
+      });
+    } else {
+      console.log('All rules are properly listed in their respective index files.');
     }
   }
   catch (error) {
