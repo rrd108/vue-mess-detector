@@ -16,7 +16,7 @@ import { checkSelfClosingComponents } from './rules/vue-strong/selfClosingCompon
 import { checkDirectiveShorthands } from './rules/vue-strong/directiveShorthands'
 import { checkFullWordComponentName } from './rules/vue-strong/fullWordComponentName'
 import { checkTopLevelElementOrder } from './rules/vue-recommended/topLevelElementOrder'
-import { checkElementAttributeOrder } from "./rules/vue-recommended/elementAttributeOrder"
+import { checkElementAttributeOrder } from './rules/vue-recommended/elementAttributeOrder'
 import { checkTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount } from './rules/rrd/parameterCount'
@@ -26,6 +26,7 @@ import { checkComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import type { RuleSetType } from './rules/rules'
 import { checkDeepIndentation } from './rules/rrd/deepIndentation'
+import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -57,6 +58,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
 
   if (apply.includes('vue-caution')) {
     checkImplicitParentChildCommunication(script, filePath)
+    checkElementSelectorsWithScoped(descriptor.styles, filePath)
   }
 
   if (apply.includes('rrd')) {

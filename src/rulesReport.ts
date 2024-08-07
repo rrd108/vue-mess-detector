@@ -24,6 +24,7 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
+import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 
 export const reportRules = () => {
   let errors = 0
@@ -52,6 +53,7 @@ export const reportRules = () => {
 
   // vue-caution rules
   errors += reportImplicitParentChildCommunication()
+  errors += reportElementSelectorsWithScoped()
 
   // rrd rules
   errors += reportCyclomaticComplexity()

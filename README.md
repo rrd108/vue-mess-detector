@@ -107,5 +107,3 @@ npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 ## How to contribute?
 
 See [CONTRIBUTING.md](https://github.com/rrd108/vue-mess-detector/blob/main/CONTRIBUTING.md) file.
-
-
