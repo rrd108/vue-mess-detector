@@ -4,7 +4,22 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Vue Mess Detector',
   description: 'A static code analysis tool for detecting code smells and best practice violations in **Vue** and **Nuxt** projects.',
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }], ['link', { rel: 'stylesheet', href: '/styles.css' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'stylesheet', href: '/styles.css' }],
+    [
+      'script',
+      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-4WQ5DGB03H' },
+    ],
+    [
+      'script',
+      {},
+    `window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4WQ5DGB03H');`,
+    ],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     search: {
