@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const vifWithVforFiles: { filePath: string }[] = []
@@ -44,10 +44,9 @@ const reportVifWithVfor = () => {
     vifWithVforFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-essential ~ v-if used with v-for${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

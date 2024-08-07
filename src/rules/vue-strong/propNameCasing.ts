@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { createRegExp, letter, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const propNameCasingFiles: { filePath: string }[] = []
@@ -40,10 +40,9 @@ const reportPropNameCasing = () => {
     propNameCasingFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-strong ~ prop names are not camelCased${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

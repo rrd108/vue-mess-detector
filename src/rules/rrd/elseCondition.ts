@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const elseConditionFiles: { fileName: string, elseCount: number }[] = []
@@ -24,10 +24,9 @@ const reportElseCondition = () => {
     elseConditionFiles.forEach((file) => {
       offenses.push({
         file: file.fileName,
-        rule: `${BG_WARN}rrd ~ else conditions${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET}`,
-        message: `${BG_WARN}(${file.elseCount})${BG_RESET} 🚨`,
+        message: `else clauses found ${BG_ERR}(${file.elseCount})${BG_RESET} 🚨`,
       })
     })
   }

@@ -1,5 +1,5 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const globalStyleFiles: { filePath: string }[] = []
@@ -22,10 +22,9 @@ const reportGlobalStyle = () => {
     globalStyleFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-essential ~ global style${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-essential ~ global style${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

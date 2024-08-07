@@ -3,7 +3,7 @@ export type GroupBy = 'rule' | 'file'
 export interface Offense {
   file: string
   rule: string
-  title: string
+  title?: string
   description: string
   message: string
 }

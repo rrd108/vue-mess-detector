@@ -45,10 +45,10 @@ const reportParameterCount = () => {
     parameterCountFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}rrd ~ parameter count${BG_RESET}`,
+        rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
         title: '',
         description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
-        message: `${file.funcName}() has ${BG_WARN}${file.paramsCount}${BG_RESET} parameters 🚨`,
+        message: `function ${BG_WARN}${file.funcName}${BG_RESET} has ${BG_WARN}${file.paramsCount}${BG_RESET} parameters 🚨`,
       })
     })
   }

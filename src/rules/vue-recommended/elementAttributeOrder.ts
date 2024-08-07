@@ -1,7 +1,6 @@
 /* eslint-disable no-cond-assign */
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 interface ElementAttributeOrder { filename: string, message: string }
@@ -55,7 +54,7 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
         if (currIdx !== -1 && currIdx < lastIdx) {
           elementAttributeOrderFiles.push({
             filename: filePath,
-            message: `${filePath} tag has attributes out of order ${BG_WARN}(${tagName})${BG_RESET}`,
+            message: `tag has attributes out of order ${BG_WARN}(${tagName})${BG_RESET}`,
           })
           break
         }
@@ -72,8 +71,7 @@ const reportElementAttributeOrder = () => {
     elementAttributeOrderFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-recommended ~ element attribute order${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
         message: `${file.message} 🚨`,
       })

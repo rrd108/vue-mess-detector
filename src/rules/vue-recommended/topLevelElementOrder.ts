@@ -1,5 +1,5 @@
 import type { Offense } from '../../types'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 
 interface TopLevelElementOrder { filename: string }
 
@@ -41,10 +41,9 @@ const reportTopLevelElementOrder = () => {
     topLevelElementOrderFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-recommended ~ top level element order${BG_RESET}`,
-        title: `\n${TEXT_INFO}vue-recommended${TEXT_RESET} ${BG_WARN}SFC top-level element order${BG_RESET} detected in ${topLevelElementOrderFiles.length} files.`,
+        rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
-        message: '',
+        message: '🚨',
       })
     })
   }

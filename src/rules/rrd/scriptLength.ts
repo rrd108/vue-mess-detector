@@ -23,8 +23,7 @@ const reportScriptLength = () => {
     longScriptFiles.forEach((file) => {
       offenses.push({
         file: file.fileName,
-        rule: `${BG_WARN}rrd ~ Long <script> blocks${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ Long <script> blocks${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`,
         message: `${file.scriptLength > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
           file.scriptLength

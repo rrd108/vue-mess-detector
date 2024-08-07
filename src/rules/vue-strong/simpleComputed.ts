@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { Offense } from '../../types'
 
@@ -22,7 +22,7 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string) =>
       if (match.split('\n').length > MAX_COMPUTED_LENGTH) {
         const firstLine = match.split('\n')[0]
         const lineNumber = getLineNumber(script.content, firstLine)
-        complicatedComputedTargets.push({ filename: filePath, message: `${filePath}:${lineNumber} ${BG_WARN}computed${BG_RESET}` })
+        complicatedComputedTargets.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}computed${BG_RESET}` })
         complicatedComputedFiles.push({ filePath })
         if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
           complicatedComputedFiles.push({ filePath })
@@ -39,8 +39,7 @@ const reportSimpleComputed = () => {
     complicatedComputedTargets.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-strong ~ complicated computed property${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ complicated computed property${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`,
         message: `${file.message} 🚨`,
       })

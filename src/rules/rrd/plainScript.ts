@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const plainScriptFiles: string[] = []
@@ -18,10 +18,9 @@ const reportPlainScript = () => {
     plainScriptFiles.forEach((file) => {
       offenses.push({
         file,
-        rule: `${BG_WARN}rrd ~ Plain <script> blocks${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ Plain <script> blocks${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET}`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

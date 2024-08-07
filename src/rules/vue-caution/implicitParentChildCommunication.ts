@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { createRegExp, exactly, global } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { Offense } from '../../types'
 
@@ -30,7 +30,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
       const lineNumber = getLineNumber(script.content.trim(), definedProps)
       implicitParentChildCommunicationFiles.push({
         filename: filePath,
-        message: `${filePath}#${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,
+        message: `line #${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,
       })
     }
   }
@@ -41,7 +41,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
     const lineNumber = getLineNumber(script.content.trim(), parentMatch[0])
     implicitParentChildCommunicationFiles.push({
       filename: filePath,
-      message: `${filePath}#${lineNumber} ${BG_WARN}(${parentMatch[0]})${BG_RESET}`,
+      message: `line #${lineNumber} ${BG_WARN}(${parentMatch[0]})${BG_RESET}`,
     })
   }
 }
@@ -53,8 +53,7 @@ const reportImplicitParentChildCommunication = () => {
     implicitParentChildCommunicationFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-caution ~ implicit parent-child communication${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
         message: `${file.message} 🚨`,
       })

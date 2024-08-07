@@ -1,7 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import { getUniqueFilenameCount } from '../../helpers'
 import type { Offense } from '../../types'
 
 interface TemplateSimpleExpressionFile { filename: string, message: string }
@@ -24,7 +23,7 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
       const firstPart = expression.split('\n').at(0)?.trim() || ''
       templateSimpleExpressionFiles.push({
         filename: filePath,
-        message: `${filePath}#${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
+        message: `line #${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
       })
     }
   })
@@ -37,10 +36,9 @@ const reportTemplateSimpleExpression = () => {
     templateSimpleExpressionFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-strong ~ lengthy template expression${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`,
-        message: file.message,
+        message: `${file.message} 🚨`,
       })
     })
   }

@@ -1,6 +1,5 @@
 import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 interface FullWordComponentNames { filename: string, filePath: string }
@@ -41,8 +40,7 @@ const reportFullWordComponentName = () => {
     fullWordComponentNames.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-strong ~ full-word component names${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
         message: `${BG_WARN}(${file.filename})${BG_RESET} 🚨`,
       })

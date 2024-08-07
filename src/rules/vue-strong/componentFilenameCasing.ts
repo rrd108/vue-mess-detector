@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const componentFilenameCasingFiles: { fileName: string }[] = []
@@ -29,10 +29,9 @@ const reportComponentFilenameCasing = () => {
     componentFilenameCasingFiles.forEach((file) => {
       offenses.push({
         file: file.fileName,
-        rule: `${BG_WARN}vue-strong ~ component name is not PascalCase and not kebab-case${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

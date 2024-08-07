@@ -27,7 +27,7 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
     const lineNumber = getLineNumber(script.content, match)
     deepIndentationFiles.push({
       filePath,
-      message: `${filePath}#${lineNumber} ${BG_WARN}indentation: ${match.length}${BG_RESET}`,
+      message: `line #${lineNumber} ${BG_WARN}indentation: ${match.length}${BG_RESET}`,
     })
   })
 }
@@ -39,8 +39,7 @@ const reportDeepIndentation = () => {
     deepIndentationFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}rrd ~ deep indentation${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
         message: `${file.message} 🚨`,
       })

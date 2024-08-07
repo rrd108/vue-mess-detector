@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 interface ShortVariableNameFile {
@@ -36,10 +36,9 @@ const reportShortVariableName = () => {
     shortVariableNameFile.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}rrd ~ short variable names${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
-        message: `${BG_WARN}(${file.variable})${BG_RESET} 🚨`,
+        message: `${BG_ERR}(${file.variable})${BG_RESET} 🚨`,
       })
     })
   }

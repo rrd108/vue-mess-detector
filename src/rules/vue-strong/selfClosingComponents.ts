@@ -1,6 +1,6 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { charNotIn, createRegExp, letter, linefeed, maybe, oneOrMore, tab, wordChar } from 'magic-regexp'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { Offense } from '../../types'
 
@@ -30,7 +30,7 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
   matches.forEach((componentTag) => {
     const lineNumber = getLineNumber(descriptor.source, componentTag)
     const lastPart = componentTag.split('\n').at(-1)?.trim() || ''
-    selfClosingComponentsFiles.push({ filename: filePath, message: `${filePath}#${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })
+    selfClosingComponentsFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })
   })
 }
 
@@ -41,8 +41,7 @@ const reportSelfClosingComponents = () => {
     selfClosingComponentsFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-strong ~ component is not self closing${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`,
         message: `${file.message} 🚨`,
       })

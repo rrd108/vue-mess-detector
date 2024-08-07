@@ -1,6 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { Offense } from '../../types'
 
@@ -20,7 +19,7 @@ const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) =>
   matches.forEach((match) => {
     const lineNumber = getLineNumber(script.content.trim(), match)
     const firstPart = match.split('\n').at(0)?.trim() || ''
-    componentFiles.push({ filename: filePath, message: `${filePath}#${lineNumber} ${BG_WARN}(${firstPart})${BG_RESET}` })
+    componentFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}(${firstPart})${BG_RESET}` })
   })
 }
 
@@ -31,8 +30,7 @@ const reportComponentFiles = () => {
     componentFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}vue-strong ~ component files${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
         message: `${file.message} 🚨`,
       })

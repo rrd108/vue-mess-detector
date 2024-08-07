@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { createRegExp, letter } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const singleNameComponentFiles: { filePath: string }[] = []
@@ -30,10 +30,9 @@ const reportSingleNameComponent = () => {
     singleNameComponentFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-essential ~ single name component${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-essential ~ single name component${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }

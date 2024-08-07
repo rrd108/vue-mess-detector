@@ -96,7 +96,7 @@ export const reportRules = (groupBy: GroupBy) => {
         console.log(`   File: ${offense.file}`)
       }
       console.log(`   Description: ${offense.description}`)
-      console.log(`   Message: ${offense.message || 'N/A'}\n`)
+      console.log(`   Message: ${offense.message || '🚨'}\n`)
     })
   })
 

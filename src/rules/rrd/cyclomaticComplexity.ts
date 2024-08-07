@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
-import { BG_ERR, BG_INFO, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 /**
@@ -60,8 +60,7 @@ const reportCyclomaticComplexity = () => {
     cyclomaticComplexityFiles.forEach((file) => {
       offenses.push({
         file: file.fileName,
-        rule: `${BG_WARN}rrd ~ cyclomatic complexity${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
         message: `${file.cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
           file.cyclomaticComplexity

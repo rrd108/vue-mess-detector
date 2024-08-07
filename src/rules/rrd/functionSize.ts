@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 interface FunctionSizeFile {
@@ -44,10 +44,9 @@ const reportFunctionSize = () => {
     functionSizeFiles.forEach((file) => {
       offenses.push({
         file: file.filename,
-        rule: `${BG_WARN}rrd ~ function size${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
-        message: `${BG_WARN}(${file.funcName})${BG_RESET} 🚨`,
+        message: `function ${BG_ERR}(${file.funcName})${BG_RESET} 🚨`,
       })
     })
   }

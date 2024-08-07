@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const tooManyPropsFiles: { fileName: string, propsCount: number }[] = []
@@ -27,10 +27,9 @@ const reportTooManyProps = () => {
     tooManyPropsFiles.forEach((file) => {
       offenses.push({
         file: file.fileName,
-        rule: `${BG_WARN}rrd ~ too many props${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET}`,
-        message: `${BG_WARN}(${file.propsCount})${BG_RESET} 🚨`,
+        message: `props found ${BG_ERR}(${file.propsCount})${BG_RESET} 🚨`,
       })
     })
   }

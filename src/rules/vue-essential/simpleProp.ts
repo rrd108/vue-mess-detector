@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { Offense } from '../../types'
 
 const simplePropFiles: { filePath: string }[] = []
@@ -24,10 +24,9 @@ const reportSimpleProp = () => {
     simplePropFiles.forEach((file) => {
       offenses.push({
         file: file.filePath,
-        rule: `${BG_WARN}vue-essential ~ simple prop${BG_RESET}`,
-        title: '',
+        rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
-        message: `N/A`,
+        message: `🚨`,
       })
     })
   }
