@@ -44,6 +44,7 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
 7. **Add the new rule to the analizer**
 
+   - Add your new `ruleName` entry to function call to `src/rules/rules.ts`
    - Add your new `checkRuleName` function call to `src/rulesCheck.ts`
    - Add your new `reportRuleName` function call to `src/rulesReport.ts`
 
