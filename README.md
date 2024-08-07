@@ -168,6 +168,14 @@ See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-sho
 Checks if any computed properties are bigger then 5 lines
 See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties
 
+### Implicit Parent-Child Communication (vue-caution)
+Props and events should be preferred for parent-child component communication, instead of this.$parent or mutating props.
+See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication
+
+### Element Selectors with Scoped (vue-caution)
+Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.
+See: https://vuejs.org/style-guide/rules-use-with-caution.html#element-selectors-with-scoped
+
 ### Cyclomatic Complexity (rrd)
 
 Checks if the cyclomatic complexity of a component is too high. The default threshold is 5. Between 5 and 10 you get a warning, above 10 you get an error.
