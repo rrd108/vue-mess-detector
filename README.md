@@ -98,7 +98,7 @@ npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 
 ## Example output
 
-![Output Image](output.png)
+![Output Image](./docs/public/output.png)
 
 ## Documentation
 
