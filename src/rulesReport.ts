@@ -27,10 +27,14 @@ import { reportDeepIndentation } from './rules/rrd/deepIndentation'
 import type { Offense } from './types'
 
 type GroupBy = 'rule' | 'file'
+type ReportFunction = () => Offense[]
+interface OffensesGrouped {
+  [key: string]: Offense[]
+}
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
-  const offensesGrouped: any = {}
+  const offensesGrouped: OffensesGrouped = {}
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {
@@ -43,9 +47,9 @@ export const reportRules = (groupBy: GroupBy) => {
   }
 
   // Helper function to process offenses from a report function
-  const processOffenses = (reportFunction: any) => {
+  const processOffenses = (reportFunction: ReportFunction) => {
     const offenses = reportFunction()
-    offenses.forEach((offense: any) => {
+    offenses.forEach((offense) => {
       addOffense(offense)
       errors++
     })
@@ -90,7 +94,7 @@ export const reportRules = (groupBy: GroupBy) => {
   // Output the report grouped by file
   Object.keys(offensesGrouped).forEach((key) => {
     console.log(`\n - ${key}`)
-    offensesGrouped[key].forEach((offense: any) => {
+    offensesGrouped[key].forEach((offense) => {
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
       }
