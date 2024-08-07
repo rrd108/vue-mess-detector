@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.4.27",
+    "html-tags": "^4.0.0",
     "magic-regexp": "^0.8.0",
     "yargs": "^17.7.2"
   },

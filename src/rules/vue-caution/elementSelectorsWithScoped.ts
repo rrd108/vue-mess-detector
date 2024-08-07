@@ -1,4 +1,6 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
+import type { HtmlTags } from 'html-tags'
+import htmlTags from 'html-tags'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { getUniqueFilenameCount } from '../../helpers'
 
@@ -6,8 +8,6 @@ interface ElementSelectorsWithScoped {
   filename: string
   selector: string
 }
-
-const validHtmlTags = ['div', 'span', 'button', 'input', 'form', 'label']
 
 const elementSelectorsWithScopedFiles: ElementSelectorsWithScoped[] = []
 
@@ -21,8 +21,8 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
     let match
     // eslint-disable-next-line no-cond-assign
     while ((match = elementSelectorRegex.exec(style.content)) !== null) {
-      const selector = match[1]
-      if (validHtmlTags.includes(selector)) {
+      const selector = match[1] as HtmlTags
+      if (htmlTags.includes(selector)) {
         elementSelectorsWithScopedFiles.push({ filename: filePath, selector })
       }
     }

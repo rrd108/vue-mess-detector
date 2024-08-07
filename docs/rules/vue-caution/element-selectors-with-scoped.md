@@ -9,9 +9,9 @@ We created a [benchmarking tool](https://github.com/David-Pena/element-class-sel
 
 The benchmark results clearly indicate that **class selectors consistently outperform element selectors** in terms of speed when applying styles in JavaScript. As the number of HTML elements increases, the time difference between the two selector types becomes more pronounced. Specifically:
 
-- With **10,000 HTML elements**, class selectors are approximately **17% faster** than element selectors.
-- With **20,000 HTML elements**, class selectors are around **12% faster** than element selectors.
-- With **50,000 HTML elements**, class selectors are about **18% faster** than element selectors.
+- With **10,000 HTML elements**, class selectors are approximately **17% faster (2.5ms)** than element selectors.
+- With **20,000 HTML elements**, class selectors are around **12% faster (2.9ms)** than element selectors.
+- With **50,000 HTML elements**, class selectors are about **18% faster (13.5)** than element selectors.
 
 > [!IMPORTANT]
 > These findings suggest that using class selectors can lead to more efficient performance, especially in scenarios with a large number of elements. Therefore, for better performance in styling large-scale web applications **class selectors should be preferred** over element selectors.
