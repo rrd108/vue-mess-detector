@@ -61,6 +61,7 @@ export default defineConfig({
               ] },
               { text: 'Vue Caution', link: '/rules/vue-caution', collapsed: true, items: [
                 { text: 'Implicit parent-child communication', link: '/rules/vue-caution/implicit-parent-child-communication' },
+                { text: 'Element Selectors in Scoped CSS', link: '/rules/vue-caution/element-selectors-with-scoped' },
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
                 { text: 'Cyclomatic Complexity', link: '/rules/rrd/cyclomatic-complexity' },
