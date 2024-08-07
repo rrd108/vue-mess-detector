@@ -56,7 +56,7 @@ export const analyze = (dir: string, apply: Array<RuleSetType> = []) => {
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
 
-  if (!reportRules()) {
+  if (!reportRules('file')) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
   }
 }
