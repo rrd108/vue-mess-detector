@@ -30,6 +30,7 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
    - Create a new file for your rule at `src/rules/RULESET/`, following the naming convention `ruleName.ts`.
    - Use existing rules as a reference for implementing your new rule.
+   - If the rule has one level of `warning`, use the warning level in the output. If it has two levels, use the `error` level. For example in *script length rule* if the length exceeds 100 lines, it is a `warning`, and if it exceeds 200 lines, it is an `error`.
    - We use Regular Expressions `regex` extensively in our rules. As [magic-regexp](https://regexp.dev/) offers a significantly easier to read, understand, and maintain syntax compared to plain regex, we prefer its use. If you submit a contribution using plain regex, we will handle the conversion to magic-regexp if necessary.
 
 6. **Create Tests for Your Rule**
