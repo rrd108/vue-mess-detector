@@ -1,6 +1,6 @@
 # Contributing to vue-mess-detector
 
-Thank you for your interest in contributing to vue-mess-detector! Follow these steps to get started:
+Thank you for your interest in contributing to vue-mess-detector! Follow these steps to get started and do not hesitate to ask questions if you need help.
 
 ## 🛠️ Steps to Contribute
 
@@ -23,7 +23,7 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
 4. **Read Documentation and Ask Questions**
 
-   - Familiarize yourself with the documentation related to the selected issue.
+   - Familiarize yourself with the details related to the selected issue.
    - If you have any questions, feel free to ask in the issue discussion or open a new issue.
 
 5. **Create Your Rule**
@@ -46,14 +46,15 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
    - Add your new `checkRuleName` function call to `src/rulesCheck.ts`
    - Add your new `reportRuleName` function call to `src/rulesReport.ts`
 
-8. **Add the rule to the README**
+8. **Add the rule to the documentation**
 
-   - Add your new rule to the README file under the `Rules` section marking the ruleset it belongs to. You can use the following template:
-
-     ```markdown
-     ### Rule Name (RULESET)
-
-     Description of the rule.
+   - Add your new rule to the `docs/rules/RULESET/rule-name.md` file.
+   - Use exsiting rules as a reference for the documentation.
+   - Add your rule's link to the ruleset's index page at `docs/rules/RULESET/index.md`.
+   - Add your rule's link to `docs/.vitepress/config.ts` file's `sidebar` object.
+   - Run the missing documentation check to ensure you have added all the necessary documentation:
+     ```bash
+     yarn docs:missing
      ```
 
 9. **Create the PR**
@@ -79,19 +80,10 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
 ## 🧪 Testing Your Feature with Your Own Folder
 
-If you want to test your feature with your own set of files:
-
-1. **Build the Project**
-
-   - Build the project to include your new rule:
-     ```bash
-     yarn build
-     ```
-
-2. **Run the Analyzer**
+1. **Run the Analyzer**
    - Execute the analyzer on your specified path:
      ```bash
-     npx vue-mess-detector analyze path/to/files
+     yarn analyze path/to/files
      ```
 
 ---
