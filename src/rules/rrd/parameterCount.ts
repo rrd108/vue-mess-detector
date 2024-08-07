@@ -1,7 +1,8 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
-const parameterCountFiles: { filename: string; funcName: string; paramsCount: number }[] = []
+const parameterCountFiles: { filename: string, funcName: string, paramsCount: number }[] = []
 
 const MAX_PARAMETER_COUNT = 3 // completely rrd made-up number
 
@@ -21,14 +22,16 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string) =>
     return
   }
   // regular expression to match both regular and arrow functions and capture their params
-  const regex = /function\s+([a-zA-Z0-9_$]+)\s*\(([^)]*)\)\s*{|const\s+([a-zA-Z0-9_$]+)\s*=\s*\(([^)]*)\)\s*=>\s*{/g
+  const regex = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g
   let match
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
     if (match[1]) {
       // Regular function
       checkParameters(match[1], match[2], filePath) // match[2] are the params for current regular function
-    } else if (match[3]) {
+    }
+    else if (match[3]) {
       // Arrow function
       checkParameters(match[3], match[4], filePath) // match[4] are the params for current arrow function
     }
@@ -36,19 +39,21 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string) =>
 }
 
 const reportParameterCount = () => {
+  const offenses: Offense[] = []
+
   if (parameterCountFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}parameter count${BG_RESET} exceeds recommended limit in ${parameterCountFiles.length} files.`
-    )
-    console.log(`👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`)
-    parameterCountFiles.forEach(file => {
-      console.log(
-        `- ${BG_WARN}${file.funcName}${BG_RESET} in file ${file.filename} 🚨 ${BG_WARN}(${file.paramsCount})${BG_RESET}`
-      )
+    parameterCountFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${BG_WARN}rrd ~ parameter count${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+        message: `${file.funcName}() has ${BG_WARN}${file.paramsCount}${BG_RESET} parameters 🚨`,
+      })
     })
   }
 
-  return parameterCountFiles.length
+  return offenses
 }
 
 export { checkParameterCount, reportParameterCount }

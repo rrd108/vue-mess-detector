@@ -1,6 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import { BG_ERR, BG_INFO, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
 /**
  * Defines complexity thresholds.
@@ -53,20 +54,22 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
  * @returns {number} The number of files with high cyclomatic complexity.
  */
 const reportCyclomaticComplexity = () => {
+  const offenses: Offense[] = []
+
   if (cyclomaticComplexityFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_INFO}cyclomaticComplexity${BG_RESET} is above moderate in ${cyclomaticComplexityFiles.length} files.`,
-    )
-    console.log(`👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`)
     cyclomaticComplexityFiles.forEach((file) => {
-      console.log(
-        `- ${file.fileName} ${file.cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
+      offenses.push({
+        file: file.fileName,
+        rule: `${BG_WARN}rrd ~ cyclomatic complexity${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
+        message: `${file.cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
           file.cyclomaticComplexity
-        })${BG_RESET}`,
-      )
+        })${BG_RESET} 🚨`,
+      })
     })
   }
-  return cyclomaticComplexityFiles.length
+  return offenses
 }
 
 export { checkCyclomaticComplexity, reportCyclomaticComplexity }

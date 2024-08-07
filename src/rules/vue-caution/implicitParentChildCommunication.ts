@@ -1,10 +1,10 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
-import getLineNumber from '../getLineNumber'
-import { getUniqueFilenameCount } from '../../helpers'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { createRegExp, exactly, global } from 'magic-regexp'
+import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import getLineNumber from '../getLineNumber'
+import type { Offense } from '../../types'
 
-type ImplicitParentChildCommunicationFile = { filename: string; message: string }
+interface ImplicitParentChildCommunicationFile { filename: string, message: string }
 
 const implicitParentChildCommunicationFiles: ImplicitParentChildCommunicationFile[] = []
 
@@ -14,7 +14,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
   }
   const propsRegex = /defineProps\(([^)]+)\)/
   const vModelRegex = /v-model\s*=\s*"([^"]+)"/
-  const parentRegex = createRegExp(exactly("$parent").or("getCurrentInstance"), [global]);
+  const parentRegex = createRegExp(exactly('$parent').or('getCurrentInstance'), [global])
 
   // Extract defined props
   const propsMatch = script.content.match(propsRegex)
@@ -47,24 +47,20 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
 }
 
 const reportImplicitParentChildCommunication = () => {
-  if (implicitParentChildCommunicationFiles.length > 0) {
-    // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<ImplicitParentChildCommunicationFile>(
-      implicitParentChildCommunicationFiles,
-      'filename'
-    )
+  const offenses: Offense[] = []
 
-    console.log(
-      `\n${TEXT_INFO}vue-caution${TEXT_RESET} ${BG_WARN}implicit parent-child communication${BG_RESET} detected in ${fileCount} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`
-    )
-    implicitParentChildCommunicationFiles.forEach(file => {
-      console.log(`- ${file.message} 🚨`)
+  if (implicitParentChildCommunicationFiles.length > 0) {
+    implicitParentChildCommunicationFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${BG_WARN}vue-caution ~ implicit parent-child communication${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return implicitParentChildCommunicationFiles.length
+  return offenses
 }
 
 export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication }

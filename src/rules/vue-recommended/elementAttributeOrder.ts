@@ -2,6 +2,7 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { getUniqueFilenameCount } from '../../helpers'
+import type { Offense } from '../../types'
 
 interface ElementAttributeOrder { filename: string, message: string }
 
@@ -65,19 +66,20 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
 }
 
 const reportElementAttributeOrder = () => {
-  if (elementAttributeOrderFiles.length > 0) {
-    // count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<ElementAttributeOrder>(elementAttributeOrderFiles, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(`\n${TEXT_INFO}vue-recommended${TEXT_RESET} ${BG_ERR}element attribute order ${BG_RESET} detected in ${fileCount} files.`)
-    console.log(
-            `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
-    )
+  if (elementAttributeOrderFiles.length > 0) {
     elementAttributeOrderFiles.forEach((file) => {
-      console.log(`- ${file.message} 🚨`)
+      offenses.push({
+        file: file.filename,
+        rule: `${BG_WARN}vue-recommended ~ element attribute order${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return elementAttributeOrderFiles.length
+  return offenses
 }
 
 export { checkElementAttributeOrder, reportElementAttributeOrder }

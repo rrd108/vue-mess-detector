@@ -1,10 +1,11 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, tab, whitespace } from 'magic-regexp'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import { getUniqueFilenameCount } from '../../helpers'
+import type { Offense } from '../../types'
 
-type DeepIndentationFile = {
+interface DeepIndentationFile {
   filePath: string
   message: string
 }
@@ -22,7 +23,7 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
   ])
   const matches = script.content.match(regex)
 
-  matches?.forEach(match => {
+  matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)
     deepIndentationFiles.push({
       filePath,
@@ -32,18 +33,20 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
 }
 
 const reportDeepIndentation = () => {
-  if (deepIndentationFiles.length > 0) {
-    const fileCount = getUniqueFilenameCount<DeepIndentationFile>(deepIndentationFiles, 'filePath')
+  const offenses: Offense[] = []
 
-    console.log(`\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}deep indentation${BG_RESET} found in ${fileCount} files.`)
-    console.log(
-      `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`
-    )
-    deepIndentationFiles.forEach(file => {
-      console.log(`- ${file.message} 🚨`)
+  if (deepIndentationFiles.length > 0) {
+    deepIndentationFiles.forEach((file) => {
+      offenses.push({
+        file: file.filePath,
+        rule: `${BG_WARN}rrd ~ deep indentation${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return deepIndentationFiles.length
+  return offenses
 }
 
 export { checkDeepIndentation, reportDeepIndentation }

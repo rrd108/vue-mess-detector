@@ -1,6 +1,7 @@
 import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { getUniqueFilenameCount } from '../../helpers'
+import type { Offense } from '../../types'
 
 interface FullWordComponentNames { filename: string, filePath: string }
 
@@ -34,19 +35,20 @@ const checkFullWordComponentName = (filePath: string) => {
 }
 
 const reportFullWordComponentName = () => {
-  if (fullWordComponentNames.length > 0) {
-    // count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<FullWordComponentNames>(fullWordComponentNames, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(`\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}full-word component names${BG_RESET} detected in ${fileCount} files.`)
-    console.log(
-      `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
-    )
+  if (fullWordComponentNames.length > 0) {
     fullWordComponentNames.forEach((file) => {
-      console.log(`- ${file.filePath} 🚨 ${BG_WARN}(${file.filename})${BG_RESET}`)
+      offenses.push({
+        file: file.filePath,
+        rule: `${BG_WARN}vue-strong ~ full-word component names${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
+        message: `${BG_WARN}(${file.filename})${BG_RESET} 🚨`,
+      })
     })
   }
-  return fullWordComponentNames.length
+  return offenses
 }
 
 export { checkFullWordComponentName, reportFullWordComponentName }

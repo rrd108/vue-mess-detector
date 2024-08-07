@@ -1,8 +1,9 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
-import { char, charNotIn, createRegExp, exactly, maybe, oneOrMore, whitespace } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
-const tooManyPropsFiles: { fileName: string; propsCount: number }[] = []
+const tooManyPropsFiles: { fileName: string, propsCount: number }[] = []
 const TOO_MANY_PROPS = 5
 
 const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
@@ -14,22 +15,26 @@ const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
   if (matches?.length) {
     const propsCount = matches[0].split(',').length
     if (propsCount > TOO_MANY_PROPS) {
-      tooManyPropsFiles.push({ fileName: file, propsCount: propsCount })
+      tooManyPropsFiles.push({ fileName: file, propsCount })
     }
   }
 }
 
 const reportTooManyProps = () => {
+  const offenses: Offense[] = []
+
   if (tooManyPropsFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}too many props${BG_RESET} are used in ${tooManyPropsFiles.length} files.`
-    )
-    console.log(`👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET}`)
-    tooManyPropsFiles.forEach(file => {
-      console.log(`- ${file.fileName} ${BG_WARN}(${file.propsCount})${BG_RESET}`)
+    tooManyPropsFiles.forEach((file) => {
+      offenses.push({
+        file: file.fileName,
+        rule: `${BG_WARN}rrd ~ too many props${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET}`,
+        message: `${BG_WARN}(${file.propsCount})${BG_RESET} 🚨`,
+      })
     })
   }
-  return tooManyPropsFiles.length
+  return offenses
 }
 
 export { checkTooManyProps, reportTooManyProps }

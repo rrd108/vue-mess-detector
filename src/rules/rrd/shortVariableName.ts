@@ -1,8 +1,8 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
-type ShortVariableNameFile = {
+interface ShortVariableNameFile {
   filename: string
   variable: string
 }
@@ -16,9 +16,10 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
     return
   }
   // Regular expression to match variable names
-  const regex = /\b(?:const|var|let)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g
+  const regex = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g
 
   let match
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
     const variable = match[1]
 
@@ -29,17 +30,20 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
 }
 
 const reportShortVariableName = () => {
-  if (shortVariableNameFile.length > 0) {
-    // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<ShortVariableNameFile>(shortVariableNameFile, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(`\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}variable names${BG_RESET} are too short in ${fileCount} files.`)
-    console.log(`👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`)
-    shortVariableNameFile.forEach(file => {
-      console.log(`- ${file.filename} 🚨 ${BG_WARN}(${file.variable})${BG_RESET}`)
+  if (shortVariableNameFile.length > 0) {
+    shortVariableNameFile.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${BG_WARN}rrd ~ short variable names${BG_RESET}`,
+        title: '',
+        description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+        message: `${BG_WARN}(${file.variable})${BG_RESET} 🚨`,
+      })
     })
   }
-  return shortVariableNameFile.length
+  return offenses
 }
 
 export { checkShortVariableName, reportShortVariableName }
