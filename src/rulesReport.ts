@@ -24,13 +24,7 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
-import type { Offense } from './types'
-
-type GroupBy = 'rule' | 'file'
-type ReportFunction = () => Offense[]
-interface OffensesGrouped {
-  [key: string]: Offense[]
-}
+import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
