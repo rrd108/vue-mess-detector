@@ -96,22 +96,22 @@ npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 
 There are five rulesets available in Vue Mess Detector. Each ruleset has a different purpose and level of strictness.
 
-### ⭐ Vue Essential Ruleset ~ [vue-essential](/rules/vue-essential)
+### ⭐ Vue Essential Ruleset ~ [vue-essential](/rules/vue-essential/index)
 
 These rules help prevent errors, so learn and abide by them at all costs. Exceptions may exist, but should be very rare and only be made by those with expert knowledge of both JavaScript and Vue.
 
-### 👍 Vue Strongly Recommended Ruleset ~ [vue-strong](/rules/vue-strong)
+### 👍 Vue Strongly Recommended Ruleset ~ [vue-strong](/rules/vue-strong/index)
 
 **Strongly Recommended** rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
 
-### ✅ Vue Recommended Ruleset ~ [vue-recommended](/rules/vue-recommended)
+### ✅ Vue Recommended Ruleset ~ [vue-recommended](/rules/vue-recommended/index)
 
 Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though!
 
-### ⚠️ Vue Caution Ruleset ~ [vue-caution](/rules/vue-caution)
+### ⚠️ Vue Caution Ruleset ~ [vue-caution](/rules/vue-caution/index)
 
 Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
 
-### 💻 rrd Ruleset ~ [rrd](/rules/rrd)
+### 💻 rrd Ruleset ~ [rrd](/rules/rrd/index)
 
 Opinionated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.
