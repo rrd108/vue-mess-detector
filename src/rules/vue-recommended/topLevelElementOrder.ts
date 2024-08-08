@@ -51,4 +51,6 @@ const reportTopLevelElementOrder = () => {
   return offenses
 }
 
-export { checkTopLevelElementOrder, reportTopLevelElementOrder }
+const resetTopLevelElementOrder = () => (topLevelElementOrderFiles.length = 0)
+
+export { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder }

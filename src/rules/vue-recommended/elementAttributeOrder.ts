@@ -80,4 +80,6 @@ const reportElementAttributeOrder = () => {
   return offenses
 }
 
-export { checkElementAttributeOrder, reportElementAttributeOrder }
+const resetElementAttributeOrder = () => (elementAttributeOrderFiles.length = 0)
+
+export { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder }
