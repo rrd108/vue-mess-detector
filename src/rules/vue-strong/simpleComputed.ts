@@ -48,4 +48,9 @@ const reportSimpleComputed = () => {
   return offenses
 }
 
-export { checkSimpleComputed, reportSimpleComputed }
+const resetSimpleComputed = () => {
+  complicatedComputedTargets.length = 0
+  complicatedComputedFiles.length = 0
+}
+
+export { checkSimpleComputed, reportSimpleComputed, resetSimpleComputed }

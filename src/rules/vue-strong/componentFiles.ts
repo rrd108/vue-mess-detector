@@ -39,4 +39,6 @@ const reportComponentFiles = () => {
   return offenses
 }
 
-export { checkComponentFiles, reportComponentFiles }
+const resetComponentFiles = () => (componentFiles.length = 0)
+
+export { checkComponentFiles, reportComponentFiles, resetComponentFiles }

@@ -49,4 +49,6 @@ const reportPropNameCasing = () => {
   return offenses
 }
 
-export { checkPropNameCasing, reportPropNameCasing }
+const resetPropNameCasing = () => (propNameCasingFiles.length = 0)
+
+export { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing }

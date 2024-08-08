@@ -1,14 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { SFCDescriptor } from '@vue/compiler-sfc'
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkSelfClosingComponents, reportSelfClosingComponents, resetSelfClosingComponents } from './selfClosingComponents'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 describe('checkSelfClosingComponents', () => {
   beforeEach(() => {
     resetSelfClosingComponents()
-    mockConsoleLog.mockClear()
   })
 
   it('should not report simple html tags', () => {
@@ -23,8 +20,8 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportSelfClosingComponents().length).toBe(0)
+    expect(reportSelfClosingComponents()).toStrictEqual([])
   })
 
   it('should not report files where the components self close', () => {
@@ -39,8 +36,8 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportSelfClosingComponents().length).toBe(0)
+    expect(reportSelfClosingComponents()).toStrictEqual([])
   })
 
   it('should report files where the components does not self close - single line', () => {
@@ -55,9 +52,13 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'not-self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}#2 ${BG_WARN}<MyComponent></MyComponent>${BG_RESET} 🚨`)
+    expect(reportSelfClosingComponents().length).toBe(1)
+    expect(reportSelfClosingComponents()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`,
+      message: `line #2 ${BG_WARN}<MyComponent></MyComponent>${BG_RESET} 🚨`,
+    }])
   })
 
   it('should report files where the components does not self close - multi line', () => {
@@ -74,8 +75,12 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'not-self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}#4 ${BG_WARN}></MyComponent>${BG_RESET} 🚨`)
+    expect(reportSelfClosingComponents().length).toBe(1)
+    expect(reportSelfClosingComponents()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`,
+      message: `line #4 ${BG_WARN}></MyComponent>${BG_RESET} 🚨`,
+    }])
   })
 })

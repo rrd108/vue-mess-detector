@@ -1,10 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { checkPropNameCasing, reportPropNameCasing } from './propNameCasing'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing } from './propNameCasing'
 
 describe('checkPropNameCasing', () => {
+  beforeEach(() => {
+    resetPropNameCasing()
+  })
+
   it('should not report files with camelCase props name', () => {
     const script = {
       content: `<script setup>
@@ -14,8 +17,8 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'proper-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportPropNameCasing().length).toBe(0)
+    expect(reportPropNameCasing()).toStrictEqual([])
   })
 
   it('should report files with none camelCase props name', () => {
@@ -28,8 +31,12 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'mixed-case-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(reportPropNameCasing().length).toBe(1)
+    expect(reportPropNameCasing()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
+      message: `🚨`,
+    }])
   })
 })

@@ -49,4 +49,6 @@ const reportFullWordComponentName = () => {
   return offenses
 }
 
-export { checkFullWordComponentName, reportFullWordComponentName }
+const resetFullWordComponentName = () => (fullWordComponentNames.length = 0)
+
+export { checkFullWordComponentName, reportFullWordComponentName, resetFullWordComponentName }

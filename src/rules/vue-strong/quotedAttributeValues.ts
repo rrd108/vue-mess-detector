@@ -59,4 +59,6 @@ const reportQuotedAttributeValues = () => {
   return offenses
 }
 
-export { checkQuotedAttributeValues, reportQuotedAttributeValues }
+const resetQuotedAttributeValues = () => (unquotedAttributeValuesFiles.length = 0)
+
+export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetQuotedAttributeValues }

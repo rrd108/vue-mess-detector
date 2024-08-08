@@ -17,7 +17,7 @@ const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: st
   directivesToCheck.forEach((directive) => {
     if (template.content.includes(`${directive}:`)) {
       const lineNumber = getLineNumber(descriptor.source, directive)
-      directiveShorthandsTargets.push({ filename: filePath, message: `line ${lineNumber} ${BG_WARN}${directive}${BG_RESET}` })
+      directiveShorthandsTargets.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${directive}${BG_RESET}` })
 
       if (!directiveShorthandsFiles.some(file => file.filePath === filePath)) {
         directiveShorthandsFiles.push({ filePath })
@@ -42,4 +42,9 @@ const reportDirectiveShorthands = () => {
   return offenses
 }
 
-export { checkDirectiveShorthands, reportDirectiveShorthands }
+const resetDirectiveShorthands = () => {
+  directiveShorthandsFiles.length = 0
+  directiveShorthandsTargets.length = 0
+}
+
+export { checkDirectiveShorthands, reportDirectiveShorthands, resetDirectiveShorthands }
