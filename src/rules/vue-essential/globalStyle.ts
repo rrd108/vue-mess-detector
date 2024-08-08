@@ -31,4 +31,6 @@ const reportGlobalStyle = () => {
   return offenses
 }
 
-export { checkGlobalStyle, reportGlobalStyle }
+const resetGlobalStyle = () => (globalStyleFiles.length = 0)
+
+export { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle }

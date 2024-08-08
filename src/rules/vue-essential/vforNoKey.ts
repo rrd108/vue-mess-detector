@@ -39,4 +39,6 @@ const reportVforNoKey = () => {
   return offenses
 }
 
-export { checkVforNoKey, reportVforNoKey }
+const resetReportVForNoKey = () => (vforNoKeyFiles.length = 0)
+
+export { checkVforNoKey, reportVforNoKey, resetReportVForNoKey }

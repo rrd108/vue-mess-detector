@@ -53,4 +53,6 @@ const reportVifWithVfor = () => {
   return offenses
 }
 
-export { checkVifWithVfor, reportVifWithVfor }
+const resetVIfWithVFor = () => (vifWithVforFiles.length = 0)
+
+export { checkVifWithVfor, reportVifWithVfor, resetVIfWithVFor }

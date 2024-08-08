@@ -1,11 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET } from '../asceeCodes'
-import { checkVforNoKey, reportVforNoKey } from './vforNoKey'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkVforNoKey, reportVforNoKey, resetReportVForNoKey } from './vforNoKey'
 
 describe('checkVforNoKey', () => {
+  beforeEach(() => {
+    resetReportVForNoKey()
+  })
+
   it('should not report files where v-for has key property', () => {
     const script = {
       content: `<template>
@@ -21,8 +23,8 @@ describe('checkVforNoKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vfor-with-key.vue'
     checkVforNoKey(script, fileName)
-    expect(reportVforNoKey()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportVforNoKey().length).toBe(0)
+    expect(reportVforNoKey()).toStrictEqual([])
   })
 
   it('should report files where v-for has no key property', () => {
@@ -37,8 +39,12 @@ describe('checkVforNoKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vfor-no-key.vue'
     checkVforNoKey(script, fileName)
-    expect(reportVforNoKey()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(reportVforNoKey().length).toBe(1)
+    expect(reportVforNoKey()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-essential ~ v-for has no key${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`,
+      message: `🚨`,
+    }])
   })
 })

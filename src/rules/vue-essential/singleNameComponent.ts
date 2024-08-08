@@ -39,4 +39,6 @@ const reportSingleNameComponent = () => {
   return offenses
 }
 
-export { checkSingleNameComponent, reportSingleNameComponent }
+const resetSingleNameComponent = () => (singleNameComponentFiles.length = 0)
+
+export { checkSingleNameComponent, reportSingleNameComponent, resetSingleNameComponent }

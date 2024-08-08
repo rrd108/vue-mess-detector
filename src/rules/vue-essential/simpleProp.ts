@@ -33,4 +33,6 @@ const reportSimpleProp = () => {
   return offenses
 }
 
-export { checkSimpleProp, reportSimpleProp }
+const resetSimpleProp = () => (simplePropFiles.length = 0)
+
+export { checkSimpleProp, reportSimpleProp, resetSimpleProp }
