@@ -1,11 +1,12 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
-import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './implicitParentChildCommunication'
+import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetImplicitParentChildCommunicationFiles } from './implicitParentChildCommunication'
 
 describe('checkImplicitParentChildCommunication', () => {
-  const offenses: Offense[] = []
+  beforeEach(() => {
+    resetImplicitParentChildCommunicationFiles()
+  })
 
   it('should not report files where there is no implicit parent-child communication', () => {
     const script = {
@@ -29,7 +30,7 @@ describe('checkImplicitParentChildCommunication', () => {
     const filename = 'no-implicit-pcc.vue'
     checkImplicitParentChildCommunication(script, filename)
     expect(reportImplicitParentChildCommunication().length).toBe(0)
-    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
+    expect(reportImplicitParentChildCommunication()).toStrictEqual([])
   })
 
   it('should report files where there is a prop mutation', () => {
@@ -51,12 +52,12 @@ describe('checkImplicitParentChildCommunication', () => {
     } as SFCScriptBlock
     const filename = 'props-mutation.vue'
     const lineNumber = 7
-    offenses.push({
+    const offenses = [{
       file: filename,
       rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
       message: `line #${lineNumber} ${BG_WARN}(todo)${BG_RESET} 🚨`,
-    })
+    }]
     checkImplicitParentChildCommunication(script, filename)
     expect(reportImplicitParentChildCommunication().length).toBe(1)
     expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
@@ -97,14 +98,16 @@ describe('checkImplicitParentChildCommunication', () => {
     } as SFCScriptBlock
     const filename = 'parent-instance.vue'
     const lineNumber = 2
-    offenses.push({
+    const offenses = [{
       file: filename,
       rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
       message: `line #${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
-    })
+    }]
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(2)
+    const r = reportImplicitParentChildCommunication()
+    console.info(r)
+    expect(reportImplicitParentChildCommunication().length).toBe(1)
     expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 
@@ -142,7 +145,7 @@ describe('checkImplicitParentChildCommunication', () => {
       `,
     } as SFCScriptBlock
     const filename = 'complex-sample.vue'
-    offenses.push(
+    const offenses = [
       {
         file: filename,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
@@ -155,9 +158,9 @@ describe('checkImplicitParentChildCommunication', () => {
         description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
         message: `line #2 ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
       },
-    )
+    ]
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(4)
+    expect(reportImplicitParentChildCommunication().length).toBe(2)
     expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 })
