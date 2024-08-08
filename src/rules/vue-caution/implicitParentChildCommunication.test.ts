@@ -1,13 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
-import { SFCScriptBlock } from '@vue/compiler-sfc';
-import { BG_ERR, BG_RESET, BG_WARN } from '../asceeCodes'
-import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './implicitParentChildCommunication';
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
+import { describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
+import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './implicitParentChildCommunication'
 
 describe('checkImplicitParentChildCommunication', () => {
+  const offenses: Offense[] = []
+
   it('should not report files where there is no implicit parent-child communication', () => {
-    const script = { 
+    const script = {
       content: `
         <script setup>
         defineProps({
@@ -23,16 +24,16 @@ describe('checkImplicitParentChildCommunication', () => {
         <template>
           <input :value="todo.text" @input="emit('input', $event.target.value)" />
         </template>
-      `
-    } as SFCScriptBlock;
+      `,
+    } as SFCScriptBlock
     const filename = 'no-implicit-pcc.vue'
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportImplicitParentChildCommunication().length).toBe(0)
+    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 
   it('should report files where there is a prop mutation', () => {
-    const script = { 
+    const script = {
       content: `
         <script setup>
         defineProps({
@@ -46,16 +47,19 @@ describe('checkImplicitParentChildCommunication', () => {
         <template>
           <input v-model="todo.text" />
         </template>
-      `
-    } as SFCScriptBlock;
+      `,
+    } as SFCScriptBlock
     const filename = 'props-mutation.vue'
     const lineNumber = 7
+    offenses.push({
+      file: filename,
+      rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+      message: `line #${lineNumber} ${BG_WARN}(todo)${BG_RESET} 🚨`,
+    })
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-      `- ${filename}#${lineNumber} ${BG_WARN}(todo)${BG_RESET} 🚨`
-    )
+    expect(reportImplicitParentChildCommunication().length).toBe(1)
+    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 
   it('should report files where $parent/getCurrentInstance is present', () => {
@@ -89,16 +93,19 @@ describe('checkImplicitParentChildCommunication', () => {
             <button @click="removeTodo">×</button>
           </span>
         </template>
-      `
-    } as SFCScriptBlock;
-    const filename = "parent-instance.vue"
+      `,
+    } as SFCScriptBlock
+    const filename = 'parent-instance.vue'
     const lineNumber = 2
+    offenses.push({
+      file: filename,
+      rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+      message: `line #${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
+    })
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication()).toBe(2)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-      `- ${filename}#${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`
-    )
+    expect(reportImplicitParentChildCommunication().length).toBe(2)
+    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 
   it('should report files where props mutation & $parent/getCurrentInstance are present', () => {
@@ -132,15 +139,25 @@ describe('checkImplicitParentChildCommunication', () => {
             <input v-model="todo.text" />
           </span>
         </template>
-      `
-    } as SFCScriptBlock;
-    const filename = "complex-sample.vue"
-    const lineNumber = 2
-    checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication()).toBe(4)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-      `- ${filename}#${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`
+      `,
+    } as SFCScriptBlock
+    const filename = 'complex-sample.vue'
+    offenses.push(
+      {
+        file: filename,
+        rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+        message: `line #9 ${BG_WARN}(todo)${BG_RESET} 🚨`,
+      },
+      {
+        file: filename,
+        rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+        message: `line #2 ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
+      },
     )
+    checkImplicitParentChildCommunication(script, filename)
+    expect(reportImplicitParentChildCommunication().length).toBe(4)
+    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })
 })

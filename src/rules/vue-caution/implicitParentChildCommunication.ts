@@ -59,6 +59,7 @@ const reportImplicitParentChildCommunication = () => {
       })
     })
   }
+
   return offenses
 }
 
