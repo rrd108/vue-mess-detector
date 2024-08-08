@@ -33,4 +33,6 @@ const reportElseCondition = () => {
   return offenses
 }
 
-export { checkElseCondition, reportElseCondition }
+const resetElseCondition = () => (elseConditionFiles.length = 0)
+
+export { checkElseCondition, reportElseCondition, resetElseCondition }

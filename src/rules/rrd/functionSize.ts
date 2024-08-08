@@ -9,7 +9,7 @@ interface FunctionSizeFile {
 
 const functionSizeFiles: FunctionSizeFile[] = []
 
-const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
+export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
 const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -53,4 +53,6 @@ const reportFunctionSize = () => {
   return offenses
 }
 
-export { checkFunctionSize, reportFunctionSize }
+const resetFunctionSize = () => (functionSizeFiles.length = 0)
+
+export { checkFunctionSize, reportFunctionSize, resetFunctionSize }

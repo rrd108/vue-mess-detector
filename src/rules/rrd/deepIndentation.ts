@@ -2,7 +2,6 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, tab, whitespace } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import { getUniqueFilenameCount } from '../../helpers'
 import type { Offense } from '../../types'
 
 interface DeepIndentationFile {
@@ -48,4 +47,6 @@ const reportDeepIndentation = () => {
   return offenses
 }
 
-export { checkDeepIndentation, reportDeepIndentation }
+const resetDeepIndentation = () => (deepIndentationFiles.length = 0)
+
+export { checkDeepIndentation, reportDeepIndentation, resetDeepIndentation }

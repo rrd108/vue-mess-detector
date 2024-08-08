@@ -4,7 +4,7 @@ import type { Offense } from '../../types'
 
 const parameterCountFiles: { filename: string, funcName: string, paramsCount: number }[] = []
 
-const MAX_PARAMETER_COUNT = 3 // completely rrd made-up number
+export const MAX_PARAMETER_COUNT = 3 // completely rrd made-up number
 
 // Function used in both scenarios (regular and arrow function) to count parameters
 const checkParameters = (funcName: string, params: string, filePath: string) => {
@@ -46,7 +46,6 @@ const reportParameterCount = () => {
       offenses.push({
         file: file.filename,
         rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-        title: '',
         description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
         message: `function ${BG_WARN}${file.funcName}${BG_RESET} has ${BG_WARN}${file.paramsCount}${BG_RESET} parameters 🚨`,
       })
@@ -56,4 +55,6 @@ const reportParameterCount = () => {
   return offenses
 }
 
-export { checkParameterCount, reportParameterCount }
+const resetParameterCount = () => (parameterCountFiles.length = 0)
+
+export { checkParameterCount, reportParameterCount, resetParameterCount }

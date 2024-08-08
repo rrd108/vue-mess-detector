@@ -7,7 +7,7 @@ interface ShortVariableNameFile {
   variable: string
 }
 
-const MIN_VARIABLE_NAME = 4 // completely rrd made-up number
+export const MIN_VARIABLE_NAME = 4 // completely rrd made-up number
 
 const shortVariableNameFile: ShortVariableNameFile[] = []
 
@@ -45,4 +45,6 @@ const reportShortVariableName = () => {
   return offenses
 }
 
-export { checkShortVariableName, reportShortVariableName }
+const resetShortVariableName = () => (shortVariableNameFile.length = 0)
+
+export { checkShortVariableName, reportShortVariableName, resetShortVariableName }
