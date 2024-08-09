@@ -4,7 +4,7 @@ import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCod
 import getLineNumber from '../getLineNumber'
 import type { Offense } from '../../types'
 
-interface ImplicitParentChildCommunicationFile { filename: string, message: string }
+interface ImplicitParentChildCommunicationFile { filePath: string, message: string }
 
 const implicitParentChildCommunicationFiles: ImplicitParentChildCommunicationFile[] = []
 
@@ -29,7 +29,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
     if (definedProps.includes(vModelProp)) {
       const lineNumber = getLineNumber(script.content.trim(), definedProps)
       implicitParentChildCommunicationFiles.push({
-        filename: filePath,
+        filePath,
         message: `line #${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,
       })
     }
@@ -40,7 +40,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
   if (parentMatch) {
     const lineNumber = getLineNumber(script.content.trim(), parentMatch[0])
     implicitParentChildCommunicationFiles.push({
-      filename: filePath,
+      filePath,
       message: `line #${lineNumber} ${BG_WARN}(${parentMatch[0]})${BG_RESET}`,
     })
   }
@@ -52,7 +52,7 @@ const reportImplicitParentChildCommunication = () => {
   if (implicitParentChildCommunicationFiles.length > 0) {
     implicitParentChildCommunicationFiles.forEach((file) => {
       offenses.push({
-        file: file.filename,
+        file: file.filePath,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
         message: `${file.message} 🚨`,
