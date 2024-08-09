@@ -2,9 +2,9 @@ import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { charIn, charNotIn, createRegExp, maybe, oneOrMore, wordChar } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-const unquotedAttributeValuesFiles: { filename: string, message: string }[] = []
+const results: FileCheckResult[] = []
 
 const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
@@ -38,7 +38,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     const match = templateTag.match(regexUnquotedAttributeValue)
     if (match?.length) {
       const lineNumber = getLineNumber(descriptor.source, templateTag)
-      unquotedAttributeValuesFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
+      results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
     }
   })
 }
@@ -46,19 +46,19 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
 const reportQuotedAttributeValues = () => {
   const offenses: Offense[] = []
 
-  if (unquotedAttributeValuesFiles.length > 0) {
-    unquotedAttributeValuesFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ attribute value is not quoted${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetQuotedAttributeValues = () => (unquotedAttributeValuesFiles.length = 0)
+const resetQuotedAttributeValues = () => (results.length = 0)
 
 export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetQuotedAttributeValues }
