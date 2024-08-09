@@ -11,30 +11,39 @@ const functionSizeFiles: FunctionSizeFile[] = []
 
 export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
+const addFunctionToFiles = (match: RegExpExecArray, filePath: string) => {
+  const funcName = match[1]
+  const funcBody = match[2]
+
+  // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
+  const lineCount = funcBody.split('\n').length
+  if (lineCount > MAX_FUNCTION_LENGTH) {
+    functionSizeFiles.push({ filename: filePath, funcName })
+  }
+}
+
 const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
-  // Regular expression to match function definitions (both regular and arrow functions)
-  const regex
-    = /function\s+([\w$]+)\s*\([^)]*\)\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}|const\s+([\w$]+)\s*=\s*\([^)]*\)\s*=>\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}/g
+  const regexNormalFunction
+    = /function\s+([\w$]+)\s*\([^)]*\)\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}/g
+  const regexArrowFunction
+    = /const\s+([\w$]+)\s*=\s*\([^)]*\)\s*=>\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}/g
+  // TODO it does not match arrow functions with no curly braces
+
   let match
 
   // eslint-disable-next-line no-cond-assign
-  while ((match = regex.exec(script.content)) !== null) {
-    /*
-      We use match[1] and match[2] for regular functions
-      and match[5] and match[6] for arrow functions
-    */
-    const funcName = match[1] || match[5]
-    const funcBody = match[2] || match[6]
-
-    // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
-    const lineCount = funcBody.split('\n').length
-    if (lineCount > MAX_FUNCTION_LENGTH) {
-      functionSizeFiles.push({ filename: filePath, funcName })
-    }
+  while ((match = regexNormalFunction.exec(script.content)) !== null) {
+    addFunctionToFiles(match, filePath)
   }
+
+  // TODO temporary switch off see #116
+
+  // while ((match = regexArrowFunction.exec(script.content)) !== null) {
+  //  addFunctionToFiles(match, filePath)
+  // }
 }
 
 const reportFunctionSize = () => {

@@ -8,19 +8,19 @@ import { checkRules } from './rulesCheck'
 import type { GroupBy } from './types'
 
 let filesCount = 0
-let _apply:Array<RuleSetType> = []
+let _apply: Array<RuleSetType> = []
 
 const dirs2Check = [
   'src',
   'components',
-  'pages',
   'layouts',
-  'server',
+  'pages',
+  /* 'server',
   'composables',
   'store',
   'utils',
   'plugins',
-  'middleware',
+  'middleware', */
 ]
 
 const walkAsync = async (dir: string) => {
@@ -29,7 +29,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, file)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (dirs2Check.some(dir => filePath.includes(dir))) {
+      if (dirs2Check.some(dir => filePath.endsWith(`/${dir}`))) {
         await walkAsync(filePath)
       }
     }
