@@ -1,9 +1,7 @@
-import type { Offense } from '../../types'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 
-interface TopLevelElementOrder { filename: string }
-
-const topLevelElementOrderFiles: TopLevelElementOrder[] = []
+const results: FileCheckResult[] = []
 
 /* The opinionated correct order is: script, template, style */
 const checkTopLevelElementOrder = (source: string, filePath: string) => {
@@ -31,19 +29,19 @@ const checkTopLevelElementOrder = (source: string, filePath: string) => {
   if (isCorrectOrder)
     return // If it's correct, do nothing
 
-  topLevelElementOrderFiles.push({ filename: filePath })
+  results.push({ filePath, message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET}`   })
 }
 
 const reportTopLevelElementOrder = () => {
   const offenses: Offense[] = []
 
-  if (topLevelElementOrderFiles.length > 0) {
-    topLevelElementOrderFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
-        message: '🚨',
+        message: `${result.message} 🚨`,
       })
     })
   }
@@ -51,6 +49,6 @@ const reportTopLevelElementOrder = () => {
   return offenses
 }
 
-const resetTopLevelElementOrder = () => (topLevelElementOrderFiles.length = 0)
+const resetTopLevelElementOrder = () => (results.length = 0)
 
 export { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder }

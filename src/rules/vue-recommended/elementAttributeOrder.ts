@@ -51,7 +51,7 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
         const currIdx = ATTRIBUTE_ORDER.indexOf(attr)
         if (currIdx !== -1 && currIdx < lastIdx) {
           results.push({
-            filename: filePath,
+            filePath,
             message: `tag has attributes out of order ${BG_WARN}(${tagName})${BG_RESET}`,
           })
           break
@@ -68,7 +68,7 @@ const reportElementAttributeOrder = () => {
   if (results.length > 0) {
     results.forEach((result) => {
       offenses.push({
-        file: result.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
         message: `${result.message} 🚨`,
