@@ -1,8 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-const parameterCountFiles: { filename: string, funcName: string, paramsCount: number }[] = []
+const results: FileCheckResult[] = []
 
 export const MAX_PARAMETER_COUNT = 3 // completely rrd made-up number
 
@@ -13,7 +13,7 @@ const checkParameters = (funcName: string, params: string, filePath: string) => 
     .map(param => param.trim())
     .filter(param => param.length > 0)
   if (paramsArray.length > MAX_PARAMETER_COUNT) {
-    parameterCountFiles.push({ filename: filePath, funcName, paramsCount: paramsArray.length })
+    results.push({ filePath, message: `function ${BG_WARN}${funcName}${BG_RESET} has ${BG_WARN}${paramsArray.length}${BG_RESET} parameters`, })
   }
 }
 
@@ -41,13 +41,13 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string) =>
 const reportParameterCount = () => {
   const offenses: Offense[] = []
 
-  if (parameterCountFiles.length > 0) {
-    parameterCountFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
-        message: `function ${BG_WARN}${file.funcName}${BG_RESET} has ${BG_WARN}${file.paramsCount}${BG_RESET} parameters 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
@@ -55,6 +55,6 @@ const reportParameterCount = () => {
   return offenses
 }
 
-const resetParameterCount = () => (parameterCountFiles.length = 0)
+const resetParameterCount = () => (results.length = 0)
 
 export { checkParameterCount, reportParameterCount, resetParameterCount }
