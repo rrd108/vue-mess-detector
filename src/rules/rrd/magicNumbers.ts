@@ -1,10 +1,10 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { anyOf, createRegExp, digit, global, linefeed,  } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 import getLineNumber from '../getLineNumber'
 
-const magicNumberFiles: { filePath: string, message: string }[] = []
+const results: FileCheckResult[] = []
 
 const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -15,7 +15,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
 
   matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)
-    magicNumberFiles.push({
+    results.push({
       filePath,
       message: `line #${lineNumber} ${BG_WARN}magic number: ${match.length}${BG_RESET}`,
     })
@@ -26,19 +26,19 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
 const reportMagicNumbers = () => {
   const offenses: Offense[] = []
 
-  if (magicNumberFiles.length > 0) {
-    magicNumberFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET}`,
-        message: `magic numbers found (${file.message}) 🚨`,
+        message: `magic numbers found (${result.message}) 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetMagicNumbers = () => (magicNumberFiles.length = 0)
+const resetMagicNumbers = () => (results.length = 0)
 
 export { checkMagicNumbers, reportMagicNumbers, resetMagicNumbers }
