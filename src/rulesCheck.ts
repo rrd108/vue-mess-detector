@@ -30,6 +30,7 @@ import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSele
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
+  console.log(`Analyzing ${filePath}...`)
 
   if (apply.includes('vue-essential')) {
     checkSingleNameComponent(filePath)
