@@ -96,9 +96,19 @@ If you want to apply *only* some rulesets add the `--apply` flag with comma sepa
 npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
 ```
 
+If you want to *group* the results by file add the `--group` flag with one of the allowed options `file | rule`
+
+```bash
+npx vue-mess-detector analyze ./src --group=file
+```
+
 ## Example output
 
-![Output Image](./docs/public/output.png)
+#### Without `--group` flag (default behavior is to group per rule) ⬇️
+![Output Image - Group By Rule](./docs/public/results-per-rule.png)
+
+#### With `--group=file` flag ⬇️
+![Output Image - Group By File](./docs/public/results-per-file.png)
 
 ## Documentation
 

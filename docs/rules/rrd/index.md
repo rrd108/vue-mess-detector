@@ -11,6 +11,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [Script Length](./script-length.md)
 - [Short Variable Name](./short-variable-name.md)
 - [Too Many Props](./too-many-props.md)
+- [Magic Numbers](./magic-numbers.md)
 
 ## ❓ Why it's good to follow this ruleset?
 

@@ -73,6 +73,7 @@ export default defineConfig({
                 { text: 'Script Length', link: '/rules/rrd/script-length' },
                 { text: 'Short Variable Name', link: '/rules/rrd/short-variable-name' },
                 { text: 'Too Many Props', link: '/rules/rrd/too-many-props' },
+                { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
               ] },
             ],
           },

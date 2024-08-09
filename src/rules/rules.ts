@@ -22,6 +22,7 @@ export const RULES = {
     'scriptLenght',
     'shortVariableName',
     'tooManyProps',
+    'magicNumbers',
   ],
 }
 export type RuleType = typeof RULES
