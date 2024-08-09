@@ -1,9 +1,9 @@
-import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO, BG_WARN } from '../asceeCodes'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import { getUniqueFilenameCount } from '../../helpers'
+import type { Offense } from '../../types'
 
-type TemplateSimpleExpressionFile = { filename: string; message: string }
+interface TemplateSimpleExpressionFile { filename: string, message: string }
 
 const templateSimpleExpressionFiles: TemplateSimpleExpressionFile[] = []
 
@@ -13,37 +13,38 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
   if (!template) {
     return
   }
+  // eslint-disable-next-line regexp/strict, regexp/no-super-linear-backtracking
   const regex = /{{\s*([\s\S]*?)\s*}}/g
   const matches = [...template.content.matchAll(regex)].map(match => match[1].trim())
 
-  matches.forEach(expression => {
+  matches.forEach((expression) => {
     if (expression.length > MAX_EXPRESSION_LENGTH) {
       const lineNumber = getLineNumber(template.content, expression)
       const firstPart = expression.split('\n').at(0)?.trim() || ''
       templateSimpleExpressionFiles.push({
         filename: filePath,
-        message: `${filePath}#${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
+        message: `line #${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
       })
     }
   })
 }
 
 const reportTemplateSimpleExpression = () => {
-  if (templateSimpleExpressionFiles.length > 0) {
-    // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<TemplateSimpleExpressionFile>(templateSimpleExpressionFiles, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(
-      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}Lengthy template expression${BG_RESET} found in ${fileCount} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`
-    )
-    templateSimpleExpressionFiles.forEach(file => {
-      console.log(`- ${file.message} 🚨`)
+  if (templateSimpleExpressionFiles.length > 0) {
+    templateSimpleExpressionFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return templateSimpleExpressionFiles.length
+  return offenses
 }
 
-export { checkTemplateSimpleExpression, reportTemplateSimpleExpression }
+const resetTemplateSimpleExpression = () => (templateSimpleExpressionFiles.length = 0)
+
+export { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetTemplateSimpleExpression }

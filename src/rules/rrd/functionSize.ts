@@ -1,25 +1,26 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
-type FunctionSizeFile = {
+interface FunctionSizeFile {
   filename: string
   funcName: string
 }
 
 const functionSizeFiles: FunctionSizeFile[] = []
 
-const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
+export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
 const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
   // Regular expression to match function definitions (both regular and arrow functions)
-  const regex =
-    /function\s+([a-zA-Z0-9_$]+)\s*\([^)]*\)\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}|const\s+([a-zA-Z0-9_$]+)\s*=\s*\([^)]*\)\s*=>\s*{([^{}]*(([^{}]*{[^{}]*}[^{}]*)*[^{}]*))}/g
+  const regex
+    = /function\s+([\w$]+)\s*\([^)]*\)\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}|const\s+([\w$]+)\s*=\s*\([^)]*\)\s*=>\s*\{([^{}]*(([^{}]*\{[^{}]*\}[^{}]*)*[^{}]*))\}/g
   let match
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
     /*
       We use match[1] and match[2] for regular functions
@@ -37,19 +38,21 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
 }
 
 const reportFunctionSize = () => {
-  if (functionSizeFiles.length > 0) {
-    // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<FunctionSizeFile>(functionSizeFiles, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_WARN}function size${BG_RESET} exceeds recommended limit in ${fileCount} files.`
-    )
-    console.log(`👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`)
-    functionSizeFiles.forEach(file => {
-      console.log(`- ${file.filename} 🚨 ${BG_WARN}(${file.funcName})${BG_RESET}`)
+  if (functionSizeFiles.length > 0) {
+    functionSizeFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+        message: `function ${BG_ERR}(${file.funcName})${BG_RESET} 🚨`,
+      })
     })
   }
-  return functionSizeFiles.length
+  return offenses
 }
 
-export { checkFunctionSize, reportFunctionSize }
+const resetFunctionSize = () => (functionSizeFiles.length = 0)
+
+export { checkFunctionSize, reportFunctionSize, resetFunctionSize }

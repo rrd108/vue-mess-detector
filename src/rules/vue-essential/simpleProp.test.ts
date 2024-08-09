@@ -1,10 +1,14 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { checkSimpleProp, reportSimpleProp } from './simpleProp'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkSimpleProp, reportSimpleProp, resetSimpleProp } from './simpleProp'
 
 describe('checkSimpleProp', () => {
+  beforeEach(() => {
+    resetSimpleProp()
+  })
+
   it('should not report files with detailed props definition', () => {
     const script = {
       content: `<script setup>
@@ -15,8 +19,8 @@ describe('checkSimpleProp', () => {
     } as SFCScriptBlock
     const fileName = 'proper-prop.vue'
     checkSimpleProp(script, fileName)
-    expect(reportSimpleProp()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportSimpleProp().length).toBe(0)
+    expect(reportSimpleProp()).toStrictEqual([])
   })
 
   it('should report files with simple props defeiniton', () => {
@@ -27,8 +31,12 @@ describe('checkSimpleProp', () => {
     } as SFCScriptBlock
     const fileName = 'simple-prop.vue'
     checkSimpleProp(script, fileName)
-    expect(reportSimpleProp()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(reportSimpleProp().length).toBe(1)
+    expect(reportSimpleProp()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
+      message: `🚨`,
+    }])
   })
 })

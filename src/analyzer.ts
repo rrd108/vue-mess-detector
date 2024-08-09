@@ -7,6 +7,7 @@ import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
+import type { GroupBy } from './types'
 
 let filesCount = 0
 
@@ -39,7 +40,7 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
   }
 }
 
-export const analyze = (dir: string, apply: Array<RuleSetType> = []) => {
+export const analyze = (dir: string, apply: Array<RuleSetType> = [], groupBy: GroupBy) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
   console.log(`Applying ${apply.length} rulesets ${BG_INFO}${apply}${BG_RESET} and ignoring ${ignore.length} rulesets ${BG_INFO}${ignore}${BG_RESET} `)
@@ -56,7 +57,7 @@ export const analyze = (dir: string, apply: Array<RuleSetType> = []) => {
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
 
-  if (!reportRules()) {
+  if (!reportRules(groupBy)) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
   }
 }

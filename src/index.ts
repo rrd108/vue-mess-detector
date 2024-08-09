@@ -4,6 +4,7 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
 import type { RuleSetType } from './rules/rules'
 import { RULESETS } from './rules/rules'
+import type { GroupBy } from './types'
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
 yargs(hideBin(process.argv))
@@ -27,6 +28,12 @@ yargs(hideBin(process.argv))
           type: 'string',
           coerce: coerceRules('apply'),
         })
+        .option('group', {
+          describe: 'Group results by rule or file',
+          type: 'string',
+          coerce: value => customGroupType(value),
+          default: 'rule',
+        })
         .check((argv) => {
           if (argv.ignore && argv.apply) {
             console.error(
@@ -46,7 +53,7 @@ yargs(hideBin(process.argv))
       if (argv.ignore) {
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
-      analyze(argv.path as string, rules)
+      analyze(argv.path as string, rules, argv.group)
     },
   )
   .help().argv
@@ -66,4 +73,13 @@ function coerceRules(optionName: 'ignore' | 'apply') {
     }
     return values as RuleSetType[]
   }
+}
+
+function customGroupType(value: GroupBy) {
+  const validChoices: GroupBy[] = ['rule', 'file']
+  if (!validChoices.includes(value)) {
+    // eslint-disable-next-line node/prefer-global/process
+    process.exit(1)
+  }
+  return value
 }

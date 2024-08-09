@@ -1,9 +1,10 @@
-import { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN, TEXT_INFO } from '../asceeCodes'
-import { createRegExp, charIn, charNotIn, oneOrMore, maybe, wordChar } from 'magic-regexp'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
+import { charIn, charNotIn, createRegExp, maybe, oneOrMore, wordChar } from 'magic-regexp'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
+import type { Offense } from '../../types'
 
-const unquotedAttributeValuesFiles: { message: string }[] = []
+const unquotedAttributeValuesFiles: { filename: string, message: string }[] = []
 
 const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
@@ -19,40 +20,45 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     maybe(oneOrMore(charIn(' \t\n\r'))),
     maybe('/'),
     '>',
-    ['g']
+    ['g'],
   )
   const matches = template.content.match(regexTempltaTag)
 
-  if (matches === null) return
+  if (matches === null)
+    return
 
   const regexUnquotedAttributeValue = createRegExp(':', oneOrMore(wordChar), maybe(' '), '=', maybe(' '), charNotIn('\'"'), [
     'g',
   ])
 
-  matches.forEach(templateTag => {
-    if (!templateTag.includes(':')) return // check if it contains a colon
+  matches.forEach((templateTag) => {
+    if (!templateTag.includes(':'))
+      return // check if it contains a colon
 
     const match = templateTag.match(regexUnquotedAttributeValue)
     if (match?.length) {
       const lineNumber = getLineNumber(descriptor.source, templateTag)
-      unquotedAttributeValuesFiles.push({ message: `${filePath}#${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
+      unquotedAttributeValuesFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
     }
   })
 }
 
 const reportQuotedAttributeValues = () => {
+  const offenses: Offense[] = []
+
   if (unquotedAttributeValuesFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}Attribute value is not quoted${BG_RESET} in ${unquotedAttributeValuesFiles.length} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`
-    )
-    unquotedAttributeValuesFiles.forEach(file => {
-      console.log(`- ${file.message} 🚨`)
+    unquotedAttributeValuesFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${TEXT_INFO}vue-strong ~ attribute value is not quoted${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return unquotedAttributeValuesFiles.length
+  return offenses
 }
 
-export { checkQuotedAttributeValues, reportQuotedAttributeValues }
+const resetQuotedAttributeValues = () => (unquotedAttributeValuesFiles.length = 0)
+
+export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetQuotedAttributeValues }

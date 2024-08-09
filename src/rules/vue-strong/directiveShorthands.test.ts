@@ -1,11 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCDescriptor, SFCTemplateBlock } from '@vue/compiler-sfc'
-import { checkDirectiveShorthands, reportDirectiveShorthands } from './directiveShorthands'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkDirectiveShorthands, reportDirectiveShorthands, resetDirectiveShorthands } from './directiveShorthands'
 
 describe('checkDirectiveShorthands', () => {
+  beforeEach(() => {
+    resetDirectiveShorthands()
+  })
+
   it('should not report files where directive shorthands are used', () => {
     const template = `<template #header>
       <input
@@ -21,8 +23,8 @@ describe('checkDirectiveShorthands', () => {
     } as SFCDescriptor
     const fileName = 'directive-shorthands.vue'
     checkDirectiveShorthands(descriptor, fileName)
-    expect(reportDirectiveShorthands()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportDirectiveShorthands().length).toBe(0)
+    expect(reportDirectiveShorthands()).toStrictEqual([])
   })
 
   it('should report files where directive shorthands are not used', () => {
@@ -40,8 +42,26 @@ describe('checkDirectiveShorthands', () => {
     } as SFCDescriptor
     const fileName = 'no-directive-shorthands.vue'
     checkDirectiveShorthands(descriptor, fileName)
-    expect(reportDirectiveShorthands()).toBe(3)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}:4 ${BG_WARN}v-on${BG_RESET} 🚨`)
+    expect(reportDirectiveShorthands().length).toBe(3)
+    expect(reportDirectiveShorthands()).toStrictEqual([
+      {
+        file: fileName,
+        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`,
+        message: `line #1 ${BG_WARN}v-slot${BG_RESET} 🚨`,
+      },
+      {
+        file: fileName,
+        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`,
+        message: `line #3 ${BG_WARN}v-bind${BG_RESET} 🚨`,
+      },
+      {
+        file: fileName,
+        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`,
+        message: `line #4 ${BG_WARN}v-on${BG_RESET} 🚨`,
+      },
+    ])
   })
 })

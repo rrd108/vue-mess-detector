@@ -1,11 +1,14 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { checkParameterCount, reportParameterCount } from './parameterCount'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { MAX_PARAMETER_COUNT, checkParameterCount, reportParameterCount, resetParameterCount } from './parameterCount'
 
 describe('checkParameterCount', () => {
+  beforeEach(() => {
+    resetParameterCount()
+  })
+
   it('should not report files where functions do not exceed the recommended limit', () => {
     const script = {
       content: `
@@ -14,12 +17,12 @@ describe('checkParameterCount', () => {
             return 'One'
           }
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'no-parameters.vue';
-    checkParameterCount(script, filename);
-    expect(reportParameterCount()).toBe(0);
-    expect(mockConsoleLog).not.toHaveBeenCalled();
+      `,
+    } as SFCScriptBlock
+    const filename = 'no-parameters.vue'
+    checkParameterCount(script, filename)
+    expect(reportParameterCount().length).toBe(0)
+    expect(reportParameterCount()).toStrictEqual([])
   })
 
   it('should report files where one function exceeds the recommended limit', () => {
@@ -32,16 +35,19 @@ describe('checkParameterCount', () => {
 
           const dummyFuncTwo = (param1, param2, param3, param4) => {}
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'one-parameter.vue';
-    const funcName = 'dummyFuncTwo';
-    const paramsCount = 4;
-    checkParameterCount(script, filename);
-    expect(reportParameterCount()).toBe(1);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_WARN}${funcName}${BG_RESET} in file ${filename} 🚨 ${BG_WARN}(${paramsCount})${BG_RESET}`)
-    
+      `,
+    } as SFCScriptBlock
+    const filename = 'one-parameter.vue'
+    const funcName = 'dummyFuncTwo'
+    const paramsCount = 4
+    checkParameterCount(script, filename)
+    expect(reportParameterCount().length).toBe(1)
+    expect(reportParameterCount()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      message: `function ${BG_WARN}${funcName}${BG_RESET} has ${BG_WARN}${paramsCount}${BG_RESET} parameters 🚨`,
+    }])
   })
 
   it('should report files where multiple functions exceed the recommended limit', () => {
@@ -60,14 +66,21 @@ describe('checkParameterCount', () => {
             return 'Three'
           }
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'multiple-parameters.vue';
-    const funcName = 'dummyFuncTwo';
-    const paramsCount = 4;
-    checkParameterCount(script, filename);
-    expect(reportParameterCount()).toBe(3);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${BG_WARN}${funcName}${BG_RESET} in file ${filename} 🚨 ${BG_WARN}(${paramsCount})${BG_RESET}`)
+      `,
+    } as SFCScriptBlock
+    const filename = 'multiple-parameters.vue'
+    checkParameterCount(script, filename)
+    expect(reportParameterCount().length).toBe(2)
+    expect(reportParameterCount()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      message: `function ${BG_WARN}dummyFuncOne${BG_RESET} has ${BG_WARN}5${BG_RESET} parameters 🚨`,
+    }, {
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      message: `function ${BG_WARN}dummyFuncTwo${BG_RESET} has ${BG_WARN}4${BG_RESET} parameters 🚨`,
+    }])
   })
 })

@@ -1,9 +1,10 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_WARN, TEXT_RESET, TEXT_INFO } from '../asceeCodes'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
-const MAX_SCRIPT_LENGTH = 100
+export const MAX_SCRIPT_LENGTH = 100
 
-const longScriptFiles: { fileName: string; scriptLength: number }[] = []
+const longScriptFiles: { fileName: string, scriptLength: number }[] = []
 
 const checkScriptLength = (script: SFCScriptBlock | null, file: string) => {
   if (!script) {
@@ -16,22 +17,23 @@ const checkScriptLength = (script: SFCScriptBlock | null, file: string) => {
 }
 
 const reportScriptLength = () => {
+  const offenses: Offense[] = []
+
   if (longScriptFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}rrd${TEXT_RESET} ${BG_ERR}Long <script> blocks${BG_RESET} in ${longScriptFiles.length} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`
-    )
-    longScriptFiles.forEach(file => {
-      console.log(
-        `- ${file.fileName} ${file.scriptLength > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
+    longScriptFiles.forEach((file) => {
+      offenses.push({
+        file: file.fileName,
+        rule: `${TEXT_INFO}rrd ~ Long <script> blocks${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET}`,
+        message: `${file.scriptLength > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
           file.scriptLength
-        } lines)${BG_RESET}`
-      )
+        } lines)${BG_RESET} 🚨`,
+      })
     })
   }
-  return longScriptFiles.length
+  return offenses
 }
 
-export { checkScriptLength, reportScriptLength }
+const resetScriptLength = () => (longScriptFiles.length = 0)
+
+export { checkScriptLength, reportScriptLength, resetScriptLength }

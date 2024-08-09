@@ -1,6 +1,7 @@
-import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
 const vforNoKeyFiles: { filePath: string }[] = []
 
@@ -23,18 +24,21 @@ const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => 
 }
 
 const reportVforNoKey = () => {
+  const offenses: Offense[] = []
+
   if (vforNoKeyFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}vue-essential${TEXT_RESET} ${BG_ERR}v-for has no key${BG_RESET} in ${vforNoKeyFiles.length} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`
-    )
-    vforNoKeyFiles.forEach(file => {
-      console.log(`- ${file.filePath} 🚨`)
+    vforNoKeyFiles.forEach((file) => {
+      offenses.push({
+        file: file.filePath,
+        rule: `${TEXT_INFO}vue-essential ~ v-for has no key${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`,
+        message: `🚨`,
+      })
     })
   }
-  return vforNoKeyFiles.length
+  return offenses
 }
 
-export { checkVforNoKey, reportVforNoKey }
+const resetReportVForNoKey = () => (vforNoKeyFiles.length = 0)
+
+export { checkVforNoKey, reportVforNoKey, resetReportVForNoKey }

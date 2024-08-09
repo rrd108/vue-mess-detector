@@ -1,11 +1,14 @@
+import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it, vi } from 'vitest'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
-import { checkElementAttributeOrder, reportElementAttributeOrder } from './elementAttributeOrder'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder } from './elementAttributeOrder'
 
 describe('checkElementAttributeOrder', () => {
+  beforeEach(() => {
+    resetElementAttributeOrder()
+  })
+
   it('should not report files where elements attribute order is correct', () => {
     const template = {
       content: `
@@ -16,8 +19,8 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportElementAttributeOrder().length).toBe(0)
+    expect(reportElementAttributeOrder()).toStrictEqual([])
   })
 
   it('should report files where elements attribute order are incorrect', () => {
@@ -30,11 +33,13 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order-incorrect.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-            `- ${filename} tag has attributes out of order ${BG_WARN}(input)${BG_RESET} 🚨`,
-    )
+    expect(reportElementAttributeOrder().length).toBe(1)
+    expect(reportElementAttributeOrder()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
+      message: `tag has attributes out of order ${BG_WARN}(input)${BG_RESET} 🚨`,
+    }])
   })
 
   it('should not report files where elements attribute order is incorrect 2', () => {
@@ -47,10 +52,12 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order-incorrect-2.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder()).toBe(2)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-            `- ${filename} tag has attributes out of order ${BG_WARN}(div)${BG_RESET} 🚨`,
-    )
+    expect(reportElementAttributeOrder().length).toBe(1)
+    expect(reportElementAttributeOrder()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
+      message: `tag has attributes out of order ${BG_WARN}(div)${BG_RESET} 🚨`,
+    }])
   })
 })

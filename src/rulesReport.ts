@@ -24,47 +24,81 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
-import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
 
-export const reportRules = () => {
+export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
+  const offensesGrouped: OffensesGrouped = {}
+
+  // Helper function to add offenses
+  const addOffense = ({ file, rule, title, description, message }: Offense) => {
+    const groupKey = groupBy === 'rule' ? rule : file
+
+    if (!offensesGrouped[groupKey]) {
+      offensesGrouped[groupKey] = []
+    }
+    offensesGrouped[groupKey].push({ file, rule, title, description, message })
+  }
+
+  // Helper function to process offenses from a report function
+  const processOffenses = (reportFunction: ReportFunction) => {
+    const offenses = reportFunction()
+    offenses.forEach((offense) => {
+      addOffense(offense)
+      errors++
+    })
+  }
 
   // vue-essential rules
-  errors += reportSingleNameComponent()
-  errors += reportSimpleProp()
-  errors += reportVforNoKey()
-  errors += reportVifWithVfor()
-  errors += reportGlobalStyle()
+  processOffenses(reportSingleNameComponent)
+  processOffenses(reportSimpleProp)
+  processOffenses(reportVforNoKey)
+  processOffenses(reportVifWithVfor)
+  processOffenses(reportGlobalStyle)
 
   // vue-strong rules
-  errors += reportComponentFilenameCasing()
-  errors += reportSelfClosingComponents()
-  errors += reportPropNameCasing()
-  errors += reportTemplateSimpleExpression()
-  errors += reportQuotedAttributeValues()
-  errors += reportDirectiveShorthands()
-  errors += reportSimpleComputed()
-  errors += reportComponentFiles()
-  errors += reportFullWordComponentName()
+  processOffenses(reportComponentFilenameCasing)
+  processOffenses(reportSelfClosingComponents)
+  processOffenses(reportPropNameCasing)
+  processOffenses(reportTemplateSimpleExpression)
+  processOffenses(reportQuotedAttributeValues)
+  processOffenses(reportDirectiveShorthands)
+  processOffenses(reportSimpleComputed)
+  processOffenses(reportComponentFiles)
+  processOffenses(reportFullWordComponentName)
 
   // vue-recommended rules
-  errors += reportTopLevelElementOrder()
-  errors += reportElementAttributeOrder()
+  processOffenses(reportTopLevelElementOrder)
+  processOffenses(reportElementAttributeOrder)
 
   // vue-caution rules
-  errors += reportImplicitParentChildCommunication()
-  errors += reportElementSelectorsWithScoped()
+  processOffenses(reportImplicitParentChildCommunication)
 
   // rrd rules
-  errors += reportCyclomaticComplexity()
-  errors += reportDeepIndentation()
-  errors += reportElseCondition()
-  errors += reportFunctionSize()
-  errors += reportParameterCount()
-  errors += reportPlainScript()
-  errors += reportScriptLength()
-  errors += reportShortVariableName()
-  errors += reportTooManyProps()
+  processOffenses(reportCyclomaticComplexity)
+  processOffenses(reportDeepIndentation)
+  processOffenses(reportElseCondition)
+  processOffenses(reportFunctionSize)
+  processOffenses(reportParameterCount)
+  processOffenses(reportPlainScript)
+  processOffenses(reportScriptLength)
+  processOffenses(reportShortVariableName)
+  processOffenses(reportTooManyProps)
+
+  // Output the report grouped by file
+  Object.keys(offensesGrouped).forEach((key) => {
+    console.log(`\n - ${key}`)
+    offensesGrouped[key].forEach((offense) => {
+      if (groupBy === 'file') {
+        console.log(`   Rule: ${offense.rule}`)
+      }
+      else {
+        console.log(`   File: ${offense.file}`)
+      }
+      console.log(`   Description: ${offense.description}`)
+      console.log(`   Message: ${offense.message || '🚨'}\n`)
+    })
+  })
 
   return errors
 }

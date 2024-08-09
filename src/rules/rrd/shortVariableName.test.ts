@@ -1,11 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
-import { SFCScriptBlock } from '@vue/compiler-sfc';
-import { checkShortVariableName, reportShortVariableName } from './shortVariableName';
-import { BG_RESET, BG_WARN } from '../asceeCodes';
+import { beforeEach, describe, expect, it } from 'vitest'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { MIN_VARIABLE_NAME, checkShortVariableName, reportShortVariableName, resetShortVariableName } from './shortVariableName'
 
 describe('shortVariableName', () => {
+  beforeEach(() => {
+    resetShortVariableName()
+  })
+
   it('should not report files where variable names are not too short', () => {
     const script = {
       content: `
@@ -13,12 +16,12 @@ describe('shortVariableName', () => {
         import { ref } from 'vue';
         const isLoading = ref(false);
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'not-short-variable-name.vue';
-    checkShortVariableName(script, filename);
-    expect(reportShortVariableName()).toBe(0);
-    expect(mockConsoleLog).not.toHaveBeenCalled();
+      `,
+    } as SFCScriptBlock
+    const filename = 'not-short-variable-name.vue'
+    checkShortVariableName(script, filename)
+    expect(reportShortVariableName().length).toBe(0)
+    expect(reportShortVariableName()).toStrictEqual([])
   })
 
   it('should report files where one variable is too short', () => {
@@ -27,16 +30,20 @@ describe('shortVariableName', () => {
         <script setup>
         let age = 10;
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'short-variable-name.vue';
-    const variable = 'age';
-    checkShortVariableName(script, filename);
-    expect(reportShortVariableName()).toBe(1);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${filename} 🚨 ${BG_WARN}(${variable})${BG_RESET}`);
+      `,
+    } as SFCScriptBlock
+    const filename = 'short-variable-name.vue'
+    const variable = 'age'
+    checkShortVariableName(script, filename)
+    expect(reportShortVariableName().length).toBe(1)
+    expect(reportShortVariableName()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      message: `${BG_ERR}(${variable})${BG_RESET} 🚨`,
+    }])
   })
-  
+
   it('should report files where more than one variable are too short', () => {
     const script = {
       content: `
@@ -47,13 +54,26 @@ describe('shortVariableName', () => {
         var isLoading = false;
         const lng = 5;
         </script>
-      `
-    } as SFCScriptBlock;
-    const filename = 'multiple-short-variable-name.vue';
-    const variable = 'lng';
-    checkShortVariableName(script, filename);
-    expect(reportShortVariableName()).toBe(4);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${filename} 🚨 ${BG_WARN}(${variable})${BG_RESET}`);
+      `,
+    } as SFCScriptBlock
+    const filename = 'multiple-short-variable-name.vue'
+    checkShortVariableName(script, filename)
+    expect(reportShortVariableName().length).toBe(3)
+    expect(reportShortVariableName()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      message: `${BG_ERR}(age)${BG_RESET} 🚨`,
+    }, {
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      message: `${BG_ERR}(gps)${BG_RESET} 🚨`,
+    }, {
+      file: filename,
+      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      message: `${BG_ERR}(lng)${BG_RESET} 🚨`,
+    }])
   })
 })

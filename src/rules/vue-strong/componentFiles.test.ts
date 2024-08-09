@@ -1,23 +1,25 @@
-import { describe, expect, it, vi } from 'vitest';
-import { SFCScriptBlock } from '@vue/compiler-sfc';
-import { BG_ERR, BG_RESET, BG_WARN } from '../asceeCodes';
-import { checkComponentFiles, reportComponentFiles } from './componentFiles';
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkComponentFiles, reportComponentFiles, resetComponentFiles } from './componentFiles'
 
 describe('checkComponentFiles', () => {
+  beforeEach(() => {
+    resetComponentFiles()
+  })
+
   it('should not report files where each component is its own file', () => {
     const script = {
       content: `
         <script setup>
         console.log('This is just fine');
         </script>
-      `
+      `,
     } as SFCScriptBlock
     const filename = 'component.vue'
     checkComponentFiles(script, filename)
-    expect(reportComponentFiles()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportComponentFiles().length).toBe(0)
+    expect(reportComponentFiles()).toStrictEqual([])
   })
 
   it('should report files each component is not its own file', () => {
@@ -32,15 +34,21 @@ describe('checkComponentFiles', () => {
           // ...
         })
         </script>
-      `
+      `,
     } as SFCScriptBlock
     const filename = 'component.vue'
-    const lineNumber = 6;
     checkComponentFiles(script, filename)
-    expect(reportComponentFiles()).toBe(2)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(
-      `- ${filename}#${lineNumber} ${BG_WARN}(TodoItem)${BG_RESET} 🚨`
-    )
+    expect(reportComponentFiles().length).toBe(2)
+    expect(reportComponentFiles()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
+      message: `line #2 ${BG_WARN}(TodoList)${BG_RESET} 🚨`,
+    }, {
+      file: filename,
+      rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
+      message: `line #6 ${BG_WARN}(TodoItem)${BG_RESET} 🚨`,
+    }])
   })
 })

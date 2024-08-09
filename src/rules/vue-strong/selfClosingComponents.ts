@@ -1,9 +1,10 @@
-import { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, BG_WARN, TEXT_INFO } from '../asceeCodes'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { charNotIn, createRegExp, letter, linefeed, maybe, oneOrMore, tab, wordChar } from 'magic-regexp'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
+import type { Offense } from '../../types'
 
-const selfClosingComponentsFiles: { message: string }[] = []
+const selfClosingComponentsFiles: { filename: string, message: string }[] = []
 
 const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
@@ -19,32 +20,34 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
     '></',
     oneOrMore(wordChar),
     '>',
-    ['g']
+    ['g'],
   )
   const matches = template.content.match(regexSelfClosingComponent)
 
-  if (matches === null) return
+  if (matches === null)
+    return
 
-  matches.forEach(componentTag => {
+  matches.forEach((componentTag) => {
     const lineNumber = getLineNumber(descriptor.source, componentTag)
     const lastPart = componentTag.split('\n').at(-1)?.trim() || ''
-    selfClosingComponentsFiles.push({ message: `${filePath}#${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })
+    selfClosingComponentsFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })
   })
 }
 
 const reportSelfClosingComponents = () => {
+  const offenses: Offense[] = []
+
   if (selfClosingComponentsFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}vue-strong${TEXT_RESET} - ${BG_ERR}Component is not self closing${BG_RESET} in ${selfClosingComponentsFiles.length} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`
-    )
-    selfClosingComponentsFiles.forEach(file => {
-      console.log(`- ${file.message} 🚨`)
+    selfClosingComponentsFiles.forEach((file) => {
+      offenses.push({
+        file: file.filename,
+        rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#self-closing-components`,
+        message: `${file.message} 🚨`,
+      })
     })
   }
-  return selfClosingComponentsFiles.length
+  return offenses
 }
 
 const resetSelfClosingComponents = () => (selfClosingComponentsFiles.length = 0)

@@ -1,10 +1,14 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCBlock } from '@vue/compiler-sfc'
-import { checkTopLevelElementOrder, reportTopLevelElementOrder } from './topLevelElementOrder'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import type { SFCBlock } from '@vue/compiler-sfc'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder } from './topLevelElementOrder'
 
 describe('checkTopLevelElementOrder', () => {
+  beforeEach(() => {
+    resetTopLevelElementOrder()
+  })
+
   it('should not report files where top-level element order is correct', () => {
     const script = {
       content: `
@@ -20,12 +24,12 @@ describe('checkTopLevelElementOrder', () => {
           color: white;
         }
         </style>
-      `
-    } as SFCBlock;
+      `,
+    } as SFCBlock
     const filename = 'sfc-correct-order.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportTopLevelElementOrder().length).toBe(0)
+    expect(reportTopLevelElementOrder()).toStrictEqual([])
   })
 
   it('should report files where top-level element order is incorrect', () => {
@@ -43,13 +47,17 @@ describe('checkTopLevelElementOrder', () => {
           color: white;
         }
         </style>
-      `
-    } as SFCBlock;
+      `,
+    } as SFCBlock
     const filename = 'sfc-incorrect-order.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(` - ${filename} 🚨`)
+    expect(reportTopLevelElementOrder().length).toBe(1)
+    expect(reportTopLevelElementOrder()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
+      message: '🚨',
+    }])
   })
 
   it('should report files where one top-level element order is missing', () => {
@@ -63,12 +71,16 @@ describe('checkTopLevelElementOrder', () => {
         <template>
           <h1 class="age-input">22</h1>
         </template>
-      `
-    } as SFCBlock;
+      `,
+    } as SFCBlock
     const filename = 'sfc-missing-element.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder()).toBe(2)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(` - ${filename} 🚨`)
+    expect(reportTopLevelElementOrder().length).toBe(1)
+    expect(reportTopLevelElementOrder()).toStrictEqual([{
+      file: filename,
+      rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
+      message: '🚨',
+    }])
   })
 })

@@ -1,20 +1,23 @@
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, TEXT_WARN, TEXT_RESET, BG_ERR, TEXT_INFO } from '../asceeCodes'
-import { global, charNotIn, createRegExp, letter, oneOrMore } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { createRegExp, letter, oneOrMore } from 'magic-regexp'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { Offense } from '../../types'
 
 const propNameCasingFiles: { filePath: string }[] = []
 
 const camelCasePattern = createRegExp(
   oneOrMore(letter.lowercase).at.lineStart(),
-  oneOrMore(letter.uppercase, letter.lowercase.times.any().grouped()).at.lineEnd()
+  oneOrMore(letter.uppercase, letter.lowercase.times.any().grouped()).at.lineEnd(),
 )
 
 const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+  // eslint-disable-next-line regexp/strict
   const regex = /defineProps\({([^}]+)/g
   let match
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
     const propNames = match[1]
       .replace(/\s+/g, '')
@@ -31,18 +34,21 @@ const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) =>
 }
 
 const reportPropNameCasing = () => {
+  const offenses: Offense[] = []
+
   if (propNameCasingFiles.length > 0) {
-    console.log(
-      `\n${TEXT_INFO}vue-strong${TEXT_RESET} ${BG_ERR}prop names are not camelCased${BG_RESET} in ${propNameCasingFiles.length} files.`
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`
-    )
-    propNameCasingFiles.forEach(file => {
-      console.log(`- ${file.filePath} 🚨`)
+    propNameCasingFiles.forEach((file) => {
+      offenses.push({
+        file: file.filePath,
+        rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
+        message: `🚨`,
+      })
     })
   }
-  return propNameCasingFiles.length
+  return offenses
 }
 
-export { checkPropNameCasing, reportPropNameCasing }
+const resetPropNameCasing = () => (propNameCasingFiles.length = 0)
+
+export { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing }

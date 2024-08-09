@@ -1,11 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { checkVifWithVfor, reportVifWithVfor } from './vifWithVfor'
-import { BG_ERR, BG_RESET } from '../asceeCodes'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkVifWithVfor, reportVifWithVfor, resetVIfWithVFor } from './vifWithVfor'
 
 describe('checkVifWithVfor', () => {
+  beforeEach(() => {
+    resetVIfWithVFor()
+  })
+
   it('should not report files where v-for and v-if is not used together', () => {
     const script = {
       content: `<template>
@@ -20,8 +22,8 @@ describe('checkVifWithVfor', () => {
     } as SFCTemplateBlock
     const fileName = 'separate-vif-vfor.vue'
     checkVifWithVfor(script, fileName)
-    expect(reportVifWithVfor()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportVifWithVfor().length).toBe(0)
+    expect(reportVifWithVfor()).toStrictEqual([])
   })
 
   it('should report files where v-for is used with v-if', () => {
@@ -40,8 +42,12 @@ describe('checkVifWithVfor', () => {
     } as SFCTemplateBlock
     const fileName = 'vif-with-vfor.vue'
     checkVifWithVfor(script, fileName)
-    expect(reportVifWithVfor()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨`)
+    expect(reportVifWithVfor().length).toBe(1)
+    expect(reportVifWithVfor()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`,
+      message: `🚨`,
+    }])
   })
 })

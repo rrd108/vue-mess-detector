@@ -1,28 +1,30 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { checkSimpleComputed, reportSimpleComputed } from './simpleComputed'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
-
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { checkSimpleComputed, reportSimpleComputed, resetSimpleComputed } from './simpleComputed'
 
 describe('checkSimpleComputed', () => {
+  beforeEach(() => {
+    resetSimpleComputed()
+  })
+
   it('should not report files with simple computed properties', () => {
     let script = {
       content: `const isWeekend = computed(() => today.getDay() === 0 || today.getDay() === 6)
       const one = 1
       const isWeekend2 = computed(() => today.getDay() === 0 || today.getDay() === 6)`,
     } as SFCScriptBlock
-    let fileName = 'simple-computed.vue'
+    const fileName = 'simple-computed.vue'
     checkSimpleComputed(script, fileName)
-    expect(reportSimpleComputed()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportSimpleComputed().length).toBe(0)
+    expect(reportSimpleComputed()).toStrictEqual([])
 
     script = {
       content: `const isWeekend = computed(()=>today.getDay() === 0 || today.getDay() === 6)`,
     } as SFCScriptBlock
     checkSimpleComputed(script, fileName)
-    expect(reportSimpleComputed()).toBe(0)
-    expect(mockConsoleLog).not.toHaveBeenCalled()
+    expect(reportSimpleComputed().length).toBe(0)
+    expect(reportSimpleComputed()).toStrictEqual([])
   })
 
   it('should report files with complicated computed properties', () => {
@@ -49,8 +51,12 @@ describe('checkSimpleComputed', () => {
     } as SFCScriptBlock
     const fileName = 'complicated-computed.vue'
     checkSimpleComputed(script, fileName)
-    expect(reportSimpleComputed()).toBe(1)
-    expect(mockConsoleLog).toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName}:2 ${BG_WARN}computed${BG_RESET} 🚨`)
+    expect(reportSimpleComputed().length).toBe(1)
+    expect(reportSimpleComputed()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}vue-strong ~ complicated computed property${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`,
+      message: `line #2 ${BG_WARN}computed${BG_RESET} 🚨`,
+    }])
   })
 })

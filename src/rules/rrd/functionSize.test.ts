@@ -1,13 +1,16 @@
-import { describe, expect, it, vi } from 'vitest'
-import { SFCScriptBlock } from '@vue/compiler-sfc'
-import { checkFunctionSize, reportFunctionSize } from './functionSize'
-import { BG_RESET, BG_WARN } from '../asceeCodes'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {})
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { MAX_FUNCTION_LENGTH, checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
+  beforeEach(() => {
+    resetFunctionSize()
+  })
+
   it('should not report files where functions do not exceed the recommended limit', () => {
-    const script = { 
+    const script = {
       content: `
         <script setup>
           function greeting(msg) {
@@ -20,16 +23,16 @@ describe('checkFunctionSize', () => {
             }
           }
         </script>
-      `
-    } as SFCScriptBlock;
-    const fileName = 'function-size.vue';
-    checkFunctionSize(script, fileName);
-    expect(reportFunctionSize()).toBe(0);
-    expect(mockConsoleLog).not.toHaveBeenCalled();
+      `,
+    } as SFCScriptBlock
+    const fileName = 'function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(0)
+    expect(reportFunctionSize()).toStrictEqual([])
   })
 
   it('should report files with one function exceeding the limit', () => {
-    const script = { 
+    const script = {
       content: `
         <script setup>
           function dummyRegularFunction() {
@@ -62,18 +65,22 @@ describe('checkFunctionSize', () => {
             console.log(getGreeting());
           }
         </script>
-      `
-    } as SFCScriptBlock;
-    const fileName = 'function-size.vue';
-    const funcName = 'dummyRegularFunction';
-    checkFunctionSize(script, fileName);
-    expect(reportFunctionSize()).toBe(1);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨 ${BG_WARN}(${funcName})${BG_RESET}`)
+      `,
+    } as SFCScriptBlock
+    const fileName = 'function-size.vue'
+    const funcName = 'dummyRegularFunction'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(1)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      message: `function ${BG_ERR}(${funcName})${BG_RESET} 🚨`,
+    }])
   })
 
   it('should report files with two functions exceeding the limit', () => {
-    const script = { 
+    const script = {
       content: `
         <script setup>
           function dummyRegularFunction(name = 'Hi') {
@@ -134,13 +141,21 @@ describe('checkFunctionSize', () => {
             return 'Function execution complete!';
           }
         </script>
-      `
-    } as SFCScriptBlock;
-    const fileName = 'function-size.vue';
-    const funcName = 'dummyArrowFunction';
-    checkFunctionSize(script, fileName);
-    expect(reportFunctionSize()).toBe(3);
-    expect(mockConsoleLog).toHaveBeenCalled();
-    expect(mockConsoleLog).toHaveBeenLastCalledWith(`- ${fileName} 🚨 ${BG_WARN}(${funcName})${BG_RESET}`)
+      `,
+    } as SFCScriptBlock
+    const fileName = 'function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(2)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} 🚨`,
+    }, {
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      message: `function ${BG_ERR}(dummyArrowFunction)${BG_RESET} 🚨`,
+    }])
   })
 })
