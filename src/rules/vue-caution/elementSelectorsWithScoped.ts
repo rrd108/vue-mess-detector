@@ -28,12 +28,12 @@ const reportElementSelectorsWithScoped = () => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
-    results.forEach((file) => {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#element-selectors-with-scoped`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
