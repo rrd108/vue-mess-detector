@@ -1,11 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface ComponentFiles { filename: string, message: string }
-
-const componentFiles: ComponentFiles[] = []
+const results: FileCheckResult[] = []
 
 const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -19,26 +17,26 @@ const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) =>
   matches.forEach((match) => {
     const lineNumber = getLineNumber(script.content.trim(), match)
     const firstPart = match.split('\n').at(0)?.trim() || ''
-    componentFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}(${firstPart})${BG_RESET}` })
+    results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}(${firstPart})${BG_RESET}` })
   })
 }
 
 const reportComponentFiles = () => {
   const offenses: Offense[] = []
 
-  if (componentFiles.length > 0) {
-    componentFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetComponentFiles = () => (componentFiles.length = 0)
+const resetComponentFiles = () => (results.length = 0)
 
 export { checkComponentFiles, reportComponentFiles, resetComponentFiles }
