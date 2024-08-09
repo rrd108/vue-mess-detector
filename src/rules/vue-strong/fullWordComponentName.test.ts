@@ -23,7 +23,7 @@ describe('checkFullWordComponentName', () => {
       file: filename,
       rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
-      message: `${BG_WARN}(${componentName})${BG_RESET} 🚨`,
+      message: `${componentName} is not a ${BG_WARN}full word.${BG_RESET} 🚨`,
     }])
   })
 
@@ -36,7 +36,7 @@ describe('checkFullWordComponentName', () => {
       file: filename,
       rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
-      message: `${BG_WARN}(${componentName})${BG_RESET} 🚨`,
+      message: `${componentName} is not a ${BG_WARN}full word.${BG_RESET} 🚨`,
     }])
   })
 })
