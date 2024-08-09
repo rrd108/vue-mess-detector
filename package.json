@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "vite build && cp ./src/cli.js ./dist/",
-    "analyze": "cp ./src/cli.js ./dist/ && node ./dist/cli.js analyze",
+    "analyze": "node ./dist/cli.js analyze",
     "test": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

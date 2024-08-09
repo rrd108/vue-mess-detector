@@ -13,11 +13,12 @@ export default defineConfig({
       formats: ['es', 'umd'], // Use only 'es' and 'umd' formats
     },
     rollupOptions: {
-      external: ['yargs', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
+      external: ['yargs', 'node:fs/promises', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
       output: {
         globals: {
           'yargs': 'yargs',
           'node:fs': 'node:fs',
+          'node:fs/promises': 'node:fs/promises',
           'fs': 'fs',
           'node:path': 'node:path',
           'path': 'path',
