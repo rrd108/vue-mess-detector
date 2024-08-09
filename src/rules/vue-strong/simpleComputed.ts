@@ -1,9 +1,10 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-const complicatedComputedTargets: { filename: string, message: string }[] = []
+const results: FileCheckResult[] = []
+
 const complicatedComputedFiles: { filePath: string }[] = []
 
 const MAX_COMPUTED_LENGTH = 5 // completely rrd made-up number
@@ -22,7 +23,7 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string) =>
       if (match.split('\n').length > MAX_COMPUTED_LENGTH) {
         const firstLine = match.split('\n')[0]
         const lineNumber = getLineNumber(script.content, firstLine)
-        complicatedComputedTargets.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}computed${BG_RESET}` })
+        results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}computed${BG_RESET}` })
         complicatedComputedFiles.push({ filePath })
         if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
           complicatedComputedFiles.push({ filePath })
@@ -36,12 +37,12 @@ const reportSimpleComputed = () => {
   const offenses: Offense[] = []
 
   if (complicatedComputedFiles.length > 0) {
-    complicatedComputedTargets.forEach((file) => {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ complicated computed property${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
@@ -49,7 +50,7 @@ const reportSimpleComputed = () => {
 }
 
 const resetSimpleComputed = () => {
-  complicatedComputedTargets.length = 0
+  results.length = 0
   complicatedComputedFiles.length = 0
 }
 
