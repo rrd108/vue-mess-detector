@@ -1,11 +1,9 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface TemplateSimpleExpressionFile { filename: string, message: string }
-
-const templateSimpleExpressionFiles: TemplateSimpleExpressionFile[] = []
+const results: FileCheckResult[] = []
 
 const MAX_EXPRESSION_LENGTH = 40 // completely rrd made-up number
 
@@ -21,8 +19,8 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
     if (expression.length > MAX_EXPRESSION_LENGTH) {
       const lineNumber = getLineNumber(template.content, expression)
       const firstPart = expression.split('\n').at(0)?.trim() || ''
-      templateSimpleExpressionFiles.push({
-        filename: filePath,
+      results.push({
+        filePath,
         message: `line #${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
       })
     }
@@ -32,19 +30,19 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
 const reportTemplateSimpleExpression = () => {
   const offenses: Offense[] = []
 
-  if (templateSimpleExpressionFiles.length > 0) {
-    templateSimpleExpressionFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetTemplateSimpleExpression = () => (templateSimpleExpressionFiles.length = 0)
+const resetTemplateSimpleExpression = () => (results.length = 0)
 
 export { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetTemplateSimpleExpression }
