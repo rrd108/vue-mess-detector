@@ -4,7 +4,22 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Vue Mess Detector',
   description: 'A static code analysis tool for detecting code smells and best practice violations in **Vue** and **Nuxt** projects.',
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }], ['link', { rel: 'stylesheet', href: '/styles.css' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'stylesheet', href: '/styles.css' }],
+    [
+      'script',
+      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-4WQ5DGB03H' },
+    ],
+    [
+      'script',
+      {},
+    `window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4WQ5DGB03H');`,
+    ],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     search: {
@@ -46,6 +61,7 @@ export default defineConfig({
               ] },
               { text: 'Vue Caution', link: '/rules/vue-caution', collapsed: true, items: [
                 { text: 'Implicit parent-child communication', link: '/rules/vue-caution/implicit-parent-child-communication' },
+                { text: 'Element Selectors in Scoped CSS', link: '/rules/vue-caution/element-selectors-with-scoped' },
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
                 { text: 'Cyclomatic Complexity', link: '/rules/rrd/cyclomatic-complexity' },

@@ -26,6 +26,7 @@ import { checkComponentFiles } from './rules/vue-strong/componentFiles'
 import { checkImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import type { RuleSetType } from './rules/rules'
 import { checkDeepIndentation } from './rules/rrd/deepIndentation'
+import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -57,6 +58,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
 
   if (apply.includes('vue-caution')) {
     checkImplicitParentChildCommunication(script, filePath)
+    checkElementSelectorsWithScoped(descriptor.styles, filePath)
   }
 
   if (apply.includes('rrd')) {

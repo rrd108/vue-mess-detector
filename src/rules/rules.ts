@@ -1,5 +1,5 @@
 export const RULES = {
-  'vue-caution': ['implicitParentChildCommunication'],
+  'vue-caution': ['implicitParentChildCommunication', 'elementSelectorsWithScoped'],
   'vue-essential': ['globalStyle', 'simpleProp', 'singleNameComponent', 'vforNoKey', 'vifWithVfor'],
   'vue-recommended': ['topLevelElementOrder', 'elementAttributeOrder'],
   'vue-strong': [
