@@ -2,11 +2,9 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { createRegExp, exactly, global } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface ImplicitParentChildCommunicationFile { filePath: string, message: string }
-
-const implicitParentChildCommunicationFiles: ImplicitParentChildCommunicationFile[] = []
+const results: FileCheckResult[] = []
 
 const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -28,7 +26,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
     // Check if matched prop is inside `v-model` directive
     if (definedProps.includes(vModelProp)) {
       const lineNumber = getLineNumber(script.content.trim(), definedProps)
-      implicitParentChildCommunicationFiles.push({
+      results.push({
         filePath,
         message: `line #${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,
       })
@@ -39,7 +37,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
   const parentMatch = script.content.match(parentRegex)
   if (parentMatch) {
     const lineNumber = getLineNumber(script.content.trim(), parentMatch[0])
-    implicitParentChildCommunicationFiles.push({
+    results.push({
       filePath,
       message: `line #${lineNumber} ${BG_WARN}(${parentMatch[0]})${BG_RESET}`,
     })
@@ -49,8 +47,8 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
 const reportImplicitParentChildCommunication = () => {
   const offenses: Offense[] = []
 
-  if (implicitParentChildCommunicationFiles.length > 0) {
-    implicitParentChildCommunicationFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((file) => {
       offenses.push({
         file: file.filePath,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
@@ -63,6 +61,6 @@ const reportImplicitParentChildCommunication = () => {
   return offenses
 }
 
-const resetImplicitParentChildCommunicationFiles = () => (implicitParentChildCommunicationFiles.length = 0)
+const resetImplicitParentChildCommunicationFiles = () => (results.length = 0)
 
 export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetImplicitParentChildCommunicationFiles }

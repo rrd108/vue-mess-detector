@@ -13,3 +13,8 @@ export type ReportFunction = () => Offense[]
 export interface OffensesGrouped {
   [key: string]: Offense[]
 }
+
+export interface FileCheckResult {
+  filePath: string
+  message: string
+}
