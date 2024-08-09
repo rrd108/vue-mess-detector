@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing } from './propNameCasing'
 
 describe('checkPropNameCasing', () => {
@@ -36,7 +36,7 @@ describe('checkPropNameCasing', () => {
       file: fileName,
       rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
-      message: `🚨`,
+      message: `prop names are ${BG_WARN}not camelCased${BG_RESET} 🚨`,
     }])
   })
 })
