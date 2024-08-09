@@ -1,26 +1,26 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
-const plainScriptFiles: string[] = []
+const results: FileCheckResult[] = []
 
 const checkPlainScript = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script || !script.setup) {
     return
   }
-  plainScriptFiles.push(filePath)
+  results.push({filePath, message: `${BG_WARN}Plain <script> block${BG_RESET} found`})
 }
 
 const reportPlainScript = () => {
   const offenses: Offense[] = []
 
-  if (plainScriptFiles.length > 0) {
-    plainScriptFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ Plain <script> blocks${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET}`,
-        message: `🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
