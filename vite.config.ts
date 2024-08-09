@@ -1,6 +1,6 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,17 +13,19 @@ export default defineConfig({
       formats: ['es', 'umd'], // Use only 'es' and 'umd' formats
     },
     rollupOptions: {
-      external: ['yargs', 'fs', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
+      external: ['yargs', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
       output: {
         globals: {
-          yargs: 'yargs',
-          fs: 'fs',
-          path: 'path',
+          'yargs': 'yargs',
+          'node:fs': 'node:fs',
+          'fs': 'fs',
+          'node:path': 'node:path',
+          'path': 'path',
           '@vue/compiler-sfc': 'compilerSfc',
-          vue: 'Vue',
-          util: 'util',
-          assert: 'assert',
-          url: 'url',
+          'vue': 'Vue',
+          'util': 'util',
+          'assert': 'assert',
+          'url': 'url',
         },
       },
     },

@@ -105,8 +105,6 @@ describe('checkImplicitParentChildCommunication', () => {
       message: `line #${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
     }]
     checkImplicitParentChildCommunication(script, filename)
-    const r = reportImplicitParentChildCommunication()
-    console.info(r)
     expect(reportImplicitParentChildCommunication().length).toBe(1)
     expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
   })

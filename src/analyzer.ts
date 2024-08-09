@@ -1,7 +1,5 @@
-// eslint-disable-next-line unicorn/prefer-node-protocol
-import fs from 'fs'
-// eslint-disable-next-line unicorn/prefer-node-protocol
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
 import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
@@ -43,7 +41,7 @@ const walkSync = (dir: string, callback: (arg0: string) => void) => {
 export const analyze = (dir: string, apply: Array<RuleSetType> = [], groupBy: GroupBy) => {
   console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
-  console.log(`Applying ${apply.length} rulesets ${BG_INFO}${apply}${BG_RESET} and ignoring ${ignore.length} rulesets ${BG_INFO}${ignore}${BG_RESET} `)
+  console.log(`Applying ${apply.length} rulesets ${BG_INFO}${apply}${BG_RESET} and ignoring ${ignore.length} rulesets ${BG_INFO}${ignore}${BG_RESET} grouping by ${BG_INFO}${groupBy}${BG_RESET}`)
 
   walkSync(dir, (filePath) => {
     if (filePath.includes('App.vue') || filePath.includes('app.vue')) {
