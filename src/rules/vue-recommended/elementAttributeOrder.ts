@@ -1,11 +1,9 @@
 /* eslint-disable no-cond-assign */
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface ElementAttributeOrder { filename: string, message: string }
-
-const elementAttributeOrderFiles: ElementAttributeOrder[] = []
+const results: FileCheckResult[] = []
 
 const ATTRIBUTE_ORDER = [
   'is',
@@ -52,8 +50,8 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
       for (const attr of filteredAttrs) {
         const currIdx = ATTRIBUTE_ORDER.indexOf(attr)
         if (currIdx !== -1 && currIdx < lastIdx) {
-          elementAttributeOrderFiles.push({
-            filename: filePath,
+          results.push({
+            filePath,
             message: `tag has attributes out of order ${BG_WARN}(${tagName})${BG_RESET}`,
           })
           break
@@ -67,19 +65,19 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
 const reportElementAttributeOrder = () => {
   const offenses: Offense[] = []
 
-  if (elementAttributeOrderFiles.length > 0) {
-    elementAttributeOrderFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetElementAttributeOrder = () => (elementAttributeOrderFiles.length = 0)
+const resetElementAttributeOrder = () => (results.length = 0)
 
 export { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder }

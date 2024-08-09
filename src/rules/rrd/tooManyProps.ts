@@ -1,12 +1,13 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-const tooManyPropsFiles: { fileName: string, propsCount: number }[] = []
+const results: FileCheckResult[] = []
+
 const TOO_MANY_PROPS = 5
 
-const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
+const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
@@ -15,7 +16,7 @@ const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
   if (matches?.length) {
     const propsCount = matches[0].split(',').length
     if (propsCount > TOO_MANY_PROPS) {
-      tooManyPropsFiles.push({ fileName: file, propsCount })
+      results.push({ filePath, message: `props found ${BG_ERR}(${propsCount})${BG_RESET}` })
     }
   }
 }
@@ -23,19 +24,19 @@ const checkTooManyProps = (script: SFCScriptBlock | null, file: string) => {
 const reportTooManyProps = () => {
   const offenses: Offense[] = []
 
-  if (tooManyPropsFiles.length > 0) {
-    tooManyPropsFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.fileName,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET}`,
-        message: `props found ${BG_ERR}(${file.propsCount})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetTooManyProps = () => (tooManyPropsFiles.length = 0)
+const resetTooManyProps = () => (results.length = 0)
 
 export { checkTooManyProps, reportTooManyProps, resetTooManyProps }

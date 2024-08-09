@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import {
   checkComponentFilenameCasing,
   reportComponentFilenameCasing,
@@ -47,7 +47,7 @@ describe('checkComponentFilenameCasing', () => {
       file: 'components/myheader.vue',
       rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`,
-      message: `🚨`,
+      message: `component name is ${BG_WARN}not PascalCase, nor kebab-case.${BG_RESET} 🚨`,
     }])
   })
 
@@ -58,7 +58,7 @@ describe('checkComponentFilenameCasing', () => {
       file: 'components/myHeader.vue',
       rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`,
-      message: `🚨`,
+      message: `component name is ${BG_WARN}not PascalCase, nor kebab-case.${BG_RESET} 🚨`,
     }])
   })
 })

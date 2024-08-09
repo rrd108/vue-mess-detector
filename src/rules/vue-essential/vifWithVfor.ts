@@ -1,9 +1,9 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
-const vifWithVforFiles: { filePath: string }[] = []
+const results: FileCheckResult[] = []
 
 const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
@@ -33,26 +33,27 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
   const matches2 = template.content.match(regex2)
 
   if (matches1?.length || matches2?.length) {
-    vifWithVforFiles.push({ filePath })
+    // TODO add line number see 122
+    results.push({ filePath, message: `${BG_WARN}v-if used with v-for${BG_RESET}` })
   }
 }
 
 const reportVifWithVfor = () => {
   const offenses: Offense[] = []
 
-  if (vifWithVforFiles.length > 0) {
-    vifWithVforFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for`,
-        message: `🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetVIfWithVFor = () => (vifWithVforFiles.length = 0)
+const resetVIfWithVFor = () => (results.length = 0)
 
 export { checkVifWithVfor, reportVifWithVfor, resetVIfWithVFor }

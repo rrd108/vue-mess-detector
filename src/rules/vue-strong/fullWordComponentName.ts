@@ -1,10 +1,9 @@
 import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface FullWordComponentNames { filename: string, filePath: string }
+const results: FileCheckResult[] = []
 
-const fullWordComponentNames: FullWordComponentNames[] = []
 const MINIMAL_CONSONANTS = 3
 
 const checkFullWordComponentName = (filePath: string) => {
@@ -28,7 +27,7 @@ const checkFullWordComponentName = (filePath: string) => {
     const consonantsMatch = filename.match(consonantsRegex)
 
     if (!consonantsMatch || consonantsMatch.length < MINIMAL_CONSONANTS) {
-      fullWordComponentNames.push({ filename, filePath })
+      results.push({ filePath, message: `${filename} is not a ${BG_WARN}full word.${BG_RESET}` })
     }
   }
 }
@@ -36,19 +35,19 @@ const checkFullWordComponentName = (filePath: string) => {
 const reportFullWordComponentName = () => {
   const offenses: Offense[] = []
 
-  if (fullWordComponentNames.length > 0) {
-    fullWordComponentNames.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
-        message: `${BG_WARN}(${file.filename})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetFullWordComponentName = () => (fullWordComponentNames.length = 0)
+const resetFullWordComponentName = () => (results.length = 0)
 
 export { checkFullWordComponentName, reportFullWordComponentName, resetFullWordComponentName }

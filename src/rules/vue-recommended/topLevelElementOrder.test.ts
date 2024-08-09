@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCBlock } from '@vue/compiler-sfc'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder } from './topLevelElementOrder'
 
 describe('checkTopLevelElementOrder', () => {
@@ -56,7 +56,7 @@ describe('checkTopLevelElementOrder', () => {
       file: filename,
       rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
-      message: '🚨',
+      message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET} 🚨`,
     }])
   })
 
@@ -80,7 +80,7 @@ describe('checkTopLevelElementOrder', () => {
       file: filename,
       rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
-      message: '🚨',
+      message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET} 🚨`,
     }])
   })
 })

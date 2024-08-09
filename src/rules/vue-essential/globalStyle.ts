@@ -1,8 +1,8 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
-const globalStyleFiles: { filePath: string }[] = []
+const results: FileCheckResult[] = []
 
 const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
   if (!styles) {
@@ -10,7 +10,8 @@ const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
   }
   styles.forEach((style) => {
     if (!style.scoped) {
-      globalStyleFiles.push({ filePath })
+      results.push({ filePath, message: `${BG_WARN}global style${BG_RESET} used`,
+      })
     }
   })
 }
@@ -18,19 +19,19 @@ const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
 const reportGlobalStyle = () => {
   const offenses: Offense[] = []
 
-  if (globalStyleFiles.length > 0) {
-    globalStyleFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-essential ~ global style${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`,
-        message: `🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetGlobalStyle = () => (globalStyleFiles.length = 0)
+const resetGlobalStyle = () => (results.length = 0)
 
 export { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle }

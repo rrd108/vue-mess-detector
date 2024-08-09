@@ -1,9 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { createRegExp, letter, oneOrMore } from 'magic-regexp'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
-const propNameCasingFiles: { filePath: string }[] = []
+const results: FileCheckResult[] = []
 
 const camelCasePattern = createRegExp(
   oneOrMore(letter.lowercase).at.lineStart(),
@@ -28,7 +28,7 @@ const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) =>
       .filter(prop => !camelCasePattern.test(prop))
 
     if (propNames.length) {
-      propNameCasingFiles.push({ filePath })
+      results.push({ filePath, message: `prop names are ${BG_WARN}not camelCased${BG_RESET}` })
     }
   }
 }
@@ -36,19 +36,19 @@ const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) =>
 const reportPropNameCasing = () => {
   const offenses: Offense[] = []
 
-  if (propNameCasingFiles.length > 0) {
-    propNameCasingFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
-        message: `🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetPropNameCasing = () => (propNameCasingFiles.length = 0)
+const resetPropNameCasing = () => (results.length = 0)
 
 export { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing }

@@ -1,18 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-/**
- * Defines complexity thresholds.
- */
+const results: FileCheckResult[] = []
+
 const COMPLEXITY_MODERATE = 5
 const COMPLEXITY_HIGH = 10
-
-/**
- * Array to store files with medium or high cyclomatic complexity.
- */
-const cyclomaticComplexityFiles: { fileName: string, cyclomaticComplexity: number }[] = []
 
 /**
  * Function to check cyclomatic complexity of a SFC script block.
@@ -20,7 +14,7 @@ const cyclomaticComplexityFiles: { fileName: string, cyclomaticComplexity: numbe
  * @param {SFCScriptBlock} script - The SFC script block to analyze.
  * @param {string} file - The filename of the SFC.
  */
-const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) => {
+const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
@@ -44,7 +38,9 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
     + (_caseCount?.length || 0)
 
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
-    cyclomaticComplexityFiles.push({ fileName: file, cyclomaticComplexity })
+    results.push({ filePath, message: `${cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
+      cyclomaticComplexity
+    })${BG_RESET}`, })
   }
 }
 
@@ -56,21 +52,19 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, file: string) 
 const reportCyclomaticComplexity = () => {
   const offenses: Offense[] = []
 
-  if (cyclomaticComplexityFiles.length > 0) {
-    cyclomaticComplexityFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.fileName,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
-        message: `${file.cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
-          file.cyclomaticComplexity
-        })${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetCyclomaticComplexity = () => (cyclomaticComplexityFiles.length = 0)
+const resetCyclomaticComplexity = () => (results.length = 0)
 
 export { checkCyclomaticComplexity, reportCyclomaticComplexity, resetCyclomaticComplexity }

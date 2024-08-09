@@ -1,15 +1,10 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface ShortVariableNameFile {
-  filename: string
-  variable: string
-}
+const results: FileCheckResult[] = []
 
 export const MIN_VARIABLE_NAME = 4 // completely rrd made-up number
-
-const shortVariableNameFile: ShortVariableNameFile[] = []
 
 const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -24,7 +19,7 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
     const variable = match[1]
 
     if (variable.length < MIN_VARIABLE_NAME) {
-      shortVariableNameFile.push({ filename: filePath, variable })
+      results.push({ filePath, message: `${BG_ERR}(${variable})${BG_RESET}`, })
     }
   }
 }
@@ -32,19 +27,19 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
 const reportShortVariableName = () => {
   const offenses: Offense[] = []
 
-  if (shortVariableNameFile.length > 0) {
-    shortVariableNameFile.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
-        message: `${BG_ERR}(${file.variable})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetShortVariableName = () => (shortVariableNameFile.length = 0)
+const resetShortVariableName = () => (results.length = 0)
 
 export { checkShortVariableName, reportShortVariableName, resetShortVariableName }

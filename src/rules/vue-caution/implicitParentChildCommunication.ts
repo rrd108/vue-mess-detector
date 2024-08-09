@@ -48,12 +48,12 @@ const reportImplicitParentChildCommunication = () => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
-    results.forEach((file) => {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }

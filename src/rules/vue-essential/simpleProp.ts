@@ -1,9 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global } from 'magic-regexp'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
-const simplePropFiles: { filePath: string }[] = []
+const results: FileCheckResult[] = []
 
 const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -13,26 +13,26 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    simplePropFiles.push({ filePath })
+    results.push({ filePath, message: `${BG_WARN}Props type${BG_RESET} not defined` })
   }
 }
 
 const reportSimpleProp = () => {
   const offenses: Offense[] = []
 
-  if (simplePropFiles.length > 0) {
-    simplePropFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
-        message: `🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetSimpleProp = () => (simplePropFiles.length = 0)
+const resetSimpleProp = () => (results.length = 0)
 
 export { checkSimpleProp, reportSimpleProp, resetSimpleProp }

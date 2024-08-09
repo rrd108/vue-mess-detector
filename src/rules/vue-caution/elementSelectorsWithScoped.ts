@@ -2,14 +2,9 @@ import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import type { HtmlTags } from 'html-tags'
 import htmlTags from 'html-tags'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface ElementSelectorsWithScoped {
-  filename: string
-  selector: string
-}
-
-const elementSelectorsWithScopedFiles: ElementSelectorsWithScoped[] = []
+const results: FileCheckResult[] = []
 
 const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePath: string) => {
   if (!styles)
@@ -23,7 +18,7 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
     while ((match = elementSelectorRegex.exec(style.content)) !== null) {
       const selector = match[1] as HtmlTags
       if (htmlTags.includes(selector)) {
-        elementSelectorsWithScopedFiles.push({ filename: filePath, selector })
+        results.push({ filePath, message: `${BG_WARN}(${selector})${BG_RESET}` })
       }
     }
   })
@@ -32,13 +27,13 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
 const reportElementSelectorsWithScoped = () => {
   const offenses: Offense[] = []
 
-  if (elementSelectorsWithScopedFiles.length > 0) {
-    elementSelectorsWithScopedFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#element-selectors-with-scoped`,
-        message: `${BG_WARN}(${file.selector})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
@@ -46,6 +41,6 @@ const reportElementSelectorsWithScoped = () => {
   return offenses
 }
 
-const resetElementSelectorWithScoped = () => (elementSelectorsWithScopedFiles.length = 0)
+const resetElementSelectorWithScoped = () => (results.length = 0)
 
 export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetElementSelectorWithScoped }
