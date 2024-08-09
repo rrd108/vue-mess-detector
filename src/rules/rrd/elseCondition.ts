@@ -1,11 +1,11 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-const elseConditionFiles: { fileName: string, elseCount: number }[] = []
+const results: FileCheckResult[] = []
 
-const checkElseCondition = (script: SFCScriptBlock | null, file: string) => {
+const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
@@ -13,26 +13,26 @@ const checkElseCondition = (script: SFCScriptBlock | null, file: string) => {
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    elseConditionFiles.push({ fileName: file, elseCount: matches.length })
+    results.push({ filePath, message: `else clauses found ${BG_ERR}(${matches.length})${BG_RESET}`, })
   }
 }
 
 const reportElseCondition = () => {
   const offenses: Offense[] = []
 
-  if (elseConditionFiles.length > 0) {
-    elseConditionFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.fileName,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET}`,
-        message: `else clauses found ${BG_ERR}(${file.elseCount})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetElseCondition = () => (elseConditionFiles.length = 0)
+const resetElseCondition = () => (results.length = 0)
 
 export { checkElseCondition, reportElseCondition, resetElseCondition }
