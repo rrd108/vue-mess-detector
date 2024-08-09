@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkSimpleProp, reportSimpleProp, resetSimpleProp } from './simpleProp'
 
 describe('checkSimpleProp', () => {
@@ -36,7 +36,7 @@ describe('checkSimpleProp', () => {
       file: fileName,
       rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
-      message: `🚨`,
+      message: `${BG_WARN}Props type${BG_RESET} not defined 🚨`,
     }])
   })
 })
