@@ -2,7 +2,7 @@ import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import type { HtmlTags } from 'html-tags'
 import htmlTags from 'html-tags'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { getUniqueFilenameCount } from '../../helpers'
+import type { Offense } from '../../types'
 
 interface ElementSelectorsWithScoped {
   filename: string
@@ -30,21 +30,22 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
 }
 
 const reportElementSelectorsWithScoped = () => {
-  if (elementSelectorsWithScopedFiles.length > 0) {
-    // Count only non duplicated objects (by its `filename` property)
-    const fileCount = getUniqueFilenameCount<ElementSelectorsWithScoped>(elementSelectorsWithScopedFiles, 'filename')
+  const offenses: Offense[] = []
 
-    console.log(
-      `\n${TEXT_INFO}vue-caution${TEXT_RESET} ${BG_WARN}element selectors with scoped${BG_RESET} found in ${fileCount} files.`,
-    )
-    console.log(
-      `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#element-selectors-with-scoped`,
-    )
+  if (elementSelectorsWithScopedFiles.length > 0) {
     elementSelectorsWithScopedFiles.forEach((file) => {
-      console.log(` - ${file.filename} 🚨 ${BG_WARN}(${file.selector})${BG_RESET}`)
+      offenses.push({
+        file: file.filename,
+        rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#element-selectors-with-scoped`,
+        message: `${BG_WARN}(${file.selector})${BG_RESET} 🚨`,
+      })
     })
   }
-  return elementSelectorsWithScopedFiles.length
+
+  return offenses
 }
 
-export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped }
+const resetElementSelectorWithScoped = () => (elementSelectorsWithScopedFiles.length = 0)
+
+export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetElementSelectorWithScoped }
