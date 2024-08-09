@@ -75,7 +75,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
-      message: `function ${BG_ERR}(${funcName})${BG_RESET} 🚨`,
+      message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long 🚨`,
     }])
   })
 
@@ -151,7 +151,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
-      message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} 🚨`,
+      message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} is too long 🚨`,
     }/* TODO temporary disabled for #116
     , {
       file: fileName,

@@ -1,13 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface FunctionSizeFile {
-  filename: string
-  funcName: string
-}
-
-const functionSizeFiles: FunctionSizeFile[] = []
+const results: FileCheckResult[] = []
 
 export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
@@ -18,7 +13,7 @@ const addFunctionToFiles = (match: RegExpExecArray, filePath: string) => {
   // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
   const lineCount = funcBody.split('\n').length
   if (lineCount > MAX_FUNCTION_LENGTH) {
-    functionSizeFiles.push({ filename: filePath, funcName })
+    results.push({ filePath, message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long`, })
   }
 }
 
@@ -49,19 +44,19 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
 const reportFunctionSize = () => {
   const offenses: Offense[] = []
 
-  if (functionSizeFiles.length > 0) {
-    functionSizeFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filename,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
-        message: `function ${BG_ERR}(${file.funcName})${BG_RESET} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetFunctionSize = () => (functionSizeFiles.length = 0)
+const resetFunctionSize = () => (results.length = 0)
 
 export { checkFunctionSize, reportFunctionSize, resetFunctionSize }
