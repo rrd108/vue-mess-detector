@@ -2,13 +2,10 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, tab, whitespace } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
-import type { Offense } from '../../types'
+import type { FileCheckResult, Offense } from '../../types'
 
-interface DeepIndentationFile {
-  filePath: string
-  message: string
-}
-const deepIndentationFiles: DeepIndentationFile[] = []
+const results: FileCheckResult[] = []
+
 const MAX_TABS = 5
 const WHITESPACE_TO_TABS = 3
 
@@ -24,7 +21,7 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
 
   matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)
-    deepIndentationFiles.push({
+    results.push({
       filePath,
       message: `line #${lineNumber} ${BG_WARN}indentation: ${match.length}${BG_RESET}`,
     })
@@ -34,19 +31,19 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
 const reportDeepIndentation = () => {
   const offenses: Offense[] = []
 
-  if (deepIndentationFiles.length > 0) {
-    deepIndentationFiles.forEach((file) => {
+  if (results.length > 0) {
+    results.forEach((result) => {
       offenses.push({
-        file: file.filePath,
+        file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
-        message: `${file.message} 🚨`,
+        message: `${result.message} 🚨`,
       })
     })
   }
   return offenses
 }
 
-const resetDeepIndentation = () => (deepIndentationFiles.length = 0)
+const resetDeepIndentation = () => (results.length = 0)
 
 export { checkDeepIndentation, reportDeepIndentation, resetDeepIndentation }
