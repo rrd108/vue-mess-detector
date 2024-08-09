@@ -10,7 +10,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
   if (!descriptor) {
     return
   }
-  const template = descriptor.template! // it is exists otherwise the function is not called at all
+  const template = descriptor.template
 
   const regexTempltaTag = createRegExp(
     '<',
@@ -22,7 +22,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     '>',
     ['g'],
   )
-  const matches = template.content.match(regexTempltaTag)
+  const matches = template?.content.match(regexTempltaTag)
 
   if (matches === null)
     return
@@ -31,7 +31,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     'g',
   ])
 
-  matches.forEach((templateTag) => {
+  matches?.forEach((templateTag) => {
     if (!templateTag.includes(':'))
       return // check if it contains a colon
 

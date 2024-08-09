@@ -10,7 +10,7 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
   if (!descriptor) {
     return
   }
-  const template = descriptor.template! // it is exists otherwise the function is not called at all
+  const template = descriptor.template
 
   const regexSelfClosingComponent = createRegExp(
     '<',
@@ -22,12 +22,12 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
     '>',
     ['g'],
   )
-  const matches = template.content.match(regexSelfClosingComponent)
+  const matches = template?.content?.match(regexSelfClosingComponent)
 
   if (matches === null)
     return
 
-  matches.forEach((componentTag) => {
+  matches?.forEach((componentTag) => {
     const lineNumber = getLineNumber(descriptor.source, componentTag)
     const lastPart = componentTag.split('\n').at(-1)?.trim() || ''
     selfClosingComponentsFiles.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })

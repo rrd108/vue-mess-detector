@@ -12,10 +12,10 @@ const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: st
   if (!descriptor) {
     return
   }
-  const template = descriptor.template! // it is exists otherwise the function is not called at all
+  const template = descriptor.template
 
   directivesToCheck.forEach((directive) => {
-    if (template.content.includes(`${directive}:`)) {
+    if (template?.content.includes(`${directive}:`)) {
       const lineNumber = getLineNumber(descriptor.source, directive)
       directiveShorthandsTargets.push({ filename: filePath, message: `line #${lineNumber} ${BG_WARN}${directive}${BG_RESET}` })
 
