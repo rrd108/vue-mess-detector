@@ -29,7 +29,7 @@ const checkTopLevelElementOrder = (source: string, filePath: string) => {
   if (isCorrectOrder)
     return // If it's correct, do nothing
 
-  results.push({ filePath, message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET}`   })
+  results.push({ filePath, message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET}` })
 }
 
 const reportTopLevelElementOrder = () => {
@@ -40,7 +40,7 @@ const reportTopLevelElementOrder = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order`,
+        description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
         message: `${result.message} 🚨`,
       })
     })
