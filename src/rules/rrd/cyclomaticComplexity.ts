@@ -40,7 +40,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
     results.push({ filePath, message: `${cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
       cyclomaticComplexity
-    })${BG_RESET}`, })
+    })${BG_RESET}` })
   }
 }
 
@@ -57,7 +57,7 @@ const reportCyclomaticComplexity = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
         message: `${result.message} 🚨`,
       })
     })

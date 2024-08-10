@@ -24,7 +24,7 @@ describe('checkElseCondition', () => {
     expect(reportElseCondition()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
       message: `else clauses found ${BG_ERR}(1)${BG_RESET} 🚨`,
     }])
   })

@@ -8,7 +8,7 @@ const checkPlainScript = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script || !script.setup) {
     return
   }
-  results.push({filePath, message: `${BG_WARN}Plain <script> block${BG_RESET} found`})
+  results.push({ filePath, message: `${BG_WARN}Plain <script> block${BG_RESET} found` })
 }
 
 const reportPlainScript = () => {
@@ -19,7 +19,7 @@ const reportPlainScript = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ Plain <script> blocks${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
         message: `${result.message} 🚨`,
       })
     })

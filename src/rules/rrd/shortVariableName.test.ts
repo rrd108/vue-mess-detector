@@ -39,7 +39,7 @@ describe('shortVariableName', () => {
     expect(reportShortVariableName()).toStrictEqual([{
       file: filename,
       rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${BG_ERR}(${variable})${BG_RESET} 🚨`,
     }])
   })
@@ -62,17 +62,17 @@ describe('shortVariableName', () => {
     expect(reportShortVariableName()).toStrictEqual([{
       file: filename,
       rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${BG_ERR}(age)${BG_RESET} 🚨`,
     }, {
       file: filename,
       rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${BG_ERR}(gps)${BG_RESET} 🚨`,
     }, {
       file: filename,
       rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${BG_ERR}(lng)${BG_RESET} 🚨`,
     }])
   })

@@ -19,7 +19,7 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
     const variable = match[1]
 
     if (variable.length < MIN_VARIABLE_NAME) {
-      results.push({ filePath, message: `${BG_ERR}(${variable})${BG_RESET}`, })
+      results.push({ filePath, message: `${BG_ERR}(${variable})${BG_RESET}` })
     }
   }
 }
@@ -32,7 +32,7 @@ const reportShortVariableName = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
         message: `${result.message} 🚨`,
       })
     })

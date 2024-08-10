@@ -30,7 +30,7 @@ describe('checkDeepIndentation', () => {
     expect(reportDeepIndentation()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
       message: `line #1 ${BG_WARN}indentation: 5${BG_RESET} 🚨`,
     }])
   })
@@ -43,7 +43,7 @@ describe('checkDeepIndentation', () => {
     expect(reportDeepIndentation()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
       message: `line #1 ${BG_WARN}indentation: 15${BG_RESET} 🚨`,
     }])
   })
