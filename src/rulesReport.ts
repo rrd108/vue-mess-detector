@@ -27,6 +27,7 @@ import { reportDeepIndentation } from './rules/rrd/deepIndentation'
 import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
 import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
+import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
@@ -68,6 +69,7 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportSimpleComputed)
   processOffenses(reportComponentFiles)
   processOffenses(reportFullWordComponentName)
+  processOffenses(reportMultiAttributeElements)
 
   // vue-recommended rules
   processOffenses(reportTopLevelElementOrder)

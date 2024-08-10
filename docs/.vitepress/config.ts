@@ -54,6 +54,7 @@ export default defineConfig({
                 { text: 'Self Closing Components', link: '/rules/vue-strong/self-closing-components' },
                 { text: 'Simple Computed Properties', link: '/rules/vue-strong/simple-computed' },
                 { text: 'Template Simple Expressions', link: '/rules/vue-strong/template-simple-expression' },
+                { text: 'Multi Attribute Elements', link: '/rules/vue-strong/multi-attribute-elements' },
               ] },
               { text: 'Vue Recommended', link: '/rules/vue-recommended', collapsed: true, items: [
                 { text: 'Element Attribute Order', link: '/rules/vue-recommended/element-attribute-order' },

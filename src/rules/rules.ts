@@ -12,6 +12,7 @@ export const RULES = {
     'simpleComputed',
     'templateSimpleExpression',
     'fullWordComponentName',
+    'multiAttributeElements',
   ],
   'rrd': [
     'cyclomaticComplexity',

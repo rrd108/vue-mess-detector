@@ -11,3 +11,4 @@ These rules have been found to improve readability and/or developer experience i
 - [Self Closing Components](./self-closing-components.md)
 - [Simple Computed Properties](./simple-computed.md)
 - [Template Simple Expressions](./template-simple-expression.md)
+- [Multi Attribute Elements](./multi-attribute-elements.md)
