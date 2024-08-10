@@ -25,7 +25,7 @@ const reportSimpleProp = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
+        description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
         message: `${result.message} 🚨`,
       })
     })

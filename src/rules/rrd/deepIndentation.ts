@@ -36,7 +36,7 @@ const reportDeepIndentation = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations..${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
         message: `${result.message} 🚨`,
       })
     })

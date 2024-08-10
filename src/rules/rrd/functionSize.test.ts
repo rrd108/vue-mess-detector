@@ -74,7 +74,7 @@ describe('checkFunctionSize', () => {
     expect(reportFunctionSize()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long 🚨`,
     }])
   })
@@ -150,14 +150,14 @@ describe('checkFunctionSize', () => {
     expect(reportFunctionSize()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} is too long 🚨`,
-    }/* TODO temporary disabled for #116
+    }, /* TODO temporary disabled for #116
     , {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function ${BG_ERR}(dummyArrowFunction)${BG_RESET} 🚨`,
-    }*/])
+    } */])
   })
 })

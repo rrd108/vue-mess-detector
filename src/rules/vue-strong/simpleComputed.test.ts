@@ -55,7 +55,7 @@ describe('checkSimpleComputed', () => {
     expect(reportSimpleComputed()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}vue-strong ~ complicated computed property${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-computed-properties`,
+      description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
       message: `line #2 ${BG_WARN}computed${BG_RESET} 🚨`,
     }])
   })

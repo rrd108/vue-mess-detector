@@ -24,7 +24,7 @@ describe('checkGlobalStyle', () => {
     expect(reportGlobalStyle()).toStrictEqual([{
       file: filePath,
       rule: `${TEXT_INFO}vue-essential ~ global style${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-component-scoped-styling`,
+      description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
       message: `${BG_WARN}global style${BG_RESET} used 🚨`,
     }])
   })

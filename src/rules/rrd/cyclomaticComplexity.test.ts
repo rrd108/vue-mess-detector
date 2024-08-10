@@ -30,7 +30,7 @@ describe('checkCyclomaticComplexity', () => {
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
       message: `${BG_WARN}(6)${BG_RESET} 🚨`,
     }])
   })
@@ -46,7 +46,7 @@ describe('checkCyclomaticComplexity', () => {
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
       message: `${BG_ERR}(11)${BG_RESET} 🚨`,
     }])
   })

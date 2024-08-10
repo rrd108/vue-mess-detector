@@ -29,7 +29,7 @@ const reportTooManyProps = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
         message: `${result.message} 🚨`,
       })
     })

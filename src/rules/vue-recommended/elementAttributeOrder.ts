@@ -70,7 +70,7 @@ const reportElementAttributeOrder = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order`,
+        description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
         message: `${result.message} 🚨`,
       })
     })

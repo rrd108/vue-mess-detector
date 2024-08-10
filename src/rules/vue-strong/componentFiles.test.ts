@@ -42,12 +42,12 @@ describe('checkComponentFiles', () => {
     expect(reportComponentFiles()).toStrictEqual([{
       file: filename,
       rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
+      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
       message: `line #2 ${BG_WARN}(TodoList)${BG_RESET} 🚨`,
     }, {
       file: filename,
       rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files`,
+      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
       message: `line #6 ${BG_WARN}(TodoItem)${BG_RESET} 🚨`,
     }])
   })

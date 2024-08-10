@@ -55,7 +55,7 @@ describe('checkImplicitParentChildCommunication', () => {
     const offenses = [{
       file: filename,
       rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
       message: `line #${lineNumber} ${BG_WARN}(todo)${BG_RESET} 🚨`,
     }]
     checkImplicitParentChildCommunication(script, filename)
@@ -101,7 +101,7 @@ describe('checkImplicitParentChildCommunication', () => {
     const offenses = [{
       file: filename,
       rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+      description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
       message: `line #${lineNumber} ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
     }]
     checkImplicitParentChildCommunication(script, filename)
@@ -147,13 +147,13 @@ describe('checkImplicitParentChildCommunication', () => {
       {
         file: filename,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
         message: `line #9 ${BG_WARN}(todo)${BG_RESET} 🚨`,
       },
       {
         file: filename,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication`,
+        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
         message: `line #2 ${BG_WARN}(getCurrentInstance)${BG_RESET} 🚨`,
       },
     ]

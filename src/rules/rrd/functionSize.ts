@@ -13,7 +13,7 @@ const addFunctionToFiles = (match: RegExpExecArray, filePath: string) => {
   // Check if the function block has more than `MAX_FUNCTION_LENGTH` lines
   const lineCount = funcBody.split('\n').length
   if (lineCount > MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long`, })
+    results.push({ filePath, message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long` })
   }
 }
 
@@ -49,7 +49,7 @@ const reportFunctionSize = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
         message: `${result.message} 🚨`,
       })
     })

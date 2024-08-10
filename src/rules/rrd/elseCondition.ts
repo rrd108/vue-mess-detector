@@ -13,7 +13,7 @@ const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => 
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    results.push({ filePath, message: `else clauses found ${BG_ERR}(${matches.length})${BG_RESET}`, })
+    results.push({ filePath, message: `else clauses found ${BG_ERR}(${matches.length})${BG_RESET}` })
   }
 }
 
@@ -25,7 +25,7 @@ const reportElseCondition = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET}`,
+        description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
         message: `${result.message} 🚨`,
       })
     })

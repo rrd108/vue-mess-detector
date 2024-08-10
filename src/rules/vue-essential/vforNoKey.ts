@@ -31,7 +31,7 @@ const reportVforNoKey = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-essential ~ v-for has no key${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for`,
+        description: `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -45,7 +45,7 @@ describe('checkParameterCount', () => {
     expect(reportParameterCount()).toStrictEqual([{
       file: filename,
       rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function ${BG_WARN}${funcName}${BG_RESET} has ${BG_WARN}${paramsCount}${BG_RESET} parameters 🚨`,
     }])
   })
@@ -74,12 +74,12 @@ describe('checkParameterCount', () => {
     expect(reportParameterCount()).toStrictEqual([{
       file: filename,
       rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function ${BG_WARN}dummyFuncOne${BG_RESET} has ${BG_WARN}5${BG_RESET} parameters 🚨`,
     }, {
       file: filename,
       rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function ${BG_WARN}dummyFuncTwo${BG_RESET} has ${BG_WARN}4${BG_RESET} parameters 🚨`,
     }])
   })

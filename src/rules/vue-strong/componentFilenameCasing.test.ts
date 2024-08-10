@@ -46,7 +46,7 @@ describe('checkComponentFilenameCasing', () => {
     expect(reportComponentFilenameCasing()).toStrictEqual([{
       file: 'components/myheader.vue',
       rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`,
+      description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
       message: `component name is ${BG_WARN}not PascalCase, nor kebab-case.${BG_RESET} 🚨`,
     }])
   })
@@ -57,7 +57,7 @@ describe('checkComponentFilenameCasing', () => {
     expect(reportComponentFilenameCasing()).toStrictEqual([{
       file: 'components/myHeader.vue',
       rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#single-file-component-filename-casing`,
+      description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
       message: `component name is ${BG_WARN}not PascalCase, nor kebab-case.${BG_RESET} 🚨`,
     }])
   })

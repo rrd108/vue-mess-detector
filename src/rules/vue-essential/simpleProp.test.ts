@@ -35,7 +35,7 @@ describe('checkSimpleProp', () => {
     expect(reportSimpleProp()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-detailed-prop-definitions`,
+      description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
       message: `${BG_WARN}Props type${BG_RESET} not defined 🚨`,
     }])
   })

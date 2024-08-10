@@ -40,7 +40,7 @@ describe('checkQuotedAttributeValues', () => {
     expect(reportQuotedAttributeValues()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}vue-strong ~ attribute value is not quoted${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#quoted-attribute-values`,
+      description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
       message: `line #2 ${BG_WARN}:style={${BG_RESET} 🚨`,
     }])
   })
