@@ -25,6 +25,8 @@ import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
 import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
+import { reportHtmlLink } from './rules/rrd/htmlLink'
+import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
@@ -79,6 +81,8 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportDeepIndentation)
   processOffenses(reportElseCondition)
   processOffenses(reportFunctionSize)
+  processOffenses(reportHtmlLink)
+  processOffenses(reportMagicNumbers)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportScriptLength)

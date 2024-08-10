@@ -17,12 +17,13 @@ export const RULES = {
     'cyclomaticComplexity',
     'elseCondition',
     'functionSize',
+    'htmlLink',
+    'magicNumbers',
     'parameterCount',
     'plainScript',
     'scriptLenght',
     'shortVariableName',
     'tooManyProps',
-    'magicNumbers',
   ],
 }
 export type RuleType = typeof RULES

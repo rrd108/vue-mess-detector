@@ -27,6 +27,8 @@ import { checkImplicitParentChildCommunication } from './rules/vue-caution/impli
 import type { RuleSetType } from './rules/rules'
 import { checkDeepIndentation } from './rules/rrd/deepIndentation'
 import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import { checkHtmlLink } from './rules/rrd/htmlLink'
+import { checkMagicNumbers } from './rules/rrd/magicNumbers'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -67,6 +69,8 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkDeepIndentation(script, filePath)
     checkElseCondition(script, filePath)
     checkFunctionSize(script, filePath)
+    checkHtmlLink(descriptor.template, filePath)
+    checkMagicNumbers(script, filePath)
     checkParameterCount(script, filePath)
     checkPlainScript(descriptor.script, filePath)
     checkScriptLength(script, filePath)
