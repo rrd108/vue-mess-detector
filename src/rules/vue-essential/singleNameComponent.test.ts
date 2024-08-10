@@ -32,7 +32,7 @@ describe('checkSingleNameComponent', () => {
     expect(reportSingleNameComponent()).toStrictEqual([{
       file: 'components/Header.vue',
       rule: `${TEXT_INFO}vue-essential ~ single name component${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-essential.html#use-multi-word-component-names`,
+      description: `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
       message: `Component name is ${BG_WARN}single word${BG_RESET} 🚨`,
     }])
   })
