@@ -35,7 +35,7 @@ const reportDirectiveShorthands = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#directive-shorthands`,
+        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
         message: `${result.message} 🚨`,
       })
     })

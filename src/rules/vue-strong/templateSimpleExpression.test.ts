@@ -37,7 +37,7 @@ describe('checkTemplateSimpleExpression', () => {
     expect(reportTemplateSimpleExpression()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#simple-expressions-in-templates`,
+      description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
       message: `line #5 ${BG_WARN}fullName.split(' ').map((word) => {${BG_RESET} 🚨`,
     }])
   })

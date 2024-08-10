@@ -41,7 +41,7 @@ const reportPropNameCasing = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#prop-name-casing`,
+        description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
         message: `${result.message} 🚨`,
       })
     })

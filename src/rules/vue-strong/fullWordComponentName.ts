@@ -40,7 +40,7 @@ const reportFullWordComponentName = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names`,
+        description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
         message: `${result.message} 🚨`,
       })
     })
