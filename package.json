@@ -30,6 +30,7 @@
     "lint:fix": "eslint . --fix",
     "docs:dev": "vitepress dev docs",
     "docs:missing": "node ./docs/checkMissing.js",
+    "rules:missing": "node ./src/checkMissing.js",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
