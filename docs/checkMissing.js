@@ -1,6 +1,8 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
+console.log('🛟  Checking if documentation has all rules')
+
 const camelToKebab = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
 const isValidSourceFile = (currentPath, file) => currentPath !== './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')
@@ -18,7 +20,7 @@ const fileExists = async (filePath) => {
 const findMissingDocs = async (srcDir, docsDir) => {
   const allRules = []
   const missingDocs = []
-  const rulesetIndexes = new Map();
+  const rulesetIndexes = new Map()
 
   async function traverseDirectory(currentPath) {
     const files = await fs.readdir(currentPath)
@@ -42,11 +44,11 @@ const findMissingDocs = async (srcDir, docsDir) => {
           missingDocs.push({ srcFile: fullPath, expectedDoc: expectedDocPath })
         }
 
-        const rulesetName = path.basename(relativePath);
+        const rulesetName = path.basename(relativePath)
         if (!rulesetIndexes.has(rulesetName)) {
-          rulesetIndexes.set(rulesetName, []);
+          rulesetIndexes.set(rulesetName, [])
         }
-        rulesetIndexes.get(rulesetName).push(kebabCaseName);
+        rulesetIndexes.get(rulesetName).push(kebabCaseName)
       }
     }
   }
@@ -88,26 +90,27 @@ const extractSidebarRules = async (configPath) => {
 }
 
 const checkIndexFiles = async (docsDir, rulesetIndexes) => {
-  const missingFromIndex = [];
+  const missingFromIndex = []
 
   for (const [rulesetName, rules] of rulesetIndexes) {
-    const indexPath = path.join(docsDir, rulesetName, 'index.md');
-    
-    if (await fileExists(indexPath)) {
-      const indexContent = await fs.readFile(indexPath, 'utf-8');
-      const indexLinks = indexContent.match(/\[.+?\]\(\.\/(.+?\.md)\)/g) || [];
-      const indexedRules = indexLinks.map(link => link.match(/\(\.\/(.+?\.md)\)/)[1]);
+    const indexPath = path.join(docsDir, rulesetName, 'index.md')
 
-      const missingRules = rules.filter(rule => !indexedRules.includes(rule));
+    if (await fileExists(indexPath)) {
+      const indexContent = await fs.readFile(indexPath, 'utf-8')
+      const indexLinks = indexContent.match(/\[.+?\]\(\.\/(.+?\.md)\)/g) || []
+      const indexedRules = indexLinks.map(link => link.match(/\(\.\/(.+?\.md)\)/)[1])
+
+      const missingRules = rules.filter(rule => !indexedRules.includes(rule))
       if (missingRules.length > 0) {
-        missingFromIndex.push({ rulesetName, missingRules });
+        missingFromIndex.push({ rulesetName, missingRules })
       }
-    } else {
-      missingFromIndex.push({ rulesetName, missingRules: rules, indexMissing: true });
+    }
+    else {
+      missingFromIndex.push({ rulesetName, missingRules: rules, indexMissing: true })
     }
   }
 
-  return missingFromIndex;
+  return missingFromIndex
 }
 
 const main = async () => {
@@ -138,19 +141,21 @@ const main = async () => {
       })
     }
 
-    const missingFromIndex = await checkIndexFiles(docsDirectory, rulesetIndexes);
+    const missingFromIndex = await checkIndexFiles(docsDirectory, rulesetIndexes)
     if (missingFromIndex.length > 0) {
-      console.log('🙀 Missing rules from index files:');
+      console.log('🙀 Missing rules from index files:')
       missingFromIndex.forEach(({ rulesetName, missingRules, indexMissing }) => {
         if (indexMissing) {
-          console.log(`- ${rulesetName}: index.md file is missing`);
-        } else {
-          console.log(`- ${rulesetName}:`);
-          missingRules.forEach(rule => console.log(`  - ${rule}`));
+          console.log(`- ${rulesetName}: index.md file is missing`)
         }
-      });
-    } else {
-      console.log('👉 All rules are properly listed in their respective index files.');
+        else {
+          console.log(`- ${rulesetName}:`)
+          missingRules.forEach(rule => console.log(`  - ${rule}`))
+        }
+      })
+    }
+    else {
+      console.log('👉 All rules are properly listed in their respective index files.')
     }
   }
   catch (error) {
