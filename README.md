@@ -110,6 +110,17 @@ npx vue-mess-detector analyze ./src --group=file
 #### With `--group=file` flag ⬇️
 ![Output Image - Group By File](./docs/public/results-per-file.png)
 
+## Output explanation
+
+**Group per rule:** Here we can see a first line of blue color, this line is the rule that is being evaluated, then we will be seeing blocks of information with the following structure file, description and message.
+
+**Group per file:** Here it varies a little with respect to the previous one and it is that in the first line we will be able to see the path of the file that is being evaluated then we will be seeing blocks of information with the following structure rule, description, message.
+
+- **Rule:** Blue line that defines the ruler.
+- **File:** It will show us the path to the file where the rule is evaluated.
+- **Description:** A short description of what should be done, accompanied by a link to the respective documentation.
+- **Message:** This message will tell you the line of code where it was detected that the rule is not met, something to keep in mind is that the yellow messages are warnings that it is advisable to follow, but the messages that are red, it is definitive that a change must be made.
+
 ## Documentation
 
 > 👉 For more information, see the [documentation](https://vue-mess-detector.webmania.cc/).
