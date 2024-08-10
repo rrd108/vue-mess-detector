@@ -9,20 +9,20 @@ describe('checkTemplateSimpleExpression', () => {
   })
 
   it('should not report files where template expression is simple', () => {
-    const script = {
+    const template = {
       content: `<template>
       {{ normalizedFullName }}
       {{ chantGauranga }}
     </template>`,
     } as SFCTemplateBlock
     const fileName = 'simple-expression.vue'
-    checkTemplateSimpleExpression(script, fileName)
+    checkTemplateSimpleExpression(template, fileName)
     expect(reportTemplateSimpleExpression().length).toBe(0)
     expect(reportTemplateSimpleExpression()).toStrictEqual([])
   })
 
   it('should report files where template expression is not simple', () => {
-    const script = {
+    const template = {
       content: `<template>
       {{
         fullName.split(' ').map((word) => {
@@ -32,7 +32,7 @@ describe('checkTemplateSimpleExpression', () => {
     </template>`,
     } as SFCTemplateBlock
     const fileName = 'not-simple-expression.vue'
-    checkTemplateSimpleExpression(script, fileName)
+    checkTemplateSimpleExpression(template, fileName)
     expect(reportTemplateSimpleExpression().length).toBe(1)
     expect(reportTemplateSimpleExpression()).toStrictEqual([{
       file: fileName,
