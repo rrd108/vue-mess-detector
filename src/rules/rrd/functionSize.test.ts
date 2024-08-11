@@ -31,6 +31,29 @@ describe('checkFunctionSize', () => {
     expect(reportFunctionSize()).toStrictEqual([])
   })
 
+  it('should not report files where arrow functions without curly braces do not exceed the recommended limit', () => {
+    const script = {
+      content: `
+        <script setup>
+          const getOpenBookings = (page: number) =>
+            axios
+              .get(\`\${import.meta.env.VITE_APP_API_URL}bookings/listOpen.json?page=\${page}\`, store.tokenHeader)
+              .then(res => {
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+              })
+              .catch(err => console.error(err))
+
+          const shortFunction = (a, b) => a + b
+        </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'arrow-function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(0)
+    expect(reportFunctionSize()).toStrictEqual([])
+  })
+
   it('should report files with one function exceeding the limit', () => {
     const script = {
       content: `
@@ -145,19 +168,67 @@ describe('checkFunctionSize', () => {
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
     checkFunctionSize(script, fileName)
-    //  expect(reportFunctionSize().length).toBe(2) TODO temporary disabled for #116
-    expect(reportFunctionSize().length).toBe(1)
+    expect(reportFunctionSize().length).toBe(2)
     expect(reportFunctionSize()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} is too long 🚨`,
-    }, /* TODO temporary disabled for #116
-    , {
+    }, {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(dummyArrowFunction)${BG_RESET} 🚨`,
-    } */])
+      message: `function ${BG_ERR}(dummyArrowFunction)${BG_RESET} is too long 🚨`,
+    }])
+  })
+
+  it('should report files with one arrow function without curly braces exceeding the limit', () => {
+    const script = {
+      content: `
+        <script setup>
+          const getOpenBookings = (page: number) =>
+            axios
+              .get(\`\${import.meta.env.VITE_APP_API_URL}bookings/listOpen.json?page=\${page}\`, store.tokenHeader)
+              .then(res => {
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+              })
+              .catch(err => console.error(err))
+
+          const shortFunction = (a, b) => a + b
+        </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'arrow-function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(1)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long 🚨`,
+    }])
   })
 })
