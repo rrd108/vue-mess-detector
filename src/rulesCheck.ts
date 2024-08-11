@@ -29,6 +29,7 @@ import { checkDeepIndentation } from './rules/rrd/deepIndentation'
 import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 import { checkHtmlLink } from './rules/rrd/htmlLink'
 import { checkMagicNumbers } from './rules/rrd/magicNumbers'
+import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -52,6 +53,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkQuotedAttributeValues(descriptor, filePath)
     checkDirectiveShorthands(descriptor, filePath)
     checkFullWordComponentName(filePath)
+    checkMultiAttributeElements(descriptor.template, filePath)
   }
 
   if (apply.includes('vue-recommended')) {

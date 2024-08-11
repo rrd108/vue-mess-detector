@@ -27,6 +27,8 @@ import { reportDeepIndentation } from './rules/rrd/deepIndentation'
 import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
 import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
+import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
+import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
@@ -60,14 +62,15 @@ export const reportRules = (groupBy: GroupBy) => {
 
   // vue-strong rules
   processOffenses(reportComponentFilenameCasing)
-  processOffenses(reportSelfClosingComponents)
-  processOffenses(reportPropNameCasing)
-  processOffenses(reportTemplateSimpleExpression)
-  processOffenses(reportQuotedAttributeValues)
-  processOffenses(reportDirectiveShorthands)
-  processOffenses(reportSimpleComputed)
   processOffenses(reportComponentFiles)
+  processOffenses(reportDirectiveShorthands)
   processOffenses(reportFullWordComponentName)
+  processOffenses(reportMultiAttributeElements)
+  processOffenses(reportPropNameCasing)
+  processOffenses(reportQuotedAttributeValues)
+  processOffenses(reportSelfClosingComponents)
+  processOffenses(reportSimpleComputed)
+  processOffenses(reportTemplateSimpleExpression)
 
   // vue-recommended rules
   processOffenses(reportTopLevelElementOrder)
@@ -75,6 +78,7 @@ export const reportRules = (groupBy: GroupBy) => {
 
   // vue-caution rules
   processOffenses(reportImplicitParentChildCommunication)
+  processOffenses(reportElementSelectorsWithScoped)
 
   // rrd rules
   processOffenses(reportCyclomaticComplexity)
