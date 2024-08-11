@@ -29,6 +29,7 @@ import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import { reportPropsDrilling } from './rules/rrd/propsDrilling'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
@@ -89,6 +90,7 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportMagicNumbers)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
+  processOffenses(reportPropsDrilling)
   processOffenses(reportScriptLength)
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)

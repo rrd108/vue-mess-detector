@@ -30,6 +30,7 @@ import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSele
 import { checkHtmlLink } from './rules/rrd/htmlLink'
 import { checkMagicNumbers } from './rules/rrd/magicNumbers'
 import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
+import { checkPropsDrilling } from './rules/rrd/propsDrilling'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -75,6 +76,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkMagicNumbers(script, filePath)
     checkParameterCount(script, filePath)
     checkPlainScript(descriptor.script, filePath)
+    checkPropsDrilling(script, filePath)
     checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
     checkTooManyProps(script, filePath)
