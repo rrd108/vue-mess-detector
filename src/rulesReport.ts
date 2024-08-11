@@ -62,15 +62,15 @@ export const reportRules = (groupBy: GroupBy) => {
 
   // vue-strong rules
   processOffenses(reportComponentFilenameCasing)
-  processOffenses(reportSelfClosingComponents)
-  processOffenses(reportPropNameCasing)
-  processOffenses(reportTemplateSimpleExpression)
-  processOffenses(reportQuotedAttributeValues)
-  processOffenses(reportDirectiveShorthands)
-  processOffenses(reportSimpleComputed)
   processOffenses(reportComponentFiles)
+  processOffenses(reportDirectiveShorthands)
   processOffenses(reportFullWordComponentName)
   processOffenses(reportMultiAttributeElements)
+  processOffenses(reportPropNameCasing)
+  processOffenses(reportQuotedAttributeValues)
+  processOffenses(reportSelfClosingComponents)
+  processOffenses(reportSimpleComputed)
+  processOffenses(reportTemplateSimpleExpression)
 
   // vue-recommended rules
   processOffenses(reportTopLevelElementOrder)
