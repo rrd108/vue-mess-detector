@@ -7,3 +7,31 @@ Checks if the component name is a full word. As this is not easy to detect progr
 
 - **Readability**: Full-word component names are easier to read and understand.
 - **Consistency**: Full-word component names are consistent with the naming of files and folders.
+
+## 😱 Examples of code for which this rule will throw a warning
+
+::: warning
+The following code uses a component name that does not qualify as a full word because it contains fewer than three consonants. This is not in line with best practices for component naming.
+:::
+
+```vue
+<template>
+  <nav>
+    <!-- Navigation items -->
+  </nav>
+</template>
+```
+
+## 🤩 How to fix it?
+
+::: tip
+Refactor the component name to use a full word, ensuring it contains at least three consonants for clarity and better readability:
+:::
+
+```vue
+<template>
+  <navigation>
+    <!-- Navigation items -->
+  </navigation>
+</template>
+```

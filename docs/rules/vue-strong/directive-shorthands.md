@@ -11,3 +11,33 @@ This rule enforces using directive shorthands for better readability. While the 
 
 - **Readability:** Directive shorthands are easier to read and understand and result in a shorter block of code.
 - **Consistency:** Using shorthands makes the code more consistent and easier to maintain.
+
+## 😱 Examples of code for which this rule will throw a warning
+
+::: warning
+The following code uses full directive syntax instead of shorthands. This goes against the recommended practice of using directive shorthands for clarity and brevity.
+:::
+
+```javascript
+<template v-slot:header>
+  <input
+    v-bind:value="newTodoText"
+    v-on:input="addTodo"
+  >
+</template>
+```
+
+## 🤩 How to fix it?
+
+::: tip
+Refactor the code to use directive shorthands. This improves readability and aligns with Vue best practices:
+:::
+
+```vue
+<template #header>
+  <input
+    :value="newTodoText"
+    @input="addTodo"
+  >
+</template>
+```
