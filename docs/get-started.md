@@ -98,13 +98,24 @@ If you want to *group* the results by file add the `--group` flag with one of th
 npx vue-mess-detector analyze ./src --group=file
 ```
 
-## Example output
+## 📊 Example output
 
 #### Without `--group` flag (default behavior is to group per rule) ⬇️
 ![Output Image - Group By Rule](./public/results-per-rule.png)
 
 #### With `--group=file` flag ⬇️
 ![Output Image - Group By File](./public/results-per-file.png)
+
+## ℹ️ Output explanation
+
+**Group by Rule:** In this view, the first line is highlighted in blue, representing the rule being evaluated. Following this, you'll see blocks of information structured as follows: file path, description, and message.
+
+**Group by File:** In this view, the first line displays the file path being evaluated. Below this, you'll see blocks of information with the following structure: rule, description, and message.
+
+- Rule: The blue line that defines the specific rule being evaluated.
+- File: Shows the path to the file where the rule is applied.
+- Description: A concise explanation of the rule, often accompanied by a link to relevant documentation for further details.
+- Message: Indicates the line of code where the rule was violated. Yellow messages are warnings, suggesting best practices, while red messages highlight errors that must be corrected.
 
 ## 📋 Rulesets
 
