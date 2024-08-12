@@ -14,10 +14,10 @@ Checks if the props name is in camelCase. &nbsp;&nbsp;<br />
 The following code defines props using a naming convention that does not comply with `camelCase`. This is not in line with best practices for prop naming.
 :::
 
-```vue
+```js
 <script setup>
 const props = defineProps({
-  'greeting-text': String, // This should be in camelCase
+  'greeting-text': String, // [!code warning]
 })
 </script>
 
@@ -32,7 +32,7 @@ const props = defineProps({
 Refactor the prop names to use `camelCase`, which is the standard convention for naming props in Vue:
 :::
 
-```vue
+```vue{3}
 <script setup>
 const props = defineProps({
   greetingText: String, // Now in camelCase

@@ -14,7 +14,7 @@ Checks if the template is using quoted attribute values. &nbsp;&nbsp;<br />
 The following code does not use quotes for attribute values. This can lead to issues with parsing and is not compliant with best practices.
 :::
 
-```javascript
+```html
 <template>
   <AppSidebar :style={width:sidebarWidth+'px'}>
     <!-- This should have quotes around the attribute value -->
@@ -28,7 +28,7 @@ The following code does not use quotes for attribute values. This can lead to is
 Refactor the attribute values to use quotes to ensure proper parsing and adherence to best practices:
 :::
 
-```vue
+```vue{2}
 <template>
   <AppSidebar :style="{ width: `${sidebarWidth}px` }">
     <!-- Now properly quoted -->

@@ -19,7 +19,7 @@ Checks if any computed properties are bigger than 5 lines. &nbsp;&nbsp;<br />
 The following code contains computed properties that are too large, making them harder to read and maintain.
 :::
 
-```vue
+```vue{5-13}
 <!-- Incorrect: Computed property exceeds 5 lines -->
 <script setup>
 const total = computed(() => {
@@ -44,7 +44,7 @@ const total = computed(() => {
 Refactor large computed properties into smaller, more manageable ones. This improves readability and maintainability.
 :::
 
-```vue
+```vue{4}
 <!-- Correct: Computed properties are simplified and concise -->
 <script setup>
 const total = computed(() => {

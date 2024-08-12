@@ -14,13 +14,13 @@ Checks if the component is using `v-if` with `v-for`. &nbsp;&nbsp;<br />
 The following code uses `v-if` together with `v-for`, which is not recommended as it can lead to performance issues and inefficient rendering.
 :::
 
-```vue
+```js
 <template>
   <ul>
     <li
       v-for="user in users"
-      v-if="user.isActive"
-      :key="user.id"
+      v-if="user.isActive" // [!code warning]
+      v-bind:key="user.id"
     >
       {{ user.name }}
     </li>
@@ -36,7 +36,7 @@ Refactor the code to use a computed property that filters the users before rende
 
 ```vue
 <script setup>
-import { computed } from 'vue'
+import { computed } from 'vue' // [!code ++]
 
 const users = [
   { id: 1, name: 'John Doe', isActive: true },
@@ -44,7 +44,7 @@ const users = [
   // more users...
 ]
 
-const activeUsers = computed(() => users.filter(user => user.isActive))
+const activeUsers = computed(() => users.filter(user => user.isActive)) // [!code ++]
 </script>
 
 <template>

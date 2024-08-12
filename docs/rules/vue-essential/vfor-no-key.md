@@ -11,13 +11,13 @@ Checks if the component is using `v-for` without a `key` property. &nbsp;&nbsp;<
 ## 😱 Examples of code for which this rule will throw a warning
 
 ::: warning
-The following code uses v-for without a key property, which can lead to rendering issues and decreased performance.
+The following code uses `v-for` without a key property, which can lead to rendering issues and decreased performance.
 :::
 
-```vue
+```js
 <template>
   <ul>
-    <li v-for="todo in todos">
+    <li v-for="todo in todos"> // [!code warning]
       {{ todo.text }}
     </li>
   </ul>
@@ -27,10 +27,10 @@ The following code uses v-for without a key property, which can lead to renderin
 ## 🤩 How to fix it?
 
 ::: tip
-Add a :key property to the v-for directive to uniquely identify each element in the loop.
+Add a `:key` property to the `v-for` directive to uniquely identify each element in the loop.
 :::
 
-```vue
+```vue /3/
 <template>
   <ul>
     <li v-for="todo in todos" :key="todo.id">

@@ -20,7 +20,7 @@ Implicit parent-child communication can lead to unmanageable code and unexpected
 :::
 
 ### Example 1: Prop Mutation
-```vue
+```js
 <script setup>
 defineProps({
   todo: {
@@ -31,14 +31,14 @@ defineProps({
 </script>
 
 <template>
-  <input v-model="todo.text">
+  <input v-model="todo.text"> // [!code warning]
 </template>
 ```
 
 In this example, the `v-model` directive directly mutates the `todo` prop, which is passed down from a parent component. This implicit communication can make the flow of data hard to follow.
 
 ### Example 2: Using getCurrentInstance
-```vue
+```vue{11,18-20}
 <script setup>
 import { getCurrentInstance } from 'vue'
 

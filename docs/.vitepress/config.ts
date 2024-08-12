@@ -88,4 +88,11 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/rrd108/vue-mess-detector' },
     ],
   },
+  markdown: {
+    theme: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
+    },
+    lineNumbers: true,
+  },
 })
