@@ -9,3 +9,38 @@ Checks if the component is using global styles instead of `scoped` styles. &nbsp
 - **Isolation** the component is isolated and has no unwanted effect on the other parts of the application.
 - **Reusability** the component can be reused in other parts of the application with exactly the same look and feel.
 
+## 😱 Examples of code for which this rule will throw a warning
+
+::: warning
+The following code contains global styles, which may affect other components unintentionally.
+:::
+
+```vue
+<template>
+  <h3>Hello World</h3>
+</template>
+
+<style>
+h3 {
+  background: pink;
+}
+</style>
+```
+
+## 🤩 How to fix it?
+
+::: tip
+Refactor the code to use scoped styles by adding the scoped attribute to the `<style>` block.
+:::
+
+```vue
+<template>
+  <h3>Hello World</h3>
+</template>
+
+<style scoped>
+h3 {
+  background: pink;
+}
+</style>
+```
