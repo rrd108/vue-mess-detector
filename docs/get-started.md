@@ -112,10 +112,13 @@ npx vue-mess-detector analyze ./src --group=file
 
 **Group by File:** In this view, the first line displays the file path being evaluated. Below this, you'll see blocks of information with the following structure: rule, description, and message.
 
-- Rule: The blue line that defines the specific rule being evaluated.
-- File: Shows the path to the file where the rule is applied.
-- Description: A concise explanation of the rule, often accompanied by a link to relevant documentation for further details.
-- Message: Indicates the line of code where the rule was violated. Yellow messages are warnings, suggesting best practices, while red messages highlight errors that must be corrected.
+- **Rule**: The blue line that defines the specific rule being evaluated.
+- **File**: Shows the path to the file where the rule is applied.
+- **Description**: A concise explanation of the rule, often accompanied by a link to relevant documentation for further details.
+- **Message**: Indicates the line of code where the rule was violated.
+
+> [!IMPORTANT]
+> Yellow messages are warnings, suggesting best practices, while red messages highlight errors that must be corrected.
 
 ## 📋 Rulesets
 
