@@ -7,6 +7,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [Else Condition](./else-condition.md)
 - [Function Size](./function-size.md)
 - [HTML links](./html-link.md)
+- [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)

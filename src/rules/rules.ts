@@ -20,6 +20,7 @@ export const RULES = {
     'elseCondition',
     'functionSize',
     'htmlLink',
+    'ifWithoutCurlyBraces',
     'magicNumbers',
     'parameterCount',
     'plainScript',
