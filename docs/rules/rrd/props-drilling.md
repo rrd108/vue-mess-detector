@@ -16,16 +16,16 @@ Props drilling refers to the practice of passing props from a parent component t
 ## 😱 Examples of code for which this rule will throw a warning
 
 ::: warning
-The following code forwards the user prop to ChildComponent without modifying it. What does the user prop represent? It should be handled differently.
+The following code forwards the `items` prop to `ChildComponent` without modifying it. What does the `items` prop represent? It should be handled differently.
 :::
 
 ```vue
 <script setup>
-const props = defineProps(['user'])
+const props = defineProps(['items'])
 </script>
 
 <template>
-  <ChildComponent :user="props.user" />
+  <ChildComponent :items="props.items" />
 </template>
 ```
 
@@ -37,13 +37,12 @@ Refactor the code to avoid drilling the prop unmodified. You can either use the 
 
 ```vue
 <script setup>
-const props = defineProps(['user'])
-
-const IN_5_DAYS = Date.now() + 5 * 24 * 60 * 60 * 1000
-const modifiedUser = { ...props.user, tokenExpiration: Date.now() + IN_5_DAYS }
+import { computed } from 'vue'
+const props = defineProps(['items'])
+const filteredItems = computed(() => props.items.filter(item => item.active))
 </script>
 
 <template>
-  <ChildComponent :user="modifiedUser" />
+  <ChildComponent :items="filteredItems" />
 </template>
 ```

@@ -27,10 +27,14 @@ describe('checkPropsDrilling', () => {
     const script = {
       content: `
         <script setup>
+          import { computed } from 'vue'
           const props = defineProps(['items'])
-          const filteredItems = props.items.filter(item => item.active);
-          <ChildComponent :items="filteredItems" />
+          const filteredItems = computed(() => props.items.filter(item => item.active))
         </script>
+
+        <template>
+          <ChildComponent :items="filteredItems" />
+        </template>
       `,
     } as SFCScriptBlock
     const filePath = 'component.vue'
