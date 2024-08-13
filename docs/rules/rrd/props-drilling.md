@@ -39,8 +39,8 @@ Refactor the code to avoid drilling the prop unmodified. You can either use the 
 <script setup>
 const props = defineProps(['user'])
 
-// Example of modifying the prop
-const modifiedUser = { ...props.user, additionalInfo: 'Some info' }
+const IN_5_DAYS = Date.now() + 5 * 24 * 60 * 60 * 1000
+const modifiedUser = { ...props.user, tokenExpiration: Date.now() + IN_5_DAYS }
 </script>
 
 <template>
