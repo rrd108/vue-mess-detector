@@ -30,6 +30,7 @@ import { checkElementSelectorsWithScoped } from './rules/vue-caution/elementSele
 import { checkHtmlLink } from './rules/rrd/htmlLink'
 import { checkMagicNumbers } from './rules/rrd/magicNumbers'
 import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
+import { checkIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -72,6 +73,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkElseCondition(script, filePath)
     checkFunctionSize(script, filePath)
     checkHtmlLink(descriptor.template, filePath)
+    checkIfWithoutCurlyBraces(script, filePath)
     checkMagicNumbers(script, filePath)
     checkParameterCount(script, filePath)
     checkPlainScript(descriptor.script, filePath)
