@@ -28,7 +28,7 @@ import { ref } from 'vue';
 let age = ref(22);
 </script>
 
-<style>
+<style scoped>
 .age-input {
   color: white;
 }
@@ -45,7 +45,7 @@ In this example, the `<template>` tag appears before the `<script>` tag, which v
   </h1>
 </template>
 
-<style>
+<style scoped>
 .age-input {
   color: white;
 }
@@ -74,7 +74,7 @@ const age = ref(22)
   </h1>
 </template>
 
-<style>
+<style scoped>
 .age-input {
   color: white;
 }
@@ -95,7 +95,7 @@ const age = ref(22)
   </h1>
 </template>
 
-<style>
+<style scoped>
 .age-input {
   color: white;
 }

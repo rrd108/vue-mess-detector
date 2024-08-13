@@ -14,19 +14,19 @@ The attributes of elements (including components) should be ordered consistently
 :::
 
 ### Example 1: Incorrect Attribute Order
-```javascript
+```html
 <template>
-    <input v-on:input="handleInput" v-model="inputValue">
+    <input @input="handleInput" v-model="inputValue">
 </template>
 ```
 
-In this example, the attributes of the `<input>` element are out of order. The `v-on:input` directive should come after `v-model` to maintain consistent attribute ordering.
+In this example, the attributes of the `<input>` element are out of order. The `@input` directive should come after `v-model` to maintain consistent attribute ordering.
 
 ### Example 2: Incorrect Attribute Order in a Different Element
 
-```javascript
+```html
 <template>
-  <div id="app" v-if="isVisible" ref="myDiv" v-on:click="handleClick"></div>
+  <div id="app" v-if="isVisible" ref="myDiv" @click="handleClick"></div>
 </template>
 ```
 
@@ -49,7 +49,7 @@ To comply with the recommended attribute order, ensure that the attributes in yo
 ### Fixing Incorrect Attribute Order in a Different Element
 
 ```vue
-<div v-if="isVisible" id="app" ref="myDiv" v-on:click="handleClick"></div>
+<div v-if="isVisible" id="app" ref="myDiv" @click="handleClick"></div>
 ```
 
 By maintaining a consistent order of attributes in your elements, you improve code readability and maintainability, making it easier for others (and yourself) to understand the structure and functionality of your components.
