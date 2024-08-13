@@ -70,6 +70,7 @@ export default defineConfig({
                 { text: 'Else Condition', link: '/rules/rrd/else-condition' },
                 { text: 'Function Size', link: '/rules/rrd/function-size' },
                 { text: 'HTML links', link: '/rules/rrd/html-link' },
+                { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
                 { text: 'Plain Script', link: '/rules/rrd/plain-script' },

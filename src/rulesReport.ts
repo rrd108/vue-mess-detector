@@ -29,6 +29,7 @@ import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 
 export const reportRules = (groupBy: GroupBy) => {
   let errors = 0
@@ -86,6 +87,7 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportElseCondition)
   processOffenses(reportFunctionSize)
   processOffenses(reportHtmlLink)
+  processOffenses(reportIfWithoutCurlyBraces)
   processOffenses(reportMagicNumbers)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
