@@ -32,7 +32,7 @@ div {
   color: red;
 }
 
-/* Imagine 10_000+ element selectors */
+/* Imagine 10k div-s on the page */
 </style>
 ```
 
