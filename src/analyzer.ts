@@ -29,7 +29,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, file)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (dirs2Check.some(dir => filePath.endsWith(`/${dir}`))) {
+      if (dirs2Check.some(dir => filePath.includes(`/${dir}`))) {
         await walkAsync(filePath)
       }
     }
