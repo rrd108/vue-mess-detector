@@ -16,9 +16,9 @@ The following code uses a component name that does not qualify as a full word be
 
 ```vue
 <template>
-  <nav>
+  <NavG>
     <!-- Navigation items -->
-  </nav>
+  </NavG>
 </template>
 ```
 
@@ -30,8 +30,8 @@ Refactor the component name to use a full word, ensuring it contains at least th
 
 ```vue
 <template>
-  <navigation>
+  <Navigation>
     <!-- Navigation items -->
-  </navigation>
+  </Navigation>
 </template>
 ```
