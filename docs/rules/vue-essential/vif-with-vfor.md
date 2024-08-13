@@ -14,13 +14,13 @@ Checks if the component is using `v-if` with `v-for`. &nbsp;&nbsp;<br />
 The following code uses `v-if` together with `v-for`, which is not recommended as it can lead to performance issues and inefficient rendering.
 :::
 
-```js
+```vue{4-5}
 <template>
   <ul>
     <li
       v-for="user in users"
-      v-if="user.isActive" // [!code warning]
-      v-bind:key="user.id"
+      v-if="user.isActive"
+      :key="user.id"
     >
       {{ user.name }}
     </li>
