@@ -21,8 +21,11 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run MissingDocs check
+      - name: Run Missing Docs Check
         run: yarn docs:missing
 
       - name: Run tests
         run: yarn test
+      
+      - name: Run Missing Rules Check
+        run: yarn rules:missing
