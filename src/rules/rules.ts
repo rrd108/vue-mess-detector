@@ -24,6 +24,7 @@ export const RULES = {
     'magicNumbers',
     'parameterCount',
     'plainScript',
+    'propsDrilling',
     'scriptLength',
     'shortVariableName',
     'tooManyProps',

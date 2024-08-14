@@ -20,6 +20,7 @@ import { checkElementAttributeOrder } from './rules/vue-recommended/elementAttri
 import { checkTooManyProps } from './rules/rrd/tooManyProps'
 import { checkFunctionSize } from './rules/rrd/functionSize'
 import { checkParameterCount } from './rules/rrd/parameterCount'
+import { checkPropsDrilling } from './rules/rrd/propsDrilling'
 import { checkShortVariableName } from './rules/rrd/shortVariableName'
 import { checkSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { checkComponentFiles } from './rules/vue-strong/componentFiles'
@@ -77,6 +78,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkMagicNumbers(script, filePath)
     checkParameterCount(script, filePath)
     checkPlainScript(descriptor.script, filePath)
+    checkPropsDrilling(script, filePath)
     checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
     checkTooManyProps(script, filePath)
