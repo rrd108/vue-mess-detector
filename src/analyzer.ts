@@ -61,16 +61,16 @@ export const analyze = async (dir: string, apply: Array<RuleSetType> = [], group
 
   const codeHealth = Math.ceil(errors/linesCount*100)
   if (codeHealth < 75) {
-    console.log(`${BG_ERR}Code health is ${codeHealth}%${BG_RESET}`)
+    console.log(`${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}`)
   }
   if (codeHealth >= 75 && codeHealth < 85) {
-    console.log(`${BG_WARN}Code health is ${codeHealth}%${BG_RESET}`)
+    console.log(`${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}`)
   }
   if (codeHealth >= 85 && codeHealth < 85) {
-    console.log(`${BG_INFO}Code health is ${codeHealth}%${BG_RESET}`)
+    console.log(`${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}`)
   }
   if (codeHealth >= 95) {
-    console.log(`${BG_OK}Code health is ${codeHealth}%${BG_RESET}`)
+    console.log(`${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}`)
   }
 
   if (!errors) {
