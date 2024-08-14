@@ -1,13 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
-import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
+import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
 import type { GroupBy } from './types'
 
 let filesCount = 0
+let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
 const dirs2Check = [
@@ -36,6 +37,7 @@ const walkAsync = async (dir: string) => {
     else if (file.endsWith('.vue')) {
       filesCount++
       const content = await fs.readFile(filePath, 'utf-8')
+      linesCount += content.split(/\r\n|\r|\n/).length
       const { descriptor } = parse(content)
       checkRules(descriptor, filePath, _apply)
     }
@@ -51,9 +53,27 @@ export const analyze = async (dir: string, apply: Array<RuleSetType> = [], group
 
   await walkAsync(dir)
 
+  
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
+  
+  const errors = reportRules(groupBy)
+  console.log(`Found ${BG_INFO}${errors}${BG_RESET} errors, ${BG_INFO}${linesCount}${BG_RESET} lines of code in ${BG_INFO}${filesCount}${BG_RESET} files`)
 
-  if (!reportRules(groupBy)) {
+  const codeHealth = Math.ceil(errors/linesCount*100)
+  if (codeHealth < 75) {
+    console.log(`${BG_ERR}Code health is ${codeHealth}%${BG_RESET}`)
+  }
+  if (codeHealth >= 75 && codeHealth < 85) {
+    console.log(`${BG_WARN}Code health is ${codeHealth}%${BG_RESET}`)
+  }
+  if (codeHealth >= 85 && codeHealth < 85) {
+    console.log(`${BG_INFO}Code health is ${codeHealth}%${BG_RESET}`)
+  }
+  if (codeHealth >= 95) {
+    console.log(`${BG_OK}Code health is ${codeHealth}%${BG_RESET}`)
+  }
+
+  if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
   }
 }
