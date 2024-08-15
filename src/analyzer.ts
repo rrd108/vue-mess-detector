@@ -56,9 +56,11 @@ export const analyze = async (dir: string, apply: Array<RuleSetType> = [], group
   
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
   
-  const errors = reportRules(groupBy)
+  const health = reportRules(groupBy)
+  const errors = health.reduce((acc, { errors }) => acc + errors, 0)
   console.log(`Found ${BG_INFO}${errors}${BG_RESET} errors, ${BG_INFO}${linesCount}${BG_RESET} lines of code in ${BG_INFO}${filesCount}${BG_RESET} files`)
 
+  // Code health calculated by the number of errors per lines of code
   const codeHealth = Math.ceil((1 - errors/linesCount) * 100)
   if (codeHealth < 75) {
     console.log(`${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}`)
@@ -72,6 +74,11 @@ export const analyze = async (dir: string, apply: Array<RuleSetType> = [], group
   if (codeHealth >= 95) {
     console.log(`${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}`)
   }
+
+  // Code health calculated by number of offenses per file divided by the number of files - David's suggestion
+  health.forEach(({ file, errors }) => {
+    console.log(`- ${file}, ${errors} errors`) // TODO how exactly you wanted this to calculate?
+  })
 
   if (!errors) {
     console.log(`${BG_OK}No code smells detected!${BG_RESET}`)

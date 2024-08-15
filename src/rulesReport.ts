@@ -97,10 +97,22 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
 
+  const health: { file: string, errors: number }[] = []
+
   // Output the report grouped by file
   Object.keys(offensesGrouped).forEach((key) => {
     console.log(`\n - ${key}`)
     offensesGrouped[key].forEach((offense) => {
+      // if health already has the file, push the error
+      if (health.some(h => h.file === offense.file)) {
+        const foundHealth = health.find(h => h.file === offense.file)
+        if (foundHealth) {
+          foundHealth.errors++
+        }
+      } else {
+        health.push({ file: offense.file, errors: 1 })
+      }
+
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
       }
@@ -112,5 +124,5 @@ export const reportRules = (groupBy: GroupBy) => {
     })
   })
 
-  return errors
+  return health
 }
