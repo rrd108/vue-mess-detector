@@ -10,29 +10,34 @@ import type { GroupBy } from './types'
 yargs(hideBin(process.argv))
   .command(
     'analyze [path]',
-    'Analyze Vue files for code smells',
+    'Analyze Vue files for code smells and best practices',
     (yargs) => {
       return yargs
         .positional('path', {
           describe: 'path to the Vue files',
-          type: 'string',
           default: './',
         })
         .option('ignore', {
-          describe: 'Comma-separated list of rulesets to ignore',
-          type: 'string',
+          alias: 'i',
+          describe: `Comma-separated list of rulesets to ignore.`,
+          choices: RULESETS,
           coerce: coerceRules('ignore'),
+          group: 'Filter Rulesets:',
         })
         .option('apply', {
-          describe: 'Comma-separated list of rulesets to apply',
-          type: 'string',
+          alias: 'a',
+          describe: `Comma-separated list of rulesets to apply.`,
+          choices: RULESETS,
           coerce: coerceRules('apply'),
+          group: 'Filter Rulesets:',
         })
         .option('group', {
-          describe: 'Group results by rule or file',
-          type: 'string',
+          alias: 'g',
+          describe: 'Group results at the output',
+          choices: ['rule', 'file'],
           coerce: value => customGroupType(value),
           default: 'rule',
+          group: 'Group Results:',
         })
         .check((argv) => {
           if (argv.ignore && argv.apply) {
