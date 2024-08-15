@@ -1919,8 +1919,8 @@ ${D}Analyzing Vue files in ${e}${b}`);
   console.log(`Applying ${D}${t.length}${b} rulesets ${D}${t}${b} and ignoring ${D}${s.length}${b} rulesets ${D}${s}${b} grouping by ${D}${n}${b}`), Vt = t, await Gt(e), console.log(`Found ${D}${lt}${b} Vue files`);
   const o = Co(n);
   console.log(`Found ${D}${o}${b} errors, ${D}${ut}${b} lines of code in ${D}${lt}${b} files`);
-  const c = Math.ceil(o / ut * 100);
-  c < 75 && console.log(`${H}Code health is LOW: ${c}%${b}`), c >= 75 && c < 85 && console.log(`${C}Code health is MEDIUM ${c}%${b}`), c >= 85 && c < 85 && console.log(`${D}Code health is OK: ${c}%${b}`), c >= 95 && console.log(`${Ct}Code health is GOOD: ${c}%${b}`), o || console.log(`${Ct}No code smells detected!${b}`);
+  const c = Math.ceil((1 - o / ut) * 100);
+  c < 75 && console.log(`${H}Code health is LOW: ${c}%${b}`), c >= 75 && c < 85 && console.log(`${C}Code health is MEDIUM ${c}%${b}`), c >= 85 && c < 95 && console.log(`${D}Code health is OK: ${c}%${b}`), c >= 95 && console.log(`${Ct}Code health is GOOD: ${c}%${b}`), o || console.log(`${Ct}No code smells detected!${b}`);
 };
 sn(bn(process.argv)).command(
   "analyze [path]",
