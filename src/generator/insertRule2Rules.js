@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'node:path'
 
-export const insertRule = async (ruleset, ruleName) => {
+export const insertRule2Rules = async (ruleset, ruleName) => {
     // Read the rules.ts file
     const rulesPath = path.join('./src/rules/rules.ts');
     let content = await fs.readFile(rulesPath, 'utf8');

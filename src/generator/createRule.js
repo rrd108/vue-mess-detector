@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';  // it cause some error when this file is ts
 import fs from 'fs/promises';
-import { insertRule } from './insertRule.js';
+import { insertRule2Rules } from './insertRule2Rules.js';
 
 const questions = [
   {
@@ -35,14 +35,13 @@ const createFiles = async (answers) => {
   await fs.writeFile(testPath, testContent, 'utf8');
   console.log(`2️⃣  Test ${testPath} generated!`);
 
-  // TODO Add your new ruleName entry to function call to src/rules/rules.ts
-  console.log(`3️⃣  ${answers.name} added to ./src/rules/rules.ts!`);
   try {
-    await insertRule(answers.ruleset, answers.name);
+    await insertRule2Rules(answers.ruleset, answers.name);
   } catch (error) {
     console.error('Error:', error.message);
     process.exit(1);
   }
+  console.log(`3️⃣  ${answers.name} added to ./src/rules/rules.ts!`);
 
   // TODO Add your new checkRuleName function call to src/rulesCheck.ts
   console.log(`4️⃣  check${pascalCaseRulename} function call to ./src/rulesCheck.ts`);
