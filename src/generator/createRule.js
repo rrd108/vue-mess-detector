@@ -44,10 +44,11 @@ const createFiles = async (answers) => {
   console.log(`3️⃣  ${answers.name} added to ./src/rules/rules.ts!`);
 
   // TODO Add your new checkRuleName function call to src/rulesCheck.ts
-  console.log(`4️⃣  check${pascalCaseRulename} function call to ./src/rulesCheck.ts`);
+  // for this we have to know if it works with descriptor, script, template or style
+  // console.log(`4️⃣  check${pascalCaseRulename} function call to ./src/rulesCheck.ts`);
 
   // TODO Add your new reportRuleName function call to src/rulesReport.ts
-  console.log(`5️⃣  report${pascalCaseRulename} function call to ./src/rulesReport.ts`);
+  // console.log(`5️⃣  report${pascalCaseRulename} function call to ./src/rulesReport.ts`);
 };
 
 inquirer.prompt(questions)
