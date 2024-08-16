@@ -31,9 +31,9 @@ import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import { BG_ERR } from './rules/asceeCodes'
 
 export const reportRules = (groupBy: GroupBy) => {
-  let errors = 0
   const offensesGrouped: OffensesGrouped = {}
 
   // Helper function to add offenses
@@ -51,7 +51,6 @@ export const reportRules = (groupBy: GroupBy) => {
     const offenses = reportFunction()
     offenses.forEach((offense) => {
       addOffense(offense)
-      errors++
     })
   }
 
@@ -97,20 +96,21 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
 
-  const health: { file: string, errors: number }[] = []
+  const health: { file: string, errors: number, warnings: number }[] = []
 
   // Output the report grouped by file
   Object.keys(offensesGrouped).forEach((key) => {
     console.log(`\n - ${key}`)
     offensesGrouped[key].forEach((offense) => {
+      const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
         const foundHealth = health.find(h => h.file === offense.file)
         if (foundHealth) {
-          foundHealth.errors++
+          isError ? foundHealth.errors++ : foundHealth.warnings++
         }
       } else {
-        health.push({ file: offense.file, errors: 1 })
+        health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
       }
 
       if (groupBy === 'file') {
