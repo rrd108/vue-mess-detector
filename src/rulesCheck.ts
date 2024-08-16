@@ -37,35 +37,51 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
   const script = descriptor.scriptSetup || descriptor.script
   console.log(`Analyzing ${filePath}...`)
 
+  const isVueFile = filePath.endsWith('.vue')
+
   if (apply.includes('vue-essential')) {
-    checkSingleNameComponent(filePath)
     checkSimpleProp(script, filePath)
-    checkGlobalStyle(descriptor.styles, filePath)
-    checkVforNoKey(descriptor.template, filePath)
-    checkVifWithVfor(descriptor.template, filePath)
+
+    if (isVueFile) {
+      checkSingleNameComponent(filePath)
+      checkGlobalStyle(descriptor.styles, filePath)
+      checkVforNoKey(descriptor.template, filePath)
+      checkVifWithVfor(descriptor.template, filePath)
+    }
   }
 
   if (apply.includes('vue-strong')) {
-    checkComponentFilenameCasing(filePath)
-    checkPropNameCasing(script, filePath)
-    checkComponentFiles(script, filePath)
     checkSimpleComputed(script, filePath)
-    checkSelfClosingComponents(descriptor, filePath)
-    checkTemplateSimpleExpression(descriptor.template, filePath)
-    checkQuotedAttributeValues(descriptor, filePath)
-    checkDirectiveShorthands(descriptor, filePath)
-    checkFullWordComponentName(filePath)
-    checkMultiAttributeElements(descriptor.template, filePath)
+    
+    if (isVueFile) {
+      checkComponentFiles(script, filePath)
+      checkPropNameCasing(script, filePath)
+      checkComponentFilenameCasing(filePath)
+      checkSelfClosingComponents(descriptor, filePath)
+      checkTemplateSimpleExpression(descriptor.template, filePath)
+      checkQuotedAttributeValues(descriptor, filePath)
+      checkDirectiveShorthands(descriptor, filePath)
+      checkFullWordComponentName(filePath)
+      checkMultiAttributeElements(descriptor.template, filePath)
+    }
   }
 
   if (apply.includes('vue-recommended')) {
-    checkTopLevelElementOrder(descriptor.source, filePath)
-    checkElementAttributeOrder(descriptor.template, filePath)
+    // no rule for ts/js files
+    
+    if (isVueFile) {
+      checkTopLevelElementOrder(descriptor.source, filePath)
+      checkElementAttributeOrder(descriptor.template, filePath)
+    }
   }
-
+  
   if (apply.includes('vue-caution')) {
-    checkImplicitParentChildCommunication(script, filePath)
-    checkElementSelectorsWithScoped(descriptor.styles, filePath)
+    // no rule for ts/js files
+    
+    if (isVueFile) {
+      checkImplicitParentChildCommunication(script, filePath)
+      checkElementSelectorsWithScoped(descriptor.styles, filePath)
+    }
   }
 
   if (apply.includes('rrd')) {
@@ -73,14 +89,17 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkDeepIndentation(script, filePath)
     checkElseCondition(script, filePath)
     checkFunctionSize(script, filePath)
-    checkHtmlLink(descriptor.template, filePath)
     checkIfWithoutCurlyBraces(script, filePath)
     checkMagicNumbers(script, filePath)
     checkParameterCount(script, filePath)
-    checkPlainScript(descriptor.script, filePath)
     checkPropsDrilling(script, filePath)
     checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
     checkTooManyProps(script, filePath)
+
+    if (isVueFile) {
+      checkPlainScript(descriptor.script, filePath)
+      checkHtmlLink(descriptor.template, filePath)
+    }
   }
 }
