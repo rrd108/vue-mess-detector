@@ -38,7 +38,7 @@ const report_RULENAME_ = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}_RULESET_ ~ _RULENAME_${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}/* TODO add your description here*/.${TEXT_RESET} See: https:/* TODO add doc link here */`,
+        description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
         message: `${result.message} 🚨`,
       })
     })
