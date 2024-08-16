@@ -25,7 +25,11 @@ const createFiles = async (answers) => {
   console.log(`File ${filePath} generated!`);
 
   const testPath = `./src/rules/${answers.ruleset}/${answers.name}.test.ts`;
-  const testContent = `// This is a ${answers.template} template`;
+  let testContent = await fs.readFile('./src/generator/testSkeleton', 'utf8');
+  testContent = testContent
+    .replace(/_RULENAME_CAMELCASE_/g, answers.name)
+    .replace(/_RULENAME_/g, answers.name.charAt(0).toUpperCase() + answers.name.slice(1))
+    .replace(/_RULESET_/g, answers.ruleset);
   await fs.writeFile(testPath, testContent, 'utf8');
   console.log(`Test ${testPath} generated!`);
 };
