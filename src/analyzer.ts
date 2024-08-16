@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { parse } from '@vue/compiler-sfc'
+import { parse, SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
@@ -16,12 +16,12 @@ const dirs2Check = [
   'components',
   'layouts',
   'pages',
-  /* 'server',
+  'server',
   'composables',
   'store',
   'utils',
   'plugins',
-  'middleware', */
+  'middleware',
 ]
 
 const walkAsync = async (dir: string) => {
@@ -34,11 +34,17 @@ const walkAsync = async (dir: string) => {
         await walkAsync(filePath)
       }
     }
-    else if (file.endsWith('.vue')) {
+    else if (file.endsWith('.vue') || file.endsWith('.ts') || file.endsWith('.js')) {
       filesCount++
       const content = await fs.readFile(filePath, 'utf-8')
       linesCount += content.split(/\r\n|\r|\n/).length
       const { descriptor } = parse(content)
+
+      // vue files has descriptor.source, descriptor.script, descriptor.styles, descriptor.template
+      // ts/js files has descriptor.source only but the work for us as a script block
+      if (file.endsWith('.ts') || file.endsWith('.js')) {
+        descriptor.script = { content } as SFCScriptBlock
+      }
       checkRules(descriptor, filePath, _apply)
     }
   }

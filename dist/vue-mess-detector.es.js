@@ -1897,25 +1897,25 @@ const xo = [
   "src",
   "components",
   "layouts",
-  "pages"
-  /* 'server',
-  'composables',
-  'store',
-  'utils',
-  'plugins',
-  'middleware', */
+  "pages",
+  "server",
+  "composables",
+  "store",
+  "utils",
+  "plugins",
+  "middleware"
 ], Gt = async (e) => {
   const t = await xe.readdir(e);
   for (const n of t) {
     const s = ht.join(e, n);
     if ((await xe.stat(s)).isDirectory())
       xo.some((a) => s.includes(`${a}`)) && await Gt(s);
-    else if (n.endsWith(".vue")) {
+    else if (n.endsWith(".vue") || n.endsWith(".ts") || n.endsWith(".js")) {
       lt++;
       const a = await xe.readFile(s, "utf-8");
       ut += a.split(/\r\n|\r|\n/).length;
       const { descriptor: u } = dn(a);
-      So(u, s, Vt);
+      (n.endsWith(".ts") || n.endsWith(".js")) && (u.script = { content: a }), So(u, s, Vt);
     }
   }
 }, Oo = async (e, t = [], n) => {
