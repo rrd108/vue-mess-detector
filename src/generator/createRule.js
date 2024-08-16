@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import inquirer from 'inquirer';  // it cause some error when this file is ts
 import fs from 'fs/promises';
 
 const questions = [
@@ -18,7 +18,7 @@ const questions = [
 const createFiles = async (answers) => {
   const filePath = `./src/rules/${answers.ruleset}/${answers.name}.ts`;
   let fileContent = await fs.readFile('./src/generator/ruleSkeleton.txt', 'utf8');
- fileContent = fileContent.replace(/_RULENAME_/g, answers.name.charAt(0).toUpperCase()+ answers.name.slice(1));
+ fileContent = fileContent.replace(/_RULENAME_/g, answers.name.charAt(0).toUpperCase()+ answers.name.slice(1)).replace(/_RULESET_/g, answers.ruleset);
   
 
   await fs.writeFile(filePath, fileContent, 'utf8');
