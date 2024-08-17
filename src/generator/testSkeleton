@@ -18,7 +18,7 @@ describe('check_RULENAME_', () => {
     expect(report_RULENAME_()).toStrictEqual([])
   })
 
-  it('should report files with c/* TODO add test description */', () => {
+  it('should report files with /* TODO add test description */', () => {
     const script = {
         content: ` // TODO add code content to test`,
     } as SFCScriptBlock
