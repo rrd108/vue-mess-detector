@@ -1,4 +1,4 @@
-# Implicit parent-child communication
+# Implicit Parent-child Communication
 
 Checks if props and events are used for parent-child component communication, instead of this.$parent or mutating props. &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication

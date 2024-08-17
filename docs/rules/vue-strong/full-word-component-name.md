@@ -1,4 +1,4 @@
-# Full-word component names
+# Full-word Component Names
 
 Checks if the component name is a full word. As this is not easy to detect programatically we jsu check if the name has less then 3 consonants &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names

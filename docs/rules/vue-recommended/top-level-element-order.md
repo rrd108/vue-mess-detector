@@ -1,4 +1,4 @@
-# Single-file component top-level element order
+# Single-file Component Top-level Element Order
 
 Checks if the component always uses `script`, `template`, and `style` tags' order consistently. &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order

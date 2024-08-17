@@ -1,4 +1,4 @@
-# Element attribute order
+# Element Attribute Order
 
 Checks if the component always uses `is`, `v-for`, `v-if`, `v-else-if`, `v-else`, `v-show`, `v-cloak`, `v-pre`, `v-once`, `id`, `ref`, `key`, `v-model`, `v-on`, `v-html`, `v-text` order consistently. &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order
