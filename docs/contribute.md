@@ -44,9 +44,9 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 
 7. **Add the new rule to the analizer**
 
-   - Add your new `ruleName` entry to function call to `src/rules/rules.ts`
-   - Add your new `checkRuleName` function call to `src/rulesCheck.ts`
-   - Add your new `reportRuleName` function call to `src/rulesReport.ts`
+   - Add your new `ruleName` entry to function call to `src/rules/rules.ts`.
+   - Add your new `checkRuleName` function call to `src/rulesCheck.ts`. Script rules are applicable to ts, js and vue files, while template and style rules are applicable to vue files only.
+   - Add your new `reportRuleName` function call to `src/rulesReport.ts`.
    - Run the missing rule check to ensure you have added all the necessary entries:
      ```bash
      yarn rules:missing
