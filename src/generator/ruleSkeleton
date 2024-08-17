@@ -37,7 +37,7 @@ const report_RULENAME_ = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}_RULESET_ ~ _RULENAME_${TEXT_RESET}`,
+        rule: `${TEXT_INFO}_RULESET_ ~ _HUMANRULENAME_${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
         message: `${result.message} 🚨`,
       })

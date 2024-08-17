@@ -27,7 +27,7 @@ describe('check_RULENAME_', () => {
     expect(report_RULENAME_().length).toBe(1)
     expect(report_RULENAME_()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}_RULESET_ ~ /* TODO Human readbale rule name */${TEXT_RESET}`,
+      rule: `${TEXT_INFO}_RULESET_ ~ _HUMANRULENAME_${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
       message: `line #/* TODO line number from your content above*/ ${BG_WARN}/* TODO message from the rule file */${BG_RESET} 🚨`,
     }])

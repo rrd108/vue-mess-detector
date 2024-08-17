@@ -18,10 +18,12 @@ const questions = [
 
 const createFiles = async (answers) => {
   const pascalCaseRulename = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
+  const humanReadableRulename = answers.name.replace(/([A-Z])/g, ' $1').trim();
   const filePath = `./src/rules/${answers.ruleset}/${answers.name}.ts`;
   let fileContent = await fs.readFile('./src/generator/ruleSkeleton', 'utf8');
-  fileContent = fileContent.replace(/_RULENAME_/g, pascalCaseRulename).replace(/_RULESET_/g, answers.ruleset);
-
+  fileContent = fileContent.replace(/_RULENAME_/g, pascalCaseRulename)
+  .replace(/_HUMANRULENAME_/g, humanReadableRulename)
+  .replace(/_RULESET_/g, answers.ruleset);
 
   await fs.writeFile(filePath, fileContent, 'utf8');
   console.log(`1️⃣  File ${filePath} generated!`);
@@ -31,6 +33,7 @@ const createFiles = async (answers) => {
   testContent = testContent
     .replace(/_RULENAME_CAMELCASE_/g, answers.name)
     .replace(/_RULENAME_/g, pascalCaseRulename)
+    .replace(/_HUMANRULENAME_/g, humanReadableRulename)
     .replace(/_RULESET_/g, answers.ruleset);
   await fs.writeFile(testPath, testContent, 'utf8');
   console.log(`2️⃣  Test ${testPath} generated!`);
