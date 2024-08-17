@@ -1,4 +1,6 @@
+export type Flag = 'groupBy' | 'orderBy'
 export type GroupBy = 'rule' | 'file'
+export type OrderBy = 'asc' | 'desc'
 
 export interface Offense {
   file: string
