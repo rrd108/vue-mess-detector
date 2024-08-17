@@ -25,7 +25,7 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
-import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
+import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, ReportFunction } from './types'
 import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
@@ -34,7 +34,7 @@ import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSel
 import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { BG_ERR } from './rules/asceeCodes'
 
-export const reportRules = (groupBy: GroupBy) => {
+export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
   const offensesGrouped: OffensesGrouped = {}
 
   // Helper function to add offenses
@@ -98,10 +98,48 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
 
-  const health: { file: string, errors: number, warnings: number }[] = []
+  const health: Health[] = []
+
+  // Sort offenses grouped by key based on the `orderBy` parameter
+  const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
+    const countA = offensesGrouped[a].length
+    const countB = offensesGrouped[b].length
+
+    if (orderBy === 'desc') {
+      return countB - countA
+    }
+
+    return countA - countB
+  })
 
   // Output the report grouped by file
-  Object.keys(offensesGrouped).forEach((key) => {
+  // Object.keys(offensesGrouped).forEach((key) => {
+  //   console.log(`\n - ${key}`)
+  //   offensesGrouped[key].forEach((offense) => {
+  //     const isError = offense.message.includes(BG_ERR)
+  //     // if health already has the file, push the error
+  //     if (health.some(h => h.file === offense.file)) {
+  //       const foundHealth = health.find(h => h.file === offense.file)
+  //       if (foundHealth) {
+  //         isError ? foundHealth.errors++ : foundHealth.warnings++
+  //       }
+  //     } else {
+  //       health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
+  //     }
+
+  //     if (groupBy === 'file') {
+  //       console.log(`   Rule: ${offense.rule}`)
+  //     }
+  //     else {
+  //       console.log(`   File: ${offense.file}`)
+  //     }
+  //     console.log(`   Description: ${offense.description}`)
+  //     console.log(`   Message: ${offense.message || '🚨'}\n`)
+  //   })
+  // })
+
+  // Output the report grouped by the sorted keys
+  sortedKeys.forEach((key) => {
     console.log(`\n - ${key}`)
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
@@ -117,8 +155,7 @@ export const reportRules = (groupBy: GroupBy) => {
 
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
-      }
-      else {
+      } else {
         console.log(`   File: ${offense.file}`)
       }
       console.log(`   Description: ${offense.description}`)

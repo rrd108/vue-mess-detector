@@ -40,10 +40,10 @@ yargs(hideBin(process.argv))
           default: 'rule',
           group: 'Group Results:',
         })
-        .option('sort', {
-          alias: 's',
-          describe: 'Sort results at the output',
-          choices: ['problematic-file', 'check-runs'],
+        .option('order', {
+          alias: 'o',
+          describe: 'Order results at the output',
+          choices: ['asc', 'desc'],
           coerce: value => customOptionType<OrderBy>(value, 'orderBy'),
           default: 'asc',
           group: 'Order Results:'
@@ -67,7 +67,7 @@ yargs(hideBin(process.argv))
       if (argv.ignore) {
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
-      analyze(argv.path as string, rules, argv.group)
+      analyze({ dir: argv.path as string, apply: rules, groupBy: argv.group, orderBy: argv.order })
     },
   )
   .help().argv
