@@ -9,6 +9,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [HTML links](./html-link.md)
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
+- [Nested Ternary](./nested-ternary.md)
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)
 - [Props Drilling](./props-drilling.md)

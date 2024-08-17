@@ -1,7 +1,19 @@
 export const RULES = {
-  'vue-caution': ['elementSelectorsWithScoped', 'implicitParentChildCommunication'],
-  'vue-essential': ['globalStyle', 'simpleProp', 'singleNameComponent', 'vforNoKey', 'vifWithVfor'],
-  'vue-recommended': ['elementAttributeOrder', 'topLevelElementOrder'],
+  'vue-caution': [
+    'elementSelectorsWithScoped',
+    'implicitParentChildCommunication'
+  ],
+  'vue-essential': [
+    'globalStyle',
+    'simpleProp',
+    'singleNameComponent',
+    'vforNoKey',
+    'vifWithVfor'
+  ],
+  'vue-recommended': [
+    'elementAttributeOrder',
+    'topLevelElementOrder'
+  ],
   'vue-strong': [
     'componentFilenameCasing',
     'componentFiles',
@@ -12,7 +24,7 @@ export const RULES = {
     'quotedAttributeValues',
     'selfClosingComponents',
     'simpleComputed',
-    'templateSimpleExpression',
+    'templateSimpleExpression'
   ],
   'rrd': [
     'cyclomaticComplexity',
@@ -22,14 +34,15 @@ export const RULES = {
     'htmlLink',
     'ifWithoutCurlyBraces',
     'magicNumbers',
+    'nestedTernary',
     'parameterCount',
     'plainScript',
     'propsDrilling',
     'scriptLength',
     'shortVariableName',
-    'tooManyProps',
-  ],
-}
+    'tooManyProps'
+  ]
+};
 export type RuleType = typeof RULES
 
 export const RULESETS = Object.keys(RULES) as Array<keyof typeof RULES>

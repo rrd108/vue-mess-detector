@@ -72,6 +72,7 @@ export default defineConfig({
                 { text: 'HTML links', link: '/rules/rrd/html-link' },
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
+                { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
                 { text: 'Plain Script', link: '/rules/rrd/plain-script' },
                 { text: 'Props Drilling', link: '/rules/rrd/props-drilling' },
