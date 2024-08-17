@@ -32,6 +32,7 @@ import { checkHtmlLink } from './rules/rrd/htmlLink'
 import { checkMagicNumbers } from './rules/rrd/magicNumbers'
 import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { checkIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
+import { checkNestedTernary } from './rules/rrd/nestedTernary'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -53,7 +54,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
 
   if (apply.includes('vue-strong')) {
     checkSimpleComputed(script, filePath)
-    
+
     if (isVueFile) {
       checkComponentFiles(script, filePath)
       checkPropNameCasing(script, filePath)
@@ -69,16 +70,16 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
 
   if (apply.includes('vue-recommended')) {
     // no rule for ts/js files
-    
+
     if (isVueFile) {
       checkTopLevelElementOrder(descriptor.source, filePath)
       checkElementAttributeOrder(descriptor.template, filePath)
     }
   }
-  
+
   if (apply.includes('vue-caution')) {
     // no rule for ts/js files
-    
+
     if (isVueFile) {
       checkImplicitParentChildCommunication(script, filePath)
       checkElementSelectorsWithScoped(descriptor.styles, filePath)
@@ -92,6 +93,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkFunctionSize(script, filePath)
     checkIfWithoutCurlyBraces(script, filePath)
     checkMagicNumbers(script, filePath)
+    checkNestedTernary(script, filePath)
     checkParameterCount(script, filePath)
     checkPropsDrilling(script, filePath)
     checkScriptLength(script, filePath)

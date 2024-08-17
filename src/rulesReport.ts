@@ -31,6 +31,7 @@ import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
+import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { BG_ERR } from './rules/asceeCodes'
 
 export const reportRules = (groupBy: GroupBy) => {
@@ -89,6 +90,7 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportHtmlLink)
   processOffenses(reportIfWithoutCurlyBraces)
   processOffenses(reportMagicNumbers)
+  processOffenses(reportNestedTernary)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
