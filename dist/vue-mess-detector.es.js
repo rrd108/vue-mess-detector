@@ -1892,7 +1892,7 @@ const Ks = (e, t) => {
   const s = e.scriptSetup || e.script;
   console.log(`Analyzing ${t}...`);
   const o = t.endsWith(".vue");
-  n.includes("vue-essential") && (fs(s, t), o && (cs(t), ls(e.styles, t), ds(e.template, t), ps(e.template, t))), n.includes("vue-strong") && (Es(s, t), ro(s, t), so(s, t), o && ($s(t), Os(e, t), As(e.template, t), Ss(e, t), js(e, t), Ps(t), yo(e.template, t))), n.includes("vue-recommended") && o && (Ws(e.source, t), Is(e.template, t)), n.includes("vue-caution") && (co(s, t), o && vo(e.styles, t)), n.includes("rrd") && (rs(s, t), uo(s, t), ts(s, t), Ks(s, t), mo(s, t), $o(s, t), Xs(s, t), Zs(s, t), Vn(s, t), eo(s, t), ks(s, t), o && (qn(e.script, t), ho(e.template, t)));
+  n.includes("vue-essential") && (fs(s, t), o && (cs(t), ls(e.styles, t), ds(e.template, t), ps(e.template, t))), n.includes("vue-strong") && (so(s, t), o && (ro(s, t), Es(s, t), $s(t), Os(e, t), As(e.template, t), Ss(e, t), js(e, t), Ps(t), yo(e.template, t))), n.includes("vue-recommended") && o && (Ws(e.source, t), Is(e.template, t)), n.includes("vue-caution") && o && (co(s, t), vo(e.styles, t)), n.includes("rrd") && (rs(s, t), uo(s, t), ts(s, t), Ks(s, t), mo(s, t), $o(s, t), Xs(s, t), Zs(s, t), Vn(s, t), eo(s, t), ks(s, t), o && (qn(e.script, t), ho(e.template, t)));
 };
 let lt = 0, ut = 0, Vt = [];
 const xo = [
@@ -1906,12 +1906,12 @@ const xo = [
   "utils",
   "plugins",
   "middleware"
-], Gt = async (e) => {
+], Oo = ["node_modules", ".git", ".nuxt", "dist", "coverage"], Gt = async (e) => {
   const t = await xe.readdir(e);
   for (const n of t) {
     const s = ht.join(e, n);
     if ((await xe.stat(s)).isDirectory())
-      xo.some((a) => s.includes(`${a}`)) && await Gt(s);
+      !Oo.some((a) => s.includes(a)) && xo.some((a) => s.includes(a)) && await Gt(s);
     else if (n.endsWith(".vue") || n.endsWith(".ts") || n.endsWith(".js")) {
       lt++;
       const a = await xe.readFile(s, "utf-8");
@@ -1920,7 +1920,7 @@ const xo = [
       (n.endsWith(".ts") || n.endsWith(".js")) && (u.script = { content: a }), So(u, s, Vt);
     }
   }
-}, Oo = async (e, t = [], n) => {
+}, _o = async (e, t = [], n) => {
   console.log(`
 
 ${H}Analyzing Vue files in ${e}${y}`);
@@ -1953,7 +1953,7 @@ sn(bn(process.argv)).command(
     alias: "g",
     describe: "Group results at the output",
     choices: ["rule", "file"],
-    coerce: (t) => _o(t),
+    coerce: (t) => No(t),
     default: "rule",
     group: "Group Results:"
   }).check((t) => (t.ignore && t.apply && (console.error(
@@ -1964,7 +1964,7 @@ ${z}Cannot use both --ignore and --apply options together.${y}.
   ), process.exit(1)), !0)),
   (e) => {
     let t = [...te];
-    e.apply && (t = e.apply), e.ignore && (t = te.filter((n) => !e.ignore.includes(n))), Oo(e.path, t, e.group);
+    e.apply && (t = e.apply), e.ignore && (t = te.filter((n) => !e.ignore.includes(n))), _o(e.path, t, e.group);
   }
 ).help().argv;
 function Nt(e) {
@@ -1981,6 +1981,6 @@ ${A}Allowed values are: ${[...te].join(", ")}${d}
     ), process.exit(1)), n;
   };
 }
-function _o(e) {
+function No(e) {
   return ["rule", "file"].includes(e) || process.exit(1), e;
 }

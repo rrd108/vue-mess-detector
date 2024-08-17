@@ -11,18 +11,7 @@ let filesCount = 0
 let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
-const dirs2Check = [
-  'src',
-  'components',
-  'layouts',
-  'pages',
-  'server',
-  'composables',
-  'store',
-  'utils',
-  'plugins',
-  'middleware',
-]
+const skipDirs = ['node_modules', '.git', '.nuxt', 'dist', 'coverage']
 
 const walkAsync = async (dir: string) => {
   const files = await fs.readdir(dir)
@@ -30,7 +19,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, file)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (dirs2Check.some(dir => filePath.includes(`${dir}`))) {
+      if (!skipDirs.some(dir => filePath.includes(dir))) {
         await walkAsync(filePath)
       }
     }
