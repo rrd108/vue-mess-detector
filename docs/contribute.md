@@ -26,6 +26,13 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
    - Familiarize yourself with the details related to the selected issue.
    - If you have any questions, feel free to ask in the issue discussion or open a new issue.
 
+::: tip
+You can use the rule generator to create a skeleton rule file and a skeleton test file. Run the following command and follow the instructions:
+```bash
+yarn rules:generate
+```
+:::
+
 5. **Create Your Rule**
 
    - Create a new file for your rule at `src/rules/RULESET/`, following the naming convention `ruleName.ts`.
@@ -41,13 +48,6 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
      ```bash
      yarn test
      ```
-
-::: tip
-You can use the rule generator to create a skeleton rule file and a skeleton test file. Run the following command and follow the instructions:
-```bash
-yarn rules:generate
-```
-:::
 
 7. **Add the new rule to the analizer**
 
