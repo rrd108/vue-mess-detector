@@ -16,18 +16,20 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
   if (!script) {
     return
   }
-  const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, char, whitespace, ':', whitespace, oneOrMore(char))
+  const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, oneOrMore(char), whitespace, ':', whitespace, oneOrMore(char))
 
   const matches = script.content.match(regex)
 
   // TODO add your rule logic, constants, etc here
 
   matches?.forEach((match) => {
-    const lineNumber = getLineNumber(script.content, match)
-    results.push({
-      filePath,
-      message: `line #${lineNumber} ${BG_WARN}/* TODO add your message here*/ ${BG_RESET}`,
-    })
+    if (match.split('?').length - 1 > 1) {
+      const lineNumber = getLineNumber(script.content, match)
+      results.push({
+        filePath,
+        message: `line #${lineNumber} has ${BG_WARN}nested ternary${BG_RESET}`,
+      })
+    }
   })
 }
 

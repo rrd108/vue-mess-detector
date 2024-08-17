@@ -19,9 +19,10 @@ describe('checkNestedTernary', () => {
     expect(reportNestedTernary()).toStrictEqual([])
   })
 
-  it.skip('should report files with nested ternary', () => {
+  it('should report files with nested ternary', () => {
     const script = {
-        content: `const isStrong = pass.length > 12 ? pass.includes('%') ? pass.includes('$') : false : false`,
+        content: `const pass = 'Gauranga%)'
+        const isStrong = pass.length > 12 ? pass.includes('%') ? pass.includes('$') : false : false`,
     } as SFCScriptBlock
     const fileName = 'nestedTernary-problem.vue'
     checkNestedTernary(script, fileName)
@@ -30,7 +31,7 @@ describe('checkNestedTernary', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ nested Ternary${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
-      message: `line #/* TODO line number from your content above*/ ${BG_WARN}/* TODO message from the rule file */${BG_RESET} 🚨`,
+      message: `line #2 has ${BG_WARN}nested ternary${BG_RESET} 🚨`,
     }])
   })
 })
