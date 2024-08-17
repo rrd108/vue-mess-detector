@@ -142,4 +142,4 @@ Some features of Vue exist to accommodate rare edge cases or smoother migrations
 
 ### 💻 rrd Ruleset ~ [rrd](/rules/rrd/index)
 
-Opinionated rules that enforce a specific style of coding. These rules are not recommended for general use, but can be useful in specific cases.
+A collection of rules that balances widely accepted best practices with more specific, opinionated guidelines, offering a comprehensive approach to code quality, allowing developers to choose the rules that best align with their project's style and goals.
