@@ -1,4 +1,4 @@
-## Nested Ternary
+# Nested Ternary
 
 Checks if the script has nested ternaries.
 

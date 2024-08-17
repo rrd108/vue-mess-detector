@@ -1,4 +1,4 @@
-## Too many props
+# Too Many Props
 
 Checks if the component got more then 5 props.
 
