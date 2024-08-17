@@ -30,6 +30,7 @@
     "lint:fix": "eslint . --fix",
     "docs:dev": "vitepress dev docs",
     "docs:missing": "node ./docs/missingDocs.js",
+    "rules:generate": "node ./src/generator/createRule.js",
     "rules:missing": "node ./src/missingRules.js",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
