@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse, SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from './rules/asceeCodes'
+import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
@@ -19,7 +19,7 @@ let filesCount = 0
 let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
-const skipDirs = ['node_modules', '.git', '.nuxt', 'dist', 'coverage']
+const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules',  '.nuxt',  ]
 
 const walkAsync = async (dir: string) => {
   const files = await fs.readdir(dir)
@@ -56,7 +56,7 @@ export const analyze = async ({ dir, apply = [], groupBy, orderBy }: AnalyzePara
 
   await walkAsync(dir)
 
-  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
+  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} files`)
 
   const health = reportRules(groupBy, orderBy)
   const { errors, warnings } = calculateCodeHealth(health, linesCount, filesCount)

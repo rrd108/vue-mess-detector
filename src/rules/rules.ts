@@ -40,7 +40,8 @@ export const RULES = {
     'propsDrilling',
     'scriptLength',
     'shortVariableName',
-    'tooManyProps'
+    'tooManyProps',
+    'vForWithIndexKey'
   ]
 };
 export type RuleType = typeof RULES

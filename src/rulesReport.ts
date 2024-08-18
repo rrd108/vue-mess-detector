@@ -32,6 +32,7 @@ import { reportMagicNumbers } from './rules/rrd/magicNumbers'
 import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 import { reportNestedTernary } from './rules/rrd/nestedTernary'
+import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
@@ -97,6 +98,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
   processOffenses(reportScriptLength)
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
+  processOffenses(reportVForWithIndexKey)
 
   const health: Health[] = []
 

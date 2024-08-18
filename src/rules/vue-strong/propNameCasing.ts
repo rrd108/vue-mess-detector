@@ -1,14 +1,10 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { createRegExp, letter, oneOrMore } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
-const camelCasePattern = createRegExp(
-  oneOrMore(letter.lowercase).at.lineStart(),
-  oneOrMore(letter.uppercase, letter.lowercase.times.any().grouped()).at.lineEnd(),
-)
+const camelCasePattern = /^[a-z]+([A-Z][a-z]*)*$/
 
 const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {

@@ -13,6 +13,7 @@ A clear and concise description of what the bug is.
 Steps to reproduce the behavior:
 
 1. What is the exact code you are analyzing?
+
 2. What is the output you are getting?
 
 **Expected behavior**
