@@ -33,6 +33,7 @@ import { checkMagicNumbers } from './rules/rrd/magicNumbers'
 import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeElements'
 import { checkIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { checkNestedTernary } from './rules/rrd/nestedTernary'
+import { checkVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -101,8 +102,9 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkTooManyProps(script, filePath)
 
     if (isVueFile) {
-      checkPlainScript(descriptor.script, filePath)
       checkHtmlLink(descriptor.template, filePath)
+      checkPlainScript(descriptor.script, filePath)
+      checkVForWithIndexKey(descriptor.template, filePath)
     }
   }
 }
