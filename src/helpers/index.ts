@@ -1,5 +1,6 @@
 import { BG_ERR, BG_RESET, BG_WARN, BG_INFO, BG_OK } from "../rules/asceeCodes";
 import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy } from "../types";
+import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from "./constants";
 
 /* Helper function to count non duplicated objects (using `field` to filter) */
 export function getUniqueFilenameCount<T>(arr: T[], field: Partial<keyof T>): number {
@@ -28,6 +29,9 @@ export function customOptionType<T>(value: T, flag: Flag) {
   const validOptions = flagOptions[flag];
 
   if (!validOptions.includes(value as unknown as GroupBy & OrderBy)) {
+    console.error(
+      `\nInvalid option "${value}" provided for flag "${flag}". Valid options are: ${validOptions.join(', ')}.\n`,
+    )
     // eslint-disable-next-line node/prefer-global/process
     process.exit(1)
   }
@@ -40,18 +44,18 @@ export function calculateCodeHealth(health: Health[], linesCount: number, filesC
 
   console.log(`Found ${BG_ERR}${Intl.NumberFormat('en-US').format(errors)} errors${BG_RESET}, and ${BG_WARN}${Intl.NumberFormat('en-US').format(warnings)} warnings${BG_RESET}, ${BG_INFO}${Intl.NumberFormat('en-US').format(linesCount)} lines${BG_RESET} of code in ${BG_INFO}${Intl.NumberFormat('en-US').format(filesCount)} files${BG_RESET}`)
 
-  const codeHealth = Math.ceil((1 - (errors * 1.5 + warnings) / linesCount) * 100)
+  const codeHealth = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
 
-  if (codeHealth < 75) {
+  if (codeHealth < LOW_HEALTH_THRESHOLD) {
     console.log(`${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}`)
   }
-  if (codeHealth >= 75 && codeHealth < 85) {
+  if (codeHealth >= LOW_HEALTH_THRESHOLD && codeHealth < MEDIUM_HEALTH_THRESHOLD) {
     console.log(`${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}`)
   }
-  if (codeHealth >= 85 && codeHealth < 95) {
+  if (codeHealth >= MEDIUM_HEALTH_THRESHOLD && codeHealth < OK_HEALTH_THRESHOLD) {
     console.log(`${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}`)
   }
-  if (codeHealth >= 95) {
+  if (codeHealth >= OK_HEALTH_THRESHOLD) {
     console.log(`${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}`)
   }
 
