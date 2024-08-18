@@ -1,7 +1,7 @@
 {
   "name": "vue-mess-detector",
   "type": "module",
-  "version": "0.34.0",
+  "version": "0.35.0",
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
   "description": "A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects",
   "author": "rrd",
