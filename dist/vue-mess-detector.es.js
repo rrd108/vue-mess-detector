@@ -4,7 +4,7 @@ import { normalize as ln, resolve as oe, dirname as Re, basename as un, extname 
 import { readFileSync as mt, statSync as Lt, readdirSync as mn, writeFile as pn } from "fs";
 import { notStrictEqual as dn, strictEqual as gn } from "assert";
 import { fileURLToPath as $n } from "url";
-import Oe from "node:fs/promises";
+import Se from "node:fs/promises";
 import pt from "node:path";
 import { parse as bn } from "@vue/compiler-sfc";
 class ae extends Error {
@@ -134,7 +134,7 @@ class xn {
       "strip-aliased": !1,
       "strip-dashed": !1,
       "unknown-options-as-args": !1
-    }, s.configuration), $ = Object.assign(/* @__PURE__ */ Object.create(null), s.default), v = s.configObjects || [], S = s.envPrefix, P = f["populate--"], T = P ? "--" : "_", ne = /* @__PURE__ */ Object.create(null), dt = /* @__PURE__ */ Object.create(null), ee = s.__ || Y.format, h = {
+    }, s.configuration), $ = Object.assign(/* @__PURE__ */ Object.create(null), s.default), v = s.configObjects || [], O = s.envPrefix, P = f["populate--"], T = P ? "--" : "_", ne = /* @__PURE__ */ Object.create(null), dt = /* @__PURE__ */ Object.create(null), ee = s.__ || Y.format, h = {
       aliases: /* @__PURE__ */ Object.create(null),
       arrays: /* @__PURE__ */ Object.create(null),
       bools: /* @__PURE__ */ Object.create(null),
@@ -312,11 +312,11 @@ class xn {
       h.aliases[r] && h.aliases[r].length || (h.aliases[r] = [a], ne[a] = !0), h.aliases[a] && h.aliases[a].length || $t(a, r);
     }
     function xe(r, a, m) {
-      m && (a = On(a)), (w(r, h.bools) || w(r, h.counts)) && typeof a == "string" && (a = a === "true");
+      m && (a = Sn(a)), (w(r, h.bools) || w(r, h.counts)) && typeof a == "string" && (a = a === "true");
       let u = Array.isArray(a) ? a.map(function(i) {
         return de(r, i);
       }) : de(r, a);
-      return w(r, h.counts) && (X(u) || typeof u == "boolean") && (u = Se()), w(r, h.normalize) && w(r, h.arrays) && (Array.isArray(a) ? u = a.map((i) => Y.normalize(i)) : u = Y.normalize(a)), u;
+      return w(r, h.counts) && (X(u) || typeof u == "boolean") && (u = Oe()), w(r, h.normalize) && w(r, h.arrays) && (Array.isArray(a) ? u = a.map((i) => Y.normalize(i)) : u = Y.normalize(a)), u;
     }
     function de(r, a) {
       return !f["parse-positional-numbers"] && r === "_" || !w(r, h.strings) && !w(r, h.bools) && !Array.isArray(a) && (Wt(a) && f["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${a}`))) || !X(a) && w(r, h.numbers)) && (a = Number(a)), a;
@@ -359,9 +359,9 @@ class xn {
       });
     }
     function bt(r, a) {
-      if (typeof S > "u")
+      if (typeof O > "u")
         return;
-      const m = typeof S == "string" ? S : "", u = Y.env();
+      const m = typeof O == "string" ? O : "", u = Y.env();
       Object.keys(u).forEach(function(i) {
         if (m === "" || i.lastIndexOf(m, 0) === 0) {
           const g = i.split("__").map(function(p, b) {
@@ -413,7 +413,7 @@ class xn {
       });
       const i = wt(a[a.length - 1]), g = w(a.join("."), h.arrays), p = Array.isArray(m);
       let b = f["duplicate-arguments-array"];
-      !b && w(i, h.nargs) && (b = !0, (!X(u[i]) && h.nargs[i] === 1 || Array.isArray(u[i]) && u[i].length === h.nargs[i]) && (u[i] = void 0)), m === Se() ? u[i] = Se(u[i]) : Array.isArray(u[i]) ? b && g && p ? u[i] = f["flatten-duplicate-arrays"] ? u[i].concat(m) : (Array.isArray(u[i][0]) ? u[i] : [u[i]]).concat([m]) : !b && !!g == !!p ? u[i] = m : u[i] = u[i].concat([m]) : u[i] === void 0 && g ? u[i] = p ? m : [m] : b && !(u[i] === void 0 || w(i, h.counts) || w(i, h.bools)) ? u[i] = [u[i], m] : u[i] = m;
+      !b && w(i, h.nargs) && (b = !0, (!X(u[i]) && h.nargs[i] === 1 || Array.isArray(u[i]) && u[i].length === h.nargs[i]) && (u[i] = void 0)), m === Oe() ? u[i] = Oe(u[i]) : Array.isArray(u[i]) ? b && g && p ? u[i] = f["flatten-duplicate-arrays"] ? u[i].concat(m) : (Array.isArray(u[i][0]) ? u[i] : [u[i]]).concat([m]) : !b && !!g == !!p ? u[i] = m : u[i] = u[i].concat([m]) : u[i] === void 0 && g ? u[i] = p ? m : [m] : b && !(u[i] === void 0 || w(i, h.counts) || w(i, h.bools)) ? u[i] = [u[i], m] : u[i] = m;
     }
     function Jt(...r) {
       r.forEach(function(a) {
@@ -528,13 +528,13 @@ function Cn(e) {
     c !== void 0 && typeof c == "string" && (n[c] = o);
   }), n;
 }
-function Se(e) {
+function Oe(e) {
   return e !== void 0 ? e + 1 : 1;
 }
 function wt(e) {
   return e === "__proto__" ? "___proto___" : e;
 }
-function On(e) {
+function Sn(e) {
   return typeof e == "string" && (e[0] === "'" || e[0] === '"') && e[e.length - 1] === e[0] ? e.substring(1, e.length - 1) : e;
 }
 /**
@@ -549,9 +549,9 @@ var _e, Ne, je;
 const vt = process && process.env && process.env.YARGS_MIN_NODE_VERSION ? Number(process.env.YARGS_MIN_NODE_VERSION) : 12, At = (Ne = (_e = process == null ? void 0 : process.versions) === null || _e === void 0 ? void 0 : _e.node) !== null && Ne !== void 0 ? Ne : (je = process == null ? void 0 : process.version) === null || je === void 0 ? void 0 : je.slice(1);
 if (At && Number(At.match(/^([^.]+)/)[1]) < vt)
   throw Error(`yargs parser supports a minimum Node.js version of ${vt}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
-const Sn = process ? process.env : {}, It = new xn({
+const On = process ? process.env : {}, It = new xn({
   cwd: process.cwd,
-  env: () => Sn,
+  env: () => On,
   format: Ft,
   normalize: ln,
   resolve: oe,
@@ -634,13 +634,13 @@ class Rn {
       let c = "";
       s.forEach((l, f) => {
         const { width: $ } = t[f], v = this.negatePadding(t[f]);
-        let S = l;
-        if (v > I.stringWidth(l) && (S += " ".repeat(v - I.stringWidth(l))), t[f].align && t[f].align !== "left" && this.wrap) {
+        let O = l;
+        if (v > I.stringWidth(l) && (O += " ".repeat(v - I.stringWidth(l))), t[f].align && t[f].align !== "left" && this.wrap) {
           const T = _n[t[f].align];
-          S = T(S, v), I.stringWidth(S) < v && (S += " ".repeat(($ || 0) - I.stringWidth(S) - 1));
+          O = T(O, v), I.stringWidth(O) < v && (O += " ".repeat(($ || 0) - I.stringWidth(O) - 1));
         }
         const P = t[f].padding || [0, 0, 0, 0];
-        P[be] && (c += " ".repeat(P[be])), c += xt(t[f], S, "| "), c += S, c += xt(t[f], S, " |"), P[$e] && (c += " ".repeat(P[$e])), o === 0 && n.length > 0 && (c = this.renderInline(c, n[n.length - 1]));
+        P[be] && (c += " ".repeat(P[be])), c += xt(t[f], O, "| "), c += O, c += xt(t[f], O, " |"), P[$e] && (c += " ".repeat(P[$e])), o === 0 && n.length > 0 && (c = this.renderInline(c, n[n.length - 1]));
       }), n.push({
         text: c.replace(/ +$/, ""),
         span: t.span
@@ -662,8 +662,8 @@ class Rn {
 `), c.border && (o.unshift("." + "-".repeat(this.negatePadding(c) + 2) + "."), o.push("'" + "-".repeat(this.negatePadding(c) + 2) + "'")), c.padding && (o.unshift(...new Array(c.padding[Nn] || 0).fill("")), o.push(...new Array(c.padding[jn] || 0).fill(""))), o.forEach((f, $) => {
         n[$] || n.push([]);
         const v = n[$];
-        for (let S = 0; S < l; S++)
-          v[S] === void 0 && v.push("");
+        for (let O = 0; O < l; O++)
+          v[O] === void 0 && v.push("");
         v.push(f);
       });
     }), n;
@@ -865,7 +865,7 @@ dn, gn, an, Gn || process.cwd(), un, Re, fn, hn, oe, process.cwd, process.exit, 
   directory: oe(le, "../../../locales"),
   updateFiles: !1
 });
-const Q = "\x1B[44m", x = "\x1B[43m", V = "\x1B[41m", Ot = "\x1B[42m", y = "\x1B[0m", A = "\x1B[33m", C = "\x1B[36m", d = "\x1B[0m", Kn = {
+const Q = "\x1B[44m", x = "\x1B[43m", V = "\x1B[41m", St = "\x1B[42m", y = "\x1B[0m", A = "\x1B[33m", C = "\x1B[36m", d = "\x1B[0m", Kn = {
   "vue-caution": [
     "elementSelectorsWithScoped",
     "implicitParentChildCommunication"
@@ -1001,7 +1001,7 @@ function z(...e) {
     e.map((t) => typeof t == "string" ? t.replace(es, "\\$&") : t).join("")
   );
 }
-function O(...e) {
+function S(...e) {
   return E(`${J(z(...e))}+`);
 }
 const D = "i", F = "g", _ = (...e) => {
@@ -1025,7 +1025,7 @@ const D = "i", F = "g", _ = (...e) => {
 }, We = [], rs = 5, is = 10, cs = (e, t) => {
   if (!e)
     return;
-  const n = _(M, "if", M, [F, D]), s = _(M, "else", M, [F, D]), o = _(M, "for", M, [F, D]), c = _(M, "while", M, [F, D]), l = _(M, "case", M, [F, D]), f = e.content.match(n), $ = e.content.match(s), v = e.content.match(o), S = e.content.match(c), P = e.content.match(l), T = (f?.length || 0) + ($?.length || 0) + (v?.length || 0) + (S?.length || 0) + (P?.length || 0);
+  const n = _(M, "if", M, [F, D]), s = _(M, "else", M, [F, D]), o = _(M, "for", M, [F, D]), c = _(M, "while", M, [F, D]), l = _(M, "case", M, [F, D]), f = e.content.match(n), $ = e.content.match(s), v = e.content.match(o), O = e.content.match(c), P = e.content.match(l), T = (f?.length || 0) + ($?.length || 0) + (v?.length || 0) + (O?.length || 0) + (P?.length || 0);
   T > rs && We.push({ filePath: t, message: `${T > is ? V : x}(${T})${y}` });
 }, as = () => {
   const e = [];
@@ -1101,20 +1101,20 @@ const D = "i", F = "g", _ = (...e) => {
     return;
   const n = _(
     "<",
-    O(B(">")),
+    S(B(">")),
     " v-if",
-    O(B(">")),
+    S(B(">")),
     " v-for",
-    O(B(">")),
+    S(B(">")),
     ">",
     [F, D]
   ), s = _(
     "<",
-    O(B(">")),
+    S(B(">")),
     " v-for",
-    O(B(">")),
+    S(B(">")),
     " v-if",
-    O(B(">")),
+    S(B(">")),
     ">",
     [F, D]
   ), o = e.content.match(n), c = e.content.match(s);
@@ -1135,7 +1135,7 @@ const D = "i", F = "g", _ = (...e) => {
 }, ze = [], $s = (e, t) => {
   if (!e)
     return;
-  const n = _("<", O(B(">")), " v-for", O(B(">")), ">", [
+  const n = _("<", S(B(">")), " v-for", S(B(">")), ">", [
     F,
     D
   ]), s = e.content.match(n);
@@ -1196,7 +1196,7 @@ const D = "i", F = "g", _ = (...e) => {
       });
     }
   });
-}, Os = () => {
+}, Ss = () => {
   const e = [];
   return Ve.length > 0 && Ve.forEach((t) => {
     e.push({
@@ -1206,16 +1206,16 @@ const D = "i", F = "g", _ = (...e) => {
       message: `${t.message} 🚨`
     });
   }), e;
-}, Ge = [], Ss = (e, t) => {
+}, Ge = [], Os = (e, t) => {
   if (!e)
     return;
   const n = e.template, s = _(
     "<",
-    O(U),
-    Z(O(ue(` 	
+    S(U),
+    Z(S(ue(` 	
 \r`))),
-    O(B("/>")),
-    Z(O(ue(` 	
+    S(B("/>")),
+    Z(S(ue(` 	
 \r`))),
     Z("/"),
     ">",
@@ -1223,7 +1223,7 @@ const D = "i", F = "g", _ = (...e) => {
   ), o = n?.content.match(s);
   if (o === null)
     return;
-  const c = _(":", O(U), Z(" "), "=", Z(" "), B(`'"`), [
+  const c = _(":", S(U), Z(" "), "=", Z(" "), B(`'"`), [
     "g"
   ]);
   o?.forEach((l) => {
@@ -1250,11 +1250,11 @@ const D = "i", F = "g", _ = (...e) => {
     return;
   const n = e.template, s = _(
     "<",
-    O(kt.uppercase, U),
+    S(kt.uppercase, U),
     Z(Dt, zt),
-    Z(O(B(">"))),
+    Z(S(B(">"))),
     "></",
-    O(U),
+    S(U),
     ">",
     ["g"]
   ), o = n?.content?.match(s);
@@ -1273,14 +1273,14 @@ const D = "i", F = "g", _ = (...e) => {
       message: `${t.message} 🚨`
     });
   }), e;
-}, qe = [], St = [], Rs = ["v-slot", "v-bind", "v-on"], Fs = (e, t) => {
+}, qe = [], Ot = [], Rs = ["v-slot", "v-bind", "v-on"], Fs = (e, t) => {
   if (!e)
     return;
   const n = e.template;
   Rs.forEach((s) => {
     if (n?.content.includes(`${s}:`)) {
       const o = k(e.source, s);
-      qe.push({ filePath: t, message: `line #${o} ${x}${s}${y}` }), St.some((c) => c.filePath === t) || St.push({ filePath: t });
+      qe.push({ filePath: t, message: `line #${o} ${x}${s}${y}` }), Ot.some((c) => c.filePath === t) || Ot.push({ filePath: t });
     }
   });
 }, Ls = () => {
@@ -1295,7 +1295,7 @@ const D = "i", F = "g", _ = (...e) => {
   }), e;
 }, He = [], Ps = 3, Ts = (e) => {
   const t = _(
-    O(B("/")).grouped(),
+    S(B("/")).grouped(),
     z(".vue").at.lineEnd()
   ), n = e.match(t);
   if (n) {
@@ -1358,17 +1358,17 @@ const D = "i", F = "g", _ = (...e) => {
     const l = c[1], f = c[2];
     if (f) {
       const v = Array.from(f.matchAll(o), (P) => P[1]).filter((P) => _t.includes(P));
-      let S = -1;
+      let O = -1;
       for (const P of v) {
         const T = _t.indexOf(P);
-        if (T !== -1 && T < S) {
+        if (T !== -1 && T < O) {
           Ze.push({
             filePath: t,
             message: `tag has attributes out of order ${x}(${l})${y}`
           });
           break;
         }
-        S = T;
+        O = T;
       }
     }
   }
@@ -1385,7 +1385,7 @@ const D = "i", F = "g", _ = (...e) => {
 }, Xe = [], zs = 5, Ds = (e, t) => {
   if (!e)
     return;
-  const n = _("defineProps", Z("<"), Z("("), "{", O(ye), "}", ["g", "s"]), s = e.content.match(n);
+  const n = _("defineProps", Z("<"), Z("("), "{", S(ye), "}", ["g", "s"]), s = e.content.match(n);
   if (s?.length) {
     const o = s[0].split(",").length;
     o > zs && Xe.push({ filePath: t, message: `props found ${V}(${o})${y}` });
@@ -1496,23 +1496,23 @@ const Zs = (e, t) => {
     j.times.any(),
     "[",
     j.times.any(),
-    O(ue(`'"`), O(U), ue(`'"`), j.times.any(), Z(",", j.times.any())),
+    S(ue(`'"`), S(U), ue(`'"`), j.times.any(), Z(",", j.times.any())),
     "]",
     j.times.any(),
     ")",
     [F]
   ), s = _(
     "<",
-    O(U).grouped(),
+    S(U).grouped(),
     j,
     B(">").times.any(),
     ":",
-    O(U).grouped(),
+    S(U).grouped(),
     j.times.any(),
     "=",
     j.times.any(),
     '"props.',
-    O(U).grouped(),
+    S(U).grouped(),
     '"',
     [F]
   );
@@ -1605,10 +1605,10 @@ const Zs = (e, t) => {
   if (l) {
     const $ = l[1].split(".")[0], v = c ? c[1] : "";
     if (v.includes($)) {
-      const S = k(e.content.trim(), v);
+      const O = k(e.content.trim(), v);
       we.push({
         filePath: t,
-        message: `line #${S} ${x}(${$})${y}`
+        message: `line #${O} ${x}(${$})${y}`
       });
     }
   }
@@ -1875,10 +1875,10 @@ const Zs = (e, t) => {
       message: `${t.message} 🚨`
     });
   }), e;
-}, lt = [], Oo = (e, t) => {
+}, lt = [], So = (e, t) => {
   if (!e)
     return;
-  const n = _(O(ye), j, "?", j, O(ye), j, ":", j, O(ye));
+  const n = _(S(ye), j, "?", j, S(ye), j, ":", j, S(ye));
   e.content.match(n)?.forEach((o) => {
     if (o.split("?").length - 1 > 1) {
       const c = k(e.content, o);
@@ -1888,7 +1888,7 @@ const Zs = (e, t) => {
       });
     }
   });
-}, So = () => {
+}, Oo = () => {
   const e = [];
   return lt.length > 0 && lt.forEach((t) => {
     e.push({
@@ -1901,9 +1901,9 @@ const Zs = (e, t) => {
 }, ut = [], _o = (e, t) => {
   if (!e)
     return;
-  const n = _('v-for="(', j.times.any(), O(U).grouped(), j.times.any(), ",", j.times.any(), O(U).grouped(), j.times.any(), ")", O(j), "in", O(j), O(U).grouped(), [F]), s = _(':key="', j.times.any(), O(U).grouped(), j.times.any(), '"', [F]), o = [...e.content.matchAll(n)], c = [...e.content.matchAll(s)];
+  const n = _('v-for="(', j.times.any(), S(U).grouped(), j.times.any(), ",", j.times.any(), S(U).grouped(), j.times.any(), ")", S(j), "in", S(j), S(U).grouped(), [F]), s = _(':key="', j.times.any(), S(U).grouped(), j.times.any(), '"', [F]), o = [...e.content.matchAll(n)], c = [...e.content.matchAll(s)];
   o.forEach((l) => {
-    const [f, $, v, S] = l;
+    const [f, $, v, O] = l;
     c.forEach((P) => {
       const T = P[1];
       if (T === v) {
@@ -1927,14 +1927,14 @@ const Zs = (e, t) => {
   }), e;
 }, jo = (e) => {
   const t = {}, n = ({ file: c, rule: l, title: f, description: $, message: v }) => {
-    const S = e === "rule" ? l : c;
-    t[S] || (t[S] = []), t[S].push({ file: c, rule: l, title: f, description: $, message: v });
+    const O = e === "rule" ? l : c;
+    t[O] || (t[O] = []), t[O].push({ file: c, rule: l, title: f, description: $, message: v });
   }, s = (c) => {
     c().forEach((f) => {
       n(f);
     });
   };
-  s(us), s(ps), s(bs), s(gs), s(hs), s(Es), s(ao), s(Ls), s(Ws), s(vo), s(As), s(_s), s(js), s(io), s(Os), s(Ms), s(ks), s(uo), s(Co), s(as), s(mo), s(os), s(Xs), s(go), s(bo), s(Eo), s(So), s(Js), s(Zn), s(to), s(Hn), s(so), s(Us), s(No);
+  s(us), s(ps), s(bs), s(gs), s(hs), s(Es), s(ao), s(Ls), s(Ws), s(vo), s(As), s(_s), s(js), s(io), s(Ss), s(Ms), s(ks), s(uo), s(Co), s(as), s(mo), s(os), s(Xs), s(go), s(bo), s(Eo), s(Oo), s(Js), s(Zn), s(to), s(Hn), s(so), s(Us), s(No);
   const o = [];
   return Object.keys(t).forEach((c) => {
     console.log(`
@@ -1953,18 +1953,18 @@ const Zs = (e, t) => {
   const s = e.scriptSetup || e.script;
   console.log(`Analyzing ${t}...`);
   const o = t.endsWith(".vue");
-  n.includes("vue-essential") && (ms(s, t), o && (ls(t), fs(e.styles, t), $s(e.template, t), ds(e.template, t))), n.includes("vue-strong") && (ro(s, t), o && (co(s, t), vs(s, t), ys(t), Ns(e, t), Cs(e.template, t), Ss(e, t), Fs(e, t), Ts(t), wo(e.template, t))), n.includes("vue-recommended") && o && (Is(e.source, t), Bs(e.template, t)), n.includes("vue-caution") && o && (lo(s, t), xo(e.styles, t)), n.includes("rrd") && (cs(s, t), ho(s, t), ss(s, t), Zs(s, t), $o(s, t), yo(s, t), Oo(s, t), Ys(s, t), eo(s, t), qn(s, t), no(s, t), Ds(s, t), o && (po(e.template, t), Qn(e.script, t), _o(e.template, t)));
+  n.includes("vue-essential") && (ms(s, t), o && (ls(t), fs(e.styles, t), $s(e.template, t), ds(e.template, t))), n.includes("vue-strong") && (ro(s, t), o && (co(s, t), vs(s, t), ys(t), Ns(e, t), Cs(e.template, t), Os(e, t), Fs(e, t), Ts(t), wo(e.template, t))), n.includes("vue-recommended") && o && (Is(e.source, t), Bs(e.template, t)), n.includes("vue-caution") && o && (lo(s, t), xo(e.styles, t)), n.includes("rrd") && (cs(s, t), ho(s, t), ss(s, t), Zs(s, t), $o(s, t), yo(s, t), So(s, t), Ys(s, t), eo(s, t), qn(s, t), no(s, t), Ds(s, t), o && (po(e.template, t), Qn(e.script, t), _o(e.template, t)));
 };
 let ft = 0, ht = 0, qt = [];
-const Fo = ["node_modules", ".git", ".nuxt", "dist", "coverage"], Ht = async (e) => {
-  const t = await Oe.readdir(e);
+const Fo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], Ht = async (e) => {
+  const t = await Se.readdir(e);
   for (const n of t) {
     const s = pt.join(e, n);
-    if ((await Oe.stat(s)).isDirectory())
+    if ((await Se.stat(s)).isDirectory())
       Fo.some((c) => s.includes(c)) || await Ht(s);
     else if (n.endsWith(".vue") || n.endsWith(".ts") || n.endsWith(".js")) {
       ft++;
-      const c = await Oe.readFile(s, "utf-8");
+      const c = await Se.readFile(s, "utf-8");
       ht += c.split(/\r\n|\r|\n/).length;
       const { descriptor: l } = bn(c);
       (n.endsWith(".ts") || n.endsWith(".js")) && (l.script = { content: c }), Ro(l, s, qt);
@@ -1973,13 +1973,13 @@ const Fo = ["node_modules", ".git", ".nuxt", "dist", "coverage"], Ht = async (e)
 }, Lo = async (e, t = [], n) => {
   console.log(`
 
-${Q}Analyzing Vue files in ${e}${y}`);
+${Q}Analyzing Vue, TS and JS files in ${e}${y}`);
   const s = te.filter(($) => !t.includes($));
-  console.log(`Applying ${Q}${t.length}${y} rulesets ${Q}${t}${y} and ignoring ${Q}${s.length}${y} rulesets ${Q}${s}${y} grouping by ${Q}${n}${y}`), qt = t, await Ht(e), console.log(`Found ${Q}${ft}${y} Vue files`);
-  const o = jo(n), { errors: c, warnings: l } = o.reduce(($, { errors: v, warnings: S }) => ({ errors: $.errors + v, warnings: $.warnings + S }), { errors: 0, warnings: 0 });
+  console.log(`Applying ${Q}${t.length}${y} rulesets ${Q}${t}${y} and ignoring ${Q}${s.length}${y} rulesets ${Q}${s}${y} grouping by ${Q}${n}${y}`), qt = t, await Ht(e), console.log(`Found ${Q}${ft}${y} files`);
+  const o = jo(n), { errors: c, warnings: l } = o.reduce(($, { errors: v, warnings: O }) => ({ errors: $.errors + v, warnings: $.warnings + O }), { errors: 0, warnings: 0 });
   console.log(`Found ${V}${Intl.NumberFormat("en-US").format(c)} errors${y}, and ${x}${Intl.NumberFormat("en-US").format(l)} warnings${y}, ${Q}${Intl.NumberFormat("en-US").format(ht)} lines${y} of code in ${Q}${Intl.NumberFormat("en-US").format(ft)} files${y}`);
   const f = Math.ceil((1 - (c * 1.5 + l) / ht) * 100);
-  f < 75 && console.log(`${V}Code health is LOW: ${f}%${y}`), f >= 75 && f < 85 && console.log(`${x}Code health is MEDIUM ${f}%${y}`), f >= 85 && f < 95 && console.log(`${Q}Code health is OK: ${f}%${y}`), f >= 95 && console.log(`${Ot}Code health is GOOD: ${f}%${y}`), !c && !l && console.log(`${Ot}No code smells detected!${y}`);
+  f < 75 && console.log(`${V}Code health is LOW: ${f}%${y}`), f >= 75 && f < 85 && console.log(`${x}Code health is MEDIUM ${f}%${y}`), f >= 85 && f < 95 && console.log(`${Q}Code health is OK: ${f}%${y}`), f >= 95 && console.log(`${St}Code health is GOOD: ${f}%${y}`), !c && !l && console.log(`${St}No code smells detected!${y}`);
 };
 cn(wn(process.argv)).command(
   "analyze [path]",

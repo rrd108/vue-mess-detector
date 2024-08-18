@@ -40,7 +40,7 @@ const walkAsync = async (dir: string) => {
 }
 
 export const analyze = async (dir: string, apply: Array<RuleSetType> = [], groupBy: GroupBy) => {
-  console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
+  console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
   console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET} and ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET} grouping by ${BG_INFO}${groupBy}${BG_RESET}`)
 
@@ -49,7 +49,7 @@ export const analyze = async (dir: string, apply: Array<RuleSetType> = [], group
   await walkAsync(dir)
 
 
-  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} Vue files`)
+  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} files`)
 
   const health = reportRules(groupBy)
   const { errors, warnings } = health.reduce((acc, { errors, warnings }) => ({ errors: acc.errors + errors, warnings: acc.warnings + warnings }), { errors: 0, warnings: 0 })
