@@ -112,32 +112,6 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
     return countA - countB
   })
 
-  // Output the report grouped by file
-  // Object.keys(offensesGrouped).forEach((key) => {
-  //   console.log(`\n - ${key}`)
-  //   offensesGrouped[key].forEach((offense) => {
-  //     const isError = offense.message.includes(BG_ERR)
-  //     // if health already has the file, push the error
-  //     if (health.some(h => h.file === offense.file)) {
-  //       const foundHealth = health.find(h => h.file === offense.file)
-  //       if (foundHealth) {
-  //         isError ? foundHealth.errors++ : foundHealth.warnings++
-  //       }
-  //     } else {
-  //       health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
-  //     }
-
-  //     if (groupBy === 'file') {
-  //       console.log(`   Rule: ${offense.rule}`)
-  //     }
-  //     else {
-  //       console.log(`   File: ${offense.file}`)
-  //     }
-  //     console.log(`   Description: ${offense.description}`)
-  //     console.log(`   Message: ${offense.message || '🚨'}\n`)
-  //   })
-  // })
-
   // Output the report grouped by the sorted keys
   sortedKeys.forEach((key) => {
     console.log(`\n - ${key}`)
