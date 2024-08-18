@@ -17,8 +17,8 @@ The following code contains a `v-for` directive that uses the loop index as the 
 
 ```vue
 <template>
-  <div v-for="(item, idx) in items" :key="idx">
-    {{ item.name }}
+  <div v-for="(item, index) in products" :key="index">
+    <p>{{ item.name }}</p>
   </div>
 </template>
 ```
@@ -31,8 +31,8 @@ To ensure stable rendering and improve performance, use a unique identifier from
 
 ```vue
 <template>
-  <div v-for="item in items" :key="item.id">
-    {{ item.name }}
+  <div v-for="item in products" :key="item.id">
+    <p>{{ item.name }}</p>
   </div>
 </template>
 ```
