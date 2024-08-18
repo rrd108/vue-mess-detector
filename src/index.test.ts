@@ -4,12 +4,12 @@ import { execa } from 'execa'
 describe('yarn analyze command', () => {
   it('should execute without any flags and path', async () => {
     const { stdout } = await execa('yarn', ['analyze',])
-    expect(stdout).toContain('Analyzing Vue files in ')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
   
   it('should execute without any flags with path', async () => {
     const { stdout } = await execa('yarn', ['analyze','./'])
-    expect(stdout).toContain('Analyzing Vue files in ')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
   
   it('should report error when both apply and ignore is used', async () => {
@@ -33,7 +33,7 @@ describe('yarn analyze command', () => {
   it('should execute with valid ignore rulesets', async () => {
     const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=vue-strong,rrd'])
     expect(stderr).not.toContain('Invalid ignore values')
-    expect(stdout).toContain('Analyzing Vue files in ')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
   
   it('should report error for invalid apply rulesets and exit with code 1', async () => {
@@ -48,6 +48,6 @@ describe('yarn analyze command', () => {
   it('should execute with valid apply rulesets', async () => {
     const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=vue-strong,rrd'])
     expect(stderr).not.toContain('Invalid ignore values')
-    expect(stdout).toContain('Analyzing Vue files in ')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 })
