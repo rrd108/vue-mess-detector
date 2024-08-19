@@ -31,7 +31,8 @@ const walkAsync = async (dir: string) => {
         await walkAsync(filePath)
       }
     }
-    else if (file.endsWith('.vue') || file.endsWith('.ts') || file.endsWith('.js')) {
+    
+    if (file.endsWith('.vue') || file.endsWith('.ts') || file.endsWith('.js')) {
       filesCount++
       const content = await fs.readFile(filePath, 'utf-8')
       linesCount += content.split(/\r\n|\r|\n/).length
