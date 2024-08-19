@@ -18,13 +18,6 @@ yargs(hideBin(process.argv))
           describe: 'path to the Vue files',
           default: './',
         })
-        .option('ignore', {
-          alias: 'i',
-          describe: `Comma-separated list of rulesets to ignore.`,
-          choices: RULESETS,
-          coerce: coerceRules('ignore'),
-          group: 'Filter Rulesets:',
-        })
         .option('apply', {
           alias: 'a',
           describe: `Comma-separated list of rulesets to apply.`,
@@ -39,6 +32,21 @@ yargs(hideBin(process.argv))
           coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
           default: 'rule',
           group: 'Group Results:',
+        })
+        .option('level', {
+          alias: 'l',
+          describe: 'Output level',
+          choices: ['all', 'error'],
+//          coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
+          default: 'all',
+          group: 'Output:',
+        })
+        .option('ignore', {
+          alias: 'i',
+          describe: `Comma-separated list of rulesets to ignore.`,
+          choices: RULESETS,
+          coerce: coerceRules('ignore'),
+          group: 'Filter Rulesets:',
         })
         .option('order', {
           alias: 'o',
@@ -67,7 +75,7 @@ yargs(hideBin(process.argv))
       if (argv.ignore) {
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
-      analyze({ dir: argv.path as string, apply: rules, groupBy: argv.group, orderBy: argv.order })
+      analyze({ dir: argv.path as string, level: argv.level, apply: rules, groupBy: argv.group, orderBy: argv.order })
     },
   )
   .help().argv

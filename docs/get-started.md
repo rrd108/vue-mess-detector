@@ -110,6 +110,12 @@ If you want to *order* the results by the most problematic file add the `--order
 npx vue-mess-detector analyze ./src --group=file --order=desc
 ```
 
+If you want to see only *errors* add the `--level` flag with `error`
+
+```bash
+npx vue-mess-detector analyze ./src --group=file --level=error
+```
+
 ## 📊 Example output
 
 #### Without `--group` flag (default behavior is to group per rule) ⬇️

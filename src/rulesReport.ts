@@ -25,7 +25,7 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
-import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, ReportFunction } from './types'
+import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, OutputLevel, ReportFunction } from './types'
 import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
@@ -35,7 +35,7 @@ import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
 
-export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
+export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
 
   // Helper function to add offenses
@@ -117,6 +117,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
   // Output the report grouped by the sorted keys
   sortedKeys.forEach((key) => {
     console.log(`\n - ${key}`)
+    
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
@@ -127,6 +128,10 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
         }
       } else {
         health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
+      }
+
+      if (level === 'error' && !isError) {
+        return
       }
 
       if (groupBy === 'file') {

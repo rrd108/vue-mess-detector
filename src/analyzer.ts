@@ -5,12 +5,14 @@ import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
-import type { GroupBy, OrderBy } from './types'
+import type { GroupBy, OrderBy, OutputLevel } from './types'
 import { calculateCodeHealth } from './helpers'
+import { l } from 'magic-regexp/dist/shared/magic-regexp.8360a3b8'
 
 interface AnalyzeParams {
   dir: string;
   apply: Array<RuleSetType>;
+  level: OutputLevel;
   groupBy: GroupBy;
   orderBy: OrderBy;
 }
@@ -58,10 +60,16 @@ const checkFile = async (fileName: string, filePath: string) => {
   }
 }
 
-export const analyze = async ({ dir, apply = [], groupBy, orderBy }: AnalyzeParams) => {
-  console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
+export const analyze = async ({ dir, level, apply = [], groupBy, orderBy }: AnalyzeParams) => {
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
-  console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}, ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}, grouping by ${BG_INFO}${groupBy}${BG_RESET}, ordering ${BG_INFO}${orderBy}${BG_RESET}`)
+  
+  console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
+  
+  console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
+    Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
+    Output level ${BG_INFO}${level}${BG_RESET}
+    Grouping by ${BG_INFO}${groupBy}${BG_RESET}
+    Ordering ${BG_INFO}${orderBy}${BG_RESET}`)
 
   _apply = apply
 
@@ -69,7 +77,7 @@ export const analyze = async ({ dir, apply = [], groupBy, orderBy }: AnalyzePara
 
   console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} files`)
 
-  const health = reportRules(groupBy, orderBy)
+  const health = reportRules(groupBy, orderBy, level)
   const { errors, warnings } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {
