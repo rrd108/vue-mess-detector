@@ -20,7 +20,7 @@ let filesCount = 0
 let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
-const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt',]
+const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 'vendor']
 
 const walkAsync = async (dir: string) => {
   const s = await fs.stat(dir)
