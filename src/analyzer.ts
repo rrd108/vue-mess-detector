@@ -19,32 +19,42 @@ let filesCount = 0
 let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
-const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules',  '.nuxt',  ]
+const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt',]
 
 const walkAsync = async (dir: string) => {
+  const s = await fs.stat(dir)
+  if (!s.isDirectory()) {
+    await checkFile(dir, dir)
+    return
+  }
+
   const files = await fs.readdir(dir)
-  for (const file of files) {
-    const filePath = path.join(dir, file)
+  for (const fileName of files) {
+    const filePath = path.join(dir, fileName)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
       if (!skipDirs.some(dir => filePath.includes(dir))) {
         await walkAsync(filePath)
       }
     }
-    
-    if (file.endsWith('.vue') || file.endsWith('.ts') || file.endsWith('.js')) {
-      filesCount++
-      const content = await fs.readFile(filePath, 'utf-8')
-      linesCount += content.split(/\r\n|\r|\n/).length
-      const { descriptor } = parse(content)
 
-      // vue files has descriptor.source, descriptor.script, descriptor.styles, descriptor.template
-      // ts/js files has descriptor.source only but the work for us as a script block
-      if (file.endsWith('.ts') || file.endsWith('.js')) {
-        descriptor.script = { content } as SFCScriptBlock
-      }
-      checkRules(descriptor, filePath, _apply)
+    await checkFile(filePath, filePath)
+  }
+}
+
+const checkFile = async (fileName: string, filePath: string) => {
+  if (fileName.endsWith('.vue') || fileName.endsWith('.ts') || fileName.endsWith('.js')) {
+    filesCount++
+    const content = await fs.readFile(filePath, 'utf-8')
+    linesCount += content.split(/\r\n|\r|\n/).length
+    const { descriptor } = parse(content)
+
+    // vue files has descriptor.source, descriptor.script, descriptor.styles, descriptor.template
+    // ts/js files has descriptor.source only but the work for us as a script block
+    if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
+      descriptor.script = { content } as SFCScriptBlock
     }
+    checkRules(descriptor, filePath, _apply)
   }
 }
 
