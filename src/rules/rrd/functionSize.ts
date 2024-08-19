@@ -27,8 +27,8 @@ function parseFunctionName(content: string, startIndex: number): string {
   }
 
   // Capture the function name and skip the 'const' keyword if it's an arrow function
-  if (content.slice(i, i + 5) === 'const') {
-    i += 5
+  if (content.slice(i, i + CONST_KEYWORD_LENGTH) === 'const') {
+    i += CONST_KEYWORD_LENGTH
     // Skip any whitespace after 'const'
     while (i < content.length && /\s/.test(content[i])) {
       i++
@@ -117,8 +117,8 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
     let isFunction = false
 
     // Search for a function declaration or arrow function
-    if (content.slice(index, index + 8) === 'function') {
-      index += 8
+    if (content.slice(index, index + FUNCTION_KEYWORD_LENGTH) === 'function') {
+      index += FUNCTION_KEYWORD_LENGTH
       isFunction = true
       funcName = parseFunctionName(content, index)
       index = skipToFunctionBody(content, index)

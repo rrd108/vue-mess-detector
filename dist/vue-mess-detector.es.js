@@ -1409,7 +1409,7 @@ function Qs(e, t) {
   let n = "", s = t;
   for (; s < e.length && /\s/.test(e[s]); )
     s++;
-  if (e.slice(s, s + 5) === "const")
+  if (e.startsWith("const"))
     for (s += 5; s < e.length && /\s/.test(e[s]); )
       s++;
   for (; s < e.length && /[\w$]/.test(e[s]); )
@@ -1446,17 +1446,15 @@ const eo = (e, t) => {
   let o = 0;
   for (; o < s; ) {
     let i = "", u = "", h = !1;
-    if (n.slice(o, o + 8) === "function")
-      o += 8, h = !0, i = Qs(n, o), o = Zs(n, o);
-    else if (n.slice(o, o + 5) === "const") {
+    if (n.slice(o, o + 8) === "function" && (o += 8, h = !0, i = Qs(n, o), o = Zs(n, o)), n.slice(o, o + 5) === "const") {
       const g = Xs(n, o);
       g && (h = !0, i = g.name, o = g.bodyStart);
     }
     if (h) {
       const { body: g, end: v } = Ys(n, o);
       u = g, o = v, qs(i, u, t);
-    } else
-      o++;
+    }
+    h || o++;
   }
 }, to = () => {
   const e = [];
