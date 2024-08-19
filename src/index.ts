@@ -4,7 +4,8 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
 import type { RuleSetType } from './rules/rules'
 import { RULESETS } from './rules/rules'
-import type { GroupBy } from './types'
+import { OrderBy, type GroupBy } from './types'
+import { customOptionType } from './helpers'
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
 yargs(hideBin(process.argv))
@@ -35,9 +36,17 @@ yargs(hideBin(process.argv))
           alias: 'g',
           describe: 'Group results at the output',
           choices: ['rule', 'file'],
-          coerce: value => customGroupType(value),
+          coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
           default: 'rule',
           group: 'Group Results:',
+        })
+        .option('order', {
+          alias: 'o',
+          describe: 'Order results at the output',
+          choices: ['asc', 'desc'],
+          coerce: value => customOptionType<OrderBy>(value, 'orderBy'),
+          default: 'asc',
+          group: 'Order Results:'
         })
         .check((argv) => {
           if (argv.ignore && argv.apply) {
@@ -58,7 +67,7 @@ yargs(hideBin(process.argv))
       if (argv.ignore) {
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
-      analyze(argv.path as string, rules, argv.group)
+      analyze({ dir: argv.path as string, apply: rules, groupBy: argv.group, orderBy: argv.order })
     },
   )
   .help().argv
@@ -78,13 +87,4 @@ function coerceRules(optionName: 'ignore' | 'apply') {
     }
     return values as RuleSetType[]
   }
-}
-
-function customGroupType(value: GroupBy) {
-  const validChoices: GroupBy[] = ['rule', 'file']
-  if (!validChoices.includes(value)) {
-    // eslint-disable-next-line node/prefer-global/process
-    process.exit(1)
-  }
-  return value
 }

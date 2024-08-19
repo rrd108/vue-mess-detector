@@ -1,4 +1,6 @@
+export type Flag = 'groupBy' | 'orderBy'
 export type GroupBy = 'rule' | 'file'
+export type OrderBy = 'asc' | 'desc'
 
 export interface Offense {
   file: string
@@ -18,3 +20,11 @@ export interface FileCheckResult {
   filePath: string
   message: string
 }
+
+export interface Health {
+  file: string;
+  errors: number;
+  warnings: number
+}
+
+export type CodeHealthResponse = Omit<Health, 'file'>

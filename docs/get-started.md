@@ -98,6 +98,12 @@ If you want to *group* the results by file add the `--group` flag with one of th
 npx vue-mess-detector analyze ./src --group=file
 ```
 
+If you want to *order* the results by the most problematic file add the `--order` flag with `desc`
+
+```bash
+npx vue-mess-detector analyze ./src --group=file --order=desc
+```
+
 ## 📊 Example output
 
 #### Without `--group` flag (default behavior is to group per rule) ⬇️

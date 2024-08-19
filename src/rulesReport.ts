@@ -25,7 +25,7 @@ import { reportSimpleComputed } from './rules/vue-strong/simpleComputed'
 import { reportComponentFiles } from './rules/vue-strong/componentFiles'
 import { reportImplicitParentChildCommunication } from './rules/vue-caution/implicitParentChildCommunication'
 import { reportDeepIndentation } from './rules/rrd/deepIndentation'
-import type { GroupBy, Offense, OffensesGrouped, ReportFunction } from './types'
+import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, ReportFunction } from './types'
 import { reportHtmlLink } from './rules/rrd/htmlLink'
 import { reportIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { reportMagicNumbers } from './rules/rrd/magicNumbers'
@@ -35,7 +35,7 @@ import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
 
-export const reportRules = (groupBy: GroupBy) => {
+export const reportRules = (groupBy: GroupBy, orderBy: OrderBy) => {
   const offensesGrouped: OffensesGrouped = {}
 
   // Helper function to add offenses
@@ -100,10 +100,22 @@ export const reportRules = (groupBy: GroupBy) => {
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
 
-  const health: { file: string, errors: number, warnings: number }[] = []
+  const health: Health[] = []
 
-  // Output the report grouped by file
-  Object.keys(offensesGrouped).forEach((key) => {
+  // Sort offenses grouped by key based on the `orderBy` parameter
+  const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
+    const countA = offensesGrouped[a].length
+    const countB = offensesGrouped[b].length
+
+    if (orderBy === 'desc') {
+      return countB - countA
+    }
+
+    return countA - countB
+  })
+
+  // Output the report grouped by the sorted keys
+  sortedKeys.forEach((key) => {
     console.log(`\n - ${key}`)
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
@@ -119,8 +131,7 @@ export const reportRules = (groupBy: GroupBy) => {
 
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
-      }
-      else {
+      } else {
         console.log(`   File: ${offense.file}`)
       }
       console.log(`   Description: ${offense.description}`)
