@@ -1,4 +1,7 @@
 const getLineNumber = (source: string, pattern: string) => {
+  // TODO when in a file we have multiple same patterns, this function will return the first line number
+  // TODO we need to return all line numbers where the pattern is found
+  
   // if pattern does not contain new lines
   if (!pattern.includes('\n')) {
     const lines = source.split('\n')

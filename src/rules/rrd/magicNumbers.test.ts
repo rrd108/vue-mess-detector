@@ -30,7 +30,8 @@ describe('checkMagicNumbers', () => {
   })
 
   it('should report files with magic number before a new line', () => {
-    const script = { content: `function isAdult(age) {
+    const script = {
+      content: `function isAdult(age) {
         return age >= 18
         }` } as SFCScriptBlock
     const fileName = 'with-magic-number-before-new-line.vue'
@@ -43,4 +44,29 @@ describe('checkMagicNumbers', () => {
       message: `magic numbers found (line #2 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
     }])
   })
+
+  it.skip('should report files with multple magic numbers', () => {
+    const script = {
+      content: `function isAdult(age) {
+        if (age >= 18) {
+          return age >= 18
+        }
+      }` } as SFCScriptBlock
+    const fileName = 'with-multiple-magic-numbers.vue'
+    checkMagicNumbers(script, fileName)
+    expect(reportMagicNumbers().length).toBe(2)
+    expect(reportMagicNumbers()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #2 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
+    }, {
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #3 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
+    }])
+  })
+
+
 })
