@@ -6,6 +6,9 @@ const results: FileCheckResult[] = []
 
 export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
+const CONST_KEYWORD_LENGTH = 'const'.length
+const FUNCTION_KEYWORD_LENGTH = 'function'.length
+
 function addFunctionToFiles(funcName: string, funcBody: string, filePath: string) {
   const lineCount = funcBody.split('\n').length
   if (lineCount > MAX_FUNCTION_LENGTH) {
@@ -120,7 +123,8 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
       funcName = parseFunctionName(content, index)
       index = skipToFunctionBody(content, index)
     }
-    else if (content.slice(index, index + 5) === 'const') {
+    
+    if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') {
       const arrowFunctionInfo = parseArrowFunction(content, index)
       if (arrowFunctionInfo) {
         isFunction = true
@@ -135,7 +139,7 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
       index = end
       addFunctionToFiles(funcName, funcBody, filePath)
     }
-    else {
+    if (!isFunction) {
       index++
     }
   }
