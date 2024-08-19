@@ -53,7 +53,7 @@ yargs(hideBin(process.argv))
           describe: 'Order results at the output',
           choices: ['asc', 'desc'],
           coerce: value => customOptionType<OrderBy>(value, 'orderBy'),
-          default: 'asc',
+          default: 'desc',
           group: 'Order Results:'
         })
         .check((argv) => {
