@@ -4,7 +4,7 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
 import type { RuleSetType } from './rules/rules'
 import { RULESETS } from './rules/rules'
-import { OrderBy, OutputLevel, type GroupBy } from './types'
+import type { OrderBy, OutputLevel, GroupBy } from './types'
 import { customOptionType } from './helpers'
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process

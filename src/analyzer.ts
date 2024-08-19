@@ -7,7 +7,6 @@ import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
 import type { GroupBy, OrderBy, OutputLevel } from './types'
 import { calculateCodeHealth } from './helpers'
-import { l } from 'magic-regexp/dist/shared/magic-regexp.8360a3b8'
 
 interface AnalyzeParams {
   dir: string;

@@ -1,5 +1,5 @@
 import { BG_ERR, BG_RESET, BG_WARN, BG_INFO, BG_OK } from "../rules/asceeCodes";
-import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy } from "../types";
+import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy, OutputLevel } from "../types";
 import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from "./constants";
 
 /* Helper function to count non duplicated objects (using `field` to filter) */
@@ -20,9 +20,12 @@ const validGroupByOptions: GroupBy[] = ['rule', 'file'];
 */
 const validOrderOptions: OrderBy[] = ['asc', 'desc'];
 
-const flagOptions: Record<Flag, GroupBy[] | OrderBy[]> = {
+const validOutputLevelOptions: OutputLevel[] = ['all', 'error'];
+
+const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[]> = {
   groupBy: validGroupByOptions,
-  orderBy: validOrderOptions
+  orderBy: validOrderOptions,
+  outputLevel: validOutputLevelOptions
 }
 
 export function customOptionType<T>(value: T, flag: Flag) {

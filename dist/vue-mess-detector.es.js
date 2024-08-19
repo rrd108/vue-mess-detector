@@ -1956,26 +1956,27 @@ const so = (e, t) => {
   console.log(`Analyzing ${t}...`);
   const o = t.endsWith(".vue");
   n.includes("vue-essential") && (Es(s, t), o && (gs(t), bs(e.styles, t), Os(e.template, t), vs(e.template, t))), n.includes("vue-strong") && (ho(s, t), o && (mo(s, t), Ns(s, t), Cs(t), Ws(e, t), js(e.template, t), Fs(e, t), Ms(e, t), Ds(t), _o(e.template, t))), n.includes("vue-recommended") && o && (Hs(e.source, t), Gs(e.template, t)), n.includes("vue-caution") && o && ($o(s, t), Lo(e.styles, t)), n.includes("rrd") && (ms(s, t), Eo(s, t), us(s, t), so(s, t), Oo(s, t), Co(s, t), To(s, t), ro(s, t), co(s, t), es(s, t), lo(s, t), Qs(s, t), o && (vo(e.template, t), ns(e.script, t), Po(e.template, t)));
-}, Mo = 1.5, jt = 75, Tt = 85, Ft = 95, ko = ["rule", "file"], zo = ["asc", "desc"], Do = {
+}, Mo = 1.5, jt = 75, Tt = 85, Ft = 95, ko = ["rule", "file"], zo = ["asc", "desc"], Do = ["all", "error"], Uo = {
   groupBy: ko,
-  orderBy: zo
+  orderBy: zo,
+  outputLevel: Do
 };
 function Le(e, t) {
-  const n = Do[t];
+  const n = Uo[t];
   return n.includes(e) || (console.error(
     `
 Invalid option "${e}" provided for flag "${t}". Valid options are: ${n.join(", ")}.
 `
   ), process.exit(1)), e;
 }
-function Uo(e, t, n) {
+function Ho(e, t, n) {
   const { errors: s, warnings: o } = e.reduce((u, { errors: h, warnings: g }) => ({ errors: u.errors + h, warnings: u.warnings + g }), { errors: 0, warnings: 0 });
   console.log(`Found ${V}${Intl.NumberFormat("en-US").format(s)} errors${b}, and ${x}${Intl.NumberFormat("en-US").format(o)} warnings${b}, ${z}${Intl.NumberFormat("en-US").format(t)} lines${b} of code in ${z}${Intl.NumberFormat("en-US").format(n)} files${b}`);
   const i = Math.ceil((1 - (s * Mo + o) / t) * 100);
   return i < jt && console.log(`${V}Code health is LOW: ${i}%${b}`), i >= jt && i < Tt && console.log(`${x}Code health is MEDIUM ${i}%${b}`), i >= Tt && i < Ft && console.log(`${z}Code health is OK: ${i}%${b}`), i >= Ft && console.log(`${Vt}Code health is GOOD: ${i}%${b}`), { errors: s, warnings: o };
 }
 let pt = 0, Jt = 0, en = [];
-const Ho = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], tn = async (e) => {
+const Vo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], tn = async (e) => {
   if (!(await $e.stat(e)).isDirectory()) {
     await Pt(e, e);
     return;
@@ -1983,7 +1984,7 @@ const Ho = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], tn = 
   const n = await $e.readdir(e);
   for (const s of n) {
     const o = dt.join(e, s);
-    (await $e.stat(o)).isDirectory() && (Ho.some((u) => o.includes(u)) || await tn(o)), await Pt(o, o);
+    (await $e.stat(o)).isDirectory() && (Vo.some((u) => o.includes(u)) || await tn(o)), await Pt(o, o);
   }
 }, Pt = async (e, t) => {
   if (e.endsWith(".vue") || e.endsWith(".ts") || e.endsWith(".js")) {
@@ -1993,7 +1994,7 @@ const Ho = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], tn = 
     const { descriptor: s } = xn(n);
     (e.endsWith(".ts") || e.endsWith(".js")) && (s.script = { content: n }), Bo(s, t, en);
   }
-}, Vo = async ({ dir: e, level: t, apply: n = [], groupBy: s, orderBy: o }) => {
+}, Go = async ({ dir: e, level: t, apply: n = [], groupBy: s, orderBy: o }) => {
   const i = ne.filter((w) => !n.includes(w));
   console.log(`
 
@@ -2002,7 +2003,7 @@ ${z}Analyzing Vue, TS and JS files in ${e}${b}`), console.log(`Applying ${z}${n.
     Output level ${z}${t}${b}
     Grouping by ${z}${s}${b}
     Ordering ${z}${o}${b}`), en = n, await tn(e), console.log(`Found ${z}${pt}${b} files`);
-  const u = Io(s, o, t), { errors: h, warnings: g } = Uo(u, Jt, pt);
+  const u = Io(s, o, t), { errors: h, warnings: g } = Ho(u, Jt, pt);
   !h && !g && console.log(`${Vt}No code smells detected!${b}`);
 };
 mn(_n(process.argv)).command(
@@ -2052,7 +2053,7 @@ ${V}Cannot use both --ignore and --apply options together.${b}.
   ), process.exit(1)), !0)),
   (e) => {
     let t = [...ne];
-    e.apply && (t = e.apply), e.ignore && (t = ne.filter((n) => !e.ignore.includes(n))), Vo({ dir: e.path, level: e.level, apply: t, groupBy: e.group, orderBy: e.order });
+    e.apply && (t = e.apply), e.ignore && (t = ne.filter((n) => !e.ignore.includes(n))), Go({ dir: e.path, level: e.level, apply: t, groupBy: e.group, orderBy: e.order });
   }
 ).help().argv;
 function Wt(e) {
