@@ -1,18 +1,15 @@
-const getLineNumber = (source: string, pattern: string) => {
-  // TODO when in a file we have multiple same patterns, this function will return the first line number
-  // TODO we need to return all line numbers where the pattern is found
-  
+const getLineNumber = (source: string, pattern: string, from: number = 0) => {
   // if pattern does not contain new lines
   if (!pattern.includes('\n')) {
     const lines = source.split('\n')
-    return lines.findIndex(line => line.includes(pattern)) + 1
+    return lines.findIndex((line, index) => index >= from && line.includes(pattern)) + 1
   }
 
   // if pattern contains new lines (multi line)
-  const position = source.indexOf(pattern)
-  const newLinesCount = source.slice(0, position).split('\n').length
-  const patternLinesCount = pattern.split('\n').length
-  return newLinesCount + patternLinesCount - 1
+  const fromPosition = source.split('\n').slice(0, from).reduce((count, line) => count + line.length, 0)
+  const position = source.indexOf(pattern, fromPosition)
+  const countLines = source.slice(0, position).split('\n').length
+  return countLines
 }
 
 export default getLineNumber
