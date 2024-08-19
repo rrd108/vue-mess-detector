@@ -47,7 +47,7 @@ describe('checkVifWithVfor', () => {
       file: fileName,
       rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
-      message: `line #7 ${BG_WARN}v-if used with v-for${BG_RESET} 🚨`,
+      message: `line #3 ${BG_WARN}v-if used with v-for${BG_RESET} 🚨`,
     }])
   })
 })

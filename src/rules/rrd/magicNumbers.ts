@@ -13,13 +13,16 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   const regex = createRegExp(oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
 
   let match
+  let lastLine = 0
   while ((match = regex.exec(script.content)) !== null) {
     const magicNumber = match.groups?.magicNumber || ''
-      const lineNumber = getLineNumber(script.content, magicNumber)
-      results.push({
-        filePath,
-        message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,
-      })
+    console.info(`getLineNumber(script.content, ${magicNumber}, ${lastLine})`)
+    const lineNumber = getLineNumber(script.content, magicNumber, lastLine)
+    results.push({
+      filePath,
+      message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,
+    })
+    lastLine = lineNumber
   }
 
 }
@@ -27,7 +30,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
 const reportMagicNumbers = () => {
   const offenses: Offense[] = []
 
-  if (results.length > 0) {
+  if (results.length) {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,

@@ -45,7 +45,7 @@ describe('checkMagicNumbers', () => {
     }])
   })
 
-  it.skip('should report files with multple magic numbers', () => {
+  it('should report files with multiple magic numbers', () => {
     const script = {
       content: `function isAdult(age) {
         if (age >= 18) {

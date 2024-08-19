@@ -80,7 +80,7 @@ describe('checkSelfClosingComponents', () => {
       file: fileName,
       rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
-      message: `line #4 ${BG_WARN}></MyComponent>${BG_RESET} 🚨`,
+      message: `line #2 ${BG_WARN}></MyComponent>${BG_RESET} 🚨`,
     }])
   })
 })

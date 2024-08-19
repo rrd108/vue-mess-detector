@@ -51,7 +51,7 @@ describe('checkImplicitParentChildCommunication', () => {
       `,
     } as SFCScriptBlock
     const filename = 'props-mutation.vue'
-    const lineNumber = 7
+    const lineNumber = 3
     const offenses = [{
       file: filename,
       rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
@@ -148,7 +148,7 @@ describe('checkImplicitParentChildCommunication', () => {
         file: filename,
         rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
         description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
-        message: `line #9 ${BG_WARN}(todo)${BG_RESET} 🚨`,
+        message: `line #5 ${BG_WARN}(todo)${BG_RESET} 🚨`,
       },
       {
         file: filename,
