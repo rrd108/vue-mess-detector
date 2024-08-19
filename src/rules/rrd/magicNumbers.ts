@@ -16,7 +16,6 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   let lastLine = 0
   while ((match = regex.exec(script.content)) !== null) {
     const magicNumber = match.groups?.magicNumber || ''
-    console.info(`getLineNumber(script.content, ${magicNumber}, ${lastLine})`)
     const lineNumber = getLineNumber(script.content, magicNumber, lastLine)
     results.push({
       filePath,
