@@ -25,7 +25,7 @@ describe('checkMagicNumbers', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #1 ${BG_WARN}magic number: 2${BG_RESET}) 🚨`,
+      message: `magic numbers found (line #1 ${BG_WARN}magic number: 100${BG_RESET}) 🚨`,
     }])
   })
 
@@ -40,7 +40,7 @@ describe('checkMagicNumbers', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #3 ${BG_WARN}magic number: 2${BG_RESET}) 🚨`,
+      message: `magic numbers found (line #2 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
     }])
   })
 })

@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { anyOf, createRegExp, digit, global, linefeed } from 'magic-regexp'
+import { anyOf, createRegExp, digit, global, linefeed, oneOrMore } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 import getLineNumber from '../getLineNumber'
@@ -10,16 +10,18 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
-  const regex = createRegExp(digit, anyOf(')', linefeed), [global])
-  const matches = script.content.match(regex)
+  const regex = createRegExp(oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
 
-  matches?.forEach((match) => {
-    const lineNumber = getLineNumber(script.content, match)
-    results.push({
-      filePath,
-      message: `line #${lineNumber} ${BG_WARN}magic number: ${match.length}${BG_RESET}`,
-    })
-  })
+  let match
+  while ((match = regex.exec(script.content)) !== null) {
+    const magicNumber = match.groups?.magicNumber || ''
+      const lineNumber = getLineNumber(script.content, magicNumber)
+      results.push({
+        filePath,
+        message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,
+      })
+  }
+
 }
 
 const reportMagicNumbers = () => {
