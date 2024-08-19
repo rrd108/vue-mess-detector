@@ -1,5 +1,5 @@
 import fn from "yargs";
-import { format as Tt, inspect as hn } from "util";
+import { format as Ft, inspect as hn } from "util";
 import { normalize as pn, resolve as oe, dirname as je, basename as mn, extname as dn, relative as gn } from "path";
 import { readFileSync as ht, statSync as Pt, readdirSync as $n, writeFile as bn } from "fs";
 import { notStrictEqual as yn, strictEqual as En } from "assert";
@@ -182,7 +182,7 @@ class _n {
     let H = null;
     un();
     let he = [];
-    const F = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), dt = {};
+    const T = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), dt = {};
     for (let r = 0; r < o.length; r++) {
       const a = o[r], p = a.replace(/^-{3,}/, "---");
       let l, c, $, m, b, P;
@@ -234,18 +234,18 @@ class _n {
       } else
         Ae(a);
     }
-    $t(F, !0), $t(F, !1), Jt(F), en(), bt(F, f.aliases, g, !0), tn(F), h["set-placeholder-key"] && nn(F), Object.keys(f.counts).forEach(function(r) {
-      re(F, r.split(".")) || N(r, 0);
-    }), R && he.length && (F[L] = []), he.forEach(function(r) {
-      F[L].push(r);
-    }), h["camel-case-expansion"] && h["strip-dashed"] && Object.keys(F).filter((r) => r !== "--" && r.includes("-")).forEach((r) => {
-      delete F[r];
+    $t(T, !0), $t(T, !1), Jt(T), en(), bt(T, f.aliases, g, !0), tn(T), h["set-placeholder-key"] && nn(T), Object.keys(f.counts).forEach(function(r) {
+      re(T, r.split(".")) || N(r, 0);
+    }), R && he.length && (T[L] = []), he.forEach(function(r) {
+      T[L].push(r);
+    }), h["camel-case-expansion"] && h["strip-dashed"] && Object.keys(T).filter((r) => r !== "--" && r.includes("-")).forEach((r) => {
+      delete T[r];
     }), h["strip-aliased"] && [].concat(...Object.keys(u).map((r) => u[r])).forEach((r) => {
-      h["camel-case-expansion"] && r.includes("-") && delete F[r.split(".").map((a) => ce(a)).join(".")], delete F[r];
+      h["camel-case-expansion"] && r.includes("-") && delete T[r.split(".").map((a) => ce(a)).join(".")], delete T[r];
     });
     function Ae(r) {
       const a = de("_", r);
-      (typeof a == "string" || typeof a == "number") && F._.push(a);
+      (typeof a == "string" || typeof a == "number") && T._.push(a);
     }
     function pe(r, a, p, l) {
       let c, $ = w(a, f.nargs);
@@ -289,13 +289,13 @@ class _n {
         gt(r, $);
       }
       const l = Oe(r, a, p), c = r.split(".");
-      ie(F, c, l), f.aliases[r] && f.aliases[r].forEach(function($) {
+      ie(T, c, l), f.aliases[r] && f.aliases[r].forEach(function($) {
         const m = $.split(".");
-        ie(F, m, l);
+        ie(T, m, l);
       }), c.length > 1 && h["dot-notation"] && (f.aliases[c[0]] || []).forEach(function($) {
         let m = $.split(".");
         const b = [].concat(c);
-        b.shift(), m = m.concat(b), (f.aliases[r] || []).includes(m.join(".")) || ie(F, m, l);
+        b.shift(), m = m.concat(b), (f.aliases[r] || []).includes(m.join(".")) || ie(T, m, l);
       }), w(r, f.normalize) && !w(r, f.arrays) && [r].concat(f.aliases[r] || []).forEach(function(m) {
         Object.defineProperty(dt, m, {
           enumerable: !0,
@@ -350,7 +350,7 @@ class _n {
     function xe(r, a) {
       Object.keys(r).forEach(function(p) {
         const l = r[p], c = a ? a + "." + p : p;
-        typeof l == "object" && l !== null && !Array.isArray(l) && h["dot-notation"] ? xe(l, c) : (!re(F, c.split(".")) || w(c, f.arrays) && h["combine-arrays"]) && N(c, l);
+        typeof l == "object" && l !== null && !Array.isArray(l) && h["dot-notation"] ? xe(l, c) : (!re(T, c.split(".")) || w(c, f.arrays) && h["combine-arrays"]) && N(c, l);
       });
     }
     function en() {
@@ -496,7 +496,7 @@ class _n {
     }
     return {
       aliases: Object.assign({}, f.aliases),
-      argv: Object.assign(dt, F),
+      argv: Object.assign(dt, T),
       configuration: h,
       defaulted: Object.assign({}, mt),
       error: H,
@@ -552,7 +552,7 @@ if (vt && Number(vt.match(/^([^.]+)/)[1]) < wt)
 const jn = process ? process.env : {}, Mt = new _n({
   cwd: process.cwd,
   env: () => jn,
-  format: Tt,
+  format: Ft,
   normalize: pn,
   resolve: oe,
   // TODO: figure  out a  way to combine ESM and CJS coverage, such  that
@@ -576,7 +576,7 @@ fe.looksLikeNumber = Bt;
 const Ln = {
   right: Bn,
   center: Mn
-}, Fn = 0, $e = 1, Tn = 2, be = 3;
+}, Tn = 0, $e = 1, Fn = 2, be = 3;
 class Pn {
   constructor(t) {
     var n;
@@ -659,7 +659,7 @@ class Pn {
     return t.forEach((i, u) => {
       i.width = s[u], this.wrap ? o = I.wrap(i.text, this.negatePadding(i), { hard: !0 }).split(`
 `) : o = i.text.split(`
-`), i.border && (o.unshift("." + "-".repeat(this.negatePadding(i) + 2) + "."), o.push("'" + "-".repeat(this.negatePadding(i) + 2) + "'")), i.padding && (o.unshift(...new Array(i.padding[Fn] || 0).fill("")), o.push(...new Array(i.padding[Tn] || 0).fill(""))), o.forEach((h, g) => {
+`), i.border && (o.unshift("." + "-".repeat(this.negatePadding(i) + 2) + "."), o.push("'" + "-".repeat(this.negatePadding(i) + 2) + "'")), i.padding && (o.unshift(...new Array(i.padding[Tn] || 0).fill("")), o.push(...new Array(i.padding[Fn] || 0).fill(""))), o.forEach((h, g) => {
         n[g] || n.push([]);
         const v = n[g];
         for (let A = 0; A < u; A++)
@@ -744,7 +744,7 @@ const Vn = {
     readFileSync: ht,
     writeFile: bn
   },
-  format: Tt,
+  format: Ft,
   resolve: oe,
   exists: (e) => {
     try {
@@ -910,27 +910,27 @@ const q = "\x1B[44m", x = "\x1B[43m", V = "\x1B[41m", Dt = "\x1B[42m", y = "\x1B
     "tooManyProps",
     "vForWithIndexKey"
   ]
-}, te = Object.keys(Zn), Le = [], Fe = 100, Xn = (e, t) => {
+}, te = Object.keys(Zn), Le = [], Te = 100, Xn = (e, t) => {
   if (!e)
     return;
   const n = e.content.split(`
 `);
-  n.length > Fe && Le.push({ filePath: t, message: `${n.length > Fe * 2 ? V : x}(${n.length} lines)${y}` });
+  n.length > Te && Le.push({ filePath: t, message: `${n.length > Te * 2 ? V : x}(${n.length} lines)${y}` });
 }, Yn = () => {
   const e = [];
   return Le.length > 0 && Le.forEach((t) => {
     e.push({
       file: t.filePath,
       rule: `${C}rrd ~ Long <script> blocks${d}`,
-      description: `👉 ${O}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Fe} lines.${d} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
+      description: `👉 ${O}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Te} lines.${d} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
       message: `${t.message} 🚨`
     });
   }), e;
-}, Te = [], Jn = (e, t) => {
-  !e || e.setup || Te.push({ filePath: t, message: `${x}Plain <script> block${y} found` });
+}, Fe = [], Jn = (e, t) => {
+  !e || e.setup || Fe.push({ filePath: t, message: `${x}Plain <script> block${y} found` });
 }, es = () => {
   const e = [];
-  return Te.length > 0 && Te.forEach((t) => {
+  return Fe.length > 0 && Fe.forEach((t) => {
     e.push({
       file: t.filePath,
       rule: `${C}rrd ~ Plain <script> blocks${d}`,
@@ -1004,13 +1004,13 @@ function z(...e) {
 function S(...e) {
   return E(`${J(z(...e))}+`);
 }
-const D = "i", T = "g", _ = (...e) => {
+const D = "i", F = "g", _ = (...e) => {
   const t = e.length > 1 && (Array.isArray(e[e.length - 1]) || e[e.length - 1] instanceof Set) ? e.pop() : void 0;
   return new RegExp(z(...e).toString(), [...t || ""].join(""));
 }, Pe = [], cs = (e, t) => {
   if (!e)
     return;
-  const n = _(B, "else", B, [T, D]), s = e.content.match(n);
+  const n = _(B, "else", B, [F, D]), s = e.content.match(n);
   s?.length && Pe.push({ filePath: t, message: `else clauses found ${V}(${s.length})${y}` });
 }, as = () => {
   const e = [];
@@ -1025,7 +1025,7 @@ const D = "i", T = "g", _ = (...e) => {
 }, We = [], ls = 5, us = 10, fs = (e, t) => {
   if (!e)
     return;
-  const n = _(B, "if", B, [T, D]), s = _(B, "else", B, [T, D]), o = _(B, "for", B, [T, D]), i = _(B, "while", B, [T, D]), u = _(B, "case", B, [T, D]), h = e.content.match(n), g = e.content.match(s), v = e.content.match(o), A = e.content.match(i), R = e.content.match(u), L = (h?.length || 0) + (g?.length || 0) + (v?.length || 0) + (A?.length || 0) + (R?.length || 0);
+  const n = _(B, "if", B, [F, D]), s = _(B, "else", B, [F, D]), o = _(B, "for", B, [F, D]), i = _(B, "while", B, [F, D]), u = _(B, "case", B, [F, D]), h = e.content.match(n), g = e.content.match(s), v = e.content.match(o), A = e.content.match(i), R = e.content.match(u), L = (h?.length || 0) + (g?.length || 0) + (v?.length || 0) + (A?.length || 0) + (R?.length || 0);
   L > ls && We.push({ filePath: t, message: `${L > us ? V : x}(${L})${y}` });
 }, hs = () => {
   const e = [];
@@ -1075,7 +1075,7 @@ const D = "i", T = "g", _ = (...e) => {
 }, Me = [], $s = (e, t) => {
   if (!e)
     return;
-  const n = _("defineProps([", [T, D]);
+  const n = _("defineProps([", [F, D]);
   e.content.match(n)?.length && Me.push({ filePath: t, message: `${x}Props type${y} not defined` });
 }, bs = () => {
   const e = [];
@@ -1107,7 +1107,7 @@ const D = "i", T = "g", _ = (...e) => {
     " v-for",
     S(M(">")),
     ">",
-    [T, D]
+    [F, D]
   ), s = _(
     "<",
     S(M(">")),
@@ -1116,7 +1116,7 @@ const D = "i", T = "g", _ = (...e) => {
     " v-if",
     S(M(">")),
     ">",
-    [T, D]
+    [F, D]
   ), o = e.content.match(n), i = e.content.match(s);
   if (o?.length || i?.length) {
     const u = o?.length ? o[0] : i?.length ? i[0] : "", h = k(e.content, u);
@@ -1136,7 +1136,7 @@ const D = "i", T = "g", _ = (...e) => {
   if (!e)
     return;
   const n = _("<", S(M(">")), " v-for", S(M(">")), ">", [
-    T,
+    F,
     D
   ]), s = e.content.match(n);
   s?.length && (s.some((i) => i.includes(":key")) || ze.push({ filePath: t, message: `v-for used ${x}without a key${y}` }));
@@ -1245,7 +1245,7 @@ const D = "i", T = "g", _ = (...e) => {
       message: `${t.message} 🚨`
     });
   }), e;
-}, Ge = [], Fs = (e, t) => {
+}, Ge = [], Ts = (e, t) => {
   if (!e)
     return;
   const n = e.template, s = _(
@@ -1263,7 +1263,7 @@ const D = "i", T = "g", _ = (...e) => {
 `).at(-1)?.trim() || "";
     Ge.push({ filePath: t, message: `line #${u} ${x}${h}${y}` });
   });
-}, Ts = () => {
+}, Fs = () => {
   const e = [];
   return Ge.length > 0 && Ge.forEach((t) => {
     e.push({
@@ -1301,7 +1301,7 @@ const D = "i", T = "g", _ = (...e) => {
   if (n) {
     const s = n[0]?.split(".vue")[0], o = _(
       ue("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
-      [T]
+      [F]
     ), i = s.match(o);
     (!i || i.length < Bs) && qe.push({ filePath: e, message: `${s} is not a ${x}full word.${y}` });
   }
@@ -1500,7 +1500,7 @@ const eo = (e, t) => {
     "]",
     j.times.any(),
     ")",
-    [T]
+    [F]
   ), s = _(
     "<",
     S(U).grouped(),
@@ -1514,7 +1514,7 @@ const eo = (e, t) => {
     '"props.',
     S(U).grouped(),
     '"',
-    [T]
+    [F]
   );
   let o;
   const i = /* @__PURE__ */ new Set();
@@ -1601,7 +1601,7 @@ const eo = (e, t) => {
 }, we = [], po = (e, t) => {
   if (!e)
     return;
-  const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, o = _(z("$parent").or("getCurrentInstance"), [T]), i = e.content.match(n), u = e.content.match(s);
+  const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, o = _(z("$parent").or("getCurrentInstance"), [F]), i = e.content.match(n), u = e.content.match(s);
   if (u) {
     const g = u[1].split(".")[0], v = i ? i[1] : "";
     if (v.includes(g)) {
@@ -1634,7 +1634,7 @@ const eo = (e, t) => {
   if (!e)
     return;
   const n = _(Vt.times.atLeast(_t).or(j.times.atLeast(go * _t)), [
-    T,
+    F,
     D
   ]);
   e.content.match(n)?.forEach((o) => {
@@ -1657,7 +1657,7 @@ const eo = (e, t) => {
 }, ot = [], yo = (e, t) => {
   if (!e)
     return;
-  const n = _("<a", B, [T, D]), s = e.content.match(n);
+  const n = _("<a", B, [F, D]), s = e.content.match(n);
   s?.length && ot.push({ filePath: t, message: `${s?.length} ${x}html link found${y}` });
 }, Eo = () => {
   const e = [];
@@ -1697,7 +1697,7 @@ const eo = (e, t) => {
 }, it = [], Ao = (e, t) => {
   if (!e)
     return;
-  const n = _(is, rs(")", Ht), [T]);
+  const n = _(is, rs(")", Ht), [F]);
   e.content.match(n)?.forEach((o) => {
     const i = k(e.content, o);
     it.push({
@@ -1901,7 +1901,7 @@ const eo = (e, t) => {
 }, ut = [], Lo = (e, t) => {
   if (!e)
     return;
-  const n = _('v-for="(', j.times.any(), S(U).grouped(), j.times.any(), ",", j.times.any(), S(U).grouped(), j.times.any(), ")", S(j), "in", S(j), S(U).grouped(), [T]), s = _(':key="', j.times.any(), S(U).grouped(), j.times.any(), '"', [T]), o = [...e.content.matchAll(n)], i = [...e.content.matchAll(s)];
+  const n = _('v-for="(', j.times.any(), S(U).grouped(), j.times.any(), ",", j.times.any(), S(U).grouped(), j.times.any(), ")", S(j), "in", S(j), S(U).grouped(), [F]), s = _(':key="', j.times.any(), S(U).grouped(), j.times.any(), '"', [F]), o = [...e.content.matchAll(n)], i = [...e.content.matchAll(s)];
   o.forEach((u) => {
     const [h, g, v, A] = u;
     i.forEach((R) => {
@@ -1915,7 +1915,7 @@ const eo = (e, t) => {
       }
     });
   });
-}, Fo = () => {
+}, To = () => {
   const e = [];
   return ut.length > 0 && ut.forEach((t) => {
     e.push({
@@ -1925,7 +1925,7 @@ const eo = (e, t) => {
       message: `${t.message} 🚨`
     });
   }), e;
-}, To = (e, t) => {
+}, Fo = (e, t) => {
   const n = {}, s = ({ file: h, rule: g, title: v, description: A, message: R }) => {
     const L = e === "rule" ? g : h;
     n[L] || (n[L] = []), n[L].push({ file: h, rule: g, title: v, description: A, message: R });
@@ -1934,7 +1934,7 @@ const eo = (e, t) => {
       s(v);
     });
   };
-  o(ms), o(bs), o(vs), o(Es), o(gs), o(Os), o(ho), o(Is), o(ks), o(Co), o(Ss), o(Ls), o(Ts), o(uo), o(Rs), o(Ds), o(Vs), o(mo), o(No), o(hs), o(bo), o(as), o(to), o(Eo), o(vo), o(Oo), o(jo), o(so), o(es), o(ro), o(Yn), o(co), o(Ks), o(Fo);
+  o(ms), o(bs), o(vs), o(Es), o(gs), o(Os), o(ho), o(Is), o(ks), o(Co), o(Ss), o(Ls), o(Fs), o(uo), o(Rs), o(Ds), o(Vs), o(mo), o(No), o(hs), o(bo), o(as), o(to), o(Eo), o(vo), o(Oo), o(jo), o(so), o(es), o(ro), o(Yn), o(co), o(Ks), o(To);
   const i = [];
   return Object.keys(n).sort((h, g) => {
     const v = n[h].length, A = n[g].length;
@@ -1956,7 +1956,7 @@ const eo = (e, t) => {
   const s = e.scriptSetup || e.script;
   console.log(`Analyzing ${t}...`);
   const o = t.endsWith(".vue");
-  n.includes("vue-essential") && ($s(s, t), o && (ps(t), ds(e.styles, t), ws(e.template, t), ys(e.template, t))), n.includes("vue-strong") && (lo(s, t), o && (fo(s, t), Cs(s, t), As(t), Fs(e, t), Ns(e.template, t), js(e, t), Ws(e, t), Ms(t), xo(e.template, t))), n.includes("vue-recommended") && o && (zs(e.source, t), Us(e.template, t)), n.includes("vue-caution") && o && (po(s, t), _o(e.styles, t)), n.includes("rrd") && (fs(s, t), $o(s, t), cs(s, t), eo(s, t), wo(s, t), Ao(s, t), Ro(s, t), no(s, t), oo(s, t), Xn(s, t), io(s, t), Gs(s, t), o && (yo(e.template, t), Jn(e.script, t), Lo(e.template, t)));
+  n.includes("vue-essential") && ($s(s, t), o && (ps(t), ds(e.styles, t), ws(e.template, t), ys(e.template, t))), n.includes("vue-strong") && (lo(s, t), o && (fo(s, t), Cs(s, t), As(t), Ts(e, t), Ns(e.template, t), js(e, t), Ws(e, t), Ms(t), xo(e.template, t))), n.includes("vue-recommended") && o && (zs(e.source, t), Us(e.template, t)), n.includes("vue-caution") && o && (po(s, t), _o(e.styles, t)), n.includes("rrd") && (fs(s, t), $o(s, t), cs(s, t), eo(s, t), wo(s, t), Ao(s, t), Ro(s, t), no(s, t), oo(s, t), Xn(s, t), io(s, t), Gs(s, t), o && (yo(e.template, t), Jn(e.script, t), Lo(e.template, t)));
 }, Wo = 1.5, Nt = 75, Rt = 85, jt = 95, Io = ["rule", "file"], Bo = ["asc", "desc"], Mo = {
   groupBy: Io,
   orderBy: Bo
@@ -1993,10 +1993,10 @@ const zo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt"], Yt = 
 }, Do = async ({ dir: e, apply: t = [], groupBy: n, orderBy: s }) => {
   console.log(`
 
-${q}Analyzing Vue files in ${e}${y}`);
+${q}Analyzing Vue, TS and JS files in ${e}${y}`);
   const o = te.filter((g) => !t.includes(g));
   console.log(`Applying ${q}${t.length}${y} rulesets ${q}${t}${y}, ignoring ${q}${o.length}${y} rulesets ${q}${o}${y}, grouping by ${q}${n}${y}, ordering ${q}${s}${y}`), Xt = t, await Yt(e), console.log(`Found ${q}${ft}${y} files`);
-  const i = To(n, s), { errors: u, warnings: h } = ko(i, Zt, ft);
+  const i = Fo(n, s), { errors: u, warnings: h } = ko(i, Zt, ft);
   !u && !h && console.log(`${Dt}No code smells detected!${y}`);
 };
 fn(xn(process.argv)).command(
@@ -2009,13 +2009,13 @@ fn(xn(process.argv)).command(
     alias: "i",
     describe: "Comma-separated list of rulesets to ignore.",
     choices: te,
-    coerce: Ft("ignore"),
+    coerce: Tt("ignore"),
     group: "Filter Rulesets:"
   }).option("apply", {
     alias: "a",
     describe: "Comma-separated list of rulesets to apply.",
     choices: te,
-    coerce: Ft("apply"),
+    coerce: Tt("apply"),
     group: "Filter Rulesets:"
   }).option("group", {
     alias: "g",
@@ -2042,7 +2042,7 @@ ${V}Cannot use both --ignore and --apply options together.${y}.
     e.apply && (t = e.apply), e.ignore && (t = te.filter((n) => !e.ignore.includes(n))), Do({ dir: e.path, apply: t, groupBy: e.group, orderBy: e.order });
   }
 ).help().argv;
-function Ft(e) {
+function Tt(e) {
   return (t) => {
     const n = t.split(","), s = n.filter((o) => !te.includes(o));
     return s.length > 0 && (console.error(

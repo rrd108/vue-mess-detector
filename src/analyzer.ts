@@ -48,7 +48,7 @@ const walkAsync = async (dir: string) => {
 }
 
 export const analyze = async ({ dir, apply = [], groupBy, orderBy }: AnalyzeParams) => {
-  console.log(`\n\n${BG_INFO}Analyzing Vue files in ${dir}${BG_RESET}`)
+  console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
   console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}, ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}, grouping by ${BG_INFO}${groupBy}${BG_RESET}, ordering ${BG_INFO}${orderBy}${BG_RESET}`)
 
