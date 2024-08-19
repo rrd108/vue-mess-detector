@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to vue-mess-detector! Follow these steps to get started and do not hesitate to ask questions if you need help.
 
+In this guide we use `yarn` but if you prefer `npm`, or `pnpm`, you can use it instead.
+
 ## 🛠️ Steps to Contribute
 
 1. **Fork the Original Repo**
