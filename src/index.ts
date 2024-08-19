@@ -4,7 +4,7 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
 import type { RuleSetType } from './rules/rules'
 import { RULESETS } from './rules/rules'
-import { OrderBy, type GroupBy } from './types'
+import { OrderBy, OutputLevel, type GroupBy } from './types'
 import { customOptionType } from './helpers'
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
@@ -37,7 +37,7 @@ yargs(hideBin(process.argv))
           alias: 'l',
           describe: 'Output level',
           choices: ['all', 'error'],
-//          coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
+          coerce: value => customOptionType<OutputLevel>(value, 'outputLevel'),
           default: 'all',
           group: 'Output:',
         })
