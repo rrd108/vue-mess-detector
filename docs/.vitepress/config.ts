@@ -79,7 +79,8 @@ export default defineConfig({
                 { text: 'Script Length', link: '/rules/rrd/script-length' },
                 { text: 'Short Variable Name', link: '/rules/rrd/short-variable-name' },
                 { text: 'Too Many Props', link: '/rules/rrd/too-many-props' },
-                { text: 'VFor with Index Key', link: '/rules/rrd/v-for-with-index-key' }
+                { text: 'VFor with Index Key', link: '/rules/rrd/v-for-with-index-key' },
+                { text: 'Zero Length Comparison', link: '/rules/rrd/zero-length-comparison' },
               ] },
             ],
           },
