@@ -33,8 +33,8 @@ export const RULES = {
     'vForWithIndexKey',
     'noPropDestructure',
   ],
-};
-export type RuleType = typeof RULES;
+}
+export type RuleType = typeof RULES
 
-export const RULESETS = Object.keys(RULES) as Array<keyof typeof RULES>;
-export type RuleSetType = keyof RuleType;
+export const RULESETS = Object.keys(RULES) as Array<keyof typeof RULES>
+export type RuleSetType = keyof RuleType
