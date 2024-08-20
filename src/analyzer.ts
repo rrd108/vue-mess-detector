@@ -23,8 +23,8 @@ let _apply: Array<RuleSetType> = []
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 'vendor']
 
 const walkAsync = async (dir: string) => {
-  const s = await fs.stat(dir)
-  if (!s.isDirectory()) {
+  const file = await fs.stat(dir)
+  if (!file.isDirectory()) {
     await checkFile(dir, dir)
     return
   }
