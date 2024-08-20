@@ -10,7 +10,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'VueMessDetector',
       fileName: format => `vue-mess-detector.${format}.js`,
-      formats: ['es', 'umd'], // Use only 'es' and 'umd' formats
+      formats: ['es'], // Use only 'es'
     },
     rollupOptions: {
       external: ['yargs', 'node:fs/promises', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
