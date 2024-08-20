@@ -31,7 +31,6 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
-    'noPropDestructure',
   ],
 }
 export type RuleType = typeof RULES

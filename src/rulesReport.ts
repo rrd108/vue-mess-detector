@@ -52,7 +52,7 @@ export const reportRules = (groupBy: GroupBy) => {
   // Helper function to process offenses from a report function
   const processOffenses = (reportFunction: ReportFunction) => {
     const offenses = reportFunction()
-    offenses.forEach((offense) => {
+    offenses.forEach(offense => {
       addOffense(offense)
     })
   }
@@ -105,13 +105,13 @@ export const reportRules = (groupBy: GroupBy) => {
   const health: { file: string; errors: number; warnings: number }[] = []
 
   // Output the report grouped by file
-  Object.keys(offensesGrouped).forEach((key) => {
+  Object.keys(offensesGrouped).forEach(key => {
     console.log(`\n - ${key}`)
-    offensesGrouped[key].forEach((offense) => {
+    offensesGrouped[key].forEach(offense => {
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
-      if (health.some((h) => h.file === offense.file)) {
-        const foundHealth = health.find((h) => h.file === offense.file)
+      if (health.some(h => h.file === offense.file)) {
+        const foundHealth = health.find(h => h.file === offense.file)
         if (foundHealth) {
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
