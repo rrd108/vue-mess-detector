@@ -41,7 +41,8 @@ export const RULES = {
     'scriptLength',
     'shortVariableName',
     'tooManyProps',
-    'vForWithIndexKey'
+    'vForWithIndexKey',
+    'zeroLengthComparison'
   ]
 };
 export type RuleType = typeof RULES

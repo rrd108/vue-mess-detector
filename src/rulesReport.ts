@@ -34,6 +34,7 @@ import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSel
 import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
+import { reportZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
@@ -99,6 +100,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
+  processOffenses(reportZeroLengthComparison)
 
   const health: Health[] = []
 
@@ -117,16 +119,18 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Output the report grouped by the sorted keys
   sortedKeys.forEach((key) => {
     console.log(`\n - ${key}`)
-    
+
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
         const foundHealth = health.find(h => h.file === offense.file)
         if (foundHealth) {
+          // eslint-disable-next-line ts/no-unused-expressions
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
-      } else {
+      }
+      else {
         health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
       }
 
@@ -136,7 +140,8 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
 
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
-      } else {
+      }
+      else {
         console.log(`   File: ${offense.file}`)
       }
       console.log(`   Description: ${offense.description}`)
