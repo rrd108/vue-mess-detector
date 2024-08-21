@@ -18,7 +18,7 @@ if (!projectRoot) {
 
 let config = {
   path: './src',
-  apply: RULESETS.join(','),
+  apply: undefined, // RULESETS.join(','),
   ignore: undefined,
   group: 'rule',
   level: 'all',
@@ -28,7 +28,8 @@ let config = {
 // check if the project root has a vue-mess-detector.config.js file and if yes, then read it 
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
-  config = JSON.parse(await fs.readFile(configPath, 'utf-8'))
+  const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
+  config = { ...config, ...fileConfig }
   console.log(`👉 Using configuration from ${configPath}`)
 } catch (error) {
   console.log(`👉 Using default configuration`)
@@ -87,9 +88,10 @@ yargs(hideBin(process.argv))
           group: 'Order Results:'
         })
         .check((argv) => {
+          // apply is coming from the config file, ignore is coming from the command line
           if (argv.ignore && argv.apply) {
             console.error(
-              `\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}.\n\n`,
+              `\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n\n`,
             )
             // eslint-disable-next-line node/prefer-global/process
             process.exit(1)
