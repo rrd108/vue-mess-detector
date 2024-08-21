@@ -2,7 +2,7 @@
 
 A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects.
 
-## 👥 Contributors
+## 👥 Core Team
 
 <table>
   <tr>
