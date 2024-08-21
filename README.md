@@ -120,6 +120,23 @@ If you want to see only *errors* add the `--level` flag with `error`
 npx vue-mess-detector analyze ./src --group=file --level=error
 ```
 
+If you want to store your flags in a configuration file, you can create a `vue-mess-detector.json` file in the root of your project with the following content:
+
+```json
+{
+  "apply": "vue-strong,rrd",
+  "level": "error",
+}
+```
+
+Then you can run the command without flags:
+
+```bash
+npx vue-mess-detector analyze
+```
+
+All flags will be read from the configuration file and all missing flags will be set to their default values.
+
 ## 📊 Example output
 
 #### Without `--group` flag (default behavior is to group per rule) ⬇️
