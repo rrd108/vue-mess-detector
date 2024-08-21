@@ -33,9 +33,9 @@ import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeE
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
-import { reportNoPropDestructure } from './rules/rrd/noPropDestructure'
 import { BG_ERR } from './rules/asceeCodes'
 import { reportZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
+import { reportNoPropDestructure } from './rules/rrd/noPropDestructure'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
@@ -94,6 +94,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportIfWithoutCurlyBraces)
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
+  processOffenses(reportNoPropDestructure)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
@@ -101,15 +102,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
-  processOffenses(reportNoPropDestructure)
   processOffenses(reportZeroLengthComparison)
-  
-  const health: { file: string; errors: number; warnings: number }[] = []
-
-  // Output the report grouped by file
-  Object.keys(offensesGrouped).forEach(key => {
-    console.log(`\n - ${key}`)
-    offensesGrouped[key].forEach(offense => {
 
   const health: Health[] = []
 
@@ -138,8 +131,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
           // eslint-disable-next-line ts/no-unused-expressions
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
-      }
-      else {
+      } else {
         health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
       }
 
