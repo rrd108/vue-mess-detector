@@ -2,6 +2,11 @@
 
 Thank you for your interest in contributing to vue-mess-detector! Follow these steps to get started and do not hesitate to ask questions if you need help.
 
+In this guide we use `yarn` but if you prefer `npm`, `pnpm` or `bun`, you can use it instead.
+
+> [!IMPORTANT] IMPORTANT👨‍💻
+> Issues labeled as `good first issue` are marked for new contributors to jump in.
+
 ## 🛠️ Steps to Contribute
 
 1. **Fork the Original Repo**
@@ -20,6 +25,10 @@ Thank you for your interest in contributing to vue-mess-detector! Follow these s
 3. **Choose a Rule from the Issues Tab**
 
    - Visit the [Issues tab](https://github.com/rrd108/vue-mess-detector/issues) and select an issue you'd like to work on.
+
+   :::tip TIP💡
+      Issues labeled as `good first issue` are marked for new contributors to jump in.
+   :::
 
 4. **Read Documentation and Ask Questions**
 

@@ -80,6 +80,12 @@ If you want to analyze only your `src/components` directory.
 npx vue-mess-detector analyze ./src/components
 ```
 
+If you want to analyze only your `src/components/AppHeader.vue` file.
+
+```bash
+npx vue-mess-detector analyze ./src/components/AppHeader.vue
+```
+
 If you want to ignore *some* rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
 
 ```bash
@@ -96,6 +102,18 @@ If you want to *group* the results by file add the `--group` flag with one of th
 
 ```bash
 npx vue-mess-detector analyze ./src --group=file
+```
+
+If you want to *order* the results by the most problematic file add the `--order` flag with `desc`
+
+```bash
+npx vue-mess-detector analyze ./src --group=file --order=desc
+```
+
+If you want to see only *errors* add the `--level` flag with `error`
+
+```bash
+npx vue-mess-detector analyze ./src --group=file --level=error
 ```
 
 ## 📊 Example output

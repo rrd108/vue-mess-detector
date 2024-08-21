@@ -17,6 +17,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [Short Variable Name](./short-variable-name.md)
 - [Too Many Props](./too-many-props.md)
 - [VFor with Index Key](./v-for-with-index-key.md)
+- [Zero Length Comparison](./zero-length-comparison.md)
 
 ## ❓ Why it's good to follow this ruleset?
 

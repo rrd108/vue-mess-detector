@@ -6,6 +6,9 @@ const results: FileCheckResult[] = []
 
 export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
 
+const CONST_KEYWORD_LENGTH = 'const'.length
+const FUNCTION_KEYWORD_LENGTH = 'function'.length
+
 function addFunctionToFiles(funcName: string, funcBody: string, filePath: string) {
   const lineCount = funcBody.split('\n').length
   if (lineCount > MAX_FUNCTION_LENGTH) {
@@ -24,8 +27,8 @@ function parseFunctionName(content: string, startIndex: number): string {
   }
 
   // Capture the function name and skip the 'const' keyword if it's an arrow function
-  if (content.slice(i, i + 5) === 'const') {
-    i += 5
+  if (content.slice(i, i + CONST_KEYWORD_LENGTH) === 'const') {
+    i += CONST_KEYWORD_LENGTH
     // Skip any whitespace after 'const'
     while (i < content.length && /\s/.test(content[i])) {
       i++
@@ -114,13 +117,14 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
     let isFunction = false
 
     // Search for a function declaration or arrow function
-    if (content.slice(index, index + 8) === 'function') {
-      index += 8
+    if (content.slice(index, index + FUNCTION_KEYWORD_LENGTH) === 'function') {
+      index += FUNCTION_KEYWORD_LENGTH
       isFunction = true
       funcName = parseFunctionName(content, index)
       index = skipToFunctionBody(content, index)
     }
-    else if (content.slice(index, index + 5) === 'const') {
+    
+    if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') {
       const arrowFunctionInfo = parseArrowFunction(content, index)
       if (arrowFunctionInfo) {
         isFunction = true
@@ -135,7 +139,7 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
       index = end
       addFunctionToFiles(funcName, funcBody, filePath)
     }
-    else {
+    if (!isFunction) {
       index++
     }
   }

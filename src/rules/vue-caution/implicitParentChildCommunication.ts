@@ -25,7 +25,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
 
     // Check if matched prop is inside `v-model` directive
     if (definedProps.includes(vModelProp)) {
-      const lineNumber = getLineNumber(script.content.trim(), definedProps)
+      const lineNumber = getLineNumber(script.content.trim(), vModelProp)
       results.push({
         filePath,
         message: `line #${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,

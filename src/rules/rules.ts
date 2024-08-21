@@ -31,8 +31,10 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
-  ],
+    'zeroLengthComparison'
+  ]
 }
+
 export type RuleType = typeof RULES
 
 export const RULESETS = Object.keys(RULES) as Array<keyof typeof RULES>
