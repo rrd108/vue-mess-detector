@@ -2012,7 +2012,7 @@ function Xo(e, t, n) {
   return r < Ft && console.log(`${z}Code health is LOW: ${r}%${b}`), r >= Ft && r < Wt && console.log(`${x}Code health is MEDIUM ${r}%${b}`), r >= Wt && r < It && console.log(`${D}Code health is OK: ${r}%${b}`), r >= It && console.log(`${qt}Code health is GOOD: ${r}%${b}`), { errors: s, warnings: o };
 }
 let $t = 0, nn = 0, sn = [];
-const Jo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", "vendor"], on = async (e) => {
+const Jo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], on = async (e) => {
   if (!(await ie.stat(e)).isDirectory()) {
     await Bt(e, e);
     return;
