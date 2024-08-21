@@ -39,7 +39,6 @@ import { checkZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
-  console.log(`Analyzing ${filePath}...`)
 
   // ⚠️ contributors ⚠️ script rules can be used for ts, js and vue files, but template and style rules are only for vue files
   const isVueFile = filePath.endsWith('.vue')

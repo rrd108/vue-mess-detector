@@ -119,8 +119,10 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   })
 
   // Output the report grouped by the sorted keys
+  const output: { info: string }[] = []
+
   sortedKeys.forEach((key) => {
-    console.log(`\n - ${key}`)
+    output.push({ info: `\n - ${key}` })
 
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
@@ -140,14 +142,14 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
       }
 
       if (groupBy === 'file') {
-        console.log(`   Rule: ${offense.rule}`)
+        output.push({ info: `   Rule: ${offense.rule}` })
       } else {
-        console.log(`   File: ${offense.file}`)
+        output.push({ info: `   File: ${offense.file}` })
       }
-      console.log(`   Description: ${offense.description}`)
-      console.log(`   Message: ${offense.message || '🚨'}\n`)
+      output.push({ info: `   Description: ${offense.description}` })
+      output.push({ info: `   Message: ${offense.message || '🚨'}\n` })
     })
   })
 
-  return health
+  return { output, health }
 }

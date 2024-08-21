@@ -53,6 +53,11 @@ describe('yarn analyze command with default configuration', () => {
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
+  
+  it('should output json', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--output=json'])
+    expect(stdout).toContain('"info": "👉 Analyzing Vue, TS and JS files in ')
+  })
 })
 
 describe('yarn analyze command with configuration file', () => {

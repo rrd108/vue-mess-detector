@@ -3,18 +3,20 @@ import path from 'node:path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
-import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
-import type { RuleSetType } from './rules/rules'
+import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
-import type { OrderBy, OutputLevel, GroupBy } from './types'
+import type { OrderBy, OutputLevel, GroupBy, OutputFormat } from './types'
 import { customOptionType } from './helpers'
 import getProjectRoot from './helpers/getProjectRoot'
+import coerceRules from './helpers/coerceRules'
 
 const projectRoot = await getProjectRoot()
 if (!projectRoot) {
   console.error(`\n${BG_ERR}Cannot find project root.${BG_RESET}\n\n`)
   process.exit(1)
 }
+
+const output: { info: string }[] = []
 
 let config = {
   path: './src',
@@ -23,6 +25,7 @@ let config = {
   group: 'rule',
   level: 'all',
   order: 'desc',
+  output: 'text',
 }
 
 // check if the project root has a vue-mess-detector.config.js file and if yes, then read it 
@@ -30,9 +33,9 @@ try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
-  console.log(`👉 Using configuration from ${configPath}`)
+  output.push({ info: `👉 Using configuration from ${configPath}` })
 } catch (error) {
-  console.log(`👉 Using default configuration`)
+  output.push({ info: `👉 Using default configuration` })
 }
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
@@ -87,6 +90,13 @@ yargs(hideBin(process.argv))
           default: config.order,
           group: 'Order Results:'
         })
+        .option('output', {
+          describe: 'Output format',
+          choices: ['text', 'json'],
+          coerce: value => customOptionType<OutputFormat>(value, 'outputFormat'),
+          default: config.output,
+          group: 'Output Format:'
+        })
         .check((argv) => {
           // apply is coming from the config file, ignore is coming from the command line
           if (argv.ignore && argv.apply) {
@@ -108,26 +118,27 @@ yargs(hideBin(process.argv))
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
       analyze({ dir: argv.path as string, level: argv.level, apply: rules, groupBy: argv.group, orderBy: argv.order })
+        .then(result => {
+
+          if (argv.output == 'text') {
+            [...output, ...result.output].forEach(line => {
+              console.log(line.info)
+            })
+            result.reportOutput?.forEach(line => {
+              console.log(line)
+            })
+            result.codeHealthOutput?.forEach(line => {
+              console.log(line)
+            })
+          }
+
+          if (argv.output == 'json') {
+            console.log(JSON.stringify(result, null, 2))
+          }
+        })
+        .catch(error => {
+          console.error(`${BG_ERR}${error}${BG_RESET}`)
+        })
     },
   )
   .help().argv
-
-function coerceRules(optionName: 'ignore' | 'apply') {
-  return (arg: string) => {
-    const values = arg?.split(',')
-    if (!values) {
-      return
-    }
-    const invalidValues = values.filter(value => !RULESETS.includes(value as RuleSetType))
-    if (invalidValues.length > 0) {
-      console.error(
-        `\n${BG_ERR}Invalid ${optionName} values: ${invalidValues.join(
-          ', ',
-        )}${BG_RESET}. \n${TEXT_WARN}Allowed values are: ${[...RULESETS].join(', ')}${TEXT_RESET}\n\n`,
-      )
-      // eslint-disable-next-line node/prefer-global/process
-      process.exit(1)
-    }
-    return values as RuleSetType[]
-  }
-}

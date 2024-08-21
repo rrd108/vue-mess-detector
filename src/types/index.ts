@@ -1,7 +1,8 @@
-export type Flag = 'groupBy' | 'orderBy' | 'outputLevel'
+export type Flag = 'groupBy' | 'orderBy' | 'outputLevel' | 'outputFormat'
 export type GroupBy = 'rule' | 'file'
 export type OrderBy = 'asc' | 'desc'
 export type OutputLevel = 'all' | 'error'
+export type OutputFormat = 'text' | 'json'
 
 export interface Offense {
   file: string
@@ -23,9 +24,10 @@ export interface FileCheckResult {
 }
 
 export interface Health {
-  file: string;
-  errors: number;
+  file: string
+  errors: number
   warnings: number
+  output?: { info: string }[]
 }
 
 export type CodeHealthResponse = Omit<Health, 'file'>
