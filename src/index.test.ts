@@ -56,7 +56,8 @@ describe('yarn analyze command with default configuration', () => {
   
   it('should output json', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=json'])
-    expect(stdout).toContain('"info": "👉 Analyzing Vue, TS and JS files in ')
+    expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
+    expect(stdout).toContain(`codeHealthOutput`)
   })
 })
 
