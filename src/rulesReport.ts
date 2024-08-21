@@ -35,6 +35,7 @@ import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
 import { reportZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
+import { reportNoPropDestructure } from './rules/rrd/noPropDestructure'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
@@ -52,7 +53,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Helper function to process offenses from a report function
   const processOffenses = (reportFunction: ReportFunction) => {
     const offenses = reportFunction()
-    offenses.forEach((offense) => {
+    offenses.forEach(offense => {
       addOffense(offense)
     })
   }
@@ -93,6 +94,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportIfWithoutCurlyBraces)
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
+  processOffenses(reportNoPropDestructure)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
@@ -117,8 +119,10 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   })
 
   // Output the report grouped by the sorted keys
+  const output: { info: string }[] = []
+
   sortedKeys.forEach((key) => {
-    console.log(`\n - ${key}`)
+    output.push({ info: `\n - ${key}` })
 
     offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
@@ -129,8 +133,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
           // eslint-disable-next-line ts/no-unused-expressions
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
-      }
-      else {
+      } else {
         health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
       }
 
@@ -139,15 +142,14 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
       }
 
       if (groupBy === 'file') {
-        console.log(`   Rule: ${offense.rule}`)
+        output.push({ info: `   Rule: ${offense.rule}` })
+      } else {
+        output.push({ info: `   File: ${offense.file}` })
       }
-      else {
-        console.log(`   File: ${offense.file}`)
-      }
-      console.log(`   Description: ${offense.description}`)
-      console.log(`   Message: ${offense.message || '🚨'}\n`)
+      output.push({ info: `   Description: ${offense.description}` })
+      output.push({ info: `   Message: ${offense.message || '🚨'}\n` })
     })
   })
 
-  return health
+  return { output, health }
 }

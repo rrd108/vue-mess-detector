@@ -55,7 +55,7 @@ yarn rules:generate
    - Add at least two tests: one that demonstrates a case where no problems are found and one that highlights an issue.
    - Run your tests to ensure they pass:
      ```bash
-     yarn test
+     yarn test ruleName
      ```
 
 7. **Add the new rule to the analizer**

@@ -2,7 +2,7 @@
 
 A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects.
 
-## 👥 Contributors
+## 👥 Core Team
 
 <table>
   <tr>
@@ -90,6 +90,12 @@ If you want to analyze only your `src/components/AppHeader.vue` file.
 npx vue-mess-detector analyze ./src/components/AppHeader.vue
 ```
 
+If you want to exclude some directories add the `--exclude` flag with comma separated list of directories and files to exclude.
+
+```bash
+npx vue-mess-detector analyze ./src --exclude=components,Gauranga.vue
+```
+
 If you want to ignore *some* rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
 
 ```bash
@@ -119,6 +125,23 @@ If you want to see only *errors* add the `--level` flag with `error`
 ```bash
 npx vue-mess-detector analyze ./src --group=file --level=error
 ```
+
+If you want to store your flags in a configuration file, you can create a `vue-mess-detector.json` file in the root of your project with the following content:
+
+```json
+{
+  "apply": "vue-strong,rrd",
+  "level": "error"
+}
+```
+
+Then you can run the command without flags:
+
+```bash
+npx vue-mess-detector analyze
+```
+
+All flags will be read from the configuration file and all missing flags will be set to their default values.
 
 ## 📊 Example output
 

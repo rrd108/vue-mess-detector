@@ -15,15 +15,16 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   let match
   let lastLine = 0
   while ((match = regex.exec(script.content)) !== null) {
-    const magicNumber = match.groups?.magicNumber || ''
-    const lineNumber = getLineNumber(script.content, magicNumber, lastLine)
-    results.push({
-      filePath,
-      message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,
-    })
-    lastLine = lineNumber
+    const magicNumber = match.groups?.magicNumber
+    if (magicNumber) {
+      const lineNumber = getLineNumber(script.content, magicNumber, lastLine)
+      results.push({
+        filePath,
+        message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,
+      })
+      lastLine = lineNumber
+    }
   }
-
 }
 
 const reportMagicNumbers = () => {

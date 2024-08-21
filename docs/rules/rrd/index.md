@@ -10,6 +10,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
 - [Nested Ternary](./nested-ternary.md)
+- [No Prop Destructing](./no-prop-destructure.md)
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)
 - [Props Drilling](./props-drilling.md)
