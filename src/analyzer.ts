@@ -22,6 +22,8 @@ let _apply: Array<RuleSetType> = []
 
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 
+const output:any[] = []
+
 const walkAsync = async (dir: string) => {
   const file = await fs.stat(dir)
   if (!file.isDirectory()) {
@@ -55,31 +57,45 @@ const checkFile = async (fileName: string, filePath: string) => {
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
+    output.push({info: `Analyzing ${filePath}...`})
     checkRules(descriptor, filePath, _apply)
   }
 }
 
 export const analyze = async ({ dir, level, apply = [], groupBy, orderBy }: AnalyzeParams) => {
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
-  
-  console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
-  
-  console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
+
+  //console.log(`\n\n${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}`)
+  output.push({ info: `👉 Analyzing Vue, TS and JS files in ${dir}` })
+
+  /*console.log(`Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
     Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
     Output level ${BG_INFO}${level}${BG_RESET}
     Grouping by ${BG_INFO}${groupBy}${BG_RESET}
-    Ordering ${BG_INFO}${orderBy}${BG_RESET}`)
+    Ordering ${BG_INFO}${orderBy}${BG_RESET}`)*/
+
+  output.push({
+    info: `Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
+      Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
+      Output level ${BG_INFO}${level}${BG_RESET}
+      Grouping by ${BG_INFO}${groupBy}${BG_RESET}
+      Ordering ${BG_INFO}${orderBy}${BG_RESET}`
+  })
 
   _apply = apply
 
   await walkAsync(dir)
 
-  console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} files`)
+  //console.log(`Found ${BG_INFO}${filesCount}${BG_RESET} files`)
+  output.push({ info: `Found ${BG_INFO}${filesCount}${BG_RESET} files` })
 
-  const health = reportRules(groupBy, orderBy, level)
-  const { errors, warnings } = calculateCodeHealth(health, linesCount, filesCount)
+  const {health, output: reportOutput} = reportRules(groupBy, orderBy, level)
+  const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {
-    console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
+    //console.log(`${BG_OK}No code smells detected!${BG_RESET}`)
+    output.push({ info: `No code smells detected!` })
   }
+
+  return { output, codeHealthOutput, reportOutput }
 }

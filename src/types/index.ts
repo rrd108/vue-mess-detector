@@ -23,9 +23,10 @@ export interface FileCheckResult {
 }
 
 export interface Health {
-  file: string;
-  errors: number;
+  file: string
+  errors: number
   warnings: number
+  output?: any[]
 }
 
 export type CodeHealthResponse = Omit<Health, 'file'>
