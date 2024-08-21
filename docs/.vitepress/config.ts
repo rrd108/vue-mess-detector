@@ -9,12 +9,15 @@ export default defineConfig({
     ['link', { rel: 'stylesheet', href: '/styles.css' }],
     [
       'script',
-      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-4WQ5DGB03H' },
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-4WQ5DGB03H',
+      },
     ],
     [
       'script',
       {},
-    `window.dataLayer = window.dataLayer || [];
+      `window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-4WQ5DGB03H');`,
@@ -73,6 +76,7 @@ export default defineConfig({
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },
+                {text: 'No Props Destructure', link: '/rules/rrd/no-props-destructure'},
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
                 { text: 'Plain Script', link: '/rules/rrd/plain-script' },
                 { text: 'Props Drilling', link: '/rules/rrd/props-drilling' },
@@ -89,9 +93,7 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/rrd108/vue-mess-detector' },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/rrd108/vue-mess-detector' }],
   },
   markdown: {
     theme: {

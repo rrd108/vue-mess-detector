@@ -33,6 +33,7 @@ import { reportMultiAttributeElements } from './rules/vue-strong/multiAttributeE
 import { reportElementSelectorsWithScoped } from './rules/vue-caution/elementSelectorsWithScoped'
 import { reportNestedTernary } from './rules/rrd/nestedTernary'
 import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
+import { reportNoPropDestructure } from './rules/rrd/noPropDestructure'
 import { BG_ERR } from './rules/asceeCodes'
 import { reportZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
 
@@ -52,7 +53,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Helper function to process offenses from a report function
   const processOffenses = (reportFunction: ReportFunction) => {
     const offenses = reportFunction()
-    offenses.forEach((offense) => {
+    offenses.forEach(offense => {
       addOffense(offense)
     })
   }
@@ -100,7 +101,15 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
+  processOffenses(reportNoPropDestructure)
   processOffenses(reportZeroLengthComparison)
+  
+  const health: { file: string; errors: number; warnings: number }[] = []
+
+  // Output the report grouped by file
+  Object.keys(offensesGrouped).forEach(key => {
+    console.log(`\n - ${key}`)
+    offensesGrouped[key].forEach(offense => {
 
   const health: Health[] = []
 
@@ -140,8 +149,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
 
       if (groupBy === 'file') {
         console.log(`   Rule: ${offense.rule}`)
-      }
-      else {
+      } else {
         console.log(`   File: ${offense.file}`)
       }
       console.log(`   Description: ${offense.description}`)

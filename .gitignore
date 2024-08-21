@@ -4,5 +4,4 @@ test
 docs/.vitepress/cache
 docs/.vitepress/dist
 connect.md
-
 vue-mess-detector.config.js

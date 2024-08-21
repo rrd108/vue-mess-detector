@@ -34,6 +34,7 @@ import { checkMultiAttributeElements } from './rules/vue-strong/multiAttributeEl
 import { checkIfWithoutCurlyBraces } from './rules/rrd/ifWithoutCurlyBraces'
 import { checkNestedTernary } from './rules/rrd/nestedTernary'
 import { checkVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
+import { checkNoPropDestructure } from './rules/rrd/noPropDestructure'
 import { checkZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
@@ -101,6 +102,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
     checkTooManyProps(script, filePath)
+    checkNoPropDestructure(script, filePath)
     checkZeroLengthComparison(script, filePath)
 
     if (isVueFile) {
