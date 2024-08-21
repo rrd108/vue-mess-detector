@@ -36,6 +36,7 @@ import { checkNestedTernary } from './rules/rrd/nestedTernary'
 import { checkVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { checkNoPropDestructure } from './rules/rrd/noPropDestructure'
 import { checkZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
+import { checkNoVarDeclaration } from './rules/rrd/noVarDeclaration'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: Array<RuleSetType>) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -96,12 +97,13 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: A
     checkIfWithoutCurlyBraces(script, filePath)
     checkMagicNumbers(script, filePath)
     checkNestedTernary(script, filePath)
+    checkNoPropDestructure(script, filePath)
+    checkNoVarDeclaration(script, filePath)
     checkParameterCount(script, filePath)
     checkPropsDrilling(script, filePath)
     checkScriptLength(script, filePath)
     checkShortVariableName(script, filePath)
     checkTooManyProps(script, filePath)
-    checkNoPropDestructure(script, filePath)
     checkZeroLengthComparison(script, filePath)
 
     if (isVueFile) {

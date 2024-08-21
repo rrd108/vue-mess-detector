@@ -36,6 +36,7 @@ import { reportVForWithIndexKey } from './rules/rrd/vForWithIndexKey'
 import { BG_ERR } from './rules/asceeCodes'
 import { reportZeroLengthComparison } from './rules/rrd/zeroLengthComparison'
 import { reportNoPropDestructure } from './rules/rrd/noPropDestructure'
+import { reportNoVarDeclaration } from './rules/rrd/noVarDeclaration'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
@@ -95,6 +96,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
   processOffenses(reportNoPropDestructure)
+  processOffenses(reportNoVarDeclaration)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
@@ -121,10 +123,10 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Output the report grouped by the sorted keys
   const output: { info: string }[] = []
 
-  sortedKeys.forEach((key) => {
+  sortedKeys.forEach(key => {
     output.push({ info: `\n - ${key}` })
 
-    offensesGrouped[key].forEach((offense) => {
+    offensesGrouped[key].forEach(offense => {
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
