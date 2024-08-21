@@ -4,9 +4,6 @@
     "dbaeumer.vscode-eslint",
     "usernamehw.errorlens",
     "yoavbls.pretty-ts-errors",
-    // PR management / Reviewing
-    "github.vscode-pull-request-github",
-    "eamodio.gitlens",
     // Showing todo comments
     "gruntfuggly.todo-tree",
     "aaron-bond.better-comments",
