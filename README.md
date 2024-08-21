@@ -125,7 +125,7 @@ If you want to store your flags in a configuration file, you can create a `vue-m
 ```json
 {
   "apply": "vue-strong,rrd",
-  "level": "error",
+  "level": "error"
 }
 ```
 
