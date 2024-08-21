@@ -9,11 +9,12 @@ import type { GroupBy, OrderBy, OutputLevel } from './types'
 import { calculateCodeHealth } from './helpers'
 
 interface AnalyzeParams {
-  dir: string;
-  apply: Array<RuleSetType>;
-  level: OutputLevel;
-  groupBy: GroupBy;
-  orderBy: OrderBy;
+  dir: string
+  apply: Array<RuleSetType>
+  exclude: string
+  groupBy: GroupBy
+  level: OutputLevel
+  orderBy: OrderBy
 }
 
 let filesCount = 0
@@ -21,6 +22,7 @@ let linesCount = 0
 let _apply: Array<RuleSetType> = []
 
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
+const excludeFiles: string[] = []
 
 const output: { info: string }[] = []
 
@@ -36,7 +38,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, fileName)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (!skipDirs.some(dir => filePath.includes(dir))) {
+      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(dir => filePath.endsWith(dir))) {
         await walkAsync(filePath)
       }
     }
@@ -46,6 +48,10 @@ const walkAsync = async (dir: string) => {
 }
 
 const checkFile = async (fileName: string, filePath: string) => {
+  if (excludeFiles.some(file => fileName.endsWith(file))) {
+    return
+  }
+
   if (fileName.endsWith('.vue') || fileName.endsWith('.ts') || fileName.endsWith('.js')) {
     filesCount++
     const content = await fs.readFile(filePath, 'utf-8')
@@ -62,19 +68,24 @@ const checkFile = async (fileName: string, filePath: string) => {
   }
 }
 
-export const analyze = async ({ dir, level, apply = [], groupBy, orderBy }: AnalyzeParams) => {
+export const analyze = async ({ dir, apply = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
   output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
 
   output.push({
     info: `Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
       Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
+      Excluding ${BG_INFO}${exclude ? exclude : '-'}${BG_RESET}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}
       Ordering ${BG_INFO}${orderBy}${BG_RESET}`
   })
 
   _apply = apply
+  
+  if (exclude) {
+    excludeFiles.push(...exclude.split(','))
+  }
 
   await walkAsync(dir)
 

@@ -90,6 +90,12 @@ If you want to analyze only your `src/components/AppHeader.vue` file.
 npx vue-mess-detector analyze ./src/components/AppHeader.vue
 ```
 
+If you want to exclude some directories add the `--exclude` flag with comma separated list of directories and files to exclude.
+
+```bash
+npx vue-mess-detector analyze ./src --exclude=components,Gauranga.vue
+```
+
 If you want to ignore *some* rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
 
 ```bash

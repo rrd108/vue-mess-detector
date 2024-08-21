@@ -22,6 +22,7 @@ let config = {
   path: './src',
   apply: undefined, // RULESETS.join(','),
   ignore: undefined,
+  exclude: undefined,
   group: 'rule',
   level: 'all',
   order: 'desc',
@@ -57,6 +58,12 @@ yargs(hideBin(process.argv))
           coerce: coerceRules('apply'),
           group: 'Filter Rulesets:',
           default: config.apply,
+        })
+        .option('exclude', {
+          alias: 'e',
+          describe: 'Exclude files or directories from the analysis',
+          default: config.exclude,
+          group: 'Exclude files:',
         })
         .option('group', {
           alias: 'g',
@@ -117,18 +124,25 @@ yargs(hideBin(process.argv))
       if (argv.ignore) {
         rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
       }
-      analyze({ dir: argv.path as string, level: argv.level, apply: rules, groupBy: argv.group, orderBy: argv.order })
-        .then(result => {
 
+      analyze({
+        dir: argv.path as string,
+        apply: rules, 
+        exclude: argv.exclude,
+        groupBy: argv.group, 
+        level: argv.level, 
+        orderBy: argv.order
+      })
+        .then(result => {
           if (argv.output == 'text') {
             [...output, ...result.output].forEach(line => {
               console.log(line.info)
             })
             result.reportOutput?.forEach(line => {
-              console.log(line)
+              console.log(line.info)
             })
             result.codeHealthOutput?.forEach(line => {
-              console.log(line)
+              console.log(line.info)
             })
           }
 
