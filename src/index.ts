@@ -3,10 +3,9 @@ import path from 'node:path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
-import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
-import type { RuleSetType } from './rules/rules'
+import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
-import type { OrderBy, OutputLevel, GroupBy } from './types'
+import type { OrderBy, OutputLevel, GroupBy, OutputFormat } from './types'
 import { customOptionType } from './helpers'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
@@ -17,7 +16,7 @@ if (!projectRoot) {
   process.exit(1)
 }
 
-const output = []
+const output: { info: string }[] = []
 
 let config = {
   path: './src',
@@ -26,6 +25,7 @@ let config = {
   group: 'rule',
   level: 'all',
   order: 'desc',
+  output: 'text',
 }
 
 // check if the project root has a vue-mess-detector.config.js file and if yes, then read it 
@@ -33,10 +33,8 @@ try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
-  //console.log(`👉 Using configuration from ${configPath}`)
   output.push({ info: `👉 Using configuration from ${configPath}` })
 } catch (error) {
-  //console.log(`👉 Using default configuration`)
   output.push({ info: `👉 Using default configuration` })
 }
 
@@ -92,6 +90,13 @@ yargs(hideBin(process.argv))
           default: config.order,
           group: 'Order Results:'
         })
+        .option('output', {
+          describe: 'Output format',
+          choices: ['text', 'json'],
+          coerce: value => customOptionType<OutputFormat>(value, 'outputFormat'),
+          default: config.output,
+          group: 'Output Format:'
+        })
         .check((argv) => {
           // apply is coming from the config file, ignore is coming from the command line
           if (argv.ignore && argv.apply) {
@@ -114,15 +119,22 @@ yargs(hideBin(process.argv))
       }
       analyze({ dir: argv.path as string, level: argv.level, apply: rules, groupBy: argv.group, orderBy: argv.order })
         .then(result => {
-          result.output.forEach(line => {
+
+          if (argv.output == 'text') {
+            [...output, ...result.output].forEach(line => {
               console.log(line.info)
-          })
-          result.reportOutput?.forEach(line => {
-            console.log(line)
-          })
-          result.codeHealthOutput?.forEach(line => {
+            })
+            result.reportOutput?.forEach(line => {
               console.log(line)
-          })
+            })
+            result.codeHealthOutput?.forEach(line => {
+              console.log(line)
+            })
+          }
+
+          if (argv.output == 'json') {
+            console.log(JSON.stringify(result, null, 2))
+          }
         })
         .catch(error => {
           console.error(`${BG_ERR}${error}${BG_RESET}`)
