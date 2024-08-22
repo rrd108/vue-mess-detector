@@ -2,7 +2,7 @@ import ae from "node:fs/promises";
 import oe from "node:path";
 import vn from "yargs";
 import { format as Vt, inspect as On } from "util";
-import { normalize as An, resolve as le, dirname as Ie, basename as xn, extname as Cn, relative as Sn } from "path";
+import { normalize as An, resolve as le, dirname as Ie, basename as xn, extname as Sn, relative as Cn } from "path";
 import { readFileSync as vt, statSync as Gt, readdirSync as _n, writeFile as Nn } from "fs";
 import { notStrictEqual as jn, strictEqual as Rn } from "assert";
 import { fileURLToPath as Ln } from "url";
@@ -234,7 +234,7 @@ class Mn {
       } else
         je(a);
     }
-    Ct(F, !0), Ct(F, !1), fn(F), hn(), St(F, f.aliases, b, !0), pn(F), h["set-placeholder-key"] && mn(F), Object.keys(f.counts).forEach(function(r) {
+    St(F, !0), St(F, !1), fn(F), hn(), Ct(F, f.aliases, b, !0), pn(F), h["set-placeholder-key"] && mn(F), Object.keys(f.counts).forEach(function(r) {
       ue(F, r.split(".")) || R(r, 0);
     }), _ && $e.length && (F[N] = []), $e.forEach(function(r) {
       F[N].push(r);
@@ -323,7 +323,7 @@ class Mn {
     }
     function fn(r) {
       const a = /* @__PURE__ */ Object.create(null);
-      St(a, f.aliases, b), Object.keys(f.configs).forEach(function(p) {
+      Ct(a, f.aliases, b), Object.keys(f.configs).forEach(function(p) {
         const u = r[p] || a[p];
         if (u)
           try {
@@ -358,7 +358,7 @@ class Mn {
         Le(r);
       });
     }
-    function Ct(r, a) {
+    function St(r, a) {
       if (typeof v > "u")
         return;
       const p = typeof v == "string" ? v : "", u = ee.env();
@@ -391,7 +391,7 @@ class Mn {
         ~a.indexOf(".") || typeof r[a] > "u" && (r[a] = void 0);
       }), r;
     }
-    function St(r, a, p, u = !1) {
+    function Ct(r, a, p, u = !1) {
       Object.keys(p).forEach(function(c) {
         ue(r, c.split(".")) || (fe(r, c.split("."), p[c]), u && (re[c] = !0), (a[c] || []).forEach(function($) {
           ue(r, $.split(".")) || fe(r, $.split("."), p[c]);
@@ -861,11 +861,11 @@ try {
   me = process.cwd();
 }
 const is = me.substring(0, me.lastIndexOf("node_modules"));
-jn, Rn, On, is || process.cwd(), xn, Ie, Cn, Sn, le, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, vt, os({
+jn, Rn, On, is || process.cwd(), xn, Ie, Sn, Cn, le, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, vt, os({
   directory: le(me, "../../../locales"),
   updateFiles: !1
 });
-const k = "\x1B[44m", A = "\x1B[43m", I = "\x1B[41m", Jt = "\x1B[42m", g = "\x1B[0m", x = "\x1B[33m", C = "\x1B[36m", m = "\x1B[0m", cs = {
+const k = "\x1B[44m", A = "\x1B[43m", I = "\x1B[41m", Jt = "\x1B[42m", g = "\x1B[0m", x = "\x1B[33m", S = "\x1B[36m", m = "\x1B[0m", cs = {
   "vue-caution": ["elementSelectorsWithScoped", "implicitParentChildCommunication"],
   "vue-essential": ["globalStyle", "simpleProp", "singleNameComponent", "vforNoKey", "vifWithVfor"],
   "vue-recommended": ["elementAttributeOrder", "topLevelElementOrder"],
@@ -911,7 +911,7 @@ const k = "\x1B[44m", A = "\x1B[43m", I = "\x1B[41m", Jt = "\x1B[42m", g = "\x1B
   return Be.length > 0 && Be.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ Long <script> blocks${m}`,
+      rule: `${S}rrd ~ Long <script> blocks${m}`,
       description: `👉 ${x}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Me} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
       message: `${t.message} 🚨`
     });
@@ -923,7 +923,7 @@ const k = "\x1B[44m", A = "\x1B[43m", I = "\x1B[41m", Jt = "\x1B[42m", g = "\x1B
   return ke.length > 0 && ke.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ Plain <script> blocks${m}`,
+      rule: `${S}rrd ~ Plain <script> blocks${m}`,
       description: `👉 ${x} Consider using <script setup> to leverage the new SFC <script> syntax.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
       message: `${t.message} 🚨`
     });
@@ -991,7 +991,7 @@ function U(...e) {
     e.map((t) => typeof t == "string" ? t.replace(ds, "\\$&") : t).join("")
   );
 }
-function S(...e) {
+function C(...e) {
   return E(`${te(U(...e))}+`);
 }
 const H = "i", P = "g", j = (...e) => {
@@ -1007,7 +1007,7 @@ const H = "i", P = "g", j = (...e) => {
   return ze.length > 0 && ze.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ else conditions${m}`,
+      rule: `${S}rrd ~ else conditions${m}`,
       description: `👉 ${x}Try to rewrite the conditions in a way that the else clause is not necessary.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
       message: `${t.message} 🚨`
     });
@@ -1022,7 +1022,7 @@ const H = "i", P = "g", j = (...e) => {
   return De.length > 0 && De.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ cyclomatic complexity${m}`,
+      rule: `${S}rrd ~ cyclomatic complexity${m}`,
       description: `👉 ${x}Try to reduce complexity.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
       message: `${t.message} 🚨`
     });
@@ -1040,24 +1040,24 @@ const H = "i", P = "g", j = (...e) => {
   return Ue.length > 0 && Ue.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-essential ~ single name component${m}`,
+      rule: `${S}vue-essential ~ single name component${m}`,
       description: `👉 ${x}Rename the component to use multi-word name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
       message: `${t.message} 🚨`
     });
   }), e;
-}, He = [], Cs = (e, t) => {
+}, He = [], Ss = (e, t) => {
   e && e.forEach((n) => {
     n.scoped || He.push({
       filePath: t,
       message: `${A}global style${g} used`
     });
   });
-}, Ss = () => {
+}, Cs = () => {
   const e = [];
   return He.length > 0 && He.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-essential ~ global style${m}`,
+      rule: `${S}vue-essential ~ global style${m}`,
       description: `👉 ${x}Use <style scoped>.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
       message: `${t.message} 🚨`
     });
@@ -1072,7 +1072,7 @@ const H = "i", P = "g", j = (...e) => {
   return Ve.length > 0 && Ve.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-essential ~ simple prop${m}`,
+      rule: `${S}vue-essential ~ simple prop${m}`,
       description: `👉 ${x}Add at least type definition.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
       message: `${t.message} 🚨`
     });
@@ -1091,20 +1091,20 @@ const H = "i", P = "g", j = (...e) => {
     return;
   const n = j(
     "<",
-    S(D(">")),
+    C(D(">")),
     " v-if",
-    S(D(">")),
+    C(D(">")),
     " v-for",
-    S(D(">")),
+    C(D(">")),
     ">",
     [P, H]
   ), s = j(
     "<",
-    S(D(">")),
+    C(D(">")),
     " v-for",
-    S(D(">")),
+    C(D(">")),
     " v-if",
-    S(D(">")),
+    C(D(">")),
     ">",
     [P, H]
   ), o = e.content.match(n), i = e.content.match(s);
@@ -1117,7 +1117,7 @@ const H = "i", P = "g", j = (...e) => {
   return Ge.length > 0 && Ge.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-essential ~ v-if used with v-for${m}`,
+      rule: `${S}vue-essential ~ v-if used with v-for${m}`,
       description: `👉 ${x}Move out the v-if to a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
       message: `${t.message} 🚨`
     });
@@ -1125,7 +1125,7 @@ const H = "i", P = "g", j = (...e) => {
 }, Ke = [], Ls = (e, t) => {
   if (!e)
     return;
-  const n = j("<", S(D(">")), " v-for", S(D(">")), ">", [
+  const n = j("<", C(D(">")), " v-for", C(D(">")), ">", [
     P,
     H
   ]), s = e.content.match(n);
@@ -1135,7 +1135,7 @@ const H = "i", P = "g", j = (...e) => {
   return Ke.length > 0 && Ke.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-essential ~ v-for has no key${m}`,
+      rule: `${S}vue-essential ~ v-for has no key${m}`,
       description: `👉 ${x}Add a \`:key\` property to all v-for.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
       message: `${t.message} 🚨`
     });
@@ -1150,7 +1150,7 @@ const H = "i", P = "g", j = (...e) => {
   return qe.length > 0 && qe.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ component name is not PascalCase and not kebab-case${m}`,
+      rule: `${S}vue-strong ~ component name is not PascalCase and not kebab-case${m}`,
       description: `👉 ${x}Rename the component to use PascalCase or kebab-case file name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
       message: `${t.message} 🚨`
     });
@@ -1167,7 +1167,7 @@ const H = "i", P = "g", j = (...e) => {
   return Ze.length > 0 && Ze.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ prop names are not camelCased${m}`,
+      rule: `${S}vue-strong ~ prop names are not camelCased${m}`,
       description: `👉 ${x}Rename the props to camelCase.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
       message: `${t.message} 🚨`
     });
@@ -1191,7 +1191,7 @@ const H = "i", P = "g", j = (...e) => {
   return Qe.length > 0 && Qe.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ lengthy template expression${m}`,
+      rule: `${S}vue-strong ~ lengthy template expression${m}`,
       description: `👉 ${x}Refactor the expression into a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
       message: `${t.message} 🚨`
     });
@@ -1201,11 +1201,11 @@ const H = "i", P = "g", j = (...e) => {
     return;
   const n = e.template, s = j(
     "<",
-    S(V),
-    X(S(de(` 	
+    C(V),
+    X(C(de(` 	
 \r`))),
-    S(D("/>")),
-    X(S(de(` 	
+    C(D("/>")),
+    X(C(de(` 	
 \r`))),
     X("/"),
     ">",
@@ -1213,7 +1213,7 @@ const H = "i", P = "g", j = (...e) => {
   ), o = n?.content.match(s);
   if (o === null)
     return;
-  const i = j(":", S(V), X(" "), "=", X(" "), D(`'"`), [
+  const i = j(":", C(V), X(" "), "=", X(" "), D(`'"`), [
     "g"
   ]);
   o?.forEach((l) => {
@@ -1230,7 +1230,7 @@ const H = "i", P = "g", j = (...e) => {
   return Ye.length > 0 && Ye.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ attribute value is not quoted${m}`,
+      rule: `${S}vue-strong ~ attribute value is not quoted${m}`,
       description: `👉 ${x}Use quotes for attribute values.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
       message: `${t.message} 🚨`
     });
@@ -1240,11 +1240,11 @@ const H = "i", P = "g", j = (...e) => {
     return;
   const n = e.template, s = j(
     "<",
-    S(en.uppercase, V),
+    C(en.uppercase, V),
     X(nn, tn),
-    X(S(D(">"))),
+    X(C(D(">"))),
     "></",
-    S(V),
+    C(V),
     ">",
     ["g"]
   ), o = n?.content?.match(s);
@@ -1258,7 +1258,7 @@ const H = "i", P = "g", j = (...e) => {
   return Xe.length > 0 && Xe.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ component is not self closing${m}`,
+      rule: `${S}vue-strong ~ component is not self closing${m}`,
       description: `👉 ${x}Components with no content should be self-closing.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
       message: `${t.message} 🚨`
     });
@@ -1278,14 +1278,14 @@ const H = "i", P = "g", j = (...e) => {
   return Je.length > 0 && Je.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ directive shorthands not used${m}`,
+      rule: `${S}vue-strong ~ directive shorthands not used${m}`,
       description: `👉 ${x}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
       message: `${t.message} 🚨`
     });
   }), e;
 }, et = [], Zs = 3, Qs = (e) => {
   const t = j(
-    S(D("/")).grouped(),
+    C(D("/")).grouped(),
     U(".vue").at.lineEnd()
   ), n = e.match(t);
   if (n) {
@@ -1300,7 +1300,7 @@ const H = "i", P = "g", j = (...e) => {
   return et.length > 0 && et.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ full-word component names${m}`,
+      rule: `${S}vue-strong ~ full-word component names${m}`,
       description: `👉 ${x}Component names should prefer full words over abbreviations.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
       message: `${t.message} 🚨`
     });
@@ -1317,7 +1317,7 @@ const H = "i", P = "g", j = (...e) => {
   return tt.length > 0 && tt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-recommended ~ top level element order${m}`,
+      rule: `${S}vue-recommended ~ top level element order${m}`,
       description: `👉 ${x}Single-File Components should always order <script>, <template>, and <style> tags consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
       message: `${t.message} 🚨`
     });
@@ -1367,7 +1367,7 @@ const H = "i", P = "g", j = (...e) => {
   return nt.length > 0 && nt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-recommended ~ element attribute order${m}`,
+      rule: `${S}vue-recommended ~ element attribute order${m}`,
       description: `👉 ${x}The attributes of elements (including components) should be ordered consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
       message: `${t.message} 🚨`
     });
@@ -1375,7 +1375,7 @@ const H = "i", P = "g", j = (...e) => {
 }, st = [], no = 5, so = (e, t) => {
   if (!e)
     return;
-  const n = j("defineProps", X("<"), X("("), "{", S(xe), "}", ["g", "s"]), s = e.content.match(n);
+  const n = j("defineProps", X("<"), X("("), "{", C(xe), "}", ["g", "s"]), s = e.content.match(n);
   if (s?.length) {
     const o = s[0].split(",").length;
     o > no && st.push({ filePath: t, message: `props found ${I}(${o})${g}` });
@@ -1385,20 +1385,20 @@ const H = "i", P = "g", j = (...e) => {
   return st.length > 0 && st.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ too many props${m}`,
+      rule: `${S}rrd ~ too many props${m}`,
       description: `👉 ${x}Try to refactor your code to use less properties.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
       message: `${t.message} 🚨`
     });
   }), e;
-}, Se = [], ot = 20, rt = 5, Wt = 8;
+}, Ce = [], ot = 20, rt = 5, Wt = 8;
 function ro(e, t, n) {
   const s = t.split(`
 `).length;
   if (s > 2 * ot) {
-    Se.push({ filePath: n, message: `function ${I}(${It(e)})${g} is too long: ${I}${s} lines${g}` });
+    Ce.push({ filePath: n, message: `function ${I}(${It(e)})${g} is too long: ${I}${s} lines${g}` });
     return;
   }
-  s > ot && Se.push({ filePath: n, message: `function ${A}(${It(e)})${g} is too long: ${A}${s} lines${g}` });
+  s > ot && Ce.push({ filePath: n, message: `function ${A}(${It(e)})${g} is too long: ${A}${s} lines${g}` });
 }
 function io(e, t) {
   let n = "", s = t;
@@ -1453,10 +1453,10 @@ const uo = (e, t) => {
   }
 }, fo = () => {
   const e = [];
-  return Se.length > 0 && Se.forEach((t) => {
+  return Ce.length > 0 && Ce.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ function size${m}`,
+      rule: `${S}rrd ~ function size${m}`,
       description: `👉 ${x}Functions must be shorter than ${ot} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `${t.message} 🚨`
     });
@@ -1476,7 +1476,7 @@ const uo = (e, t) => {
   return it.length > 0 && it.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ parameter count${m}`,
+      rule: `${S}rrd ~ parameter count${m}`,
       description: `👉 ${x}Max number of function parameters should be ${sn}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `${t.message} 🚨`
     });
@@ -1489,23 +1489,23 @@ const uo = (e, t) => {
     L.times.any(),
     "[",
     L.times.any(),
-    S(de(`'"`), S(V), de(`'"`), L.times.any(), X(",", L.times.any())),
+    C(de(`'"`), C(V), de(`'"`), L.times.any(), X(",", L.times.any())),
     "]",
     L.times.any(),
     ")",
     [P]
   ), s = j(
     "<",
-    S(V).grouped(),
+    C(V).grouped(),
     L,
     D(">").times.any(),
     ":",
-    S(V).grouped(),
+    C(V).grouped(),
     L.times.any(),
     "=",
     L.times.any(),
     '"props.',
-    S(V).grouped(),
+    C(V).grouped(),
     '"',
     [P]
   );
@@ -1526,7 +1526,7 @@ const uo = (e, t) => {
   return ct.length > 0 && ct.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ props drilling${m}`,
+      rule: `${S}rrd ~ props drilling${m}`,
       description: `👉 ${x}Props should not be forwarded unmodified. Consider refactoring.${m}`,
       message: `${t.message} 🚨`
     });
@@ -1545,12 +1545,12 @@ const uo = (e, t) => {
   return at.length > 0 && at.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ short variable names${m}`,
+      rule: `${S}rrd ~ short variable names${m}`,
       description: `👉 ${x}Variable names must have a minimum length of ${on}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${t.message} 🚨`
     });
   }), e;
-}, rn = [], Ce = [], yo = 5, Eo = (e, t) => {
+}, rn = [], Se = [], yo = 5, Eo = (e, t) => {
   if (!e)
     return;
   const n = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, s = e.content.match(n);
@@ -1559,15 +1559,15 @@ const uo = (e, t) => {
 `).length > yo) {
       const i = o.split(`
 `)[0], l = B(e.content, i);
-      rn.push({ filePath: t, message: `line #${l} ${A}computed${g}` }), Ce.push({ filePath: t }), Ce.some((h) => h.filePath === t) || Ce.push({ filePath: t });
+      rn.push({ filePath: t, message: `line #${l} ${A}computed${g}` }), Se.push({ filePath: t }), Se.some((h) => h.filePath === t) || Se.push({ filePath: t });
     }
   });
 }, wo = () => {
   const e = [];
-  return Ce.length > 0 && rn.forEach((t) => {
+  return Se.length > 0 && rn.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ complicated computed property${m}`,
+      rule: `${S}vue-strong ~ complicated computed property${m}`,
       description: `👉 ${x}Refactor the computed properties to smaller ones.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
       message: `${t.message} 🚨`
     });
@@ -1586,7 +1586,7 @@ const uo = (e, t) => {
   return lt.length > 0 && lt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ component files${m}`,
+      rule: `${S}vue-strong ~ component files${m}`,
       description: `👉 ${x}Whenever a build system is available to concatenate files, each component should be in its own file.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
       message: `${t.message} 🚨`
     });
@@ -1618,15 +1618,15 @@ const uo = (e, t) => {
   return _e.length > 0 && _e.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-caution ~ implicit parent-child communication${m}`,
+      rule: `${S}vue-caution ~ implicit parent-child communication${m}`,
       description: `👉 ${x}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
       message: `${t.message} 🚨`
     });
   }), e;
-}, ut = [], Mt = 5, Co = 3, So = (e, t) => {
+}, ut = [], Mt = 5, So = 3, Co = (e, t) => {
   if (!e)
     return;
-  const n = j(tn.times.atLeast(Mt).or(L.times.atLeast(Co * Mt)), [
+  const n = j(tn.times.atLeast(Mt).or(L.times.atLeast(So * Mt)), [
     P,
     H
   ]);
@@ -1642,7 +1642,7 @@ const uo = (e, t) => {
   return ut.length > 0 && ut.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ deep indentation${m}`,
+      rule: `${S}rrd ~ deep indentation${m}`,
       description: `👉 ${x}Try to refactor your component to child components, to avoid deep indentations.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
       message: `${t.message} 🚨`
     });
@@ -1657,7 +1657,7 @@ const uo = (e, t) => {
   return ft.length > 0 && ft.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ html link${m}`,
+      rule: `${S}rrd ~ html link${m}`,
       description: `👉 ${x}Use router-link or NuxtLink.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
       message: `${t.message} 🚨`
     });
@@ -1682,7 +1682,7 @@ const uo = (e, t) => {
   return ht.length > 0 && ht.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ if without curly braces${m}`,
+      rule: `${S}rrd ~ if without curly braces${m}`,
       description: `👉 ${x}All if statements must be enclosed in curly braces for better readability and maintainability.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
       message: `${t.message} 🚨`
     });
@@ -1690,16 +1690,16 @@ const uo = (e, t) => {
 }, pt = [], Fo = (e, t) => {
   if (!e)
     return;
-  const n = j(S($s).as("magicNumber"), gs(")", nn), [P]);
+  const n = j(C($s).as("magicNumber"), gs(")", nn), [P]);
   let s, o = 0;
   for (; (s = n.exec(e.content)) !== null; ) {
-    const i = s.groups?.magicNumber;
-    if (i) {
-      const l = B(e.content, i, o);
+    const i = s.groups?.magicNumber, l = parseInt(i ?? "0");
+    if (l > 1) {
+      const h = B(e.content, String(l), o);
       pt.push({
         filePath: t,
-        message: `line #${l} ${A}magic number: ${i}${g}`
-      }), o = l;
+        message: `line #${h} ${A}magic number: ${l}${g}`
+      }), o = h;
     }
   }
 }, Po = () => {
@@ -1707,7 +1707,7 @@ const uo = (e, t) => {
   return pt.length && pt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ magic numbers${m}`,
+      rule: `${S}rrd ~ magic numbers${m}`,
       description: `👉 ${x}Extract magic numbers to a constant.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
       message: `magic numbers found (${t.message}) 🚨`
     });
@@ -1727,7 +1727,7 @@ const uo = (e, t) => {
   return mt.length > 0 && mt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-strong ~ multi-attribute elements${m}`,
+      rule: `${S}vue-strong ~ multi-attribute elements${m}`,
       description: `👉 ${x}Elements with multiple attributes should span multiple lines, with one attribute per line.${m}`,
       message: `${t.message} 🚨`
     });
@@ -1867,7 +1867,7 @@ const uo = (e, t) => {
   return dt.length > 0 && dt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}vue-caution ~ element selectors with scoped${m}`,
+      rule: `${S}vue-caution ~ element selectors with scoped${m}`,
       description: `👉 ${x}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
       message: `${t.message} 🚨`
     });
@@ -1875,7 +1875,7 @@ const uo = (e, t) => {
 }, gt = [], ko = (e, t) => {
   if (!e)
     return;
-  const n = j(S(xe), L, "?", L, S(xe), L, ":", L, S(xe));
+  const n = j(C(xe), L, "?", L, C(xe), L, ":", L, C(xe));
   e.content.match(n)?.forEach((o) => {
     if (o.split("?").length - 1 > 1) {
       const i = B(e.content, o);
@@ -1890,7 +1890,7 @@ const uo = (e, t) => {
   return gt.length > 0 && gt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ nested Ternary${m}`,
+      rule: `${S}rrd ~ nested Ternary${m}`,
       description: `👉 ${x}/* TODO tip to fix this issue */.${m} See: https:///* TODO doc link */`,
       message: `${t.message} 🚨`
     });
@@ -1898,7 +1898,7 @@ const uo = (e, t) => {
 }, $t = [], Do = (e, t) => {
   if (!e)
     return;
-  const n = j('v-for="(', L.times.any(), S(V).grouped(), L.times.any(), ",", L.times.any(), S(V).grouped(), L.times.any(), ")", S(L), "in", S(L), S(V).grouped(), [P]), s = j(':key="', L.times.any(), S(V).grouped(), L.times.any(), '"', [P]), o = [...e.content.matchAll(n)], i = [...e.content.matchAll(s)];
+  const n = j('v-for="(', L.times.any(), C(V).grouped(), L.times.any(), ",", L.times.any(), C(V).grouped(), L.times.any(), ")", C(L), "in", C(L), C(V).grouped(), [P]), s = j(':key="', L.times.any(), C(V).grouped(), L.times.any(), '"', [P]), o = [...e.content.matchAll(n)], i = [...e.content.matchAll(s)];
   o.forEach((l) => {
     const [h, b, O, v] = l;
     i.forEach((_) => {
@@ -1917,7 +1917,7 @@ const uo = (e, t) => {
   return $t.length > 0 && $t.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ VFor With Index Key${m}`,
+      rule: `${S}rrd ~ VFor With Index Key${m}`,
       description: `👉 ${x}Avoid using index as key in v-for loops.${m} See: https://`,
       message: `${t.message} 🚨`
     });
@@ -1939,7 +1939,7 @@ const uo = (e, t) => {
   return bt.length > 0 && bt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ Zero Length Comparison${m}`,
+      rule: `${S}rrd ~ Zero Length Comparison${m}`,
       description: `👉 ${x}In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
       message: `${t.message} 🚨`
     });
@@ -1960,7 +1960,7 @@ const uo = (e, t) => {
   return yt.length > 0 && yt.forEach((t) => {
     e.push({
       file: t.filePath,
-      rule: `${C}rrd ~ no Prop Destructure${m}`,
+      rule: `${S}rrd ~ no Prop Destructure${m}`,
       description: `👉 ${x}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
       message: `${t.message} 🚨`
     });
@@ -1974,7 +1974,7 @@ const uo = (e, t) => {
       o(_);
     });
   };
-  i(xs), i(Ns), i(Fs), i(Rs), i(Ss), i(Ts), i(Oo), i(qs), i(Ys), i(Wo), i(Bs), i(Us), i(Vs), i(wo), i(zs), i(Js), i(to), i(xo), i(Mo), i(Os), i(_o), i(ys), i(fo), i(jo), i(Lo), i(Po), i(zo), i(Ko), i(po), i(fs), i(go), i(ls), i(bo), i(oo), i(Uo), i(Vo);
+  i(xs), i(Ns), i(Fs), i(Rs), i(Cs), i(Ts), i(Oo), i(qs), i(Ys), i(Wo), i(Bs), i(Us), i(Vs), i(wo), i(zs), i(Js), i(to), i(xo), i(Mo), i(Os), i(_o), i(ys), i(fo), i(jo), i(Lo), i(Po), i(zo), i(Ko), i(po), i(fs), i(go), i(ls), i(bo), i(oo), i(Uo), i(Vo);
   const l = [], h = Object.keys(s).sort((O, v) => {
     const _ = s[O].length, N = s[v].length;
     return t === "desc" ? N - _ : _ - N;
@@ -1994,7 +1994,7 @@ const uo = (e, t) => {
   }), { output: b, health: l };
 }, Zo = (e, t, n) => {
   const s = e.scriptSetup || e.script, o = t.endsWith(".vue");
-  n.includes("vue-essential") && (_s(s, t), o && (As(t), Cs(e.styles, t), Ls(e.template, t), js(e.template, t))), n.includes("vue-strong") && (Eo(s, t), o && (vo(s, t), Is(s, t), Ps(t), Hs(e, t), ks(e.template, t), Ds(e, t), Ks(e, t), Qs(t), To(e.template, t))), n.includes("vue-recommended") && o && (Xs(e.source, t), eo(e.template, t)), n.includes("vue-caution") && o && (Ao(s, t), Bo(e.styles, t)), n.includes("rrd") && (vs(s, t), So(s, t), bs(s, t), uo(s, t), Ro(s, t), Fo(s, t), ko(s, t), ho(s, t), mo(s, t), as(s, t), $o(s, t), so(s, t), Go(s, t), Ho(s, t), o && (No(e.template, t), us(e.script, t), Do(e.template, t)));
+  n.includes("vue-essential") && (_s(s, t), o && (As(t), Ss(e.styles, t), Ls(e.template, t), js(e.template, t))), n.includes("vue-strong") && (Eo(s, t), o && (vo(s, t), Is(s, t), Ps(t), Hs(e, t), ks(e.template, t), Ds(e, t), Ks(e, t), Qs(t), To(e.template, t))), n.includes("vue-recommended") && o && (Xs(e.source, t), eo(e.template, t)), n.includes("vue-caution") && o && (Ao(s, t), Bo(e.styles, t)), n.includes("rrd") && (vs(s, t), Co(s, t), bs(s, t), uo(s, t), Ro(s, t), Fo(s, t), ko(s, t), ho(s, t), mo(s, t), as(s, t), $o(s, t), so(s, t), Go(s, t), Ho(s, t), o && (No(e.template, t), us(e.script, t), Do(e.template, t)));
 }, Qo = 1.5, kt = 75, zt = 85, Dt = 95, Yo = ["rule", "file"], Xo = ["asc", "desc"], Jo = ["all", "error"], er = ["text", "json"], tr = {
   groupBy: Yo,
   orderBy: Xo,
