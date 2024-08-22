@@ -129,6 +129,7 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
     }
 
     if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') {
+      // TODO this will find the first const keyword, but it could be a variable declaration see #174
       const arrowFunctionInfo = parseArrowFunction(content, index)
       if (arrowFunctionInfo) {
         isFunction = true
