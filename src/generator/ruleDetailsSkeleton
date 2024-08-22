@@ -8,12 +8,26 @@ Content here...
 
 ## 😱 Examples of code for which this rule will throw a warning
 
-Example of bad code...
+::: warning
+The following code contains... /* TODO: Add details of the example provided */
+:::
 
-Extra details of the example... (if applicable)
+```vue
+<script setup>
+// TODO: Add example code
+</script>
+```
 
 ## 🤩 How to fix it?
 
-Example of how to fix it...
+::: tip
+Refactor... /* TODO: Add details of how to fix the error/warning from the example above */
+:::
+
+```vue
+<script setup>
+// TODO: Add fixed example code
+</script>
+```
 
 Extra details of the example... (if applicable)
