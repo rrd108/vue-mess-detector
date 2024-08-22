@@ -75,8 +75,9 @@ function parseArrowFunction(content: string, startIndex: number) {
 
   // Skip arrow syntax (=>)
   startIndex = content.indexOf('=>', startIndex)
-  if (startIndex === -1)
+  if (startIndex === -1) {
     return null
+  }
   bodyStart = startIndex + 2
 
   return { name, bodyStart }
@@ -91,10 +92,12 @@ function extractFunctionBody(content: string, startIndex: number) {
   while (endIndex < content.length && openBraces > 0) {
     const char = content[endIndex]
 
-    if (char === '{')
+    if (char === '{') {
       openBraces++
-    if (char === '}')
+    }
+    if (char === '}') {
       openBraces--
+    }
     body += char
     endIndex++
   }
