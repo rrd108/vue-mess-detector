@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { MAX_FUNCTION_LENGTH, checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
@@ -98,7 +98,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(${funcName})${BG_RESET} is too long 🚨`,
+      message: `function ${BG_WARN}(${funcName})${BG_RESET} is too long: ${BG_WARN}25 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -173,12 +173,12 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(dummyRegularFunction)${BG_RESET} is too long 🚨`,
+      message: `function ${BG_WARN}(dummyRegularFunction)${BG_RESET} is too long: ${BG_WARN}31 lines${BG_RESET} 🚨`,
     }, {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(dummyArrowFunction)${BG_RESET} is too long 🚨`,
+      message: `function ${BG_WARN}(dummyArrowFunction)${BG_RESET} is too long: ${BG_WARN}27 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -195,6 +195,15 @@ describe('checkFunctionSize', () => {
                 bookings.value = res.data.bookings
                 paginate.value = res.data.paginate
                 bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
                 paginate.value = res.data.paginate
                 bookings.value = res.data.bookings
                 paginate.value = res.data.paginate
@@ -228,7 +237,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long 🚨`,
+      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}43 lines${BG_RESET} 🚨`,
     }])
   })
 })
