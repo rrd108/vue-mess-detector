@@ -39,10 +39,11 @@
     "@vue/compiler-sfc": "^3.4.27",
     "html-tags": "^4.0.0",
     "magic-regexp": "^0.8.0",
+    "prettier-eslint": "^16.3.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.24.0",
+    "@antfu/eslint-config": "^2.27.0",
     "@types/node": "^20.13.0",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
