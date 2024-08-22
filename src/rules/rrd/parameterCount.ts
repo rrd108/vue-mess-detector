@@ -31,7 +31,7 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string) =>
       // Regular function
       checkParameters(match[1], match[2], filePath) // match[2] are the params for current regular function
     }
-    else if (match[3]) {
+    if (match[3]) {
       // Arrow function
       checkParameters(match[3], match[4], filePath) // match[4] are the params for current arrow function
     }

@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -11,8 +11,12 @@ const FUNCTION_KEYWORD_LENGTH = 'function'.length
 
 function addFunctionToFiles(funcName: string, funcBody: string, filePath: string) {
   const lineCount = funcBody.split('\n').length
+  if (lineCount > 2 * MAX_FUNCTION_LENGTH) {
+    results.push({ filePath, message: `function ${BG_ERR}(${cleanFunctionName(funcName)})${BG_RESET} is too long: ${BG_ERR}${lineCount} lines${BG_RESET}` })
+    return
+  }
   if (lineCount > MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_ERR}(${cleanFunctionName(funcName)})${BG_RESET} is too long` })
+    results.push({ filePath, message: `function ${BG_WARN}(${cleanFunctionName(funcName)})${BG_RESET} is too long: ${BG_WARN}${lineCount} lines${BG_RESET}` })
   }
 }
 
@@ -71,8 +75,9 @@ function parseArrowFunction(content: string, startIndex: number) {
 
   // Skip arrow syntax (=>)
   startIndex = content.indexOf('=>', startIndex)
-  if (startIndex === -1)
+  if (startIndex === -1) {
     return null
+  }
   bodyStart = startIndex + 2
 
   return { name, bodyStart }
@@ -87,10 +92,12 @@ function extractFunctionBody(content: string, startIndex: number) {
   while (endIndex < content.length && openBraces > 0) {
     const char = content[endIndex]
 
-    if (char === '{')
+    if (char === '{') {
       openBraces++
-    if (char === '}')
+    }
+    if (char === '}') {
       openBraces--
+    }
     body += char
     endIndex++
   }
@@ -123,8 +130,9 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
       funcName = parseFunctionName(content, index)
       index = skipToFunctionBody(content, index)
     }
-    
+
     if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') {
+      // TODO this will find the first const keyword, but it could be a variable declaration see #174
       const arrowFunctionInfo = parseArrowFunction(content, index)
       if (arrowFunctionInfo) {
         isFunction = true

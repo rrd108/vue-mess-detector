@@ -24,16 +24,18 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
   )
   const matches = template?.content.match(regexTempltaTag)
 
-  if (matches === null)
+  if (matches === null) {
     return
+  }
 
   const regexUnquotedAttributeValue = createRegExp(':', oneOrMore(wordChar), maybe(' '), '=', maybe(' '), charNotIn('\'"'), [
     'g',
   ])
 
   matches?.forEach((templateTag) => {
-    if (!templateTag.includes(':'))
+    if (!templateTag.includes(':')) {
       return // check if it contains a colon
+    }
 
     const match = templateTag.match(regexUnquotedAttributeValue)
     if (match?.length) {

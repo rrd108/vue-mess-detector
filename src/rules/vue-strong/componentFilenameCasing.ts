@@ -5,8 +5,9 @@ import type { FileCheckResult, Offense } from '../../types'
 const results: FileCheckResult[] = []
 
 const checkComponentFilenameCasing = (filePath: string) => {
-  if (filePath.includes('pages') || filePath.includes('layouts'))
+  if (filePath.includes('pages') || filePath.includes('layouts')) {
     return
+  }
 
   const fileName = path.basename(filePath)
 

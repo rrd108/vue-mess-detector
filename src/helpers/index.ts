@@ -1,14 +1,14 @@
-import { BG_ERR, BG_RESET, BG_WARN, BG_INFO, BG_OK } from "../rules/asceeCodes";
-import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy, OutputFormat, OutputLevel } from "../types";
-import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from "./constants";
+import { BG_ERR, BG_RESET, BG_WARN, BG_INFO, BG_OK } from "../rules/asceeCodes"
+import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy, OutputFormat, OutputLevel } from "../types"
+import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from "./constants"
 
 /* Helper function to count non duplicated objects (using `field` to filter) */
 export function getUniqueFilenameCount<T>(arr: T[], field: Partial<keyof T>): number {
-  const uniqueFilenames = new Set(arr.map((item) => item[field]));
-  return uniqueFilenames.size;
+  const uniqueFilenames = new Set(arr.map((item) => item[field]))
+  return uniqueFilenames.size
 }
 
-const validGroupByOptions: GroupBy[] = ['rule', 'file'];
+const validGroupByOptions: GroupBy[] = ['rule', 'file']
 
 /*
   - `asc` is the default order, as the checks run.
@@ -18,9 +18,9 @@ const validGroupByOptions: GroupBy[] = ['rule', 'file'];
   - for grouping by file, it will order depending on the file with most offended rules
   - for grouping by rule, it will order depending on the rule most offended
 */
-const validOrderOptions: OrderBy[] = ['asc', 'desc'];
-const validOutputLevelOptions: OutputLevel[] = ['all', 'error'];
-const validOutputFormatOptions: OutputFormat[] = ['text', 'json'];
+const validOrderOptions: OrderBy[] = ['asc', 'desc']
+const validOutputLevelOptions: OutputLevel[] = ['all', 'error']
+const validOutputFormatOptions: OutputFormat[] = ['text', 'json']
 
 const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[] | OutputFormat[]> = {
   groupBy: validGroupByOptions,
@@ -30,7 +30,7 @@ const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[] | OutputFo
 }
 
 export function customOptionType<T>(value: T, flag: Flag) {
-  const validOptions = flagOptions[flag];
+  const validOptions = flagOptions[flag]
 
   if (!validOptions.includes(value as unknown as GroupBy & OrderBy)) {
     console.error(

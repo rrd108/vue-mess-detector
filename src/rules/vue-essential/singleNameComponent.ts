@@ -12,8 +12,9 @@ const checkSingleNameComponent = (filePath: string) => {
   }
 
   const fileName = path.basename(filePath)
-  if (fileName === 'App.vue')
+  if (fileName === 'App.vue') {
     return
+  }
 
   const regex = createRegExp(letter.uppercase)
   const matches = fileName.slice(1).match(regex) // ignore the first character
