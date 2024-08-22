@@ -68,6 +68,12 @@ yarn rules:generate
      yarn rules:missing
      ```
 
+::: tip
+You can use the docs generator to create a skeleton markdown file. Run the following command and follow the instructions:
+```bash
+yarn docs:generate
+```
+:::
 8. **Add the rule to the documentation**
 
    - Add your new rule to the `docs/rules/RULESET/rule-name.md` file.

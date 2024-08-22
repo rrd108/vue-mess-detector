@@ -1,0 +1,33 @@
+# _RULENAME_
+
+Checks if...
+
+## ❓ Why it's good to follow this rule?
+
+Content here...
+
+## 😱 Examples of code for which this rule will throw a warning
+
+::: warning
+The following code contains... /* TODO: Add details of the example provided */
+:::
+
+```vue
+<script setup>
+// TODO: Add example code
+</script>
+```
+
+## 🤩 How to fix it?
+
+::: tip
+Refactor... /* TODO: Add details of how to fix the error/warning from the example above */
+:::
+
+```vue
+<script setup>
+// TODO: Add fixed example code
+</script>
+```
+
+Extra details of the example... (if applicable)
