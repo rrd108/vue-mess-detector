@@ -143,7 +143,9 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
 
       if (groupBy === 'file') {
         output.push({ info: `   Rule: ${offense.rule}` })
-      } else {
+      }
+      
+      if (groupBy !== 'file') {
         output.push({ info: `   File: ${offense.file}` })
       }
       output.push({ info: `   Description: ${offense.description}` })

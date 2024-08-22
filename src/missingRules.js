@@ -26,7 +26,7 @@ const findRules = async (srcDir) => {
       if (stat.isDirectory()) {
         await traverseDirectory(fullPath)
       }
-      else if (isValidSourceFile(currentPath, file)) {
+      if (isValidSourceFile(currentPath, file)) {
         allRules.push(`${currentPath}/${file}`)
       }
     }
@@ -84,7 +84,9 @@ const main = async () => {
       console.error(`\n${errors} errors were found during the check.\n`)
       // eslint-disable-next-line node/prefer-global/process
       process.exit(1) // Exit with error code
-    } else {
+    }
+    
+    if (!errors) {
         console.log('All checks passed successfully.')
     }
 }
