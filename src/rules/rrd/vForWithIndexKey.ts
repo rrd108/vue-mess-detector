@@ -18,13 +18,13 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
   const keyMatches = [...template.content.matchAll(keyRegex)]
 
   matches.forEach((match) => {
-    const [_, item, index, array] = match;
+    const [_, item, index, array] = match
 
     keyMatches.forEach((keyMatch) => {
-      const key = keyMatch[1];
+      const key = keyMatch[1]
 
       if (key === index) {
-        const lineNumber = getLineNumber(template.content.trim(), key as string);
+        const lineNumber = getLineNumber(template.content.trim(), key as string)
         results.push({
           filePath,
           message: `line #${lineNumber} ${BG_WARN}index is being used as :key in v-for${BG_RESET}`
