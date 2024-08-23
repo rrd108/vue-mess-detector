@@ -147,7 +147,7 @@ All flags will be read from the configuration file. All missing flags will be se
 #### With `--group=file` flag ⬇️
 ![Output Image - Group By File](./public/results-per-file.png)
 
-## ℹ️ Output explanation
+## 🧾 Output explanation
 
 **Group by Rule:** In this view, the first line is highlighted in blue, representing the rule being evaluated. Following this, you'll see blocks of information structured as follows: file path, description, and message.
 
@@ -160,6 +160,17 @@ All flags will be read from the configuration file. All missing flags will be se
 
 > [!IMPORTANT]
 > Yellow messages are warnings, suggesting best practices, while red messages highlight errors that must be corrected.
+
+## 📈 Code Health
+
+![Output Image - Code Health](./public/code-health.png)
+
+According to the number of errors and warnings, and the lines of code in your project, we calculate a health score for your project. 
+The code health is:
+- **low** if the score is under 75%
+- **medium** if the score is between 76% and 85%
+- **ok** if the score is between 86% and 95%
+- **good** if the score is above 96%
 
 ## 📋 Rulesets
 
