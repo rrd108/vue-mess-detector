@@ -168,9 +168,9 @@ All flags will be read from the configuration file. All missing flags will be se
 According to the number of errors and warnings, and the lines of code in your project, we calculate a health score for your project.
 The code health is:
 - **low** if the score is under 75%
-- **medium** if the score is between 76% and 85%
+- **medium** if the score is between 75% and 85%
 - **ok** if the score is between 86% and 95%
-- **good** if the score is above 96%
+- **good** if the score is above 95%
 
 ## 📋 Rulesets
 
