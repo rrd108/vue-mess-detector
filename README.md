@@ -141,7 +141,7 @@ Then you can run the command without flags:
 npx vue-mess-detector analyze
 ```
 
-All flags will be read from the configuration file and all missing flags will be set to their default values.
+All flags will be read from the configuration file. All missing flags will be set to their default values except if you provide them as flags in the command line.
 
 ## 📊 Example output
 
