@@ -100,7 +100,7 @@ const checkIndexFiles = async (docsDir, rulesetIndexes) => {
       const indexLinks = indexContent.match(/\[.+?\]\(\.\/(.+?\.md)\)/g) || []
       const indexedRules = indexLinks.map(link => link.match(/\(\.\/(.+?\.md)\)/)[1])
 
-      const missingRules = rules.filter(rule => !indexedRules.includes(rule))
+      const missingRules = rules.filter(rule => !indexedRules.includes(rule) && !rule.endsWith('index.md'))
       if (missingRules.length > 0) {
         missingFromIndex.push({ rulesetName, missingRules })
       }
@@ -132,7 +132,7 @@ const main = async () => {
     }
 
     const sidebarRules = await extractSidebarRules(configPath)
-    const sidebarMissingRules = allRules.filter(rule => !sidebarRules.includes(rule))
+    const sidebarMissingRules = allRules.filter(rule => !sidebarRules.includes(rule) && !rule.endsWith('index.md'))
 
     if (sidebarMissingRules.length > 0) {
       console.log(`🙀 Missing ${sidebarMissingRules.length} rules from the sidebar:`)
