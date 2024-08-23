@@ -32,7 +32,7 @@ export const insertRule2Rules = async (ruleset, ruleName) => {
   // Replace the RULES object in the file content
   const updatedContent = content.replace(
     /export const RULES = \{[\s\S]*?\}/,
-        `export const RULES = ${updatedRulesString}`,
+    `export const RULES = ${updatedRulesString}`,
   )
 
   // Write the updated content back to the file
