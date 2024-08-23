@@ -6,7 +6,7 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
-import { customOptionType } from './helpers'
+import { customOptionType } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 

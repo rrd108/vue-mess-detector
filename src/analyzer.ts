@@ -7,7 +7,7 @@ import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
 import type { GroupBy, OrderBy, OutputLevel } from './types'
-import { calculateCodeHealth } from './helpers'
+import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 
 interface AnalyzeParams {
   dir: string

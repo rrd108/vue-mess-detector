@@ -1993,28 +1993,14 @@ const uo = (e, t) => {
 }, Zo = (e, t, n) => {
   const s = e.scriptSetup || e.script, o = t.endsWith(".vue");
   n.includes("vue-essential") && (_s(s, t), o && (As(t), Ss(e.styles, t), Ls(e.template, t), js(e.template, t))), n.includes("vue-strong") && (Eo(s, t), o && (vo(s, t), Is(s, t), Ps(t), Hs(e, t), ks(e.template, t), Ds(e, t), Ks(e, t), Qs(t), To(e.template, t))), n.includes("vue-recommended") && o && (Xs(e.source, t), eo(e.template, t)), n.includes("vue-caution") && o && (Ao(s, t), Mo(e.styles, t)), n.includes("rrd") && (vs(s, t), Co(s, t), bs(s, t), uo(s, t), Ro(s, t), Fo(s, t), ko(s, t), ho(s, t), mo(s, t), as(s, t), $o(s, t), so(s, t), Go(s, t), Ho(s, t), o && (No(e.template, t), us(e.script, t), Do(e.template, t)));
-}, Qo = 1.5, kt = 75, zt = 85, Dt = 95, Yo = ["rule", "file"], Xo = ["asc", "desc"], Jo = ["all", "error"], er = ["text", "json"], tr = {
-  groupBy: Yo,
-  orderBy: Xo,
-  outputLevel: Jo,
-  outputFormat: er
-};
-function ve(e, t) {
-  const n = tr[t];
-  return n.includes(e) || (console.error(
-    `
-Invalid option "${e}" provided for flag "${t}". Valid options are: ${n.join(", ")}.
-`
-  ), process.exit(1)), e;
-}
-function nr(e, t, n) {
+}, Qo = 1.5, kt = 75, zt = 85, Dt = 95, Yo = (e, t, n) => {
   const { errors: s, warnings: o } = e.reduce((h, { errors: b, warnings: O }) => ({ errors: h.errors + b, warnings: h.warnings + O }), { errors: 0, warnings: 0 }), i = [];
   i.push({ info: `Found ${I}${Intl.NumberFormat("en-US").format(s)} errors${g}, and ${A}${Intl.NumberFormat("en-US").format(o)} warnings${g}, ${k}${Intl.NumberFormat("en-US").format(t)} lines${g} of code in ${k}${Intl.NumberFormat("en-US").format(n)} files${g}` });
   const l = Math.ceil((1 - (s * Qo + o) / t) * 100);
   return l < kt && i.push({ info: `${I}Code health is LOW: ${l}%${g}` }), l >= kt && l < zt && i.push({ info: `${A}Code health is MEDIUM ${l}%${g}` }), l >= zt && l < Dt && i.push({ info: `${k}Code health is OK: ${l}%${g}` }), l >= Dt && i.push({ info: `${Jt}Code health is GOOD: ${l}%${g}` }), { errors: s, warnings: o, output: i };
-}
+};
 let Et = 0, cn = 0, an = [];
-const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], Ot = [], ce = [], Ut = async (e, t) => {
+const Xo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], Ot = [], ce = [], Ut = async (e, t) => {
   if (!Ot.some((n) => e.endsWith(n)) && (e.endsWith(".vue") || e.endsWith(".ts") || e.endsWith(".js"))) {
     Et++;
     const n = await ae.readFile(t, "utf-8");
@@ -2030,9 +2016,9 @@ const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   const n = await ae.readdir(e);
   for (const s of n) {
     const o = oe.join(e, s);
-    (await ae.stat(o)).isDirectory() && !sr.some((l) => o.includes(l)) && !Ot.some((l) => o.endsWith(l)) && await ln(o), await Ut(o, o);
+    (await ae.stat(o)).isDirectory() && !Xo.some((l) => o.includes(l)) && !Ot.some((l) => o.endsWith(l)) && await ln(o), await Ut(o, o);
   }
-}, or = async ({ dir: e, apply: t = [], exclude: n, groupBy: s, level: o, orderBy: i }) => {
+}, Jo = async ({ dir: e, apply: t = [], exclude: n, groupBy: s, level: o, orderBy: i }) => {
   const l = se.filter((N) => !t.includes(N));
   ce.push({ info: `${k}Analyzing Vue, TS and JS files in ${e}${g}` }), ce.push({
     info: `Applying ${k}${t.length}${g} rulesets ${k}${t}${g}
@@ -2042,9 +2028,23 @@ const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
       Grouping by ${k}${s}${g}
       Ordering ${k}${i}${g}`
   }), an = t, n && Ot.push(...n.split(",")), await ln(e), ce.push({ info: `Found ${k}${Et}${g} files` });
-  const { health: h, output: b } = qo(s, i, o), { errors: O, warnings: v, output: _ } = nr(h, cn, Et);
+  const { health: h, output: b } = qo(s, i, o), { errors: O, warnings: v, output: _ } = Yo(h, cn, Et);
   return !O && !v && ce.push({ info: `${Jt}No code smells detected!${g}` }), { output: ce, codeHealthOutput: _, reportOutput: b };
-}, rr = async () => {
+}, er = ["rule", "file"], tr = ["asc", "desc"], nr = ["all", "error"], sr = ["text", "json"], or = {
+  groupBy: er,
+  orderBy: tr,
+  outputLevel: nr,
+  outputFormat: sr
+};
+function ve(e, t) {
+  const n = or[t];
+  return n.includes(e) || (console.error(
+    `
+Invalid option "${e}" provided for flag "${t}". Valid options are: ${n.join(", ")}.
+`
+  ), process.exit(1)), e;
+}
+const rr = async () => {
   let e = process.cwd();
   for (; e !== oe.parse(e).root; ) {
     const t = oe.join(e, "package.json");
@@ -2148,7 +2148,7 @@ ${I}Cannot use both --ignore and --apply options together.${g}
   ), process.exit(1)), !0)),
   (e) => {
     let t = [...se];
-    e.apply && (t = e.apply), e.ignore && (t = se.filter((n) => !e.ignore.includes(n))), or({
+    e.apply && (t = e.apply), e.ignore && (t = se.filter((n) => !e.ignore.includes(n))), Jo({
       dir: e.path,
       apply: t,
       exclude: e.exclude,
