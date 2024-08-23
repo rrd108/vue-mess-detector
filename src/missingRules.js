@@ -48,6 +48,9 @@ const main = async () => {
     const allRules = await findRules(srcDirectory)
 
     for (const rule of allRules) {
+      if (rule.endsWith('index.ts')) {
+        return
+      }
       // check if it has a test file
       const testFile = rule.replace('.ts', '.test.ts')
       const testFileExists = await fileExists(testFile)
@@ -57,6 +60,7 @@ const main = async () => {
       }
 
       const ruleName = rule.split('/').pop().replace('.ts', '')
+      const ruleNameKebabCase = ruleName.charAt(0).toUpperCase() + ruleName.slice(1)
 
       // check if the rule is added to src/rules/rules.ts
       const rulesFileContent = await fs.readFile(rulesFile, 'utf8')
@@ -67,15 +71,15 @@ const main = async () => {
 
       // check if the rule is added to src/rulesCheck.ts
       const rulesCheckFileContent = await fs.readFile(rulesCheckFile, 'utf8')
-      if (!rulesCheckFileContent.includes(ruleName)) {
-        console.log(`❌ ${ruleName} is missing from ${rulesCheckFile}`)
+      if (!rulesCheckFileContent.includes(ruleNameKebabCase)) {
+        console.log(`❌ ${ruleNameKebabCase} is missing from ${rulesCheckFile}`)
         errors++
       }
 
       // check if the rule is added to src/rulesReport.ts
       const rulesReportFileContent = await fs.readFile(rulesReportFile, 'utf8')
-      if (!rulesReportFileContent.includes(ruleName)) {
-        console.log(`❌ ${ruleName} is missing from ${rulesReportFile}`)
+      if (!rulesReportFileContent.includes(ruleNameKebabCase)) {
+        console.log(`❌ ${ruleNameKebabCase} is missing from ${rulesReportFile}`)
         errors++
       }
     }
