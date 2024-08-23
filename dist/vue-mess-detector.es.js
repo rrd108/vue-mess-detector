@@ -1691,7 +1691,7 @@ const uo = (e, t) => {
   const n = j(C($s).as("magicNumber"), gs(")", nn), [P]);
   let s, o = 0;
   for (; (s = n.exec(e.content)) !== null; ) {
-    const i = s.groups?.magicNumber, l = parseInt(i ?? "0");
+    const i = s.groups?.magicNumber, l = Number.parseInt(i ?? "0");
     if (l > 1) {
       const h = M(e.content, String(l), o);
       pt.push({
@@ -1945,7 +1945,7 @@ const uo = (e, t) => {
 }, yt = [], Go = (e, t) => {
   if (!e)
     return;
-  const n = /(?:const|let)\s*\{\s*([^\}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:\[[^\]]*\]|\{[^\}]*\})?\s*\)/g;
+  const n = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g;
   e.content.match(n)?.forEach((o) => {
     const i = M(e.content, o);
     yt.push({
@@ -2014,7 +2014,15 @@ function nr(e, t, n) {
   return l < kt && i.push({ info: `${I}Code health is LOW: ${l}%${g}` }), l >= kt && l < zt && i.push({ info: `${A}Code health is MEDIUM ${l}%${g}` }), l >= zt && l < Dt && i.push({ info: `${k}Code health is OK: ${l}%${g}` }), l >= Dt && i.push({ info: `${Jt}Code health is GOOD: ${l}%${g}` }), { errors: s, warnings: o, output: i };
 }
 let Et = 0, cn = 0, an = [];
-const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], Ot = [], ce = [], ln = async (e) => {
+const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], Ot = [], ce = [], Ut = async (e, t) => {
+  if (!Ot.some((n) => e.endsWith(n)) && (e.endsWith(".vue") || e.endsWith(".ts") || e.endsWith(".js"))) {
+    Et++;
+    const n = await ae.readFile(t, "utf-8");
+    cn += n.split(/\r\n|\r|\n/).length;
+    const { descriptor: s } = Fn(n);
+    (e.endsWith(".ts") || e.endsWith(".js")) && (s.script = { content: n }), ce.push({ info: `Analyzing ${t}...` }), Zo(s, t, an);
+  }
+}, ln = async (e) => {
   if (!(await ae.stat(e)).isDirectory()) {
     await Ut(e, e);
     return;
@@ -2023,14 +2031,6 @@ const sr = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   for (const s of n) {
     const o = oe.join(e, s);
     (await ae.stat(o)).isDirectory() && !sr.some((l) => o.includes(l)) && !Ot.some((l) => o.endsWith(l)) && await ln(o), await Ut(o, o);
-  }
-}, Ut = async (e, t) => {
-  if (!Ot.some((n) => e.endsWith(n)) && (e.endsWith(".vue") || e.endsWith(".ts") || e.endsWith(".js"))) {
-    Et++;
-    const n = await ae.readFile(t, "utf-8");
-    cn += n.split(/\r\n|\r|\n/).length;
-    const { descriptor: s } = Fn(n);
-    (e.endsWith(".ts") || e.endsWith(".js")) && (s.script = { content: n }), ce.push({ info: `Analyzing ${t}...` }), Zo(s, t, an);
   }
 }, or = async ({ dir: e, apply: t = [], exclude: n, groupBy: s, level: o, orderBy: i }) => {
   const l = se.filter((N) => !t.includes(N));

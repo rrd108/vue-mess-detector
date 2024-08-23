@@ -5,5 +5,5 @@ export default {
   ...DefaultTheme,
   enhanceApp({ app }) {
     app.component('Contributors', Contributors)
-  }
+  },
 }

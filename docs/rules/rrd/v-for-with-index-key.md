@@ -8,7 +8,6 @@ Checks if there are indexes being used as `key` in `v-for`.
 - **Improve Performance:** Unique keys help Vue.js efficiently update and manage list items, leading to better performance.
 - **Enhance Debugging:** Unique keys make it easier to track and resolve rendering issues, simplifying the debugging process.
 
-
 ## 😱 Examples of code for which this rule will throw a warning
 
 ::: warning

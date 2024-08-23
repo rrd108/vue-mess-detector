@@ -6,4 +6,4 @@ These rules help prevent errors, so learn and abide by them at all costs. Except
 - [Keyed v-for](./vfor-no-key.md)
 - [Simple Props Definition](./simple-prop.md)
 - [Single Name Components](./single-name-component.md)
-- [v-if With v-for](./vif-with-vfor.md) 
+- [v-if With v-for](./vif-with-vfor.md)

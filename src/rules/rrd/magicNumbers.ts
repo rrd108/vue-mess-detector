@@ -16,7 +16,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   let lastLine = 0
   while ((match = regex.exec(script.content)) !== null) {
     const _magicNumber = match.groups?.magicNumber
-    const magicNumber = parseInt(_magicNumber ?? '0')
+    const magicNumber = Number.parseInt(_magicNumber ?? '0')
     if (magicNumber > 1) {
       const lineNumber = getLineNumber(script.content, String(magicNumber), lastLine)
       results.push({

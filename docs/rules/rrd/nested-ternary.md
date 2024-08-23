@@ -33,17 +33,17 @@ To improve maintainability, consider refactoring the code by replacing the neste
 ```vue
 <script setup>
 const pass = 'Gauranga%)++/='
-let isStrong = false 
+let isStrong = false
 
 // Using standalone ternaries
-isStrong = pass.length > 12 ? true : false;
-isStrong = isStrong && pass.includes('%') ? true : false
+isStrong = pass.length > 12
+isStrong = !!(isStrong && pass.includes('%'))
 
 // Using if statements
 if (pass.length > 12) {
-    if (pass.includes('%')) {
-        isStrong = pass.includes('$')
-    }
+  if (pass.includes('%')) {
+    isStrong = pass.includes('$')
+  }
 }
 
 // Using AND operators
@@ -54,7 +54,7 @@ function isStrongPassword(pass) {
   if (pass.length < 12) {
     return false
   }
-  if(!pass.includes('%')) {
+  if (!pass.includes('%')) {
     return false
   }
   return pass.includes('$')

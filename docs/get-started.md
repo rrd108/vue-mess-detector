@@ -165,7 +165,7 @@ All flags will be read from the configuration file. All missing flags will be se
 
 ![Output Image - Code Health](./public/code-health.png)
 
-According to the number of errors and warnings, and the lines of code in your project, we calculate a health score for your project. 
+According to the number of errors and warnings, and the lines of code in your project, we calculate a health score for your project.
 The code health is:
 - **low** if the score is under 75%
 - **medium** if the score is between 76% and 85%

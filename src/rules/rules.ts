@@ -14,7 +14,7 @@ export const RULES = {
     'simpleComputed',
     'templateSimpleExpression',
   ],
-  rrd: [
+  'rrd': [
     'cyclomaticComplexity',
     'deepIndentation',
     'elseCondition',
@@ -31,8 +31,8 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
-    'zeroLengthComparison'
-  ]
+    'zeroLengthComparison',
+  ],
 }
 
 export type RuleType = typeof RULES

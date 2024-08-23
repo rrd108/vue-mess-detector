@@ -1,10 +1,10 @@
-import { BG_ERR, BG_RESET, BG_WARN, BG_INFO, BG_OK } from "../rules/asceeCodes"
-import { CodeHealthResponse, Flag, GroupBy, Health, OrderBy, OutputFormat, OutputLevel } from "../types"
-import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from "./constants"
+import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from '../rules/asceeCodes'
+import type { CodeHealthResponse, Flag, GroupBy, Health, OrderBy, OutputFormat, OutputLevel } from '../types'
+import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from './constants'
 
 /* Helper function to count non duplicated objects (using `field` to filter) */
 export function getUniqueFilenameCount<T>(arr: T[], field: Partial<keyof T>): number {
-  const uniqueFilenames = new Set(arr.map((item) => item[field]))
+  const uniqueFilenames = new Set(arr.map(item => item[field]))
   return uniqueFilenames.size
 }
 

@@ -1,5 +1,5 @@
-import inquirer from 'inquirer'  // it cause some error when this file is ts
-import fs from 'fs/promises'
+import fs from 'node:fs/promises'
+import inquirer from 'inquirer' // it cause some error when this file is ts
 import { insertRule2Rules } from './insertRule2Rules.js'
 
 const questions = [
@@ -13,7 +13,7 @@ const questions = [
     type: 'input',
     name: 'name',
     message: 'What is the name of the new rule? (use camelCase name)',
-  }
+  },
 ]
 
 const createFiles = async (answers) => {
@@ -22,8 +22,8 @@ const createFiles = async (answers) => {
   const filePath = `./src/rules/${answers.ruleset}/${answers.name}.ts`
   let fileContent = await fs.readFile('./src/generator/ruleSkeleton', 'utf8')
   fileContent = fileContent.replace(/_RULENAME_/g, pascalCaseRulename)
-  .replace(/_HUMANRULENAME_/g, humanReadableRulename)
-  .replace(/_RULESET_/g, answers.ruleset)
+    .replace(/_HUMANRULENAME_/g, humanReadableRulename)
+    .replace(/_RULESET_/g, answers.ruleset)
 
   await fs.writeFile(filePath, fileContent, 'utf8')
   console.log(`1️⃣  File ${filePath} generated!`)
@@ -40,7 +40,8 @@ const createFiles = async (answers) => {
 
   try {
     await insertRule2Rules(answers.ruleset, answers.name)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error:', error.message)
     process.exit(1)
   }
@@ -56,6 +57,6 @@ const createFiles = async (answers) => {
 
 inquirer.prompt(questions)
   .then(createFiles)
-  .catch(error => {
+  .catch((error) => {
     console.error(error)
   })

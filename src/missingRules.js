@@ -85,12 +85,12 @@ const main = async () => {
       // eslint-disable-next-line node/prefer-global/process
       process.exit(1) // Exit with error code
     }
-    
+
     if (!errors) {
-        console.log('All checks passed successfully.')
+      console.log('All checks passed successfully.')
     }
-}
-catch (error) {
+  }
+  catch (error) {
     console.error('🙀 An error occurred:', error)
     // eslint-disable-next-line node/prefer-global/process
     process.exit(1) // Exit with error code

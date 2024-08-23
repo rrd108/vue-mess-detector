@@ -1,12 +1,12 @@
-import inquirer from 'inquirer';  // it cause some error when this file is ts
-import fs from 'fs/promises';
+import fs from 'node:fs/promises'
+import inquirer from 'inquirer' // it cause some error when this file is ts
 
 // For some reason If I try to import a constant and use it in `questions` it doesnt work...
 const RULESETS = ['vue-essential', 'vue-strong', 'vue-recommended', 'vue-caution', 'rrd']
 
 /**
  * Represents a question for the Inquirer.js prompt.
- * @typedef {Object} Question
+ * @typedef {object} Question
  * @property {string} type - The type of the question (e.g., 'list', 'input').
  * @property {string} name - The name of the question.
  * @property {string} message - The message to be displayed to the user.
@@ -22,13 +22,13 @@ const questions = [
     type: 'list',
     name: 'ruleset',
     message: 'What ruleset this markdown file belongs to?',
-    choices: RULESETS
+    choices: RULESETS,
   },
   {
     type: 'input',
     name: 'name',
-    message: 'What is the name of the markdown file? (use kebab-case name)'
-  }
+    message: 'What is the name of the markdown file? (use kebab-case name)',
+  },
 ]
 
 async function createFile({ ruleset, name }) {
@@ -44,6 +44,6 @@ async function createFile({ ruleset, name }) {
 
 inquirer.prompt(questions)
   .then(createFile)
-  .catch(error => {
+  .catch((error) => {
     console.error(error)
   })

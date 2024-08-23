@@ -53,7 +53,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Helper function to process offenses from a report function
   const processOffenses = (reportFunction: ReportFunction) => {
     const offenses = reportFunction()
-    offenses.forEach(offense => {
+    offenses.forEach((offense) => {
       addOffense(offense)
     })
   }
@@ -133,7 +133,8 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
           // eslint-disable-next-line ts/no-unused-expressions
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
-      } else {
+      }
+      else {
         health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
       }
 
@@ -144,7 +145,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
       if (groupBy === 'file') {
         output.push({ info: `   Rule: ${offense.rule}` })
       }
-      
+
       if (groupBy !== 'file') {
         output.push({ info: `   File: ${offense.file}` })
       }

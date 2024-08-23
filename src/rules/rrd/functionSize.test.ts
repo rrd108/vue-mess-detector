@@ -240,7 +240,7 @@ describe('checkFunctionSize', () => {
       message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}43 lines${BG_RESET} 🚨`,
     }])
   })
-  
+
   it.todo('should report files with correct function name', () => {
     const script = {
       content: `
