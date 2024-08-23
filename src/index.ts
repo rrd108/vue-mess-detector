@@ -30,7 +30,7 @@ let config = {
   output: 'text',
 }
 
-// check if the project root has a vue-mess-detector.config.js file and if yes, then read it
+// check if the project root has a vue-mess-detector.config.json file and if yes, then read it
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
