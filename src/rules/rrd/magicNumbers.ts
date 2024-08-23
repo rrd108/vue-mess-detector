@@ -14,6 +14,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
 
   let match
   let lastLine = 0
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
     const _magicNumber = match.groups?.magicNumber
     const magicNumber = Number.parseInt(_magicNumber ?? '0')

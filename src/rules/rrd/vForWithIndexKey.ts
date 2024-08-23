@@ -18,6 +18,7 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
   const keyMatches = [...template.content.matchAll(keyRegex)]
 
   matches.forEach((match) => {
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const [_, item, index, array] = match
 
     keyMatches.forEach((keyMatch) => {

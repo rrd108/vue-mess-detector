@@ -34,4 +34,3 @@ export const validateOption = <T>(value: T, flag: Flag) => {
 
   return value
 }
-

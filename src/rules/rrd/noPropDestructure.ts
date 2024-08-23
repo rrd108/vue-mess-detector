@@ -10,6 +10,7 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
     return
   }
 
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
   const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
 
   const matches = script.content.match(regex)

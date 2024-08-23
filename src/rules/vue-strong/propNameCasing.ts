@@ -4,6 +4,7 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+// eslint-disable-next-line regexp/no-unused-capturing-group
 const camelCasePattern = /^[a-z]+([A-Z][a-z]*)*$/
 
 const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {

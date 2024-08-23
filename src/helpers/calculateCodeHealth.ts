@@ -18,11 +18,11 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   if (codeHealth >= LOW_HEALTH_THRESHOLD && codeHealth < MEDIUM_HEALTH_THRESHOLD) {
     output.push({ info: `${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}` })
   }
-  
+
   if (codeHealth >= MEDIUM_HEALTH_THRESHOLD && codeHealth < OK_HEALTH_THRESHOLD) {
     output.push({ info: `${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}` })
   }
-  
+
   if (codeHealth >= OK_HEALTH_THRESHOLD) {
     output.push({ info: `${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}` })
   }

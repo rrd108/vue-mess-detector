@@ -12,6 +12,7 @@ export const insertRule2Rules = async (ruleset, ruleName) => {
     throw new Error('RULES object not found in the file')
   }
 
+  // eslint-disable-next-line no-eval
   const rulesObject = eval(`(${rulesMatch[1]})`)
 
   // Check if the key exists

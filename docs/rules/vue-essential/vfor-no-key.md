@@ -14,10 +14,10 @@ Checks if the component is using `v-for` without a `key` property. &nbsp;&nbsp;<
 The following code uses `v-for` without a key property, which can lead to rendering issues and decreased performance.
 :::
 
-```js
+```vue
 <template>
   <ul>
-    <li v-for="todo in todos"> // [!code warning]
+    <li v-for="todo in todos">
       {{ todo.text }}
     </li>
   </ul>

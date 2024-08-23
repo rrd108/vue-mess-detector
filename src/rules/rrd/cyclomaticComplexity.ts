@@ -6,14 +6,8 @@ import type { FileCheckResult, Offense } from '../../types'
 const results: FileCheckResult[] = []
 
 const COMPLEXITY_MODERATE = 5
-const COMPLEXITY_HIGH = 10
+const COMPLEXITY_HIGH = 2 * COMPLEXITY_MODERATE
 
-/**
- * Function to check cyclomatic complexity of a SFC script block.
- *
- * @param {SFCScriptBlock} script - The SFC script block to analyze.
- * @param {string} file - The filename of the SFC.
- */
 const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
