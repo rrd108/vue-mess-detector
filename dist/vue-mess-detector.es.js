@@ -2035,16 +2035,14 @@ const Xo = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   orderBy: tr,
   outputLevel: nr,
   outputFormat: sr
-};
-function ve(e, t) {
+}, ve = (e, t) => {
   const n = or[t];
   return n.includes(e) || (console.error(
     `
 Invalid option "${e}" provided for flag "${t}". Valid options are: ${n.join(", ")}.
 `
   ), process.exit(1)), e;
-}
-const rr = async () => {
+}, rr = async () => {
   let e = process.cwd();
   for (; e !== oe.parse(e).root; ) {
     const t = oe.join(e, "package.json");

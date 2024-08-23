@@ -6,7 +6,7 @@ import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
-import { customOptionType } from './helpers/validateOption'
+import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 
@@ -71,7 +71,7 @@ yargs(hideBin(process.argv))
           alias: 'g',
           describe: 'Group results at the output',
           choices: ['rule', 'file'],
-          coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
+          coerce: value => validateOption<GroupBy>(value, 'groupBy'),
           default: config.group,
           group: 'Group Results:',
         })
@@ -79,7 +79,7 @@ yargs(hideBin(process.argv))
           alias: 'l',
           describe: 'Output level',
           choices: ['all', 'error'],
-          coerce: value => customOptionType<OutputLevel>(value, 'outputLevel'),
+          coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
           default: config.level,
           group: 'Output:',
         })
@@ -95,14 +95,14 @@ yargs(hideBin(process.argv))
           alias: 'o',
           describe: 'Order results at the output',
           choices: ['asc', 'desc'],
-          coerce: value => customOptionType<OrderBy>(value, 'orderBy'),
+          coerce: value => validateOption<OrderBy>(value, 'orderBy'),
           default: config.order,
           group: 'Order Results:',
         })
         .option('output', {
           describe: 'Output format',
           choices: ['text', 'json'],
-          coerce: value => customOptionType<OutputFormat>(value, 'outputFormat'),
+          coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
           default: config.output,
           group: 'Output Format:',
         })
