@@ -16,6 +16,7 @@ export default antfu(
       // ignore top-level functions should be declared with function keywordes
       'antfu/top-level-function': 'off',
       'style/semi': ['error', 'never'],
+      'eqeqeq': 'off',
     },
   },
 )
