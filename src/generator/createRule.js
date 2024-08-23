@@ -20,6 +20,7 @@ const createFiles = async (answers) => {
   const pascalCaseRulename = answers.name.charAt(0).toUpperCase() + answers.name.slice(1)
   const humanReadableRulename = answers.name.replace(/([A-Z])/g, ' $1').trim()
   const filePath = `./src/rules/${answers.ruleset}/${answers.name}.ts`
+
   let fileContent = await fs.readFile('./src/generator/ruleSkeleton', 'utf8')
   fileContent = fileContent.replace(/_RULENAME_/g, pascalCaseRulename)
     .replace(/_HUMANRULENAME_/g, humanReadableRulename)
@@ -43,15 +44,21 @@ const createFiles = async (answers) => {
   }
   catch (error) {
     console.error('Error:', error.message)
+    // eslint-disable-next-line node/prefer-global/process
     process.exit(1)
   }
   console.log(`3️⃣  ${answers.name} added to ./src/rules/rules.ts!`)
 
-  // TODO Add your new checkRuleName function call to src/rulesCheck.ts
-  // for this we have to know if it works with descriptor, script, template or style
-  // console.log(`4️⃣  check${pascalCaseRulename} function call to ./src/rulesCheck.ts`)
+  let indexContent = await fs.readFile(`./src/rules/${answers.ruleset}/index.ts`, 'utf8')
+  indexContent += `export * from './${answers.name}'\n`
+  await fs.writeFile(`./src/rules/${answers.ruleset}/index.ts`, indexContent, 'utf8')
+  console.log(`4️⃣  ${answers.name} export added to ./src/rules/${answers.ruleset}/index.ts`)
 
-  // TODO Add your new reportRuleName function call to src/rulesReport.ts
+  // TODO Add your new checkRuleName import and function call to src/rulesCheck.ts
+  // for this we have to know if it works with descriptor, script, template or style
+  // console.log(`5️⃣  check${pascalCaseRulename} function call to ./src/rulesCheck.ts`)
+
+  // TODO Add your new reportRuleName import and function call to src/rulesReport.ts
   // console.log(`5️⃣  report${pascalCaseRulename} function call to ./src/rulesReport.ts`)
 }
 
