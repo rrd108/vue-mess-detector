@@ -5,7 +5,6 @@ import type { FileCheckResult, Offense } from '../../types'
 const results: FileCheckResult[] = []
 
 export const MAX_FUNCTION_LENGTH = 20 // completely rrd made-up number
-
 const CONST_KEYWORD_LENGTH = 'const'.length
 const FUNCTION_KEYWORD_LENGTH = 'function'.length
 
@@ -15,12 +14,11 @@ function addFunctionToFiles(funcName: string, funcBody: string, filePath: string
     results.push({ filePath, message: `function ${BG_ERR}(${cleanFunctionName(funcName)})${BG_RESET} is too long: ${BG_ERR}${lineCount} lines${BG_RESET}` })
     return
   }
-  if (lineCount > MAX_FUNCTION_LENGTH) {
+  if (lineCount >= MAX_FUNCTION_LENGTH) {
     results.push({ filePath, message: `function ${BG_WARN}(${cleanFunctionName(funcName)})${BG_RESET} is too long: ${BG_WARN}${lineCount} lines${BG_RESET}` })
   }
 }
 
-// Helper to parse the function name after the 'function' keyword
 function parseFunctionName(content: string, startIndex: number): string {
   let name = ''
   let i = startIndex
@@ -30,16 +28,6 @@ function parseFunctionName(content: string, startIndex: number): string {
     i++
   }
 
-  // Capture the function name and skip the 'const' keyword if it's an arrow function
-  if (content.slice(i, i + CONST_KEYWORD_LENGTH) === 'const') {
-    i += CONST_KEYWORD_LENGTH
-    // Skip any whitespace after 'const'
-    while (i < content.length && /\s/.test(content[i])) {
-      i++
-    }
-  }
-
-  // Now capture the actual function name
   while (i < content.length && /[\w$]/.test(content[i])) {
     name += content[i]
     i++
@@ -48,11 +36,9 @@ function parseFunctionName(content: string, startIndex: number): string {
   return name.trim()
 }
 
-// Helper to skip to the start of the function body
 function skipToFunctionBody(content: string, startIndex: number): number {
   let i = startIndex
 
-  // Skip to the start of the function body '{'
   while (i < content.length && content[i] !== '{') {
     i++
   }
@@ -60,30 +46,52 @@ function skipToFunctionBody(content: string, startIndex: number): number {
   return i + 1 // Move to the first character inside the '{'
 }
 
-// Helper to parse arrow function
-function parseArrowFunction(content: string, startIndex: number) {
-  let name = ''
-  let bodyStart = -1
+function parseArrowFunction(content: string, index: number) {
+  // Define regex to match arrow functions
+  // eslint-disable-next-line regexp/prefer-w, regexp/no-unused-capturing-group
+  const regex = /const\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*=\s*(async\s+)?\(([^)]*)\)\s*=>\s*\{/
 
-  // Find variable name
-  while (startIndex < content.length && content[startIndex] !== '=') {
-    if (/\w/.test(content[startIndex])) {
-      name += content[startIndex]
+  // Extract the substring starting from the current index
+  const substring = content.slice(index)
+  const match = regex.exec(substring)
+
+  if (match) {
+    const [, name, , params] = match
+
+    // Find the closing brace for the function body
+    let braceCount = 1 // We have already encountered the opening brace
+    const bodyStartIndex = index + match.index + match[0].length
+    let bodyEndIndex = bodyStartIndex
+
+    while (bodyEndIndex < content.length && braceCount > 0) {
+      if (content[bodyEndIndex] === '{') {
+        braceCount++
+      }
+      else if (content[bodyEndIndex] === '}') {
+        braceCount--
+      }
+      bodyEndIndex++
     }
-    startIndex++
-  }
 
-  // Skip arrow syntax (=>)
-  startIndex = content.indexOf('=>', startIndex)
-  if (startIndex === -1) {
+    // Extract the function body
+    const body = content.slice(bodyStartIndex, bodyEndIndex - 1).trim() // Exclude the final '}'
+
+    console.log('FUNCTION NAME:::', name)
+    console.log('FUNCTION PARAMS:::', params)
+    console.log('FUNCTION BODY:::', body)
+
+    return {
+      name,
+      body: `{${body}}`, // Wrap body in curly braces to ensure proper structure
+      end: bodyEndIndex, // Position after the end of the function body
+    }
+  }
+  else {
+    console.log('NO MATCH FOUND')
     return null
   }
-  bodyStart = startIndex + 2
-
-  return { name, bodyStart }
 }
 
-// Helper to extract the function body by counting braces
 function extractFunctionBody(content: string, startIndex: number) {
   let openBraces = 1
   let body = ''
@@ -123,31 +131,33 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
     let funcBody = ''
     let isFunction = false
 
-    // Search for a function declaration or arrow function
+    // Check for function declarations
     if (content.slice(index, index + FUNCTION_KEYWORD_LENGTH) === 'function') {
       index += FUNCTION_KEYWORD_LENGTH
       isFunction = true
       funcName = parseFunctionName(content, index)
       index = skipToFunctionBody(content, index)
+
+      const { body, end } = extractFunctionBody(content, index)
+      funcBody = body
+      index = end
     }
 
+    // Check for arrow functions
     if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') {
-      // TODO this will find the first const keyword, but it could be a variable declaration see #174
       const arrowFunctionInfo = parseArrowFunction(content, index)
       if (arrowFunctionInfo) {
         isFunction = true
         funcName = arrowFunctionInfo.name
-        index = arrowFunctionInfo.bodyStart
+        funcBody = arrowFunctionInfo.body
+        index += arrowFunctionInfo.end // move the infex past the end of the function
       }
     }
 
     if (isFunction) {
-      const { body, end } = extractFunctionBody(content, index)
-      funcBody = body
-      index = end
       addFunctionToFiles(funcName, funcBody, filePath)
     }
-    if (!isFunction) {
+    else {
       index++
     }
   }
