@@ -1,6 +1,14 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
+import getLineNumber from '../getLineNumber'
+
+interface AddFunctionToFilesParams {
+  funcName: string
+  funcBody: string
+  lineNumber: number
+  filePath: string
+}
 
 const results: FileCheckResult[] = []
 
@@ -11,17 +19,17 @@ export const MAX_FUNCTION_LENGTH = 20
 const CONST_KEYWORD_LENGTH = 'const'.length
 const FUNCTION_KEYWORD_LENGTH = 'function'.length
 
-function addFunctionToFiles(funcName: string, funcBody: string, filePath: string) {
+function addFunctionToFiles({ funcName, funcBody, lineNumber, filePath }: AddFunctionToFilesParams) {
   const lineCount = funcBody.split('\n').length
 
   const cleanedFuncName = cleanFunctionName(funcName)
 
   if (lineCount > 2 * MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_ERR}(${cleanedFuncName})${BG_RESET} is too long: ${BG_ERR}${lineCount} lines${BG_RESET}` })
+    results.push({ filePath, message: `function ${BG_ERR}(${cleanedFuncName}#${lineNumber})${BG_RESET} is too long: ${BG_ERR}${lineCount} lines${BG_RESET}` })
     return
   }
   if (lineCount >= MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_WARN}(${cleanedFuncName})${BG_RESET} is too long: ${BG_WARN}${lineCount} lines${BG_RESET}` })
+    results.push({ filePath, message: `function ${BG_WARN}(${cleanedFuncName}#${lineNumber})${BG_RESET} is too long: ${BG_WARN}${lineCount} lines${BG_RESET}` })
   }
 }
 
@@ -157,7 +165,8 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
     }
 
     if (isFunction) {
-      addFunctionToFiles(funcName, funcBody, filePath)
+      const lineNumber = getLineNumber(content.trim(), funcName)
+      addFunctionToFiles({ funcName, funcBody, lineNumber, filePath })
     }
     else {
       index++

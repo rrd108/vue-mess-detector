@@ -114,7 +114,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(${funcName})${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(${funcName}#2)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -189,12 +189,12 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyRegularFunction)${BG_RESET} is too long: ${BG_WARN}29 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyRegularFunction#2)${BG_RESET} is too long: ${BG_WARN}29 lines${BG_RESET} 🚨`,
     }, {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyArrowFunction)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyArrowFunction#34)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -253,7 +253,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}41 lines${BG_RESET} 🚨`,
+      message: `function ${BG_ERR}(getOpenBookings#2)${BG_RESET} is too long: ${BG_ERR}41 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -299,7 +299,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(createFiles)${BG_RESET} is too long: ${BG_WARN}20 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(createFiles#10)${BG_RESET} is too long: ${BG_WARN}20 lines${BG_RESET} 🚨`,
     }])
   })
 })
