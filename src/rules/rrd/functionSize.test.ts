@@ -54,6 +54,22 @@ describe('checkFunctionSize', () => {
     expect(reportFunctionSize()).toStrictEqual([])
   })
 
+  it('should not report files with multiple short functions', () => {
+    const script = {
+      content: `
+      <script setup>
+        function shortFunctionOne() { console.log('Short function one'); }
+        function shortFunctionTwo() { console.log('Short function two'); }
+        const shortArrowFunction = () => console.log('Short arrow function');
+      </script>
+    `,
+    } as SFCScriptBlock
+    const fileName = 'multiple-short-functions.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(0)
+    expect(reportFunctionSize()).toStrictEqual([])
+  })
+
   it('should report files with one function exceeding the limit', () => {
     const script = {
       content: `
@@ -98,7 +114,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(${funcName})${BG_RESET} is too long: ${BG_WARN}25 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(${funcName})${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -173,73 +189,73 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyRegularFunction)${BG_RESET} is too long: ${BG_WARN}31 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyRegularFunction)${BG_RESET} is too long: ${BG_WARN}29 lines${BG_RESET} 🚨`,
     }, {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyArrowFunction)${BG_RESET} is too long: ${BG_WARN}27 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyArrowFunction)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
-  // it('should report files with one arrow function without curly braces exceeding the limit', () => {
-  //   const script = {
-  //     content: `
-  //       <script setup>
-  //         const getOpenBookings = (page: number) =>
-  //           axios
-  //             .get(\`\${import.meta.env.VITE_APP_API_URL}bookings/listOpen.json?page=\${page}\`, store.tokenHeader)
-  //             .then(res => {
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //               bookings.value = res.data.bookings
-  //               paginate.value = res.data.paginate
-  //             })
-  //             .catch(err => console.error(err))
+  it('should report files with one arrow function without curly braces exceeding the limit', () => {
+    const script = {
+      content: `
+        <script setup>
+          const getOpenBookings = (page: number) =>
+            axios
+              .get(\`\${import.meta.env.VITE_APP_API_URL}bookings/listOpen.json?page=\${page}\`, store.tokenHeader)
+              .then(res => {
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+                bookings.value = res.data.bookings
+                paginate.value = res.data.paginate
+              })
+              .catch(err => console.error(err))
 
-  //         const shortFunction = (a, b) => a + b
-  //       </script>
-  //     `,
-  //   } as SFCScriptBlock
-  //   const fileName = 'arrow-function-size.vue'
-  //   checkFunctionSize(script, fileName)
-  //   expect(reportFunctionSize().length).toBe(1)
-  //   expect(reportFunctionSize()).toStrictEqual([{
-  //     file: fileName,
-  //     rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-  //     description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-  //     message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}43 lines${BG_RESET} 🚨`,
-  //   }])
-  // })
+          const shortFunction = (a, b) => a + b
+        </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'arrow-function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(1)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}41 lines${BG_RESET} 🚨`,
+    }])
+  })
 
   it('should report files with correct function name', () => {
     const script = {
@@ -279,6 +295,11 @@ describe('checkFunctionSize', () => {
     const fileName = 'arrow-function-size.vue'
     checkFunctionSize(script, fileName)
     expect(reportFunctionSize().length).toBe(1)
-    expect(reportFunctionSize()[0].message).toContain(`function ${BG_WARN}(createFiles)${BG_RESET} is too long: ${BG_WARN}20 lines${BG_RESET} 🚨`)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      message: `function ${BG_WARN}(createFiles)${BG_RESET} is too long: ${BG_WARN}20 lines${BG_RESET} 🚨`,
+    }])
   })
 })
