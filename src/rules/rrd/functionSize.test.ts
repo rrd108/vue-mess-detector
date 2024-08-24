@@ -19,7 +19,7 @@ describe('checkFunctionSize', () => {
             }
 
             return {
-              message: msg.trim() 
+              message: msg.trim()
             }
           }
         </script>
@@ -49,6 +49,22 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
+    checkFunctionSize(script, fileName)
+    expect(reportFunctionSize().length).toBe(0)
+    expect(reportFunctionSize()).toStrictEqual([])
+  })
+
+  it('should not report files with multiple short functions', () => {
+    const script = {
+      content: `
+      <script setup>
+        function shortFunctionOne() { console.log('Short function one'); }
+        function shortFunctionTwo() { console.log('Short function two'); }
+        const shortArrowFunction = () => console.log('Short arrow function');
+      </script>
+    `,
+    } as SFCScriptBlock
+    const fileName = 'multiple-short-functions.vue'
     checkFunctionSize(script, fileName)
     expect(reportFunctionSize().length).toBe(0)
     expect(reportFunctionSize()).toStrictEqual([])
@@ -98,7 +114,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(${funcName})${BG_RESET} is too long: ${BG_WARN}25 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(${funcName}#2)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -173,12 +189,12 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyRegularFunction)${BG_RESET} is too long: ${BG_WARN}31 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyRegularFunction#2)${BG_RESET} is too long: ${BG_WARN}29 lines${BG_RESET} 🚨`,
     }, {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_WARN}(dummyArrowFunction)${BG_RESET} is too long: ${BG_WARN}27 lines${BG_RESET} 🚨`,
+      message: `function ${BG_WARN}(dummyArrowFunction#34)${BG_RESET} is too long: ${BG_WARN}23 lines${BG_RESET} 🚨`,
     }])
   })
 
@@ -237,11 +253,11 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function ${BG_ERR}(getOpenBookings)${BG_RESET} is too long: ${BG_ERR}43 lines${BG_RESET} 🚨`,
+      message: `function ${BG_ERR}(getOpenBookings#2)${BG_RESET} is too long: ${BG_ERR}41 lines${BG_RESET} 🚨`,
     }])
   })
 
-  it.todo('should report files with correct function name', () => {
+  it('should report files with correct function name', () => {
     const script = {
       content: `
         import inquirer from 'inquirer';  // it cause some error when this file is ts
@@ -279,6 +295,11 @@ describe('checkFunctionSize', () => {
     const fileName = 'arrow-function-size.vue'
     checkFunctionSize(script, fileName)
     expect(reportFunctionSize().length).toBe(1)
-    expect(reportFunctionSize()[0].message).toContain(`function ${BG_WARN}(createFiles)${BG_RESET} is too long: ${BG_WARN}22 lines${BG_RESET} 🚨`)
+    expect(reportFunctionSize()).toStrictEqual([{
+      file: fileName,
+      rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
+      description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      message: `function ${BG_WARN}(createFiles#10)${BG_RESET} is too long: ${BG_WARN}20 lines${BG_RESET} 🚨`,
+    }])
   })
 })
