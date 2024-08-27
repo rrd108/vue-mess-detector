@@ -62,7 +62,9 @@ const walkAsync = async (dir: string) => {
 }
 
 export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
-  const { rulesets, individualRules } = groupRulesByRuleset(apply)
+  const appliedRules = apply.filter(rule => !ignore.includes(rule))
+
+  const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
 
   // Prepare output messages for applied rulesets and rules
   const rulesetsOutput = rulesets.length ? `${BG_INFO}${rulesets.join(', ')}${BG_RESET}` : 'N/A'
@@ -74,13 +76,13 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   }
 
   // Prepare output message for ignored rulesets
-  const ignoredRulesets = RULESETS.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
+  const ignoredRulesets = ignore.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
   const ignoreRulesetsOutput = ignoredRulesets.length ? `${BG_INFO}${ignoredRulesets.join(', ')}${BG_RESET}` : 'N/A'
 
   output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
   output.push({
     info: `${applyingMessage}
-      Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
+      Ignoring ${ignoredRulesets.length} rules/rulesets: ${ignoreRulesetsOutput}
       Excluding ${exclude || '-'}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}

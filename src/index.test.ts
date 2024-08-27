@@ -35,8 +35,26 @@ describe('yarn analyze command with default configuration', () => {
     }
   })
 
-  it.todo('should execute with valid ignore rulesets', async () => {
+  it('should execute with valid ignore rulesets', async () => {
     const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=vue-strong,rrd'])
+    expect(stderr).not.toContain('Invalid ignore values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid ignore rules', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=functionSize'])
+    expect(stderr).not.toContain('Invalid ignore values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid ignore rulesets and individual rules', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=rrd,nestedTernary'])
+    expect(stderr).not.toContain('Invalid ignore values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid ignore individual rules and rulesets', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=functionSize,vue-essential'])
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })

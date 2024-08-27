@@ -106,17 +106,6 @@ yargs(hideBin(process.argv))
           default: config.output,
           group: 'Output Format:',
         })
-        .check((argv) => {
-          // apply is coming from the config file, ignore is coming from the command line
-          if (argv.ignore && argv.apply) {
-            console.error(
-              `\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n\n`,
-            )
-            // eslint-disable-next-line node/prefer-global/process
-            process.exit(1)
-          }
-          return true
-        })
     },
     (argv) => {
       analyze({
