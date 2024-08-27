@@ -15,7 +15,7 @@ describe('yarn analyze command with default configuration', () => {
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
-  it('should report error when both apply and ignore is used', async () => {
+  it('should report error when both apply and ignore is used', async () => { // This test should fail because I deleted the check...
     try {
       await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
     }
