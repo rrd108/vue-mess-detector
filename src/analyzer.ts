@@ -6,22 +6,15 @@ import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
-import type { GroupBy, OrderBy, OutputLevel } from './types'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
-
-interface AnalyzeParams {
-  dir: string
-  apply: Array<RuleSetType>
-  exclude: string
-  groupBy: GroupBy
-  level: OutputLevel
-  orderBy: OrderBy
-}
+import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
+import type { AnalyzeParams } from './types'
 
 let filesCount = 0
 let linesCount = 0
-let _apply: Array<RuleSetType> = []
+let _apply: string[] = []
 
+// Directories to skip during analysis
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
 
@@ -38,8 +31,6 @@ const checkFile = async (fileName: string, filePath: string) => {
     linesCount += content.split(/\r\n|\r|\n/).length
     const { descriptor } = parse(content)
 
-    // vue files has descriptor.source, descriptor.script, descriptor.styles, descriptor.template
-    // ts/js files has descriptor.source only but the work for us as a script block
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
@@ -48,6 +39,7 @@ const checkFile = async (fileName: string, filePath: string) => {
   }
 }
 
+// Recursive function to walk through directories
 const walkAsync = async (dir: string) => {
   const file = await fs.stat(dir)
   if (!file.isDirectory()) {
@@ -69,34 +61,50 @@ const walkAsync = async (dir: string) => {
   }
 }
 
-export const analyze = async ({ dir, apply = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
-  const ignore = RULESETS.filter(rule => !apply.includes(rule))
-  output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
+export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
+  const { rulesets, individualRules } = groupRulesByRuleset(apply)
 
+  // Prepare output messages for applied rulesets and rules
+  const rulesetsOutput = rulesets.length ? `${BG_INFO}${rulesets.join(', ')}${BG_RESET}` : 'N/A'
+  const indRulesOutput = individualRules.length ? `${BG_INFO}${individualRules.join(', ')}${BG_RESET}` : 'N/A'
+
+  let applyingMessage = `      Applying ${rulesets.length} rulesets: ${rulesetsOutput}`
+  if (individualRules.length > 0) {
+    applyingMessage += `\n      Applying ${individualRules.length} individual rules: ${indRulesOutput}`
+  }
+
+  // Prepare output message for ignored rulesets
+  const ignoredRulesets = RULESETS.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
+  const ignoreRulesetsOutput = ignoredRulesets.length ? `${BG_INFO}${ignoredRulesets.join(', ')}${BG_RESET}` : 'N/A'
+
+  output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
   output.push({
-    info: `Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
-      Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
-      Excluding ${BG_INFO}${exclude || '-'}${BG_RESET}
+    info: `${applyingMessage}
+      Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
+      Excluding ${exclude || '-'}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}
       Ordering ${BG_INFO}${orderBy}${BG_RESET}`,
   })
 
-  _apply = apply
+  // Filter out ignored rules from the apply list
+  _apply = apply.filter(rule => !ignore.includes(rule))
 
   if (exclude) {
     excludeFiles.push(...exclude.split(','))
   }
 
+  // Start analysis
   await walkAsync(dir)
 
   output.push({ info: `Found ${BG_INFO}${filesCount}${BG_RESET} files` })
 
+  // Generate the report and calculate code health
   const { health, output: reportOutput } = reportRules(groupBy, orderBy, level)
   const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {
-    output.push({ info: `${BG_OK}No code smells detected!${BG_RESET}` })
+    output.push({ info: `\n${BG_OK}No code smells detected!${BG_RESET}` })
   }
 
   return { output, codeHealthOutput, reportOutput }

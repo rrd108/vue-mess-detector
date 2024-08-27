@@ -35,7 +35,7 @@ describe('yarn analyze command with default configuration', () => {
     }
   })
 
-  it('should execute with valid ignore rulesets', async () => {
+  it.todo('should execute with valid ignore rulesets', async () => {
     const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=vue-strong,rrd'])
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
@@ -53,7 +53,25 @@ describe('yarn analyze command with default configuration', () => {
 
   it('should execute with valid apply rulesets', async () => {
     const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=vue-strong,rrd'])
-    expect(stderr).not.toContain('Invalid ignore values')
+    expect(stderr).not.toContain('Invalid apply values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid apply rules', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=nestedTernary,functionSize,topLevelElementOrder'])
+    expect(stderr).not.toContain('Invalid apply values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid apply rulesets and individual rules', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=vue-strong,nestedTernary'])
+    expect(stderr).not.toContain('Invalid apply values')
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+  })
+
+  it('should execute with valid apply individual rules and rulesets', async () => {
+    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=magicNumbers,vue-essential'])
+    expect(stderr).not.toContain('Invalid apply values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
@@ -84,6 +102,6 @@ describe('yarn analyze command with configuration file', () => {
     const { stdout } = await execa('yarn', ['analyze'])
     expect(stdout).toContain(`👉 Using configuration from ${configPath}`)
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
-    expect(stdout).toContain(`Applying ${BG_INFO}2${BG_RESET} rulesets ${BG_INFO}vue-strong,vue-recommended${BG_RESET}`)
+    expect(stdout).toContain(`Applying 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
   })
 })

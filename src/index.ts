@@ -9,6 +9,7 @@ import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
 import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
+import { FLAT_RULESETS_RULES } from './helpers/constants'
 
 const projectRoot = await getProjectRoot()
 if (!projectRoot) {
@@ -21,7 +22,7 @@ const output: { info: string }[] = []
 
 let config = {
   path: './src',
-  apply: undefined, // RULESETS.join(','),
+  apply: Object.values(RULESETS).join(','),
   ignore: undefined,
   exclude: undefined,
   group: 'rule',
@@ -55,10 +56,10 @@ yargs(hideBin(process.argv))
         })
         .option('apply', {
           alias: 'a',
-          describe: `Comma-separated list of rulesets to apply.`,
-          choices: RULESETS,
+          describe: `Comma-separated list of rulesets/rules to apply.`,
+          choices: FLAT_RULESETS_RULES,
           coerce: coerceRules('apply'),
-          group: 'Filter Rulesets:',
+          group: 'Filter Rulesets/Rules:',
           default: config.apply,
         })
         .option('exclude', {
@@ -86,7 +87,6 @@ yargs(hideBin(process.argv))
         .option('ignore', {
           alias: 'i',
           describe: `Comma-separated list of rulesets to ignore.`,
-          choices: RULESETS,
           coerce: coerceRules('ignore'),
           default: config.ignore,
           group: 'Filter Rulesets:',
@@ -119,17 +119,10 @@ yargs(hideBin(process.argv))
         })
     },
     (argv) => {
-      let rules = [...RULESETS]
-      if (argv.apply) {
-        rules = argv.apply
-      }
-      if (argv.ignore) {
-        rules = RULESETS.filter(rule => !argv.ignore!.includes(rule))
-      }
-
       analyze({
         dir: argv.path as string,
-        apply: rules,
+        apply: argv.apply as string[],
+        ignore: argv.ignore as string[],
         exclude: argv.exclude,
         groupBy: argv.group,
         level: argv.level,
