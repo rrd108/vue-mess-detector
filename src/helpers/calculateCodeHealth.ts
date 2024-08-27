@@ -12,19 +12,19 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   const codeHealth = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
 
   if (codeHealth < LOW_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}` })
+    output.push({ info: `${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}\n` })
   }
 
   if (codeHealth >= LOW_HEALTH_THRESHOLD && codeHealth < MEDIUM_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}` })
+    output.push({ info: `${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}\n` })
   }
 
   if (codeHealth >= MEDIUM_HEALTH_THRESHOLD && codeHealth < OK_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}` })
+    output.push({ info: `${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}\n` })
   }
 
   if (codeHealth >= OK_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}` })
+    output.push({ info: `${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}\n` })
   }
 
   return { errors, warnings, output }

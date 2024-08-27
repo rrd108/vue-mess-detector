@@ -4,6 +4,16 @@ export type OrderBy = 'asc' | 'desc'
 export type OutputLevel = 'all' | 'error'
 export type OutputFormat = 'text' | 'json'
 
+export interface AnalyzeParams {
+  dir: string
+  apply: string[]
+  ignore?: string[]
+  exclude: string
+  groupBy: GroupBy
+  level: OutputLevel
+  orderBy: OrderBy
+}
+
 export interface Offense {
   file: string
   rule: string
