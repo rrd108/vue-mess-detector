@@ -1,5 +1,4 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { createRegExp } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
@@ -11,10 +10,10 @@ const checkNoVarDeclaration = (script: SFCScriptBlock | null, filePath: string) 
     return
   }
 
-  const regex = /\bvar\s+(\w+(\s*=\s*[^;]*)?|{[^}]*}(\s*=\s*[^;]*)?)\s*;?/gm
+  const regex = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g
   const matches = script.content.match(regex)
 
-  matches?.forEach(match => {
+  matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)
     results.push({
       filePath,
@@ -27,7 +26,7 @@ const reportNoVarDeclaration = () => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
-    results.forEach(result => {
+    results.forEach((result) => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ no Var Declaration${TEXT_RESET}`,
