@@ -135,7 +135,7 @@ const main = async () => {
     const sidebarMissingRules = allRules.filter(rule => !sidebarRules.includes(rule) && !rule.endsWith('index.md'))
 
     if (sidebarMissingRules.length > 0) {
-      console.log(`🙀 Missing ${sidebarMissingRules.length} rules from the sidebar:`)
+      console.log(`🙀 Missing ${sidebarMissingRules.length} rules from the sidebar (docs/.vitepress/config.ts):`)
       sidebarMissingRules.forEach((rule) => {
         console.log(`- ${rule}`)
       })
