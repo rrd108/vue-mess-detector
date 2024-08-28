@@ -9,7 +9,7 @@ describe('check_RULENAME_', () => {
   })
 
   it('should not report files with /* TODO add test description */', () => {
-    let script = {
+    const script = {
       content: ` // TODO add code content to test`,
     } as SFCScriptBlock
     const fileName = '_RULENAME_CAMELCASE_.vue'
@@ -28,7 +28,7 @@ describe('check_RULENAME_', () => {
     expect(report_RULENAME_()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}_RULESET_ ~ _HUMANRULENAME_${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
+      description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO add doc link */`,
       message: `line #/* TODO line number from your content above*/ ${BG_WARN}/* TODO message from the rule file */${BG_RESET} 🚨`,
     }])
   })
