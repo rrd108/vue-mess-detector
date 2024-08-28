@@ -92,10 +92,10 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // Output the report grouped by the sorted keys
   const output: { info: string }[] = []
 
-  sortedKeys.forEach(key => {
+  sortedKeys.forEach((key) => {
     output.push({ info: `\n - ${key}` })
 
-    offensesGrouped[key].forEach(offense => {
+    offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {

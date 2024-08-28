@@ -1,5 +1,4 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { createRegExp } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
