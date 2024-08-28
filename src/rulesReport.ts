@@ -6,6 +6,7 @@ import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportV
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
 import { reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoPropDestructure, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportNoVarDeclaration } from './rules/rrd/noVarDeclaration'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}

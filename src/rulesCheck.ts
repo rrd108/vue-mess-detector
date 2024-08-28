@@ -6,6 +6,7 @@ import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforN
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
 import { checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoPropDestructure, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkNoVarDeclaration } from './rules/rrd/noVarDeclaration'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -56,6 +57,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     shortVariableName: () => checkShortVariableName(script, filePath),
     tooManyProps: () => checkTooManyProps(script, filePath),
     noPropDestructure: () => checkNoPropDestructure(script, filePath),
+    noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
     htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
     plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
