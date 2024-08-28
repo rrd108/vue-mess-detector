@@ -34,6 +34,7 @@ In this guide we use `yarn` but if you prefer `npm`, `pnpm` or `bun`, you can us
 
    - Familiarize yourself with the details related to the selected issue.
    - If you have any questions, feel free to ask in the issue discussion or open a new issue.
+   - Ask in the issue to *assign the issue* to you. So we can avoid multiple contributors working on the same issue.
 
 ::: tip
 You can use the rule generator to create a skeleton rule file and a skeleton test file. Run the following command and follow the instructions:
