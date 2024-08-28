@@ -15,9 +15,14 @@ describe('yarn analyze command with default configuration', () => {
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
-  it.todo('should error out when both apply and ignore are used', async () => {
-    const { stderr } = await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
-    expect(stderr).toContain('Cannot use both --ignore and --apply options together.')
+  it('should error out when both apply and ignore are used', async () => {
+    try {
+      await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
+    }
+    catch (error: any) {
+      expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
+      expect(error.exitCode).toBe(1)
+    }
   })
 
   it('should report error for invalid ignore rulesets and exit with code 1', async () => {

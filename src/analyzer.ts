@@ -82,7 +82,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
   output.push({
     info: `${applyingMessage}
-      Ignoring ${ignoredRulesets.length} rules/rulesets: ${ignoreRulesetsOutput}
+      Ignoring ${ignoredRulesets.length} rules: ${ignoreRulesetsOutput}
       Excluding ${exclude || '-'}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}
