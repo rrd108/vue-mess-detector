@@ -26,7 +26,7 @@ const getQuestions = async () => {
   try {
     const content = await fs.readFile(inProgressPath, 'utf8')
     const inProgressRules = content.split('\n').filter(Boolean)
-    
+
     if (inProgressRules.length > 0) {
       return [{
         type: 'list',
@@ -34,12 +34,14 @@ const getQuestions = async () => {
         message: 'Select the rule for doc generation:',
         choices: [
           ...inProgressRules,
-          { name: 'Other rule', value: 'new' }
+          { name: 'Other rule', value: 'new' },
         ],
       }]
     }
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error
+  }
+  catch (error) {
+    if (error.code !== 'ENOENT')
+      throw error
   }
 
   return getNewDocQuestions()
@@ -61,7 +63,8 @@ inquirer.prompt(await getQuestions())
     if (answers.choice === 'new') {
       const newAnswers = await inquirer.prompt(getNewDocQuestions())
       Object.assign(answers, newAnswers)
-    } else if (answers.choice) {
+    }
+    else if (answers.choice) {
       const [ruleset, name] = answers.choice.split('/')
       answers.ruleset = ruleset
       answers.name = name
