@@ -3,7 +3,7 @@ import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkBigVshow, reportBigVshow, resetBigVshow } from './bigVshow'
 
-describe('checkBigVif', () => {
+describe('checkBigVshow', () => {
   beforeEach(() => {
     resetBigVshow()
   })
