@@ -18,6 +18,8 @@ if (!projectRoot) {
   process.exit(1)
 }
 
+const packageJson = JSON.parse(await fs.readFile(path.join(projectRoot, 'package.json'), 'utf-8'))
+
 const output: { info: string }[] = []
 
 let config = {
@@ -139,4 +141,6 @@ yargs(hideBin(process.argv))
         })
     },
   )
+  .version('version', 'Show version number', packageJson.version)
+  .alias('version', 'v')
   .help().argv
