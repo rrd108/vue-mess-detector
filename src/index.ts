@@ -10,6 +10,7 @@ import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
+import { wasOptionPassed } from './helpers/wasOptionPassed'
 
 const projectRoot = await getProjectRoot()
 if (!projectRoot) {
@@ -43,6 +44,10 @@ try {
 catch {
   output.push({ info: `👉 Using default configuration` })
 }
+
+// Check if `apply` or `ignore` options were explicitly passed
+const applyFromCLI = wasOptionPassed('apply')
+const ignoreFromCLI = wasOptionPassed('ignore')
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
 yargs(hideBin(process.argv))
@@ -107,6 +112,16 @@ yargs(hideBin(process.argv))
           coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
           default: config.output,
           group: 'Output Format:',
+        })
+        .check(() => {
+          // Only check for conflict if both apply and ignore are provided from CLI
+          if (applyFromCLI && ignoreFromCLI) {
+            console.error(`\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n`)
+            // eslint-disable-next-line node/prefer-global/process
+            process.exit(1)
+          }
+
+          return true
         })
     },
     (argv) => {
