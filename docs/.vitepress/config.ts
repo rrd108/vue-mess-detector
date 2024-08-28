@@ -68,6 +68,7 @@ export default defineConfig({
                 { text: 'Element Selectors in Scoped CSS', link: '/rules/vue-caution/element-selectors-with-scoped' },
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
+                { text: 'Big v-if', link: '/rules/rrd/big-vif' },
                 { text: 'Cyclomatic Complexity', link: '/rules/rrd/cyclomatic-complexity' },
                 { text: 'Deep Indentation', link: '/rules/rrd/deep-indentation' },
                 { text: 'Else Condition', link: '/rules/rrd/else-condition' },

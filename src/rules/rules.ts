@@ -27,6 +27,7 @@ export const RULES = {
     'templateSimpleExpression',
   ],
   'rrd': [
+    'bigVif',
     'cyclomaticComplexity',
     'deepIndentation',
     'elseCondition',
