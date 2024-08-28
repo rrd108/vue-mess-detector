@@ -77,6 +77,7 @@ export default defineConfig({
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },
                 { text: 'No Props Destructure', link: '/rules/rrd/no-prop-destructure' },
+                { text: 'No Var Declaration', link: '/rules/rrd/no-var-declaration' },
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
                 { text: 'Plain Script', link: '/rules/rrd/plain-script' },
                 { text: 'Props Drilling', link: '/rules/rrd/props-drilling' },
