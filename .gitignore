@@ -5,3 +5,4 @@ docs/.vitepress/cache
 docs/.vitepress/dist
 notes.md
 vue-mess-detector.json
+.inProgress

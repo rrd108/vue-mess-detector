@@ -60,6 +60,20 @@ const createFiles = async (answers) => {
 
   // TODO Add your new reportRuleName import and function call to src/rulesReport.ts
   // console.log(`5️⃣  report${pascalCaseRulename} function call to ./src/rulesReport.ts`)
+
+  const inProgressPath = './.inProgress'
+  let inProgressContent = ''
+  try {
+    inProgressContent = await fs.readFile(inProgressPath, 'utf8')
+  }
+  catch (error) {
+    if (error.code !== 'ENOENT')
+      throw error
+  }
+  if (!inProgressContent.includes(answers.name)) {
+    await fs.appendFile(inProgressPath, `${answers.ruleset}/${answers.name}\n`, 'utf8')
+    console.log(`5️⃣  ${answers.name} added to .inProgress`)
+  }
 }
 
 inquirer.prompt(questions)
