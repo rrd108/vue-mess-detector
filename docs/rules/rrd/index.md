@@ -1,6 +1,6 @@
 # 💻 rrd Rules
 
-These ruleset is the most opinionated with rules that are not part of the *offical* Vue style guide. They are based on the experience of this repo owner and are meant to help you write better Vue code.
+These ruleset is the most opinionated with rules that are not part of the _offical_ Vue style guide. They are based on the experience of this repo owner and are meant to help you write better Vue code.
 
 - [Cyclomatic Complexity](./cyclomatic-complexity.md)
 - [Deep Indentation](./deep-indentation.md)
@@ -11,6 +11,7 @@ These ruleset is the most opinionated with rules that are not part of the *offic
 - [Magic Numbers](./magic-numbers.md)
 - [Nested Ternary](./nested-ternary.md)
 - [No Prop Destructing](./no-prop-destructure.md)
+- [No Var Declaration](./no-var-declaration.md)
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)
 - [Props Drilling](./props-drilling.md)

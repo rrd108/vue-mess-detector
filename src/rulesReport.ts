@@ -65,6 +65,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
   processOffenses(reportNoPropDestructure)
+  processOffenses(reportNoVarDeclaration)
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
