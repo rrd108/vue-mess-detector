@@ -96,16 +96,16 @@ If you want to exclude some directories add the `--exclude` flag with comma sepa
 npx vue-mess-detector analyze ./src --exclude=components,Gauranga.vue
 ```
 
-If you want to ignore *some* rulesets add the `--ignore` flag with comma separated list of rulesets to ignore.
+If you want to ignore *some* rulesets or rules add the `--ignore` flag with comma separated list of rulesets/rules to ignore.
 
 ```bash
-npx vue-mess-detector analyze ./src --ignore=vue-caution,rrd
+npx vue-mess-detector analyze ./src --ignore=vue-caution,functionSize
 ```
 
-If you want to apply *only* some rulesets add the `--apply` flag with comma separated list of rulesets to apply.
+If you want to apply *only* some rulesets or rules add the `--apply` flag with comma separated list of rulesets/rules to apply.
 
 ```bash
-npx vue-mess-detector analyze ./src --apply=vue-caution,rrd
+npx vue-mess-detector analyze ./src --apply=vue-essential,vue-strong,magicNumbers
 ```
 
 If you want to *group* the results by file add the `--group` flag with one of the allowed options `file | rule`
