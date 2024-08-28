@@ -5,14 +5,15 @@ import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
-import type { OrderBy, OutputLevel, GroupBy, OutputFormat } from './types'
-import { customOptionType } from './helpers'
+import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
+import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 
 const projectRoot = await getProjectRoot()
 if (!projectRoot) {
   console.error(`\n${BG_ERR}Cannot find project root.${BG_RESET}\n\n`)
+  // eslint-disable-next-line node/prefer-global/process
   process.exit(1)
 }
 
@@ -29,13 +30,14 @@ let config = {
   output: 'text',
 }
 
-// check if the project root has a vue-mess-detector.config.js file and if yes, then read it 
+// check if the project root has a vue-mess-detector.config.json file and if yes, then read it
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
   output.push({ info: `👉 Using configuration from ${configPath}` })
-} catch (error) {
+}
+catch {
   output.push({ info: `👉 Using default configuration` })
 }
 
@@ -46,7 +48,7 @@ yargs(hideBin(process.argv))
     'Analyze Vue files for code smells and best practices',
     (yargs) => {
       return yargs
-        .config(config)  // Use the config from the file if available
+        .config(config) // Use the config from the file if available
         .positional('path', {
           describe: 'path to the Vue files',
           default: config.path,
@@ -69,7 +71,7 @@ yargs(hideBin(process.argv))
           alias: 'g',
           describe: 'Group results at the output',
           choices: ['rule', 'file'],
-          coerce: value => customOptionType<GroupBy>(value, 'groupBy'),
+          coerce: value => validateOption<GroupBy>(value, 'groupBy'),
           default: config.group,
           group: 'Group Results:',
         })
@@ -77,7 +79,7 @@ yargs(hideBin(process.argv))
           alias: 'l',
           describe: 'Output level',
           choices: ['all', 'error'],
-          coerce: value => customOptionType<OutputLevel>(value, 'outputLevel'),
+          coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
           default: config.level,
           group: 'Output:',
         })
@@ -93,16 +95,16 @@ yargs(hideBin(process.argv))
           alias: 'o',
           describe: 'Order results at the output',
           choices: ['asc', 'desc'],
-          coerce: value => customOptionType<OrderBy>(value, 'orderBy'),
+          coerce: value => validateOption<OrderBy>(value, 'orderBy'),
           default: config.order,
-          group: 'Order Results:'
+          group: 'Order Results:',
         })
         .option('output', {
           describe: 'Output format',
           choices: ['text', 'json'],
-          coerce: value => customOptionType<OutputFormat>(value, 'outputFormat'),
+          coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
           default: config.output,
-          group: 'Output Format:'
+          group: 'Output Format:',
         })
         .check((argv) => {
           // apply is coming from the config file, ignore is coming from the command line
@@ -127,21 +129,21 @@ yargs(hideBin(process.argv))
 
       analyze({
         dir: argv.path as string,
-        apply: rules, 
+        apply: rules,
         exclude: argv.exclude,
-        groupBy: argv.group, 
-        level: argv.level, 
-        orderBy: argv.order
+        groupBy: argv.group,
+        level: argv.level,
+        orderBy: argv.order,
       })
-        .then(result => {
+        .then((result) => {
           if (argv.output == 'text') {
-            [...output, ...result.output].forEach(line => {
+            [...output, ...result.output].forEach((line) => {
               console.log(line.info)
             })
-            result.reportOutput?.forEach(line => {
+            result.reportOutput?.forEach((line) => {
               console.log(line.info)
             })
-            result.codeHealthOutput?.forEach(line => {
+            result.codeHealthOutput?.forEach((line) => {
               console.log(line.info)
             })
           }
@@ -150,7 +152,7 @@ yargs(hideBin(process.argv))
             console.log(JSON.stringify(result, null, 2))
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(`${BG_ERR}${error}${BG_RESET}`)
         })
     },

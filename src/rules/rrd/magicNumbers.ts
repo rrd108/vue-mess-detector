@@ -14,10 +14,12 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
 
   let match
   let lastLine = 0
+  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
-    const magicNumber = match.groups?.magicNumber
-    if (magicNumber) {
-      const lineNumber = getLineNumber(script.content, magicNumber, lastLine)
+    const _magicNumber = match.groups?.magicNumber
+    const magicNumber = Number.parseInt(_magicNumber ?? '0')
+    if (magicNumber > 1) {
+      const lineNumber = getLineNumber(script.content, String(magicNumber), lastLine)
       results.push({
         filePath,
         message: `line #${lineNumber} ${BG_WARN}magic number: ${magicNumber}${BG_RESET}`,

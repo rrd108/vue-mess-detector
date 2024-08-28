@@ -1,5 +1,6 @@
-import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from "../rules/asceeCodes"
-import { RULESETS, RuleSetType } from "../rules/rules"
+import { BG_ERR, BG_RESET, TEXT_RESET, TEXT_WARN } from '../rules/asceeCodes'
+import type { RuleSetType } from '../rules/rules'
+import { RULESETS } from '../rules/rules'
 
 const coerceRules = (optionName: 'ignore' | 'apply') => {
   return (arg: string) => {

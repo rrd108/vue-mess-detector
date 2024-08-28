@@ -5,8 +5,9 @@ import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCod
 const results: FileCheckResult[] = []
 
 const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath: string) => {
-  if (!template)
+  if (!template) {
     return
+  }
 
   // Regex to match elements with attributes
   // eslint-disable-next-line regexp/no-super-linear-backtracking

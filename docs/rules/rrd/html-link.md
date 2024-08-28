@@ -2,11 +2,9 @@
 
 Check if HTML links are used in the template.
 
-
 ## ❓ Why it's good to follow this rule?
 
 - Vue router and NuxtLinks are more powerful than HTML links.
-
 
 ## 😱 Examples of code for which this rule will throw a warning
 
@@ -26,7 +24,6 @@ The following code contains a HTML link.
 ::: tip
 Replace HTML links with Vue router links or NuxtLinks.
 :::
-
 
 ```html
 <ul>

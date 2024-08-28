@@ -7,8 +7,9 @@ import type { FileCheckResult, Offense } from '../../types'
 const results: FileCheckResult[] = []
 
 const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePath: string) => {
-  if (!styles)
+  if (!styles) {
     return
+  }
 
   const elementSelectorRegex = /([a-z]+)\s*\{[^}]*\}/gi
 

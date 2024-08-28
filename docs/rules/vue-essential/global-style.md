@@ -15,12 +15,12 @@ Checks if the component is using global styles instead of `scoped` styles. &nbsp
 The following code contains global styles, which may affect other components unintentionally.
 :::
 
-```js
+```vue
 <template>
   <h3>Hello World</h3>
 </template>
 
-<style> // [!code warning]
+<style>
 h3 {
   background: pink;
 }

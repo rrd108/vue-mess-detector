@@ -1,8 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { createRegExp, global, oneOrMore, whitespace, wordChar } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
-import { createRegExp, whitespace, oneOrMore, wordChar, global } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 
@@ -10,7 +10,7 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
   if (!template) {
     return
   }
- 
+
   const vForRegex = createRegExp('v-for="(', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ',', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ')', oneOrMore(whitespace), 'in', oneOrMore(whitespace), oneOrMore(wordChar).grouped(), [global])
   const keyRegex = createRegExp(':key="', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), '"', [global])
 
@@ -18,16 +18,17 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
   const keyMatches = [...template.content.matchAll(keyRegex)]
 
   matches.forEach((match) => {
-    const [_, item, index, array] = match;
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    const [_, item, index, array] = match
 
     keyMatches.forEach((keyMatch) => {
-      const key = keyMatch[1];
+      const key = keyMatch[1]
 
       if (key === index) {
-        const lineNumber = getLineNumber(template.content.trim(), key as string);
+        const lineNumber = getLineNumber(template.content.trim(), key as string)
         results.push({
           filePath,
-          message: `line #${lineNumber} ${BG_WARN}index is being used as :key in v-for${BG_RESET}`
+          message: `line #${lineNumber} ${BG_WARN}index is being used as :key in v-for${BG_RESET}`,
         })
       }
     })

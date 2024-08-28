@@ -25,8 +25,9 @@ const ATTRIBUTE_ORDER = [
 ]
 
 const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath: string) => {
-  if (!template)
+  if (!template) {
     return
+  }
 
   // Remove the <template> tags to avoid checking them
   const innerTemplate = template.content.replace(/<\/?template>/g, '')

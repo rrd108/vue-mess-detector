@@ -20,7 +20,7 @@ The following code contains magic numbers. What does 100 mean? Where it came fro
 :::
 
 ```javascript
-if (x > 100) { 
+if (x > 100) {
   // do something
 }
 ```

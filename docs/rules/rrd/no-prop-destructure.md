@@ -19,7 +19,6 @@ As a result:
 
 Destructuring props is not recommended in Vue due to the fact of breaking reactivity and making data flow less transparent. It is best to use the props object directly to ensure correct functionality and maintainability.
 
-
 ## 😱 Examples of code for which this rule will throw a warning
 
 ::: warning

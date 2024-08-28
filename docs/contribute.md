@@ -61,13 +61,20 @@ yarn rules:generate
 7. **Add the new rule to the analizer**
 
    - Add your new `ruleName` entry to function call to `src/rules/rules.ts`.
-   - Add your new `checkRuleName` function call to `src/rulesCheck.ts`. Script rules are applicable to ts, js and vue files, while template and style rules are applicable to vue files only.
-   - Add your new `reportRuleName` function call to `src/rulesReport.ts`.
+   - Add an `export` statement for your new rule in `src/rules/RULESET/index.ts`.
+   - Add your new `checkRuleName` import and function call to `src/rulesCheck.ts`. Script rules are applicable to `ts`, `js` and `vue` files, while template and style rules are applicable to `vue` files only.
+   - Add your new `reportRuleName` import and function call to `src/rulesReport.ts`.
    - Run the missing rule check to ensure you have added all the necessary entries:
      ```bash
      yarn rules:missing
      ```
 
+::: tip
+You can use the docs generator to create a skeleton markdown file. Run the following command and follow the instructions:
+```bash
+yarn docs:generate
+```
+:::
 8. **Add the rule to the documentation**
 
    - Add your new rule to the `docs/rules/RULESET/rule-name.md` file.

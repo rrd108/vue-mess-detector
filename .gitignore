@@ -3,5 +3,5 @@ test
 .idea
 docs/.vitepress/cache
 docs/.vitepress/dist
-connect.md
+notes.md
 vue-mess-detector.json

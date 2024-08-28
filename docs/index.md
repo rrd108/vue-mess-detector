@@ -22,7 +22,7 @@ features:
   - title: 🤖 PNPM, Bun, Yarn and NPM
     details: Use with your favourite package manager
   - title: 👉🏻 The Folders You Want
-    details: Check your whole project or just a folder
+    details: Check your whole project or just a folder or file
   - title: 🧲 The Rules You Want
     details: Run all checks or ignore the ones you don't like, or apply only the ones you want
   - title: 🔩 Focus on Important Rules
@@ -32,4 +32,3 @@ features:
 <span id="morphBlur"></span>
 
 <Contributors />
-

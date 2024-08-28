@@ -33,7 +33,8 @@ describe('checkMagicNumbers', () => {
     const script = {
       content: `function isAdult(age) {
         return age >= 18
-        }` } as SFCScriptBlock
+        }`,
+    } as SFCScriptBlock
     const fileName = 'with-magic-number-before-new-line.vue'
     checkMagicNumbers(script, fileName)
     expect(reportMagicNumbers().length).toBe(1)
@@ -51,7 +52,8 @@ describe('checkMagicNumbers', () => {
         if (age >= 18) {
           return age >= 18
         }
-      }` } as SFCScriptBlock
+      }`,
+    } as SFCScriptBlock
     const fileName = 'with-multiple-magic-numbers.vue'
     checkMagicNumbers(script, fileName)
     expect(reportMagicNumbers().length).toBe(2)
@@ -67,6 +69,4 @@ describe('checkMagicNumbers', () => {
       message: `magic numbers found (line #3 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
     }])
   })
-
-
 })

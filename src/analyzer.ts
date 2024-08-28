@@ -1,12 +1,13 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { parse, SFCScriptBlock } from '@vue/compiler-sfc'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { parse } from '@vue/compiler-sfc'
 import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { RULESETS, type RuleSetType } from './rules/rules'
 import { reportRules } from './rulesReport'
 import { checkRules } from './rulesCheck'
 import type { GroupBy, OrderBy, OutputLevel } from './types'
-import { calculateCodeHealth } from './helpers'
+import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 
 interface AnalyzeParams {
   dir: string
@@ -25,27 +26,6 @@ const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 
 const excludeFiles: string[] = []
 
 const output: { info: string }[] = []
-
-const walkAsync = async (dir: string) => {
-  const file = await fs.stat(dir)
-  if (!file.isDirectory()) {
-    await checkFile(dir, dir)
-    return
-  }
-
-  const files = await fs.readdir(dir)
-  for (const fileName of files) {
-    const filePath = path.join(dir, fileName)
-    const stats = await fs.stat(filePath)
-    if (stats.isDirectory()) {
-      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(dir => filePath.endsWith(dir))) {
-        await walkAsync(filePath)
-      }
-    }
-
-    await checkFile(filePath, filePath)
-  }
-}
 
 const checkFile = async (fileName: string, filePath: string) => {
   if (excludeFiles.some(file => fileName.endsWith(file))) {
@@ -68,6 +48,27 @@ const checkFile = async (fileName: string, filePath: string) => {
   }
 }
 
+const walkAsync = async (dir: string) => {
+  const file = await fs.stat(dir)
+  if (!file.isDirectory()) {
+    await checkFile(dir, dir)
+    return
+  }
+
+  const files = await fs.readdir(dir)
+  for (const fileName of files) {
+    const filePath = path.join(dir, fileName)
+    const stats = await fs.stat(filePath)
+    if (stats.isDirectory()) {
+      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(dir => filePath.endsWith(dir))) {
+        await walkAsync(filePath)
+      }
+    }
+
+    await checkFile(filePath, filePath)
+  }
+}
+
 export const analyze = async ({ dir, apply = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
   const ignore = RULESETS.filter(rule => !apply.includes(rule))
   output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
@@ -75,14 +76,14 @@ export const analyze = async ({ dir, apply = [], exclude, groupBy, level, orderB
   output.push({
     info: `Applying ${BG_INFO}${apply.length}${BG_RESET} rulesets ${BG_INFO}${apply}${BG_RESET}
       Ignoring ${BG_INFO}${ignore.length}${BG_RESET} rulesets ${BG_INFO}${ignore}${BG_RESET}
-      Excluding ${BG_INFO}${exclude ? exclude : '-'}${BG_RESET}
+      Excluding ${BG_INFO}${exclude || '-'}${BG_RESET}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}
-      Ordering ${BG_INFO}${orderBy}${BG_RESET}`
+      Ordering ${BG_INFO}${orderBy}${BG_RESET}`,
   })
 
   _apply = apply
-  
+
   if (exclude) {
     excludeFiles.push(...exclude.split(','))
   }

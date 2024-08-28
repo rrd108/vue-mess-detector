@@ -20,7 +20,8 @@ Implicit parent-child communication can lead to unmanageable code and unexpected
 :::
 
 ### Example 1: Prop Mutation
-```js
+
+```vue
 <script setup>
 defineProps({
   todo: {
@@ -31,7 +32,7 @@ defineProps({
 </script>
 
 <template>
-  <input v-model="todo.text"> // [!code warning]
+  <input v-model="todo.text">
 </template>
 ```
 

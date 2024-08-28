@@ -26,6 +26,6 @@ jobs:
 
       - name: Run tests
         run: yarn test
-      
+
       - name: Run Missing Rules Check
         run: yarn rules:missing

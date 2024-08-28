@@ -1,6 +1,10 @@
 {
-  // Enable the ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnType": false, // required
+  "editor.formatOnPaste": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange", // optional but recommended
+  "vs-code-prettier-eslint.prettierLast": false,
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,
@@ -9,57 +13,44 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
-    {
-      "rule": "style/*",
-      "severity": "off"
-    },
-    {
-      "rule": "format/*",
-      "severity": "off"
-    },
-    {
-      "rule": "*-indent",
-      "severity": "off"
-    },
-    {
-      "rule": "*-spacing",
-      "severity": "off"
-    },
-    {
-      "rule": "*-spaces",
-      "severity": "off"
-    },
-    {
-      "rule": "*-order",
-      "severity": "off"
-    },
-    {
-      "rule": "*-dangle",
-      "severity": "off"
-    },
-    {
-      "rule": "*-newline",
-      "severity": "off"
-    },
-    {
-      "rule": "*quotes",
-      "severity": "off"
-    },
-    {
-      "rule": "*semi",
-      "severity": "off"
-    }
+    { "rule": "style/*", "severity": "off", "fixable": true },
+    { "rule": "format/*", "severity": "off", "fixable": true },
+    { "rule": "*-indent", "severity": "off", "fixable": true },
+    { "rule": "*-spacing", "severity": "off", "fixable": true },
+    { "rule": "*-spaces", "severity": "off", "fixable": true },
+    { "rule": "*-order", "severity": "off", "fixable": true },
+    { "rule": "*-dangle", "severity": "off", "fixable": true },
+    { "rule": "*-newline", "severity": "off", "fixable": true },
+    { "rule": "*quotes", "severity": "off", "fixable": true },
+    { "rule": "*semi", "severity": "off", "fixable": true }
   ],
+
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
+    "javascriptreact",
     "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
     "markdown",
-    "json"
-  ],
-  "editor.quickSuggestions": {
-    "strings": true
-  }
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
+  ]
 }

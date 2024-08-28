@@ -1,33 +1,35 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { execa } from 'execa'
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { execa } from 'execa'
 import { BG_INFO, BG_RESET } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
-    const { stdout } = await execa('yarn', ['analyze',])
+    const { stdout } = await execa('yarn', ['analyze'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
-  
+
   it('should execute without any flags with path', async () => {
-    const { stdout } = await execa('yarn', ['analyze','./'])
+    const { stdout } = await execa('yarn', ['analyze', './'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
-  
+
   it('should report error when both apply and ignore is used', async () => {
     try {
       await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
-    } catch (error) {
+    }
+    catch (error) {
       expect((error as any).stderr).toContain('Cannot use both --ignore and --apply options together.')
       expect((error as any).exitCode).toBe(1)
     }
   })
-  
+
   it('should report error for invalid ignore rulesets and exit with code 1', async () => {
     try {
       await execa('yarn', ['analyze', '--ignore=gauranga,vue-strong'])
-    } catch (error) {
+    }
+    catch (error) {
       expect((error as any).stderr).toContain('Invalid ignore values: gauranga')
       expect((error as any).exitCode).toBe(1)
     }
@@ -38,11 +40,12 @@ describe('yarn analyze command with default configuration', () => {
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
-  
+
   it('should report error for invalid apply rulesets and exit with code 1', async () => {
     try {
       await execa('yarn', ['analyze', '--apply=gauranga,vue-strong'])
-    } catch (error) {
+    }
+    catch (error) {
       expect((error as any).stderr).toContain('Invalid apply values: gauranga')
       expect((error as any).exitCode).toBe(1)
     }
@@ -53,7 +56,7 @@ describe('yarn analyze command with default configuration', () => {
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
-  
+
   it('should output json', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=json'])
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)

@@ -9,7 +9,7 @@ describe('checkNestedTernary', () => {
   })
 
   it('should not report files with simle ternary', () => {
-    let script = {
+    const script = {
       content: `const today = new Date()
       const isMonday = today.getDay() == 1 ? true : false`,
     } as SFCScriptBlock
@@ -21,7 +21,7 @@ describe('checkNestedTernary', () => {
 
   it('should report files with nested ternary', () => {
     const script = {
-        content: `const pass = 'Gauranga%)'
+      content: `const pass = 'Gauranga%)'
         const isStrong = pass.length > 12 ? pass.includes('%') ? pass.includes('$') : false : false`,
     } as SFCScriptBlock
     const fileName = 'nestedTernary-problem.vue'

@@ -10,11 +10,12 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
     return
   }
 
-  const regex = /(?:const|let)\s*\{\s*([^\}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:\[[^\]]*\]|\{[^\}]*\})?\s*\)/g
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
+  const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
 
   const matches = script.content.match(regex)
 
-  matches?.forEach(match => {
+  matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)
     results.push({
       filePath,
@@ -27,7 +28,7 @@ const reportNoPropDestructure = () => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
-    results.forEach(result => {
+    results.forEach((result) => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,

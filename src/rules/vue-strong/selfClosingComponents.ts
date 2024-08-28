@@ -24,8 +24,9 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
   )
   const matches = template?.content?.match(regexSelfClosingComponent)
 
-  if (matches === null)
+  if (matches === null) {
     return
+  }
 
   matches?.forEach((componentTag) => {
     const lineNumber = getLineNumber(descriptor.source, componentTag)
