@@ -16,7 +16,7 @@ describe('checkBigVshow', () => {
         Processing <span>data</span>
       </div>`,
     } as SFCTemplateBlock
-    const fileName = 'bigVif.vue'
+    const fileName = 'bigVshow.vue'
     checkBigVshow(template, fileName)
     expect(reportBigVshow().length).toBe(0)
     expect(reportBigVshow()).toStrictEqual([])
