@@ -69,6 +69,7 @@ export default defineConfig({
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
                 { text: 'Big v-if', link: '/rules/rrd/big-vif' },
+                { text: 'Big v-show', link: '/rules/rrd/big-vshow' },
                 { text: 'Cyclomatic Complexity', link: '/rules/rrd/cyclomatic-complexity' },
                 { text: 'Deep Indentation', link: '/rules/rrd/deep-indentation' },
                 { text: 'Else Condition', link: '/rules/rrd/else-condition' },
