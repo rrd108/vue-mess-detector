@@ -6,6 +6,8 @@ Check if props are being forwarded unmodified to child components.
 
 Props drilling refers to the practice of passing props from a parent component to a child component without the child component using them directly. Instead, the child component merely forwards these props to its own children, which can lead to unnecessary complexity and decreased maintainability.
 
+👉 Checkout this article [Effective State Management](https://michaelnthiessen.com/effective-state-management) by [Michael Thiessen](https://michaelnthiessen.com/)
+
 ## ❓ Why it's good to follow this rule?
 
 - **Clarity:** Forwarding props unmodified can obscure the data flow within your components. By ensuring that props are only passed when necessary, your code becomes clearer and easier to understand.
