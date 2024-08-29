@@ -4,5 +4,5 @@
   "quoteProps": "consistent",
   "semi": false,
   "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "trailingComma": "es5"
 }
