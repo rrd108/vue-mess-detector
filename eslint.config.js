@@ -11,5 +11,6 @@ export default antfu({
     'antfu/top-level-function': 'off',
     'style/semi': ['error', 'never'],
     'eqeqeq': 'off',
+    'eol-last': ['error', 'never'],
   },
 })

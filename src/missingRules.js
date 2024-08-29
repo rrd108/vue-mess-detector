@@ -118,7 +118,6 @@ const main = async () => {
     if (!errors) {
       console.log('All checks passed successfully.')
     }
-
   }
   catch (error) {
     console.error('🙀 An error occurred:', error)

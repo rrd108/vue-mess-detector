@@ -3,5 +3,6 @@
   "singleQuote": true,
   "quoteProps": "consistent",
   "semi": false,
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "endOfLine": "auto"
 }
