@@ -5,8 +5,7 @@ import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunicatio
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
-import { reportBigVif, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoPropDestructure, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
-import { reportNoVarDeclaration } from './rules/rrd/noVarDeclaration'
+import { reportBigVif, reportBigVshow, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
@@ -58,6 +57,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
 
   // rrd rules
   processOffenses(reportBigVif)
+  processOffenses(reportBigVshow)
   processOffenses(reportCyclomaticComplexity)
   processOffenses(reportDeepIndentation)
   processOffenses(reportElseCondition)
