@@ -81,4 +81,3 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     }
   })
 }
-
