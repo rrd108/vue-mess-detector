@@ -1939,7 +1939,7 @@ const vo = (e, t) => {
     e.push({
       file: t.filePath,
       rule: `${S}rrd ~ VFor With Index Key${m}`,
-      description: `👉 ${O}Avoid using index as key in v-for loops.${m} See: https://`,
+      description: `👉 ${O}Avoid using index as key in v-for loops.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
       message: `${t.message} 🚨`
     });
   }), e;
