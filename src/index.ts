@@ -10,6 +10,7 @@ import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
+import { OUTPUT_FORMATS } from './types'
 
 const projectRoot = await getProjectRoot()
 if (!projectRoot) {
@@ -103,7 +104,7 @@ yargs(hideBin(process.argv))
         })
         .option('output', {
           describe: 'Output format',
-          choices: ['text', 'json'],
+          choices: OUTPUT_FORMATS,
           coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
           default: config.output,
           group: 'Output Format:',
@@ -120,6 +121,9 @@ yargs(hideBin(process.argv))
         orderBy: argv.order,
       })
         .then((result) => {
+          if (argv.output == 'table') {
+            console.table(output)
+          }
           if (argv.output == 'text') {
             [...output, ...result.output].forEach((line) => {
               console.log(line.info)
