@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
+import Table from 'cli-table3'
 import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
@@ -21,7 +22,7 @@ if (!projectRoot) {
 
 const packageJson = JSON.parse(await fs.readFile(path.join(projectRoot, 'package.json'), 'utf-8'))
 
-const output: { info: string }[] = []
+const configOutput: { info: string }[] = []
 
 let config = {
   path: './src',
@@ -39,10 +40,10 @@ try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
-  output.push({ info: `👉 Using configuration from ${configPath}` })
+  configOutput.push({ info: `👉 Using configuration from ${configPath}` })
 }
 catch {
-  output.push({ info: `👉 Using default configuration` })
+  configOutput.push({ info: `👉 Using default configuration` })
 }
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
@@ -50,66 +51,64 @@ yargs(hideBin(process.argv))
   .command(
     'analyze [path]',
     'Analyze Vue files for code smells and best practices',
-    (yargs) => {
-      return yargs
-        .config(config) // Use the config from the file if available
-        .positional('path', {
-          describe: 'path to the Vue files',
-          default: config.path,
-        })
-        .option('apply', {
-          alias: 'a',
-          describe: `Comma-separated list of rulesets/rules to apply.`,
-          choices: FLAT_RULESETS_RULES,
-          coerce: coerceRules('apply'),
-          group: 'Filter Rulesets/Rules:',
-          default: config.apply,
-        })
-        .option('exclude', {
-          alias: 'e',
-          describe: 'Exclude files or directories from the analysis',
-          default: config.exclude,
-          group: 'Exclude files:',
-        })
-        .option('group', {
-          alias: 'g',
-          describe: 'Group results at the output',
-          choices: ['rule', 'file'],
-          coerce: value => validateOption<GroupBy>(value, 'groupBy'),
-          default: config.group,
-          group: 'Group Results:',
-        })
-        .option('level', {
-          alias: 'l',
-          describe: 'Output level',
-          choices: ['all', 'error'],
-          coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
-          default: config.level,
-          group: 'Output:',
-        })
-        .option('ignore', {
-          alias: 'i',
-          describe: `Comma-separated list of rulesets to ignore.`,
-          coerce: coerceRules('ignore'),
-          default: config.ignore,
-          group: 'Filter Rulesets:',
-        })
-        .option('order', {
-          alias: 'o',
-          describe: 'Order results at the output',
-          choices: ['asc', 'desc'],
-          coerce: value => validateOption<OrderBy>(value, 'orderBy'),
-          default: config.order,
-          group: 'Order Results:',
-        })
-        .option('output', {
-          describe: 'Output format',
-          choices: OUTPUT_FORMATS,
-          coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
-          default: config.output,
-          group: 'Output Format:',
-        })
-    },
+    yargs => yargs
+      .config(config) // Use the config from the file if available
+      .positional('path', {
+        describe: 'path to the Vue files',
+        default: config.path,
+      })
+      .option('apply', {
+        alias: 'a',
+        describe: `Comma-separated list of rulesets/rules to apply.`,
+        choices: FLAT_RULESETS_RULES,
+        coerce: coerceRules('apply'),
+        group: 'Filter Rulesets/Rules:',
+        default: config.apply,
+      })
+      .option('exclude', {
+        alias: 'e',
+        describe: 'Exclude files or directories from the analysis',
+        default: config.exclude,
+        group: 'Exclude files:',
+      })
+      .option('group', {
+        alias: 'g',
+        describe: 'Group results at the output',
+        choices: ['rule', 'file'],
+        coerce: value => validateOption<GroupBy>(value, 'groupBy'),
+        default: config.group,
+        group: 'Group Results:',
+      })
+      .option('level', {
+        alias: 'l',
+        describe: 'Output level',
+        choices: ['all', 'error'],
+        coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
+        default: config.level,
+        group: 'Output:',
+      })
+      .option('ignore', {
+        alias: 'i',
+        describe: `Comma-separated list of rulesets to ignore.`,
+        coerce: coerceRules('ignore'),
+        default: config.ignore,
+        group: 'Filter Rulesets:',
+      })
+      .option('order', {
+        alias: 'o',
+        describe: 'Order results at the output',
+        choices: ['asc', 'desc'],
+        coerce: value => validateOption<OrderBy>(value, 'orderBy'),
+        default: config.order,
+        group: 'Order Results:',
+      })
+      .option('output', {
+        describe: 'Output format',
+        choices: OUTPUT_FORMATS,
+        coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
+        default: config.output,
+        group: 'Output Format:',
+      }),
     (argv) => {
       analyze({
         dir: argv.path as string,
@@ -122,15 +121,48 @@ yargs(hideBin(process.argv))
       })
         .then((result) => {
           if (argv.output == 'table') {
-            console.table(output)
+            [...configOutput, ...result.output].forEach((line) => {
+              console.log(line.info)
+            })
+
+            for (const group in result.reportOutput) {
+              const table = new Table({
+                head: ['id', 'message'],
+                colWidths: [40, 88],
+                wordWrap: true,
+                wrapOnWordBoundary: false,
+              })
+
+              console.log('--------------------------------------------------------------------------------')
+              console.log(`Group: ${group}`)
+              // TODO this description can be only used here if the output is grouped by rule, not by file
+              console.log(`Description: ${result.reportOutput[group][0].description}`)
+
+              result.reportOutput[group].forEach((line) => {
+                table.push([line.id, line.message])
+              })
+              console.log(table.toString())
+            }
+
+            result.codeHealthOutput?.forEach((line) => {
+              console.log(line.info)
+            })
           }
+
           if (argv.output == 'text') {
-            [...output, ...result.output].forEach((line) => {
+            [...configOutput, ...result.output].forEach((line) => {
               console.log(line.info)
             })
-            result.reportOutput?.forEach((line) => {
-              console.log(line.info)
-            })
+
+            // TODO get back the original output format
+            for (const group in result.reportOutput) {
+              result.reportOutput[group].forEach((line) => {
+                console.log(line.id)
+                console.log(line.description)
+                console.log(line.message)
+              })
+            }
+
             result.codeHealthOutput?.forEach((line) => {
               console.log(line.info)
             })
