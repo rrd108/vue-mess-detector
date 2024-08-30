@@ -23,7 +23,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const toolRoot = path.resolve(__dirname, '..')
 const packageJsonPath = path.join(toolRoot, 'package.json')
-const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
 
 const output: { info: string }[] = []
 
