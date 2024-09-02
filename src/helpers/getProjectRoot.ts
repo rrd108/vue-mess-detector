@@ -11,7 +11,7 @@ const getProjectRoot = async (startDir: string) => {
       await fs.access(packageJsonPath)
       return currentDir
     }
-    catch (e) {
+    catch {
       // File doesn't exist, move up one directory level
       currentDir = path.dirname(currentDir)
     }
