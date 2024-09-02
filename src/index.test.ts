@@ -113,7 +113,7 @@ describe('yarn analyze command with configuration file', () => {
 
   it('should execute without any flags and path', async () => {
     const { stdout } = await execa('yarn', ['analyze'])
-    expect(stdout).toContain(`👉 Using configuration from ${configPath}`)
+    expect(stdout).toContain(`👉 Using configuration from vue-mess-detector.json`)
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
     expect(stdout).toContain(`Applying 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
   })
