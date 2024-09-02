@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import Table from 'cli-table3'
@@ -13,20 +12,13 @@ import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
 import { OUTPUT_FORMATS } from './types'
+import { getPackageJson } from './helpers/getPackageJson'
 
-const projectRoot = await getProjectRoot()
-if (!projectRoot) {
-  console.error(`\n${BG_ERR}Cannot find project root.${BG_RESET}\n\n`)
-  // eslint-disable-next-line node/prefer-global/process
-  process.exit(1)
-}
+// eslint-disable-next-line node/prefer-global/process
+const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
+const projectRoot = await getProjectRoot(pathArg || './src')
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const toolRoot = path.resolve(__dirname, '..')
-const packageJsonPath = path.join(toolRoot, 'package.json')
-const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
-
+const vmdPackageJson = await getPackageJson()
 const configOutput: { info: string }[] = []
 
 let config = {
@@ -188,6 +180,6 @@ yargs(hideBin(process.argv))
         })
     },
   )
-  .version('version', 'Show version number', packageJson.version)
+  .version('version', 'Show version number', vmdPackageJson.version)
   .alias('version', 'v')
   .help().argv
