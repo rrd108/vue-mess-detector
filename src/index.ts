@@ -4,7 +4,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import Table from 'cli-table3'
 import { analyze } from './analyzer'
-import { BG_ERR, BG_RESET } from './rules/asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
 import { validateOption } from './helpers/validateOption'
@@ -156,10 +156,11 @@ yargs(hideBin(process.argv))
 
             // TODO get back the original output format
             for (const group in result.reportOutput) {
+              console.log(`\n- ${TEXT_INFO} ${group}${TEXT_RESET}`)
               result.reportOutput[group].forEach((line) => {
-                console.log(line.id)
-                console.log(line.description)
-                console.log(line.message)
+                console.log(`   ${line.id}`)
+                console.log(`   ${line.description}`)
+                console.log(`   ${line.message}\n`)
               })
             }
 
