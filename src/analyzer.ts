@@ -116,6 +116,5 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
     output.push({ info: `\n${BG_OK}No code smells detected!${BG_RESET}` })
   }
 
-
   return { output, codeHealthOutput, reportOutput }
 }

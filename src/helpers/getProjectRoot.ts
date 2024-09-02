@@ -10,8 +10,8 @@ const getProjectRoot = async (startDir: string) => {
     try {
       await fs.access(packageJsonPath)
       return currentDir
-    // eslint-disable-next-line unused-imports/no-unused-vars
-    } catch (e) {
+    }
+    catch (e) {
       // File doesn't exist, move up one directory level
       currentDir = path.dirname(currentDir)
     }
