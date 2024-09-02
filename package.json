@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.4.27",
+    "cli-table3": "^0.6.5",
     "html-tags": "^4.0.0",
     "magic-regexp": "^0.8.0",
     "prettier-eslint": "^16.3.0",

@@ -1,4 +1,5 @@
-import type { Flag, GroupBy, OrderBy, OutputFormat, OutputLevel } from '../types'
+import type { Flag, GroupBy, OrderBy, OutputLevel } from '../types'
+import { OUTPUT_FORMATS } from '../types'
 
 const validGroupByOptions: GroupBy[] = ['rule', 'file']
 
@@ -12,13 +13,12 @@ const validGroupByOptions: GroupBy[] = ['rule', 'file']
 */
 const validOrderOptions: OrderBy[] = ['asc', 'desc']
 const validOutputLevelOptions: OutputLevel[] = ['all', 'error']
-const validOutputFormatOptions: OutputFormat[] = ['text', 'json']
 
-const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[] | OutputFormat[]> = {
+const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[] | typeof OUTPUT_FORMATS> = {
   groupBy: validGroupByOptions,
   orderBy: validOrderOptions,
   outputLevel: validOutputLevelOptions,
-  outputFormat: validOutputFormatOptions,
+  outputFormat: OUTPUT_FORMATS,
 }
 
 export const validateOption = <T>(value: T, flag: Flag) => {

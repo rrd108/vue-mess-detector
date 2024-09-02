@@ -7,8 +7,14 @@ import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
 import { reportBigVif, reportBigVshow, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 
+// TODO move out to types
+interface OutputType {
+  [key: string]: { id: string, description: string, message: string }[]
+}
+
 export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
+  const health: Health[] = []
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {
@@ -77,8 +83,6 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
 
-  const health: Health[] = []
-
   // Sort offenses grouped by key based on the `orderBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
     const countA = offensesGrouped[a].length
@@ -92,12 +96,13 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   })
 
   // Output the report grouped by the sorted keys
-  const output: { info: string }[] = []
+  const output: OutputType = {}
 
   sortedKeys.forEach((key) => {
-    output.push({ info: `\n - ${key}` })
+    output[key] = []
 
-    offensesGrouped[key].forEach((offense) => {
+    offensesGrouped[key].forEach((offense, i) => {
+      output[key][i] = { id: '', description: '', message: '' }
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
@@ -116,16 +121,21 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
       }
 
       if (groupBy === 'file') {
-        output.push({ info: `   Rule: ${offense.rule}` })
+        // output.push({ info: `   Rule: ${offense.rule}` })
+        output[key][i].id = offense.rule
       }
 
       if (groupBy !== 'file') {
-        output.push({ info: `   File: ${offense.file}` })
+        // output.push({ info: `   File: ${offense.file}` })
+        output[key][i].id = offense.file
       }
-      output.push({ info: `   Description: ${offense.description}` })
-      output.push({ info: `   Message: ${offense.message || '🚨'}\n` })
+      // output.push({ info: `   Description: ${offense.description}` })
+      output[key][i].description = offense.description
+      // output.push({ info: `   Message: ${offense.message || '🚨'}\n` })
+      output[key][i].message = offense.message || '🚨'
     })
   })
 
+  // console.log(JSON.stringify(output, null, 2));
   return { output, health }
 }
