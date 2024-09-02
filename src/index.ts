@@ -120,6 +120,25 @@ yargs(hideBin(process.argv))
         orderBy: argv.order,
       })
         .then((result) => {
+          if (argv.output == 'text') {
+            [...configOutput, ...result.output].forEach((line) => {
+              console.log(line.info)
+            })
+
+            for (const group in result.reportOutput) {
+              console.log(`\n- ${TEXT_INFO} ${group}${TEXT_RESET}`)
+              result.reportOutput[group].forEach((line) => {
+                console.log(`   ${line.id}`)
+                console.log(`   ${line.description}`)
+                console.log(`   ${line.message}\n`)
+              })
+            }
+
+            result.codeHealthOutput?.forEach((line) => {
+              console.log(line.info)
+            })
+          }
+
           if (argv.output == 'table') {
             [...configOutput, ...result.output].forEach((line) => {
               console.log(line.info)
@@ -148,26 +167,6 @@ yargs(hideBin(process.argv))
                 })
               }
               console.log(table.toString())
-            }
-
-            result.codeHealthOutput?.forEach((line) => {
-              console.log(line.info)
-            })
-          }
-
-          if (argv.output == 'text') {
-            [...configOutput, ...result.output].forEach((line) => {
-              console.log(line.info)
-            })
-
-            // TODO get back the original output format
-            for (const group in result.reportOutput) {
-              console.log(`\n- ${TEXT_INFO} ${group}${TEXT_RESET}`)
-              result.reportOutput[group].forEach((line) => {
-                console.log(`   ${line.id}`)
-                console.log(`   ${line.description}`)
-                console.log(`   ${line.message}\n`)
-              })
             }
 
             result.codeHealthOutput?.forEach((line) => {
