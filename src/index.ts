@@ -128,19 +128,25 @@ yargs(hideBin(process.argv))
             for (const group in result.reportOutput) {
               const table = new Table({
                 head: ['id', 'message'],
-                colWidths: [40, 88],
+                colWidths: [60, 60],
                 wordWrap: true,
                 wrapOnWordBoundary: false,
               })
 
-              console.log('--------------------------------------------------------------------------------')
-              console.log(`Group: ${group}`)
-              // TODO this description can be only used here if the output is grouped by rule, not by file
-              console.log(`Description: ${result.reportOutput[group][0].description}`)
-
-              result.reportOutput[group].forEach((line) => {
-                table.push([line.id, line.message])
-              })
+              console.log('-'.repeat(120))
+              if (argv.group == 'rule') {
+                console.log(`${TEXT_INFO}Rule: ${group}${TEXT_RESET}`)
+                console.log(`Description: ${result.reportOutput[group][0].description}`)
+                result.reportOutput[group].forEach((line) => {
+                  table.push([line.id, line.message])
+                })
+              }
+              if (argv.group == 'file') {
+                console.log(`${TEXT_INFO}File: ${group}${TEXT_RESET}`)
+                result.reportOutput[group].forEach((line) => {
+                  table.push([`${line.id}\n${line.description.replace('See: ', 'See:\n')}`, line.message])
+                })
+              }
               console.log(table.toString())
             }
 
