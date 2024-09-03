@@ -1,7 +1,7 @@
 let isNuxt = false
 
 export const setIsNuxt = (value: boolean) => {
-    isNuxt = value;
+  isNuxt = value
 }
 
 export const getIsNuxt = () => isNuxt
