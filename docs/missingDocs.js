@@ -149,8 +149,7 @@ const main = async () => {
           console.log(`- ${rulesetName}: index.md file is missing`)
         }
         else {
-          console.log(`- ${rulesetName}:`)
-          missingRules.forEach(rule => console.log(`  - ${rule}`))
+          missingRules.forEach(rule => console.log(`  - ./docs/rules/${rulesetName}/index.md : ${rule}`))
         }
       })
     }
