@@ -1,6 +1,6 @@
 # HTML Image Elements
 
-Checks if HTML `<img>` or `<picture>` elements are used in the template of a **Nuxt project**.
+Checks if HTML `<img>` or `<picture>` elements are used in the template of a **Nuxt project**. We recommend using the `NuxtImg` and `NuxtPicture` components instead from [NuxtImage module](https://image.nuxt.com/).
 
 ## ❓ Why it's good to follow this rule?
 
