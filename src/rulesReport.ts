@@ -102,7 +102,6 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
     output[key] = []
 
     offensesGrouped[key].forEach((offense, i) => {
-      output[key][i] = { id: '', description: '', message: '' }
       const isError = offense.message.includes(BG_ERR)
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
@@ -120,6 +119,8 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
         return
       }
 
+      output[key][i] = { id: '', description: '', message: '' }
+
       if (groupBy === 'file') {
         // output.push({ info: `   Rule: ${offense.rule}` })
         output[key][i].id = offense.rule
@@ -136,6 +137,5 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
     })
   })
 
-  // console.log(JSON.stringify(output, null, 2));
   return { output, health }
 }

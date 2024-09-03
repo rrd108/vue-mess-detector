@@ -3334,14 +3334,13 @@ const Bo = (t, e) => {
   }), h = {};
   return a.forEach((p) => {
     h[p] = [], s[p].forEach((d, x) => {
-      h[p][x] = { id: "", description: "", message: "" };
       const y = d.message.includes(G);
       if (u.some((E) => E.file === d.file)) {
         const E = u.find((C) => C.file === d.file);
         E && (y ? E.errors++ : E.warnings++);
       } else
         u.push({ file: d.file, errors: y ? 1 : 0, warnings: y ? 0 : 1 });
-      n === "error" && !y || (t === "file" && (h[p][x].id = d.rule), t !== "file" && (h[p][x].id = d.file), h[p][x].description = d.description, h[p][x].message = d.message || "🚨");
+      n === "error" && !y || (h[p][x] = { id: "", description: "", message: "" }, t === "file" && (h[p][x].id = d.rule), t !== "file" && (h[p][x].id = d.file), h[p][x].description = d.description, h[p][x].message = d.message || "🚨");
     });
   }), { output: h, health: u };
 }, fe = {
