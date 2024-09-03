@@ -1,6 +1,6 @@
-# HTML Image Elements
+# HTML Image Elements in Nuxt
 
-Checks if HTML `<img>` or `<picture>` elements are used in the template of a **Nuxt project**. We recommend using the `NuxtImg` and `NuxtPicture` components instead from [NuxtImage module](https://image.nuxt.com/).
+Checks if HTML `img` or `picture` elements are used in the template of a **Nuxt project**. We recommend using the `NuxtImg` and `NuxtPicture` components instead from [NuxtImage module](https://image.nuxt.com/).
 
 ## ❓ Why it's good to follow this rule?
 
@@ -24,7 +24,7 @@ The following code uses HTML image elements instead of Nuxt-specific components.
 ## 🤩 How to fix it?
 
 ::: tip
-Replace the HTML `<img>` and `<picture>` elements with the `NuxtImg` component.
+Replace the HTML `img` and `picture` elements with the `NuxtImg` and `NuxtPicture` components.
 :::
 
 ```vue
@@ -32,4 +32,4 @@ Replace the HTML `<img>` and `<picture>` elements with the `NuxtImg` component.
 <NuxtPicture src="/image.jpg" alt="A picture" />
 ```
 
-By using <NuxtImg> and <NuxtPicture> components, you leverage Nuxt's built-in image optimization features, improving performance and maintaining consistency across your Nuxt project.
+By using `NuxtImg` and `NuxtPicture` components, you leverage Nuxt's built-in image optimization features, improving performance and maintaining consistency across your Nuxt project.
