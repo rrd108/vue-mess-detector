@@ -3456,7 +3456,7 @@ const fi = (t) => {
 }, di = 1.5, In = 75, kn = 85, Pn = 95, ds = [...on, ...Object.values(fe).flat()], mi = (t, e, n) => {
   const { errors: s, warnings: u } = t.reduce((y, { errors: E, warnings: C }) => ({ errors: y.errors + E, warnings: y.warnings + C }), { errors: 0, warnings: 0 }), o = [];
   o.push({ info: `Found ${q}${Intl.NumberFormat("en-US").format(s)} errors${b}, and ${R}${Intl.NumberFormat("en-US").format(u)} warnings${b}, ${X}${Intl.NumberFormat("en-US").format(e)} lines${b} of code in ${X}${Intl.NumberFormat("en-US").format(n)} files${b}` });
-  const r = Math.ceil((1 - (s * di + u) / e) * 100), c = 60, h = Math.max(1, Math.ceil(u / e * c)), p = Math.max(1, c - Math.ceil(r * c / 100) - h), d = c - p - h, A = `${dt}${" ".repeat(d)}${R}${" ".repeat(h)}${q}${" ".repeat(p)}${b}`;
+  const r = Math.ceil((1 - (s * di + u) / e) * 100), c = 60, h = u ? Math.max(1, Math.ceil(u / e * c)) : 0, p = s ? Math.max(1, c - Math.ceil(r * c / 100) - h) : 0, d = c - p - h, A = `${dt}${" ".repeat(d)}${R}${" ".repeat(h)}${q}${" ".repeat(p)}${b}`;
   return o.push({ info: `Code Health: [${A}] ${r}%
 ` }), r < In && o.push({ info: `${q}Code health is LOW: ${r}%${b}
 ` }), r >= In && r < kn && o.push({ info: `${R}Code health is MEDIUM ${r}%${b}
