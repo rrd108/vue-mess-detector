@@ -74,6 +74,7 @@ export default defineConfig({
                 { text: 'Deep Indentation', link: '/rules/rrd/deep-indentation' },
                 { text: 'Else Condition', link: '/rules/rrd/else-condition' },
                 { text: 'Function Size', link: '/rules/rrd/function-size' },
+                { text: 'HTML Image Elements', link: '/rules/rrd/html-image-elements' },
                 { text: 'HTML links', link: '/rules/rrd/html-link' },
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },

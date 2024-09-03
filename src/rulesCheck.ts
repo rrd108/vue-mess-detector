@@ -5,7 +5,8 @@ import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication 
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
-import { checkBigVif, checkBigVshow, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkBigVif, checkBigVshow, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { getIsNuxt } from './context'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -49,20 +50,21 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     deepIndentation: () => checkDeepIndentation(script, filePath),
     elseCondition: () => checkElseCondition(script, filePath),
     functionSize: () => checkFunctionSize(script, filePath),
+    htmlImageElements: () => getIsNuxt() && checkHtmlImageElements(descriptor.template, filePath),
+    htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
     ifWithoutCurlyBraces: () => checkIfWithoutCurlyBraces(script, filePath),
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
+    noPropDestructure: () => checkNoPropDestructure(script, filePath),
+    noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
     parameterCount: () => checkParameterCount(script, filePath),
+    plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     propsDrilling: () => checkPropsDrilling(script, filePath),
     scriptLength: () => checkScriptLength(script, filePath),
     shortVariableName: () => checkShortVariableName(script, filePath),
     tooManyProps: () => checkTooManyProps(script, filePath),
-    noPropDestructure: () => checkNoPropDestructure(script, filePath),
-    noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
-    zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
-    htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
-    plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
+    zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
   }
 
   // Run the checks for each applied rule or ruleset

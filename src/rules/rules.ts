@@ -33,6 +33,7 @@ export const RULES = {
     'deepIndentation',
     'elseCondition',
     'functionSize',
+    'htmlImageElements',
     'htmlLink',
     'ifWithoutCurlyBraces',
     'magicNumbers',

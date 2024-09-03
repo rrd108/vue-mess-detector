@@ -8,6 +8,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [Deep Indentation](./deep-indentation.md)
 - [Else Condition](./else-condition.md)
 - [Function Size](./function-size.md)
+- [HTML Image Elements](./html-image-elements.md)
 - [HTML links](./html-link.md)
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
