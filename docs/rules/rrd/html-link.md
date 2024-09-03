@@ -12,7 +12,7 @@ Check if HTML links are used in the template.
 The following code contains a HTML link.
 :::
 
-```html
+```vue
 <ul>
   <li><a href="/home">Home</a></li>
   <li><a href="/about">About</a></li>
@@ -25,7 +25,7 @@ The following code contains a HTML link.
 Replace HTML links with Vue router links or NuxtLinks.
 :::
 
-```html
+```vue
 <ul>
   <li><router-link to="/home">Home</router-link></li>
   <li><NuxtLink to="/about">About</NuxtLink></li>
