@@ -95,6 +95,11 @@ export default defineConfig({
           { text: 'Contribute', link: '/contribute' },
         ],
       },
+      {
+        items: [
+          { text: 'Suggested Readings', link: '/suggested-readings' },
+        ],
+      },
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/rrd108/vue-mess-detector' }],
