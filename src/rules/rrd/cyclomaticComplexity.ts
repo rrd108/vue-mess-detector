@@ -32,9 +32,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
     + (_caseCount?.length || 0)
 
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
-    results.push({ filePath, message: `${cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
-      cyclomaticComplexity
-    })${BG_RESET}` })
+    results.push({ filePath, message: `Cyclomatic complexity is ${cyclomaticComplexity > COMPLEXITY_HIGH ? `${BG_ERR}very high` : `${BG_WARN}high`} (${cyclomaticComplexity})${BG_RESET}` })
   }
 }
 
