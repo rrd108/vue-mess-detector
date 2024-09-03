@@ -11,6 +11,7 @@ import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import type { AnalyzeParams } from './types'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
 import getProjectRoot from './helpers/getProjectRoot'
+import { setIsNuxt } from './context'
 
 let filesCount = 0
 let linesCount = 0
@@ -82,8 +83,9 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const ignoreRulesetsOutput = ignoredRulesets.length ? `${BG_INFO}${ignoredRulesets.join(', ')}${BG_RESET}` : 'N/A'
 
   const projectRoot = await getProjectRoot(dir)
-  const isNuxt = await isNuxtProject(projectRoot)
   const isVue = await isVueProject(projectRoot)
+  const isNuxt = await isNuxtProject(projectRoot)
+  setIsNuxt(isNuxt)
 
   output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
   output.push({ info: `      Project type: ${BG_INFO}${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}${BG_RESET}` })
