@@ -64,7 +64,7 @@ const walkAsync = async (dir: string) => {
   }
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, orderBy }: AnalyzeParams) => {
+export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams) => {
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
@@ -95,7 +95,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
       Excluding ${exclude || '-'}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}
-      Ordering ${BG_INFO}${orderBy}${BG_RESET}`,
+      Sorting ${BG_INFO}${sortBy}${BG_RESET}`,
   })
 
   // Filter out ignored rules from the apply list
@@ -111,7 +111,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   output.push({ info: `Found ${BG_INFO}${filesCount}${BG_RESET} files` })
 
   // Generate the report and calculate code health
-  const { health, output: reportOutput } = reportRules(groupBy, orderBy, level)
+  const { health, output: reportOutput } = reportRules(groupBy, sortBy, level)
   const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {
