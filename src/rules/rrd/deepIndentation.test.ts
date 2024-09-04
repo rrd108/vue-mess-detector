@@ -22,7 +22,7 @@ describe('checkDeepIndentation', () => {
     expect(reportDeepIndentation()).toStrictEqual([])
   })
 
-  it('should report files with deep indentation', () => {
+  it('should report files with deep tab indentation', () => {
     const script = { content: '\t\t\t\t\tif (true) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-deep-indentation-tab.vue'
     checkDeepIndentation(script, fileName)
@@ -35,7 +35,7 @@ describe('checkDeepIndentation', () => {
     }])
   })
 
-  it('should report files with deep indentation 2', () => {
+  it('should report files with deep space indentation', () => {
     const script = { content: '               if (true) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-deep-indentation-space.vue'
     checkDeepIndentation(script, fileName)
