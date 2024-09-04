@@ -87,7 +87,7 @@ Options:
 | `--apply`   | Apply **only** specific rulesets or rules (comma-separated) | All rules | `--apply=vue-essential,magicNumbers`        |
 | `--ignore`  | Ignore **only** specific rulesets or rules (comma-separated) | -    | `--ignore=vue-caution,functionSize`                    |
 | `--group`   | Group results by `file` or `rule`                       | `rule`  | `--group=file`                                         |
-| `--order`   | Order results (`asc` or `desc`)                         | `asc`   | `--order=desc`                                         |
+| `--sort`   | Order results `asc` or `desc`                         | `asc`   | `--sort=desc`                                         |
 | `--level`   | Show only specific level (`error` or `warning`)         | Both    | `--level=error`                                        |
 | `--output`  | Output format `text` or `table` or `json`               | `text`  | `--output=table`                                        |
 

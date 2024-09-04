@@ -1,4 +1,4 @@
-export type Flag = 'groupBy' | 'orderBy' | 'outputLevel' | 'outputFormat'
+export type Flag = 'groupBy' | 'sortBy' | 'outputLevel' | 'outputFormat'
 /*
   - `asc` is the default order, as the checks run.
   - `desc` will order the results starting by the most problematic file / rule
@@ -10,8 +10,8 @@ export type Flag = 'groupBy' | 'orderBy' | 'outputLevel' | 'outputFormat'
 export const GROUP_BY = ['rule', 'file'] as const
 export type GroupBy = typeof GROUP_BY[number]
 
-export const ORDER_BY = ['asc', 'desc'] as const
-export type OrderBy = typeof ORDER_BY[number]
+export const SORT_BY = ['asc', 'desc'] as const
+export type SortBy = typeof SORT_BY[number]
 
 export const OUTPUT_FORMATS = ['text', 'json', 'table'] as const
 export type OutputFormat = typeof OUTPUT_FORMATS[number]
@@ -26,7 +26,7 @@ export interface AnalyzeParams {
   exclude: string
   groupBy: GroupBy
   level: OutputLevel
-  orderBy: OrderBy
+  sortBy: SortBy
 }
 
 export interface Offense {

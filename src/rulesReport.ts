@@ -1,4 +1,4 @@
-import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, OutputLevel, ReportFunction } from './types'
+import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import { BG_ERR } from './rules/asceeCodes'
 
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
@@ -12,7 +12,7 @@ interface OutputType {
   [key: string]: { id: string, description: string, message: string }[]
 }
 
-export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
+export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
   const health: Health[] = []
 
@@ -85,12 +85,12 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
 
-  // Sort offenses grouped by key based on the `orderBy` parameter
+  // Sort offenses grouped by key based on the `sortBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
     const countA = offensesGrouped[a].length
     const countB = offensesGrouped[b].length
 
-    if (orderBy === 'desc') {
+    if (sortBy === 'desc') {
       return countB - countA
     }
 

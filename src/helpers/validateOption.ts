@@ -1,10 +1,10 @@
 import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from '../rules/asceeCodes'
 import type { Flag } from '../types'
-import { GROUP_BY, ORDER_BY, OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from '../types'
 
-const flagOptions: Record<Flag, typeof GROUP_BY | typeof ORDER_BY | typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
+const flagOptions: Record<Flag, typeof GROUP_BY | typeof SORT_BY | typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
   groupBy: GROUP_BY,
-  orderBy: ORDER_BY,
+  sortBy: SORT_BY,
   outputLevel: OUTPUT_LEVELS,
   outputFormat: OUTPUT_FORMATS,
 }

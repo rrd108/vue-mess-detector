@@ -3570,7 +3570,7 @@ const vi = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
     const u = Z.join(t, s);
     (await pe.stat(u)).isDirectory() && !vi.some((r) => u.includes(r)) && !fn.some((r) => u.endsWith(r)) && await ws(u), await Vn(u, u);
   }
-}, Bi = async ({ dir: t, apply: e = [], ignore: n = [], exclude: s, groupBy: u, level: o, orderBy: r }) => {
+}, Bi = async ({ dir: t, apply: e = [], ignore: n = [], exclude: s, groupBy: u, level: o, sortBy: r }) => {
   const c = e.filter((te) => !n.includes(te)), { rulesets: h, individualRules: p } = xi(c), d = h.length ? `${Q}${h.join(", ")}${$}` : "N/A", A = p.length ? `${Q}${p.join(", ")}${$}` : "N/A";
   let y = `      Applying ${h.length} rulesets: ${d}`;
   p.length > 0 && (y += `
@@ -3582,14 +3582,14 @@ const vi = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
       Excluding ${s || "-"}
       Output level ${Q}${o}${$}
       Grouping by ${Q}${u}${$}
-      Ordering ${Q}${r}${$}`
+      Sorting ${Q}${r}${$}`
   }), ys = e.filter((te) => !n.includes(te)), s && fn.push(...s.split(",")), await ws(t), he.push({ info: `Found ${Q}${tn}${$} files` });
   const { health: B, output: L } = Ci(u, r, o), { errors: W, warnings: T, output: de } = wi(B, bs, tn);
   return !W && !T && he.push({ info: `
 ${mt}No code smells detected!${$}` }), { output: he, codeHealthOutput: de, reportOutput: L };
 }, xs = ["rule", "file"], As = ["asc", "desc"], vs = ["text", "json", "table"], Bs = ["all", "error"], Si = {
   groupBy: xs,
-  orderBy: As,
+  sortBy: As,
   outputLevel: Bs,
   outputFormat: vs
 }, Ne = (t, e) => {
@@ -3622,7 +3622,7 @@ let ue = {
   exclude: void 0,
   group: "rule",
   level: "all",
-  order: "desc",
+  sort: "desc",
   output: "text"
 };
 try {
@@ -3669,13 +3669,13 @@ ks(su(process.argv)).command(
     coerce: Un("ignore"),
     default: ue.ignore,
     group: "Filter Rulesets:"
-  }).option("order", {
-    alias: "o",
-    describe: "Order results at the output",
+  }).option("sort", {
+    alias: "s",
+    describe: "Sort results at the output",
     choices: As,
-    coerce: (e) => Ne(e, "orderBy"),
-    default: ue.order,
-    group: "Order Results:"
+    coerce: (e) => Ne(e, "sortBy"),
+    default: ue.sort,
+    group: "Sort Results:"
   }).option("output", {
     describe: "Output format",
     choices: vs,
@@ -3691,7 +3691,7 @@ ks(su(process.argv)).command(
       exclude: t.exclude,
       groupBy: t.group,
       level: t.level,
-      orderBy: t.order
+      sortBy: t.sort
     }).then((e) => {
       if (t.output == "text") {
         [...Ve, ...e.output].forEach((n) => {
