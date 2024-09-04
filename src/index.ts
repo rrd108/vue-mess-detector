@@ -11,7 +11,7 @@ import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
-import { OUTPUT_FORMATS } from './types'
+import { OUTPUT_FORMATS, OUTPUT_LEVELS } from './types'
 import { getPackageJson } from './helpers/getPackageJson'
 
 // eslint-disable-next-line node/prefer-global/process
@@ -79,7 +79,7 @@ yargs(hideBin(process.argv))
       .option('level', {
         alias: 'l',
         describe: 'Output level',
-        choices: ['all', 'error'],
+        choices: OUTPUT_LEVELS,
         coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
         default: config.level,
         group: 'Output:',

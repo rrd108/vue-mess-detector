@@ -1,10 +1,11 @@
 export type Flag = 'groupBy' | 'orderBy' | 'outputLevel' | 'outputFormat'
 export type GroupBy = 'rule' | 'file'
 export type OrderBy = 'asc' | 'desc'
-export type OutputLevel = 'all' | 'error'
-// TODO refactor the above to be like ouput formats - validateOption and src/index.ts should be also changed
+// TODO refactor the above to be like ouput formats - validateOption and src/index.ts (choices) should be also changed
 export const OUTPUT_FORMATS = ['text', 'json', 'table'] as const
 export type OutputFormat = typeof OUTPUT_FORMATS[number]
+export const OUTPUT_LEVELS = ['all', 'error'] as const
+export type OutputLevel = typeof OUTPUT_LEVELS[number]
 
 export interface AnalyzeParams {
   dir: string

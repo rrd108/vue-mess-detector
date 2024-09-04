@@ -1,5 +1,5 @@
-import type { Flag, GroupBy, OrderBy, OutputLevel } from '../types'
-import { OUTPUT_FORMATS } from '../types'
+import type { Flag, GroupBy, OrderBy } from '../types'
+import { OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
 
 const validGroupByOptions: GroupBy[] = ['rule', 'file']
 
@@ -12,12 +12,11 @@ const validGroupByOptions: GroupBy[] = ['rule', 'file']
   - for grouping by rule, it will order depending on the rule most offended
 */
 const validOrderOptions: OrderBy[] = ['asc', 'desc']
-const validOutputLevelOptions: OutputLevel[] = ['all', 'error']
 
-const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | OutputLevel[] | typeof OUTPUT_FORMATS> = {
+const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
   groupBy: validGroupByOptions,
   orderBy: validOrderOptions,
-  outputLevel: validOutputLevelOptions,
+  outputLevel: OUTPUT_LEVELS,
   outputFormat: OUTPUT_FORMATS,
 }
 
