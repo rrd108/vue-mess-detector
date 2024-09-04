@@ -3136,7 +3136,7 @@ const To = (t, e) => {
     t.push({
       file: e.filePath,
       rule: `${R}rrd ~ nested Ternary${m}`,
-      description: `👉 ${_}/* TODO tip to fix this issue */.${m} See: https:///* TODO doc link */`,
+      description: `👉 ${_}Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
       message: `${e.message} 🚨`
     });
   }), t;
