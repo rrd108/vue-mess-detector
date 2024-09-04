@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkVforNoKey, reportVforNoKey, resetReportVForNoKey } from './vforNoKey'
 
 describe('checkVforNoKey', () => {
@@ -44,7 +44,7 @@ describe('checkVforNoKey', () => {
       file: fileName,
       rule: `${TEXT_INFO}vue-essential ~ v-for has no key${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Add a \`:key\` property to all v-for.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
-      message: `v-for used ${BG_WARN}without a key${BG_RESET} 🚨`,
+      message: `v-for used ${BG_ERR}without a key${BG_RESET} 🚨`,
     }])
   })
 })

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle } from './globalStyle'
 
 describe('checkGlobalStyle', () => {
@@ -25,7 +25,7 @@ describe('checkGlobalStyle', () => {
       file: filePath,
       rule: `${TEXT_INFO}vue-essential ~ global style${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
-      message: `${BG_WARN}global style${BG_RESET} used 🚨`,
+      message: `${BG_ERR}global style${BG_RESET} used 🚨`,
     }])
   })
 })

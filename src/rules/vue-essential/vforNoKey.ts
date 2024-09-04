@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -18,7 +18,7 @@ const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => 
   if (matches?.length) {
     const hasKey = matches.some(match => match.includes(':key'))
     if (!hasKey) {
-      results.push({ filePath, message: `v-for used ${BG_WARN}without a key${BG_RESET}` })
+      results.push({ filePath, message: `v-for used ${BG_ERR}without a key${BG_RESET}` })
     }
   }
 }

@@ -188,7 +188,7 @@ class eu {
     const L = Object.assign(/* @__PURE__ */ Object.create(null), { _: [] }), de = {};
     for (let i = 0; i < u.length; i++) {
       const D = u[i], g = D.replace(/^-{3,}/, "---");
-      let f, l, x, $, v, V;
+      let f, l, x, $, v, H;
       if (D !== "--" && /^-/.test(D) && Re(D))
         ne(D);
       else if (g.match(/^---+(=|$)/)) {
@@ -206,24 +206,24 @@ class eu {
         v = u[i + 1], $ = D.match(/^-(.\..+)/), $ !== null && Array.isArray($) && $.length >= 2 && (l = $[1], v !== void 0 && !v.match(/^-/) && !O(l, a.bools) && !O(l, a.counts) ? (I(l, v), i++) : I(l, ge(l)));
       else if (D.match(/^-[^-]+/) && !D.match(w)) {
         x = D.slice(1, -1).split(""), f = !1;
-        for (let G = 0; G < x.length; G++) {
-          if (v = D.slice(G + 2), x[G + 1] && x[G + 1] === "=") {
-            V = D.slice(G + 3), l = x[G], O(l, a.arrays) ? i = Se(i, l, u, V) : O(l, a.nargs) !== !1 ? i = me(i, l, u, V) : I(l, V), f = !0;
+        for (let q = 0; q < x.length; q++) {
+          if (v = D.slice(q + 2), x[q + 1] && x[q + 1] === "=") {
+            H = D.slice(q + 3), l = x[q], O(l, a.arrays) ? i = Se(i, l, u, H) : O(l, a.nargs) !== !1 ? i = me(i, l, u, H) : I(l, H), f = !0;
             break;
           }
           if (v === "-") {
-            I(x[G], v);
+            I(x[q], v);
             continue;
           }
-          if (/[A-Za-z]/.test(x[G]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(v) && O(v, a.bools) === !1) {
-            I(x[G], v), f = !0;
+          if (/[A-Za-z]/.test(x[q]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(v) && O(v, a.bools) === !1) {
+            I(x[q], v), f = !0;
             break;
           }
-          if (x[G + 1] && x[G + 1].match(/\W/)) {
-            I(x[G], v), f = !0;
+          if (x[q + 1] && x[q + 1].match(/\W/)) {
+            I(x[q], v), f = !0;
             break;
           } else
-            I(x[G], ge(x[G]));
+            I(x[q], ge(x[q]));
         }
         l = D.slice(-1)[0], !f && l !== "-" && (O(l, a.arrays) ? i = Se(i, l, u) : O(l, a.nargs) !== !1 ? i = me(i, l, u) : (v = u[i + 1], v !== void 0 && (!/^(-|--)[^-]/.test(v) || v.match(w)) && !O(l, a.bools) && !O(l, a.counts) || /^(true|false)$/.test(v) ? (I(l, v), i++) : I(l, ge(l))));
       } else if (D.match(/^-[0-9]$/) && D.match(w) && O(D.slice(1), a.bools))
@@ -411,8 +411,8 @@ class eu {
     }
     function $e(i, D, g) {
       let f = i;
-      c["dot-notation"] || (D = [D.join(".")]), D.slice(0, -1).forEach(function(V) {
-        V = dn(V), typeof f == "object" && f[V] === void 0 && (f[V] = {}), typeof f[V] != "object" || Array.isArray(f[V]) ? (Array.isArray(f[V]) ? f[V].push({}) : f[V] = [f[V], {}], f = f[V][f[V].length - 1]) : f = f[V];
+      c["dot-notation"] || (D = [D.join(".")]), D.slice(0, -1).forEach(function(H) {
+        H = dn(H), typeof f == "object" && f[H] === void 0 && (f[H] = {}), typeof f[H] != "object" || Array.isArray(f[H]) ? (Array.isArray(f[H]) ? f[H].push({}) : f[H] = [f[H], {}], f = f[H][f[H].length - 1]) : f = f[H];
       });
       const l = dn(D[D.length - 1]), x = O(D.join("."), a.arrays), $ = Array.isArray(g);
       let v = c["duplicate-arguments-array"];
@@ -870,23 +870,23 @@ function bu(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
 let nn = [], Qn = 0;
-const H = (t, e) => {
+const G = (t, e) => {
   Qn >= e && nn.push(t);
 };
-H.WARN = 1;
-H.INFO = 2;
-H.DEBUG = 3;
-H.reset = () => {
+G.WARN = 1;
+G.INFO = 2;
+G.DEBUG = 3;
+G.reset = () => {
   nn = [];
 };
-H.setDebugLevel = (t) => {
+G.setDebugLevel = (t) => {
   Qn = t;
 };
-H.warn = (t) => H(t, H.WARN);
-H.info = (t) => H(t, H.INFO);
-H.debug = (t) => H(t, H.DEBUG);
-H.debugMessages = () => nn;
-var sn = H, un = { exports: {} }, yu = ({ onlyFirst: t = !1 } = {}) => {
+G.warn = (t) => G(t, G.WARN);
+G.info = (t) => G(t, G.INFO);
+G.debug = (t) => G(t, G.DEBUG);
+G.debugMessages = () => nn;
+var sn = G, un = { exports: {} }, yu = ({ onlyFirst: t = !1 } = {}) => {
   const e = [
     "[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
     "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))"
@@ -2136,7 +2136,7 @@ function lt(t, e, n) {
   u.length && n.push(u);
 }
 var hr = os, pr = hr;
-const dr = /* @__PURE__ */ bu(pr), X = "\x1B[44m", R = "\x1B[43m", q = "\x1B[41m", dt = "\x1B[42m", b = "\x1B[0m", N = "\x1B[33m", _ = "\x1B[36m", m = "\x1B[0m", mr = [
+const dr = /* @__PURE__ */ bu(pr), X = "\x1B[44m", N = "\x1B[43m", z = "\x1B[41m", dt = "\x1B[42m", b = "\x1B[0m", _ = "\x1B[33m", R = "\x1B[36m", m = "\x1B[0m", mr = [
   "a",
   "abbr",
   "address",
@@ -2263,7 +2263,7 @@ const dr = /* @__PURE__ */ bu(pr), X = "\x1B[44m", R = "\x1B[43m", q = "\x1B[41m
     let u;
     for (; (u = n.exec(s.content)) !== null; ) {
       const o = u[1];
-      mr.includes(o) && mt.push({ filePath: e, message: `${R}(${o})${b}` });
+      mr.includes(o) && mt.push({ filePath: e, message: `${N}(${o})${b}` });
     }
   });
 }, Fr = () => {
@@ -2271,8 +2271,8 @@ const dr = /* @__PURE__ */ bu(pr), X = "\x1B[44m", R = "\x1B[43m", q = "\x1B[41m
   return mt.length > 0 && mt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-caution ~ element selectors with scoped${m}`,
-      description: `👉 ${N}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
+      rule: `${R}vue-caution ~ element selectors with scoped${m}`,
+      description: `👉 ${_}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2345,7 +2345,7 @@ function T(...t) {
 const ee = "i", P = "g", M = (...t) => {
   const e = t.length > 1 && (Array.isArray(t[t.length - 1]) || t[t.length - 1] instanceof Set) ? t.pop() : void 0;
   return new RegExp(Q(...t).toString(), [...e || ""].join(""));
-}, z = (t, e, n = 0) => {
+}, V = (t, e, n = 0) => {
   if (!e.includes(`
 `))
     return t.split(`
@@ -2361,19 +2361,19 @@ const ee = "i", P = "g", M = (...t) => {
   if (r) {
     const h = r[1].split(".")[0];
     if ((o ? o[1] : "").includes(h)) {
-      const d = z(t.content.trim(), h);
+      const d = V(t.content.trim(), h);
       Ie.push({
         filePath: e,
-        message: `line #${d} ${R}(${h})${b}`
+        message: `line #${d} ${N}(${h})${b}`
       });
     }
   }
   const c = t.content.match(u);
   if (c) {
-    const h = z(t.content.trim(), c[0]);
+    const h = V(t.content.trim(), c[0]);
     Ie.push({
       filePath: e,
-      message: `line #${h} ${R}(${c[0]})${b}`
+      message: `line #${h} ${N}(${c[0]})${b}`
     });
   }
 }, Ar = () => {
@@ -2381,8 +2381,8 @@ const ee = "i", P = "g", M = (...t) => {
   return Ie.length > 0 && Ie.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-caution ~ implicit parent-child communication${m}`,
-      description: `👉 ${N}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
+      rule: `${R}vue-caution ~ implicit parent-child communication${m}`,
+      description: `👉 ${_}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2390,7 +2390,7 @@ const ee = "i", P = "g", M = (...t) => {
   t && t.forEach((n) => {
     n.scoped || gt.push({
       filePath: e,
-      message: `${R}global style${b} used`
+      message: `${z}global style${b} used`
     });
   });
 }, Br = () => {
@@ -2398,8 +2398,8 @@ const ee = "i", P = "g", M = (...t) => {
   return gt.length > 0 && gt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-essential ~ global style${m}`,
-      description: `👉 ${N}Use <style scoped>.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
+      rule: `${R}vue-essential ~ global style${m}`,
+      description: `👉 ${_}Use <style scoped>.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2407,14 +2407,14 @@ const ee = "i", P = "g", M = (...t) => {
   if (!t)
     return;
   const n = M("defineProps([", [P, ee]);
-  t.content.match(n)?.length && Ft.push({ filePath: e, message: `${R}Props type${b} not defined` });
+  t.content.match(n)?.length && Ft.push({ filePath: e, message: `${z}Props type${b} not defined` });
 }, Or = () => {
   const t = [];
   return Ft.length > 0 && Ft.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-essential ~ simple prop${m}`,
-      description: `👉 ${N}Add at least type definition.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+      rule: `${R}vue-essential ~ simple prop${m}`,
+      description: `👉 ${_}Add at least type definition.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2425,14 +2425,14 @@ const ee = "i", P = "g", M = (...t) => {
   if (e === "App.vue")
     return;
   const n = M(is.uppercase);
-  e.slice(1).match(n)?.length || Ct.push({ filePath: t, message: `Component name is ${R}single word${b}` });
+  e.slice(1).match(n)?.length || Ct.push({ filePath: t, message: `Component name is ${z}single word${b}` });
 }, _r = () => {
   const t = [];
   return Ct.length > 0 && Ct.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-essential ~ single name component${m}`,
-      description: `👉 ${N}Rename the component to use multi-word name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
+      rule: `${R}vue-essential ~ single name component${m}`,
+      description: `👉 ${_}Rename the component to use multi-word name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2443,14 +2443,14 @@ const ee = "i", P = "g", M = (...t) => {
     P,
     ee
   ]), s = t.content.match(n);
-  s?.length && (s.some((o) => o.includes(":key")) || Et.push({ filePath: e, message: `v-for used ${R}without a key${b}` }));
+  s?.length && (s.some((o) => o.includes(":key")) || Et.push({ filePath: e, message: `v-for used ${z}without a key${b}` }));
 }, jr = () => {
   const t = [];
   return Et.length > 0 && Et.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-essential ~ v-for has no key${m}`,
-      description: `👉 ${N}Add a \`:key\` property to all v-for.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
+      rule: `${R}vue-essential ~ v-for has no key${m}`,
+      description: `👉 ${_}Add a \`:key\` property to all v-for.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2477,16 +2477,16 @@ const ee = "i", P = "g", M = (...t) => {
     [P, ee]
   ), u = t.content.match(n), o = t.content.match(s);
   if (u?.length || o?.length) {
-    const r = u?.length ? u[0] : o?.length ? o[0] : "", c = z(t.content, r);
-    $t.push({ filePath: e, message: `line #${c} ${R}v-if used with v-for${b}` });
+    const r = u?.length ? u[0] : o?.length ? o[0] : "", c = V(t.content, r);
+    $t.push({ filePath: e, message: `line #${c} ${z}v-if used with v-for${b}` });
   }
 }, Tr = () => {
   const t = [];
   return $t.length > 0 && $t.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-essential ~ v-if used with v-for${m}`,
-      description: `👉 ${N}Move out the v-if to a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
+      rule: `${R}vue-essential ~ v-if used with v-for${m}`,
+      description: `👉 ${_}Move out the v-if to a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2522,7 +2522,7 @@ const ee = "i", P = "g", M = (...t) => {
         if (y !== -1 && y < d) {
           bt.push({
             filePath: e,
-            message: `tag has attributes out of order ${R}(${r})${b}`
+            message: `tag has attributes out of order ${N}(${r})${b}`
           });
           break;
         }
@@ -2535,8 +2535,8 @@ const ee = "i", P = "g", M = (...t) => {
   return bt.length > 0 && bt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-recommended ~ element attribute order${m}`,
-      description: `👉 ${N}The attributes of elements (including components) should be ordered consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+      rule: `${R}vue-recommended ~ element attribute order${m}`,
+      description: `👉 ${_}The attributes of elements (including components) should be ordered consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2546,14 +2546,14 @@ const ee = "i", P = "g", M = (...t) => {
     { name: "template", index: u },
     { name: "style", index: o }
   ].filter((h) => h.index !== -1);
-  r.every((h, p) => p === 0 ? !0 : r[p - 1].index < h.index) || yt.push({ filePath: e, message: `Top level elements are ${R}not following the correct order.${b}` });
+  r.every((h, p) => p === 0 ? !0 : r[p - 1].index < h.index) || yt.push({ filePath: e, message: `Top level elements are ${N}not following the correct order.${b}` });
 }, kr = () => {
   const t = [];
   return yt.length > 0 && yt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-recommended ~ top level element order${m}`,
-      description: `👉 ${N}Single-File Components should always order <script>, <template>, and <style> tags consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+      rule: `${R}vue-recommended ~ top level element order${m}`,
+      description: `👉 ${_}Single-File Components should always order <script>, <template>, and <style> tags consistently.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2561,14 +2561,14 @@ const ee = "i", P = "g", M = (...t) => {
   if (t.includes("pages") || t.includes("layouts"))
     return;
   const e = U.basename(t), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), u = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, o = e.match(u);
-  !s?.length && !o?.length && wt.push({ filePath: t, message: `component name is ${R}not PascalCase, nor kebab-case.${b}` });
+  !s?.length && !o?.length && wt.push({ filePath: t, message: `component name is ${N}not PascalCase, nor kebab-case.${b}` });
 }, zr = () => {
   const t = [];
   return wt.length > 0 && wt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ component name is not PascalCase and not kebab-case${m}`,
-      description: `👉 ${N}Rename the component to use PascalCase or kebab-case file name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
+      rule: `${R}vue-strong ~ component name is not PascalCase and not kebab-case${m}`,
+      description: `👉 ${_}Rename the component to use PascalCase or kebab-case file name.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2577,17 +2577,17 @@ const ee = "i", P = "g", M = (...t) => {
     return;
   const n = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g;
   [...t.content.matchAll(n)].map((u) => u[1].trim()).forEach((u) => {
-    const o = z(t.content.trim(), u), r = u.split(`
+    const o = V(t.content.trim(), u), r = u.split(`
 `).at(0)?.trim() || "";
-    xt.push({ filePath: e, message: `line #${o} ${R}(${r})${b}` });
+    xt.push({ filePath: e, message: `line #${o} ${N}(${r})${b}` });
   });
 }, Hr = () => {
   const t = [];
   return xt.length > 0 && xt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ component files${m}`,
-      description: `👉 ${N}Whenever a build system is available to concatenate files, each component should be in its own file.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+      rule: `${R}vue-strong ~ component files${m}`,
+      description: `👉 ${_}Whenever a build system is available to concatenate files, each component should be in its own file.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2597,8 +2597,8 @@ const ee = "i", P = "g", M = (...t) => {
   const n = t.template;
   Gr.forEach((s) => {
     if (n?.content.includes(`${s}:`)) {
-      const u = z(t.source, s);
-      At.push({ filePath: e, message: `line #${u} ${R}${s}${b}` }), Tn.some((o) => o.filePath === e) || Tn.push({ filePath: e });
+      const u = V(t.source, s);
+      At.push({ filePath: e, message: `line #${u} ${N}${s}${b}` }), Tn.some((o) => o.filePath === e) || Tn.push({ filePath: e });
     }
   });
 }, Ur = () => {
@@ -2606,8 +2606,8 @@ const ee = "i", P = "g", M = (...t) => {
   return At.length > 0 && At.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ directive shorthands not used${m}`,
-      description: `👉 ${N}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
+      rule: `${R}vue-strong ~ directive shorthands not used${m}`,
+      description: `👉 ${_}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2621,15 +2621,15 @@ const ee = "i", P = "g", M = (...t) => {
       Ae("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
       [P]
     ), o = s.match(u);
-    (!o || o.length < Zr) && vt.push({ filePath: t, message: `${s} is not a ${R}full word.${b}` });
+    (!o || o.length < Zr) && vt.push({ filePath: t, message: `${s} is not a ${N}full word.${b}` });
   }
 }, Yr = () => {
   const t = [];
   return vt.length > 0 && vt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ full-word component names${m}`,
-      description: `👉 ${N}Component names should prefer full words over abbreviations.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
+      rule: `${R}vue-strong ~ full-word component names${m}`,
+      description: `👉 ${_}Component names should prefer full words over abbreviations.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2641,15 +2641,15 @@ const ee = "i", P = "g", M = (...t) => {
   for (; (s = n.exec(t.content)) !== null; ) {
     const u = s[1], o = s[2];
     o.split(/\s+/).filter((c) => c.trim() !== "").length > 1 && o.split(`
-`).length === 1 && Bt.push({ filePath: e, message: `Element ${R}<${u}>${b} should have its attributes on separate lines` });
+`).length === 1 && Bt.push({ filePath: e, message: `Element ${N}<${u}>${b} should have its attributes on separate lines` });
   }
 }, Qr = () => {
   const t = [];
   return Bt.length > 0 && Bt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ multi-attribute elements${m}`,
-      description: `👉 ${N}Elements with multiple attributes should span multiple lines, with one attribute per line.${m}`,
+      rule: `${R}vue-strong ~ multi-attribute elements${m}`,
+      description: `👉 ${_}Elements with multiple attributes should span multiple lines, with one attribute per line.${m}`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2659,14 +2659,14 @@ const ee = "i", P = "g", M = (...t) => {
   const n = /defineProps\({([^}]+)/g;
   let s;
   for (; (s = n.exec(t.content)) !== null; )
-    s[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((o) => o.split(":")[0]).filter((o) => o.length).filter((o) => !Xr.test(o)).length && St.push({ filePath: e, message: `prop names are ${R}not camelCased${b}` });
+    s[1].replace(/\s+/g, "").replace(/["']/g, "").split(",").map((o) => o.split(":")[0]).filter((o) => o.length).filter((o) => !Xr.test(o)).length && St.push({ filePath: e, message: `prop names are ${N}not camelCased${b}` });
 }, to = () => {
   const t = [];
   return St.length > 0 && St.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ prop names are not camelCased${m}`,
-      description: `👉 ${N}Rename the props to camelCase.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
+      rule: `${R}vue-strong ~ prop names are not camelCased${m}`,
+      description: `👉 ${_}Rename the props to camelCase.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2695,8 +2695,8 @@ const ee = "i", P = "g", M = (...t) => {
       return;
     const c = r.match(o);
     if (c?.length) {
-      const h = z(t.source, r);
-      Ot.push({ filePath: e, message: `line #${h} ${R}${c}${b}` });
+      const h = V(t.source, r);
+      Ot.push({ filePath: e, message: `line #${h} ${N}${c}${b}` });
     }
   });
 }, so = () => {
@@ -2704,8 +2704,8 @@ const ee = "i", P = "g", M = (...t) => {
   return Ot.length > 0 && Ot.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ attribute value is not quoted${m}`,
-      description: `👉 ${N}Use quotes for attribute values.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
+      rule: `${R}vue-strong ~ attribute value is not quoted${m}`,
+      description: `👉 ${_}Use quotes for attribute values.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2723,17 +2723,17 @@ const ee = "i", P = "g", M = (...t) => {
     ["g"]
   ), u = n?.content?.match(s);
   u !== null && u?.forEach((o) => {
-    const r = z(t.source, o), c = o.split(`
+    const r = V(t.source, o), c = o.split(`
 `).at(-1)?.trim() || "";
-    Rt.push({ filePath: e, message: `line #${r} ${R}${c}${b}` });
+    Rt.push({ filePath: e, message: `line #${r} ${N}${c}${b}` });
   });
 }, ro = () => {
   const t = [];
   return Rt.length > 0 && Rt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ component is not self closing${m}`,
-      description: `👉 ${N}Components with no content should be self-closing.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
+      rule: `${R}vue-strong ~ component is not self closing${m}`,
+      description: `👉 ${_}Components with no content should be self-closing.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2745,8 +2745,8 @@ const ee = "i", P = "g", M = (...t) => {
     if (u.split(`
 `).length > oo) {
       const o = u.split(`
-`)[0], r = z(t.content, o);
-      ls.push({ filePath: e, message: `line #${r} ${R}computed${b}` }), We.push({ filePath: e }), We.some((c) => c.filePath === e) || We.push({ filePath: e });
+`)[0], r = V(t.content, o);
+      ls.push({ filePath: e, message: `line #${r} ${N}computed${b}` }), We.push({ filePath: e }), We.some((c) => c.filePath === e) || We.push({ filePath: e });
     }
   });
 }, co = () => {
@@ -2754,8 +2754,8 @@ const ee = "i", P = "g", M = (...t) => {
   return We.length > 0 && ls.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ complicated computed property${m}`,
-      description: `👉 ${N}Refactor the computed properties to smaller ones.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
+      rule: `${R}vue-strong ~ complicated computed property${m}`,
+      description: `👉 ${_}Refactor the computed properties to smaller ones.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2765,11 +2765,11 @@ const ee = "i", P = "g", M = (...t) => {
   const n = /{{\s*([\s\S]*?)\s*}}/g;
   [...t.content.matchAll(n)].map((u) => u[1].trim()).forEach((u) => {
     if (u.length > ao) {
-      const o = z(t.content, u), r = u.split(`
+      const o = V(t.content, u), r = u.split(`
 `).at(0)?.trim() || "";
       _t.push({
         filePath: e,
-        message: `line #${o} ${R}${r}${b}`
+        message: `line #${o} ${N}${r}${b}`
       });
     }
   });
@@ -2778,8 +2778,8 @@ const ee = "i", P = "g", M = (...t) => {
   return _t.length > 0 && _t.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}vue-strong ~ lengthy template expression${m}`,
-      description: `👉 ${N}Refactor the expression into a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
+      rule: `${R}vue-strong ~ lengthy template expression${m}`,
+      description: `👉 ${_}Refactor the expression into a computed property.${m} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2789,17 +2789,17 @@ const ee = "i", P = "g", M = (...t) => {
   const n = 10, s = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi;
   (t.content.match(s) || []).forEach((o) => {
     const r = o.split(`
-`).length, c = z(t.content, o);
+`).length, c = V(t.content, o);
     if (r > n * 2) {
       ke.push({
         filePath: e,
-        message: `line #${c} ${q}has a v-if with ${r} lines${b}`
+        message: `line #${c} ${z}has a v-if with ${r} lines${b}`
       });
       return;
     }
     r > n && ke.push({
       filePath: e,
-      message: `line #${c} ${R}has a v-if with ${r} lines${b}`
+      message: `line #${c} ${N}has a v-if with ${r} lines${b}`
     });
   });
 }, ho = () => {
@@ -2807,8 +2807,8 @@ const ee = "i", P = "g", M = (...t) => {
   return ke.length > 0 && ke.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ big v-if${m}`,
-      description: `👉 ${N}Big v-if can be moved out to its own component.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html`,
+      rule: `${R}rrd ~ big v-if${m}`,
+      description: `👉 ${_}Big v-if can be moved out to its own component.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2818,17 +2818,17 @@ const ee = "i", P = "g", M = (...t) => {
   const n = 10, s = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi;
   (t.content.match(s) || []).forEach((o) => {
     const r = o.split(`
-`).length, c = z(t.content, o);
+`).length, c = V(t.content, o);
     if (r > n * 2) {
       Pe.push({
         filePath: e,
-        message: `line #${c} ${q}has a v-show with ${r} lines${b}`
+        message: `line #${c} ${z}has a v-show with ${r} lines${b}`
       });
       return;
     }
     r > n && Pe.push({
       filePath: e,
-      message: `line #${c} ${R}has a v-show with ${r} lines${b}`
+      message: `line #${c} ${N}has a v-show with ${r} lines${b}`
     });
   });
 }, mo = () => {
@@ -2836,8 +2836,8 @@ const ee = "i", P = "g", M = (...t) => {
   return Pe.length > 0 && Pe.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ big v-show${m}`,
-      description: `👉 ${N}Big v-show can be moved out to its own component.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
+      rule: `${R}rrd ~ big v-show${m}`,
+      description: `👉 ${_}Big v-show can be moved out to its own component.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2845,14 +2845,14 @@ const ee = "i", P = "g", M = (...t) => {
   if (!t)
     return;
   const n = M(Y, "if", Y, [P, ee]), s = M(Y, "else", Y, [P, ee]), u = M(Y, "for", Y, [P, ee]), o = M(Y, "while", Y, [P, ee]), r = M(Y, "case", Y, [P, ee]), c = t.content.match(n), h = t.content.match(s), p = t.content.match(u), d = t.content.match(o), A = t.content.match(r), y = (c?.length || 0) + (h?.length || 0) + (p?.length || 0) + (d?.length || 0) + (A?.length || 0);
-  y > Ds && Nt.push({ filePath: e, message: `Cyclomatic complexity is ${y > go ? `${q}very high` : `${R}high`} (${y})${b}` });
+  y > Ds && Nt.push({ filePath: e, message: `Cyclomatic complexity is ${y > go ? `${z}very high` : `${N}high`} (${y})${b}` });
 }, Co = () => {
   const t = [];
   return Nt.length > 0 && Nt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ cyclomatic complexity${m}`,
-      description: `👉 ${N}Try to reduce complexity.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+      rule: `${R}rrd ~ cyclomatic complexity${m}`,
+      description: `👉 ${_}Try to reduce complexity.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2864,10 +2864,10 @@ const ee = "i", P = "g", M = (...t) => {
     ee
   ]);
   t.content.match(n)?.forEach((u) => {
-    const o = z(t.content, u);
+    const o = V(t.content, u);
     jt.push({
       filePath: e,
-      message: `line #${o} ${R}indentation: ${u.length}${b}`
+      message: `line #${o} ${N}indentation: ${u.length}${b}`
     });
   });
 }, bo = () => {
@@ -2875,8 +2875,8 @@ const ee = "i", P = "g", M = (...t) => {
   return jt.length > 0 && jt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ deep indentation${m}`,
-      description: `👉 ${N}Try to refactor your component to child components, to avoid deep indentations.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
+      rule: `${R}rrd ~ deep indentation${m}`,
+      description: `👉 ${_}Try to refactor your component to child components, to avoid deep indentations.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2884,14 +2884,14 @@ const ee = "i", P = "g", M = (...t) => {
   if (!t)
     return;
   const n = M(Y, "else", Y, [P, ee]), s = t.content.match(n);
-  s?.length && Lt.push({ filePath: e, message: `else clauses found ${q}(${s.length})${b}` });
+  s?.length && Lt.push({ filePath: e, message: `else clauses found ${z}(${s.length})${b}` });
 }, wo = () => {
   const t = [];
   return Lt.length > 0 && Lt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ else conditions${m}`,
-      description: `👉 ${N}Try to rewrite the conditions in a way that the else clause is not necessary.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
+      rule: `${R}rrd ~ else conditions${m}`,
+      description: `👉 ${_}Try to rewrite the conditions in a way that the else clause is not necessary.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2900,10 +2900,10 @@ function vo({ funcName: t, funcBody: e, lineNumber: n, filePath: s }) {
   const u = e.split(`
 `).length, o = Oo(t);
   if (u > 2 * Tt) {
-    ze.push({ filePath: s, message: `function ${q}(${o}#${n})${b} is too long: ${q}${u} lines${b}` });
+    ze.push({ filePath: s, message: `function ${z}(${o}#${n})${b} is too long: ${z}${u} lines${b}` });
     return;
   }
-  u >= Tt && ze.push({ filePath: s, message: `function ${R}(${o}#${n})${b} is too long: ${R}${u} lines${b}` });
+  u >= Tt && ze.push({ filePath: s, message: `function ${N}(${o}#${n})${b} is too long: ${N}${u} lines${b}` });
 }
 function Bo(t, e) {
   const n = /function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*\([^)]*\)\s*\{/g;
@@ -2967,7 +2967,7 @@ const Ro = (t, e) => {
       h && (c = !0, o = h.name, r = h.body, u = h.end);
     }
     if (c) {
-      const h = z(n.trim(), o);
+      const h = V(n.trim(), o);
       vo({ funcName: o, funcBody: r, lineNumber: h, filePath: e });
     } else
       u++;
@@ -2977,8 +2977,8 @@ const Ro = (t, e) => {
   return ze.length > 0 && ze.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ function size${m}`,
-      description: `👉 ${N}Functions must be shorter than ${Tt} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      rule: `${R}rrd ~ function size${m}`,
+      description: `👉 ${_}Functions must be shorter than ${Tt} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -2989,10 +2989,10 @@ const Ro = (t, e) => {
   if (s?.length) {
     let u = 0;
     s.forEach((o) => {
-      const r = z(t.content, o, u), c = o.slice(1);
+      const r = V(t.content, o, u), c = o.slice(1);
       Wt.push({
         filePath: e,
-        message: `line #${r} ${R}${c} element found${b}`
+        message: `line #${r} ${N}${c} element found${b}`
       }), u = r;
     });
   }
@@ -3001,8 +3001,8 @@ const Ro = (t, e) => {
   return Wt.length > 0 && Wt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ html image elements${m}`,
-      description: `👉 ${N}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
+      rule: `${R}rrd ~ html image elements${m}`,
+      description: `👉 ${_}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3010,14 +3010,14 @@ const Ro = (t, e) => {
   if (!t)
     return;
   const n = M("<a", Y, [P, ee]), s = t.content.match(n);
-  s?.length && Mt.push({ filePath: e, message: `${s?.length} ${R}html link found${b}` });
+  s?.length && Mt.push({ filePath: e, message: `${s?.length} ${N}html link found${b}` });
 }, To = () => {
   const t = [];
   return Mt.length > 0 && Mt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ html link${m}`,
-      description: `👉 ${N}Use router-link or NuxtLink.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
+      rule: `${R}rrd ~ html link${m}`,
+      description: `👉 ${_}Use router-link or NuxtLink.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3032,7 +3032,7 @@ const Ro = (t, e) => {
       const c = s[o + 1]?.trim();
       (!c || !c.startsWith("{") && !r.endsWith("{")) && It.push({
         filePath: e,
-        message: `line #${o} if statement without curly braces: ${q}${r}${b}`
+        message: `line #${o} if statement without curly braces: ${z}${r}${b}`
       });
     }
   });
@@ -3041,8 +3041,8 @@ const Ro = (t, e) => {
   return It.length > 0 && It.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ if without curly braces${m}`,
-      description: `👉 ${N}All if statements must be enclosed in curly braces for better readability and maintainability.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+      rule: `${R}rrd ~ if without curly braces${m}`,
+      description: `👉 ${_}All if statements must be enclosed in curly braces for better readability and maintainability.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3054,10 +3054,10 @@ const Ro = (t, e) => {
   for (; (s = n.exec(t.content)) !== null; ) {
     const o = s.groups?.magicNumber, r = Number.parseInt(o ?? "0");
     if (r > 1) {
-      const c = z(t.content, String(r), u);
+      const c = V(t.content, String(r), u);
       kt.push({
         filePath: e,
-        message: `line #${c} ${R}magic number: ${r}${b}`
+        message: `line #${c} ${N}magic number: ${r}${b}`
       }), u = c;
     }
   }
@@ -3066,8 +3066,8 @@ const Ro = (t, e) => {
   return kt.length && kt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ magic numbers${m}`,
-      description: `👉 ${N}Extract magic numbers to a constant.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      rule: `${R}rrd ~ magic numbers${m}`,
+      description: `👉 ${_}Extract magic numbers to a constant.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
       message: `magic numbers found (${e.message}) 🚨`
     });
   }), t;
@@ -3077,10 +3077,10 @@ const Ro = (t, e) => {
   const n = M(T(Te), k, "?", k, T(Te), k, ":", k, T(Te));
   t.content.match(n)?.forEach((u) => {
     if (u.split("?").length - 1 > 1) {
-      const o = z(t.content, u);
+      const o = V(t.content, u);
       Pt.push({
         filePath: e,
-        message: `line #${o} has ${R}nested ternary${b}`
+        message: `line #${o} has ${N}nested ternary${b}`
       });
     }
   });
@@ -3089,8 +3089,8 @@ const Ro = (t, e) => {
   return Pt.length > 0 && Pt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ nested Ternary${m}`,
-      description: `👉 ${N}/* TODO tip to fix this issue */.${m} See: https:///* TODO doc link */`,
+      rule: `${R}rrd ~ nested Ternary${m}`,
+      description: `👉 ${_}/* TODO tip to fix this issue */.${m} See: https:///* TODO doc link */`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3099,10 +3099,10 @@ const Ro = (t, e) => {
     return;
   const n = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g;
   t.content.match(n)?.forEach((u) => {
-    const o = z(t.content, u);
+    const o = V(t.content, u);
     zt.push({
       filePath: e,
-      message: `line #${o} ${R}props destructuring found: ${u}${b}`
+      message: `line #${o} ${N}props destructuring found: ${u}${b}`
     });
   });
 }, Ho = () => {
@@ -3110,8 +3110,8 @@ const Ro = (t, e) => {
   return zt.length > 0 && zt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ no Prop Destructure${m}`,
-      description: `👉 ${N}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+      rule: `${R}rrd ~ no Prop Destructure${m}`,
+      description: `👉 ${_}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3120,10 +3120,10 @@ const Ro = (t, e) => {
     return;
   const n = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g;
   t.content.match(n)?.forEach((u) => {
-    const o = z(t.content, u);
+    const o = V(t.content, u);
     Vt.push({
       filePath: e,
-      message: `line #${o} ${R}Avoid using 'var' for variable declarations: ${u}${b}`
+      message: `line #${o} ${N}Avoid using 'var' for variable declarations: ${u}${b}`
     });
   });
 }, qo = () => {
@@ -3131,14 +3131,14 @@ const Ro = (t, e) => {
   return Vt.length > 0 && Vt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ No Var Declaration${m}`,
-      description: `👉 ${N}Avoid var declaration, use const or let instead of that.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+      rule: `${R}rrd ~ No Var Declaration${m}`,
+      description: `👉 ${_}Avoid var declaration, use const or let instead of that.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
       message: `${e.message} 🚨`
     });
   }), t;
 }, Ht = [], fs = 3, Mn = (t, e, n) => {
   const s = e.split(",").map((u) => u.trim()).filter((u) => u.length > 0);
-  s.length > fs && Ht.push({ filePath: n, message: `function ${R}${t}${b} has ${R}${s.length}${b} parameters` });
+  s.length > fs && Ht.push({ filePath: n, message: `function ${N}${t}${b} has ${N}${s.length}${b} parameters` });
 }, Uo = (t, e) => {
   if (!t)
     return;
@@ -3151,20 +3151,20 @@ const Ro = (t, e) => {
   return Ht.length > 0 && Ht.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ parameter count${m}`,
-      description: `👉 ${N}Max number of function parameters should be ${fs}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      rule: `${R}rrd ~ parameter count${m}`,
+      description: `👉 ${_}Max number of function parameters should be ${fs}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `${e.message} 🚨`
     });
   }), t;
 }, Gt = [], Ko = (t, e) => {
-  !t || t.setup || Gt.push({ filePath: e, message: `${R}Plain <script> block${b} found` });
+  !t || t.setup || Gt.push({ filePath: e, message: `${N}Plain <script> block${b} found` });
 }, Yo = () => {
   const t = [];
   return Gt.length > 0 && Gt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ Plain <script> blocks${m}`,
-      description: `👉 ${N} Consider using <script setup> to leverage the new SFC <script> syntax.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
+      rule: `${R}rrd ~ Plain <script> blocks${m}`,
+      description: `👉 ${_} Consider using <script setup> to leverage the new SFC <script> syntax.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3205,7 +3205,7 @@ const Ro = (t, e) => {
     const c = r[1], h = r[2], p = r[3];
     o.has(p) && h === p && qt.push({
       filePath: e,
-      message: `Prop ${R}(${p})${b} is being drilled through ${R}${c}${b} component unmodified.`
+      message: `Prop ${N}(${p})${b} is being drilled through ${N}${c}${b} component unmodified.`
     });
   }
 }, Qo = () => {
@@ -3213,8 +3213,8 @@ const Ro = (t, e) => {
   return qt.length > 0 && qt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ props drilling${m}`,
-      description: `👉 ${N}Props should not be forwarded unmodified. Consider refactoring.${m}`,
+      rule: `${R}rrd ~ props drilling${m}`,
+      description: `👉 ${_}Props should not be forwarded unmodified. Consider refactoring.${m}`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3223,14 +3223,14 @@ const Ro = (t, e) => {
     return;
   const n = t.content.split(`
 `);
-  n.length > Zt && Ut.push({ filePath: e, message: `${n.length > Zt * 2 ? q : R}(${n.length} lines)${b}` });
+  n.length > Zt && Ut.push({ filePath: e, message: `${n.length > Zt * 2 ? z : N}(${n.length} lines)${b}` });
 }, ei = () => {
   const t = [];
   return Ut.length > 0 && Ut.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ Long <script> blocks${m}`,
-      description: `👉 ${N}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Zt} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
+      rule: `${R}rrd ~ Long <script> blocks${m}`,
+      description: `👉 ${_}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${Zt} lines.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3241,15 +3241,15 @@ const Ro = (t, e) => {
   let s;
   for (; (s = n.exec(t.content)) !== null; ) {
     const u = s[1];
-    u.length < hs && !ti.includes(u) && Kt.push({ filePath: e, message: `variable: ${R}(${u})${b}` });
+    u.length < hs && !ti.includes(u) && Kt.push({ filePath: e, message: `variable: ${N}(${u})${b}` });
   }
 }, si = () => {
   const t = [];
   return Kt.length > 0 && Kt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ short variable names${m}`,
-      description: `👉 ${N}Variable names must have a minimum length of ${hs}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+      rule: `${R}rrd ~ short variable names${m}`,
+      description: `👉 ${_}Variable names must have a minimum length of ${hs}.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3259,15 +3259,15 @@ const Ro = (t, e) => {
   const n = M("defineProps", oe("<"), oe("("), "{", T(Te), "}", ["g", "s"]), s = t.content.match(n);
   if (s?.length) {
     const u = s[0].split(",").length;
-    u > ui && Yt.push({ filePath: e, message: `props found ${q}(${u})${b}` });
+    u > ui && Yt.push({ filePath: e, message: `props found ${z}(${u})${b}` });
   }
 }, oi = () => {
   const t = [];
   return Yt.length > 0 && Yt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ too many props${m}`,
-      description: `👉 ${N}Try to refactor your code to use less properties.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+      rule: `${R}rrd ~ too many props${m}`,
+      description: `👉 ${_}Try to refactor your code to use less properties.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3280,10 +3280,10 @@ const Ro = (t, e) => {
     o.forEach((A) => {
       const y = A[1];
       if (y === p) {
-        const E = z(t.content.trim(), y);
+        const E = V(t.content.trim(), y);
         Jt.push({
           filePath: e,
-          message: `line #${E} ${R}index is being used as :key in v-for${b}`
+          message: `line #${E} ${N}index is being used as :key in v-for${b}`
         });
       }
     });
@@ -3293,8 +3293,8 @@ const Ro = (t, e) => {
   return Jt.length > 0 && Jt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ VFor With Index Key${m}`,
-      description: `👉 ${N}Avoid using index as key in v-for loops.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
+      rule: `${R}rrd ~ VFor With Index Key${m}`,
+      description: `👉 ${_}Avoid using index as key in v-for loops.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3304,10 +3304,10 @@ const Ro = (t, e) => {
   const n = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g;
   let s;
   for (; (s = n.exec(t.content)) !== null; ) {
-    const u = s[0], o = s[1], r = z(t.content.trim(), u);
+    const u = s[0], o = s[1], r = V(t.content.trim(), u);
     Qt.push({
       filePath: e,
-      message: `line #${r} zero length comparison found ${R}(${o})${b}`
+      message: `line #${r} zero length comparison found ${N}(${o})${b}`
     });
   }
 }, li = () => {
@@ -3315,8 +3315,8 @@ const Ro = (t, e) => {
   return Qt.length > 0 && Qt.forEach((e) => {
     t.push({
       file: e.filePath,
-      rule: `${_}rrd ~ Zero Length Comparison${m}`,
-      description: `👉 ${N}In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
+      rule: `${R}rrd ~ Zero Length Comparison${m}`,
+      description: `👉 ${_}In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.${m} See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
       message: `${e.message} 🚨`
     });
   }), t;
@@ -3336,7 +3336,7 @@ const Ro = (t, e) => {
   }), h = {};
   return c.forEach((p) => {
     h[p] = [], s[p].forEach((d, A) => {
-      const y = d.message.includes(q);
+      const y = d.message.includes(z);
       if (u.some((E) => E.file === d.file)) {
         const E = u.find((C) => C.file === d.file);
         E && (y ? E.errors++ : E.warnings++);
@@ -3455,11 +3455,11 @@ const fi = (t) => {
   });
 }, di = 1.5, In = 75, kn = 85, Pn = 95, ds = [...on, ...Object.values(fe).flat()], mi = (t, e, n) => {
   const { errors: s, warnings: u } = t.reduce((y, { errors: E, warnings: C }) => ({ errors: y.errors + E, warnings: y.warnings + C }), { errors: 0, warnings: 0 }), o = [];
-  o.push({ info: `Found ${q}${Intl.NumberFormat("en-US").format(s)} errors${b}, and ${R}${Intl.NumberFormat("en-US").format(u)} warnings${b}, ${X}${Intl.NumberFormat("en-US").format(e)} lines${b} of code in ${X}${Intl.NumberFormat("en-US").format(n)} files${b}` });
-  const r = Math.ceil((1 - (s * di + u) / e) * 100), c = 60, h = u ? Math.max(1, Math.ceil(u / e * c)) : 0, p = s ? Math.max(1, c - Math.ceil(r * c / 100) - h) : 0, d = c - p - h, A = `${dt}${" ".repeat(d)}${R}${" ".repeat(h)}${q}${" ".repeat(p)}${b}`;
+  o.push({ info: `Found ${z}${Intl.NumberFormat("en-US").format(s)} errors${b}, and ${N}${Intl.NumberFormat("en-US").format(u)} warnings${b}, ${X}${Intl.NumberFormat("en-US").format(e)} lines${b} of code in ${X}${Intl.NumberFormat("en-US").format(n)} files${b}` });
+  const r = Math.ceil((1 - (s * di + u) / e) * 100), c = 60, h = u ? Math.max(1, Math.ceil(u / e * c)) : 0, p = s ? Math.max(1, c - Math.ceil(r * c / 100) - h) : 0, d = c - p - h, A = `${dt}${" ".repeat(d)}${N}${" ".repeat(h)}${z}${" ".repeat(p)}${b}`;
   return o.push({ info: `Code Health: [${A}] ${r}%
-` }), r < In && o.push({ info: `${q}Code health is LOW: ${r}%${b}
-` }), r >= In && r < kn && o.push({ info: `${R}Code health is MEDIUM ${r}%${b}
+` }), r < In && o.push({ info: `${z}Code health is LOW: ${r}%${b}
+` }), r >= In && r < kn && o.push({ info: `${N}Code health is MEDIUM ${r}%${b}
 ` }), r >= kn && r < Pn && o.push({ info: `${X}Code health is OK: ${r}%${b}
 ` }), r >= Pn && o.push({ info: `${dt}Code health is GOOD: ${r}%${b}
 ` }), { errors: s, warnings: u, output: o };
@@ -3559,10 +3559,10 @@ Invalid option "${t}" provided for flag "${e}". Valid options are: ${n.join(", "
     on.includes(o) ? s.push(...fe[o]) : Object.values(fe).some((r) => r.includes(o)) ? s.push(o) : u.push(o);
   }), u.length > 0 && (console.error(
     `
-${q}Invalid ${t} values: ${u.join(
+${z}Invalid ${t} values: ${u.join(
       ", "
     )}${b}. 
-${N}Allowed values are: ${ds.join(", ")}${m}
+${_}Allowed values are: ${ds.join(", ")}${m}
 
 `
   ), process.exit(1)), s;
@@ -3651,7 +3651,7 @@ js(Js(process.argv)).command(
         });
         for (const n in e.reportOutput)
           console.log(`
-- ${_} ${n}${m}`), e.reportOutput[n].forEach((s) => {
+- ${R} ${n}${m}`), e.reportOutput[n].forEach((s) => {
             console.log(`   ${s.id}`), console.log(`   ${s.description}`), console.log(`   ${s.message}
 `);
           });
@@ -3670,9 +3670,9 @@ js(Js(process.argv)).command(
             wordWrap: !0,
             wrapOnWordBoundary: !1
           });
-          console.log("-".repeat(120)), t.group == "rule" && (console.log(`${_}Rule: ${n}${m}`), console.log(`Description: ${e.reportOutput[n][0].description}`), e.reportOutput[n].forEach((u) => {
+          console.log("-".repeat(120)), t.group == "rule" && (console.log(`${R}Rule: ${n}${m}`), console.log(`Description: ${e.reportOutput[n][0].description}`), e.reportOutput[n].forEach((u) => {
             s.push([u.id, u.message]);
-          })), t.group == "file" && (console.log(`${_}File: ${n}${m}`), e.reportOutput[n].forEach((u) => {
+          })), t.group == "file" && (console.log(`${R}File: ${n}${m}`), e.reportOutput[n].forEach((u) => {
             s.push([`${u.id}
 ${u.description.replace("See: ", `See:
 `)}`, u.message]);
@@ -3684,7 +3684,7 @@ ${u.description.replace("See: ", `See:
       }
       t.output == "json" && console.log(JSON.stringify(e, null, 2));
     }).catch((e) => {
-      console.error(`${q}${e}${b}`);
+      console.error(`${z}${e}${b}`);
     });
   }
 ).version("version", "Show version number", vi.version).alias("version", "v").help().argv;
