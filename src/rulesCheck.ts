@@ -7,6 +7,7 @@ import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/v
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
 import { checkBigVif, checkBigVshow, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { getIsNuxt } from './context'
+import { checkComplicatedConditions } from './rules/rrd/complicatedConditions'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -46,6 +47,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // rrd
     bigVif: () => checkBigVif(descriptor.template, filePath),
     bigVShow: () => checkBigVshow(descriptor.template, filePath),
+    complicatedConditions: () => checkComplicatedConditions(descriptor, filePath),
     cyclomaticComplexity: () => checkCyclomaticComplexity(script, filePath),
     deepIndentation: () => checkDeepIndentation(script, filePath),
     elseCondition: () => checkElseCondition(script, filePath),

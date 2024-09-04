@@ -4,6 +4,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 
 - [Big v-if](./big-vif.md)
 - [Big v-show](./big-vshow.md)
+- [Complicated Conditions](./complicated-conditions.md)
 - [Cyclomatic Complexity](./cyclomatic-complexity.md)
 - [Deep Indentation](./deep-indentation.md)
 - [Else Condition](./else-condition.md)

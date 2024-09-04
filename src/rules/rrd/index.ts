@@ -1,5 +1,6 @@
 export * from './bigVif'
 export * from './bigVshow'
+export * from './complicatedConditions'
 export * from './cyclomaticComplexity'
 export * from './deepIndentation'
 export * from './elseCondition'

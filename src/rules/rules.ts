@@ -29,6 +29,7 @@ export const RULES = {
   'rrd': [
     'bigVif',
     'bigVshow',
+    'complicatedConditions',
     'cyclomaticComplexity',
     'deepIndentation',
     'elseCondition',
