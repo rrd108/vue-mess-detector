@@ -1,21 +1,10 @@
-import type { Flag, GroupBy, OrderBy } from '../types'
-import { OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
-import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
+import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from '../rules/asceeCodes'
+import type { Flag } from '../types'
+import { GROUP_BY, ORDER_BY, OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
 
-const flagOptions: Record<Flag, typeof GROUP_BY |  typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
+const flagOptions: Record<Flag, typeof GROUP_BY | typeof ORDER_BY | typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
   groupBy: GROUP_BY,
-  - `asc` is the default order, as the checks run.
-  - `desc` will order the results starting by the most problematic file / rule
-
-  The descending order depends on what `groupBy` option is used
-  - for grouping by file, it will order depending on the file with most offended rules
-  - for grouping by rule, it will order depending on the rule most offended
-*/
-const validOrderOptions: OrderBy[] = ['asc', 'desc']
-
-const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
-  groupBy: validGroupByOptions,
-  orderBy: validOrderOptions,
+  orderBy: ORDER_BY,
   outputLevel: OUTPUT_LEVELS,
   outputFormat: OUTPUT_FORMATS,
 }
