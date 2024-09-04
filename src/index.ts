@@ -11,7 +11,7 @@ import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
-import { OUTPUT_FORMATS, OUTPUT_LEVELS } from './types'
+import { GROUP_BY,  OUTPUT_FORMATS, OUTPUT_LEVELS } from './types'
 import { getPackageJson } from './helpers/getPackageJson'
 
 // eslint-disable-next-line node/prefer-global/process
@@ -71,7 +71,7 @@ yargs(hideBin(process.argv))
       .option('group', {
         alias: 'g',
         describe: 'Group results at the output',
-        choices: ['rule', 'file'],
+        choices: GROUP_BY,
         coerce: value => validateOption<GroupBy>(value, 'groupBy'),
         default: config.group,
         group: 'Group Results:',

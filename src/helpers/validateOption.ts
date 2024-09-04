@@ -1,9 +1,9 @@
 import type { Flag, GroupBy, OrderBy } from '../types'
 import { OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS } from '../types'
 
-const validGroupByOptions: GroupBy[] = ['rule', 'file']
-
-/*
+const flagOptions: Record<Flag, typeof GROUP_BY |  typeof OUTPUT_LEVELS | typeof OUTPUT_FORMATS> = {
+  groupBy: GROUP_BY,
   - `asc` is the default order, as the checks run.
   - `desc` will order the results starting by the most problematic file / rule
 
@@ -23,10 +23,10 @@ const flagOptions: Record<Flag, GroupBy[] | OrderBy[] | typeof OUTPUT_LEVELS | t
 export const validateOption = <T>(value: T, flag: Flag) => {
   const validOptions = flagOptions[flag]
 
-  if (!validOptions.includes(value as unknown as GroupBy & OrderBy)) {
+  if (!Array.isArray(validOptions) || !validOptions.includes(value as any)) {
     console.error(
-      `\nInvalid option "${value}" provided for flag "${flag}". Valid options are: ${validOptions.join(', ')}.\n`,
-    )
+      `\nInvalid option ${BG_ERR}${value}${BG_RESET} provided for flag ${TEXT_INFO}${flag}${TEXT_RESET}. Valid options are: ${BG_INFO}${validOptions.join(', ')}${BG_RESET}.\n`,
+    );
     // eslint-disable-next-line node/prefer-global/process
     process.exit(1)
   }
