@@ -65,7 +65,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     tooManyProps: () => checkTooManyProps(script, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
-    noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath)
+    noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
   }
 
   // Run the checks for each applied rule or ruleset
