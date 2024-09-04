@@ -93,17 +93,17 @@ describe('yarn analyze command with default configuration', () => {
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
     expect(stdout).toContain(`codeHealthOutput`)
   })
-  
+
   it('should execute with group parameter', async () => {
     const { stdout } = await execa('yarn', ['analyze', './src/rules/vue-caution', '--group=file'])
     expect(stdout).toContain(`- ${TEXT_INFO} src/rules/vue-caution/elementSelectorsWithScoped.ts${TEXT_RESET}`)
   })
-  
+
   it('should execute with sort parameter', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--sort=asc'])
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
   })
-  
+
   it('should execute with level parameter', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--level=error'])
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
@@ -125,7 +125,8 @@ describe('yarn analyze command with default configuration', () => {
       await execa('yarn', ['analyze', '--output=gauranga'])
       // If the command doesn't throw, fail the test
       expect(true).toBe(false)
-    } catch (error) {
+    }
+    catch (error) {
       expect((error as any).stderr).toContain(`Invalid option ${BG_ERR}gauranga${BG_RESET} provided for flag ${TEXT_INFO}outputFormat${TEXT_RESET}. Valid options are: ${BG_INFO}text, json, table${BG_RESET}.`)
     }
   })

@@ -15,7 +15,7 @@ export const validateOption = <T>(value: T, flag: Flag) => {
   if (!Array.isArray(validOptions) || !validOptions.includes(value as any)) {
     console.error(
       `\nInvalid option ${BG_ERR}${value}${BG_RESET} provided for flag ${TEXT_INFO}${flag}${TEXT_RESET}. Valid options are: ${BG_INFO}${validOptions.join(', ')}${BG_RESET}.\n`,
-    );
+    )
     // eslint-disable-next-line node/prefer-global/process
     process.exit(1)
   }
