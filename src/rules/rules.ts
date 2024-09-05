@@ -31,6 +31,7 @@ export const RULES = {
     'bigVshow',
     'complicatedConditions',
     'cyclomaticComplexity',
+    'computedSideEffects',
     'deepIndentation',
     'elseCondition',
     'functionSize',
