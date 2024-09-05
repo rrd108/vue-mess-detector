@@ -4,7 +4,6 @@ import { camelToKebab } from '../src/helpers/caseTransform.js'
 
 console.log('🛟  Checking if documentation has all rules')
 
-
 const isValidSourceFile = (currentPath, file) => currentPath !== './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')
 
 const fileExists = async (filePath) => {
