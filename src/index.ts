@@ -182,4 +182,5 @@ yargs(hideBin(process.argv))
   )
   .version('version', 'Show version number', vmdPackageJson.version)
   .alias('version', 'v')
-  .help().argv
+  .help()
+  .argv
