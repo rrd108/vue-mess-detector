@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import inquirer from 'inquirer' // it cause some error when this file is ts
+import { camelToKebab } from '../helpers/caseTransform.js'
 
 // For some reason If I try to import a constant and use it in `questions` it doesnt work...
 const RULESETS = ['vue-essential', 'vue-strong', 'vue-recommended', 'vue-caution', 'rrd']
@@ -48,6 +49,7 @@ const getQuestions = async () => {
 }
 
 async function createFile({ ruleset, name }) {
+  name = camelToKebab(name)
   const rulename = name.split('-').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ')
   const filePath = `./docs/rules/${ruleset}/${name}.md`
 

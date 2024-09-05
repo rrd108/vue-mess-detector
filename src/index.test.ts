@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { execa } from 'execa'
-import { BG_INFO, BG_RESET } from './rules/asceeCodes'
+import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
@@ -92,6 +92,43 @@ describe('yarn analyze command with default configuration', () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=json'])
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
     expect(stdout).toContain(`codeHealthOutput`)
+  })
+
+  it('should execute with group parameter', async () => {
+    const { stdout } = await execa('yarn', ['analyze', './src/rules/vue-caution', '--group=file'])
+    expect(stdout).toContain(`- ${TEXT_INFO} src/rules/vue-caution/elementSelectorsWithScoped.ts${TEXT_RESET}`)
+  })
+
+  it('should execute with sort parameter', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--sort=asc'])
+    expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
+  })
+
+  it('should execute with level parameter', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--level=error'])
+    expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
+  })
+
+  it('should execute with exclude parameter', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--exclude=helpers'])
+    expect(stdout).toContain('Excluding helpers')
+  })
+
+  it('should execute with table output', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--output=table'])
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+    expect(stdout).toContain('┌─') // Table border character
+  })
+
+  it('should error out when invalid value is used for a flag', async () => {
+    try {
+      await execa('yarn', ['analyze', '--output=gauranga'])
+      // If the command doesn't throw, fail the test
+      expect(true).toBe(false)
+    }
+    catch (error) {
+      expect((error as any).stderr).toContain(`Invalid option ${BG_ERR}gauranga${BG_RESET} provided for flag ${TEXT_INFO}outputFormat${TEXT_RESET}. Valid options are: ${BG_INFO}text, json, table${BG_RESET}.`)
+    }
   })
 })
 

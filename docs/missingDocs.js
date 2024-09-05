@@ -1,9 +1,8 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import { camelToKebab } from '../src/helpers/caseTransform.js'
 
 console.log('🛟  Checking if documentation has all rules')
-
-const camelToKebab = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
 const isValidSourceFile = (currentPath, file) => currentPath !== './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')
 

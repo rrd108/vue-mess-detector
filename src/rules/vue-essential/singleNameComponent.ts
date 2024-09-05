@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { createRegExp, letter } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -20,7 +20,7 @@ const checkSingleNameComponent = (filePath: string) => {
   const matches = fileName.slice(1).match(regex) // ignore the first character
 
   if (!matches?.length) {
-    results.push({ filePath, message: `Component name is ${BG_WARN}single word${BG_RESET}` })
+    results.push({ filePath, message: `Component name is ${BG_ERR}single word${BG_RESET}` })
   }
 }
 

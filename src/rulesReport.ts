@@ -1,18 +1,18 @@
-import type { GroupBy, Health, Offense, OffensesGrouped, OrderBy, OutputLevel, ReportFunction } from './types'
+import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import { BG_ERR } from './rules/asceeCodes'
 
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
-import { reportBigVif, reportBigVshow, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 
 // TODO move out to types
 interface OutputType {
   [key: string]: { id: string, description: string, message: string }[]
 }
 
-export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLevel) => {
+export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
   const health: Health[] = []
 
@@ -64,7 +64,9 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   // rrd rules
   processOffenses(reportBigVif)
   processOffenses(reportBigVshow)
+  processOffenses(reportComplicatedConditions)
   processOffenses(reportCyclomaticComplexity)
+  processOffenses(reportComputedSideEffects)
   processOffenses(reportDeepIndentation)
   processOffenses(reportElseCondition)
   processOffenses(reportFunctionSize)
@@ -85,12 +87,12 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportZeroLengthComparison)
   processOffenses(reportNoInlineStyles)
 
-  // Sort offenses grouped by key based on the `orderBy` parameter
+  // Sort offenses grouped by key based on the `sortBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
     const countA = offensesGrouped[a].length
     const countB = offensesGrouped[b].length
 
-    if (orderBy === 'desc') {
+    if (sortBy === 'desc') {
       return countB - countA
     }
 

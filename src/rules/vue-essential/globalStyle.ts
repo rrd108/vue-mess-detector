@@ -1,5 +1,5 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -10,7 +10,7 @@ const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
   }
   styles.forEach((style) => {
     if (!style.scoped) {
-      results.push({ filePath, message: `${BG_WARN}global style${BG_RESET} used`,
+      results.push({ filePath, message: `${BG_ERR}global style${BG_RESET} used`,
       })
     }
   })

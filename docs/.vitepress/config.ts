@@ -70,7 +70,9 @@ export default defineConfig({
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
                 { text: 'Big v-if', link: '/rules/rrd/big-vif' },
                 { text: 'Big v-show', link: '/rules/rrd/big-vshow' },
+                { text: 'Complicated Conditions', link: '/rules/rrd/complicated-conditions' },
                 { text: 'Cyclomatic Complexity', link: '/rules/rrd/cyclomatic-complexity' },
+                { text: 'Computed Side Effects', link: '/rules/rrd/computed-side-effects' },
                 { text: 'Deep Indentation', link: '/rules/rrd/deep-indentation' },
                 { text: 'Else Condition', link: '/rules/rrd/else-condition' },
                 { text: 'Function Size', link: '/rules/rrd/function-size' },
@@ -94,6 +96,11 @@ export default defineConfig({
             ],
           },
           { text: 'Contribute', link: '/contribute' },
+        ],
+      },
+      {
+        items: [
+          { text: 'Suggested Readings', link: '/suggested-readings' },
         ],
       },
     ],

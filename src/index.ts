@@ -6,12 +6,12 @@ import Table from 'cli-table3'
 import { analyze } from './analyzer'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
-import type { GroupBy, OrderBy, OutputFormat, OutputLevel } from './types'
+import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 import { validateOption } from './helpers/validateOption'
 import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
-import { OUTPUT_FORMATS } from './types'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import { getPackageJson } from './helpers/getPackageJson'
 
 // eslint-disable-next-line node/prefer-global/process
@@ -28,7 +28,7 @@ let config = {
   exclude: undefined,
   group: 'rule',
   level: 'all',
-  order: 'desc',
+  sort: 'desc',
   output: 'text',
 }
 
@@ -71,7 +71,7 @@ yargs(hideBin(process.argv))
       .option('group', {
         alias: 'g',
         describe: 'Group results at the output',
-        choices: ['rule', 'file'],
+        choices: GROUP_BY,
         coerce: value => validateOption<GroupBy>(value, 'groupBy'),
         default: config.group,
         group: 'Group Results:',
@@ -79,7 +79,7 @@ yargs(hideBin(process.argv))
       .option('level', {
         alias: 'l',
         describe: 'Output level',
-        choices: ['all', 'error'],
+        choices: OUTPUT_LEVELS,
         coerce: value => validateOption<OutputLevel>(value, 'outputLevel'),
         default: config.level,
         group: 'Output:',
@@ -91,13 +91,13 @@ yargs(hideBin(process.argv))
         default: config.ignore,
         group: 'Filter Rulesets:',
       })
-      .option('order', {
-        alias: 'o',
-        describe: 'Order results at the output',
-        choices: ['asc', 'desc'],
-        coerce: value => validateOption<OrderBy>(value, 'orderBy'),
-        default: config.order,
-        group: 'Order Results:',
+      .option('sort', {
+        alias: 's',
+        describe: 'Sort results at the output',
+        choices: SORT_BY,
+        coerce: value => validateOption<SortBy>(value, 'sortBy'),
+        default: config.sort,
+        group: 'Sort Results:',
       })
       .option('output', {
         describe: 'Output format',
@@ -114,7 +114,7 @@ yargs(hideBin(process.argv))
         exclude: argv.exclude,
         groupBy: argv.group,
         level: argv.level,
-        orderBy: argv.order,
+        sortBy: argv.sort,
       })
         .then((result) => {
           if (argv.output == 'text') {

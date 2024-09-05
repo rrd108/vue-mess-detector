@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { caseInsensitive, createRegExp, global, tab, whitespace } from 'magic-regexp'
+import { createRegExp, global, tab, whitespace } from 'magic-regexp'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
@@ -13,18 +13,17 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
   if (!script) {
     return
   }
-  const regex = createRegExp(tab.times.atLeast(MAX_TABS).or(whitespace.times.atLeast(WHITESPACE_TO_TABS * MAX_TABS)), [
-    global,
-    caseInsensitive,
-  ])
+  const regex = createRegExp(tab.times.atLeast(MAX_TABS).at.lineStart().or(whitespace.times.atLeast(WHITESPACE_TO_TABS * MAX_TABS).at.lineStart()), [global])
   const matches = script.content.match(regex)
 
+  let from = 0
   matches?.forEach((match) => {
-    const lineNumber = getLineNumber(script.content, match)
+    const lineNumber = getLineNumber(script.content, match, from)
     results.push({
       filePath,
       message: `line #${lineNumber} ${BG_WARN}indentation: ${match.length}${BG_RESET}`,
     })
+    from = lineNumber
   })
 }
 
