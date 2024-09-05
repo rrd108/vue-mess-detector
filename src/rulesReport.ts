@@ -5,7 +5,7 @@ import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunicatio
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
-import { reportBigVif, reportBigVshow, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportBigVif, reportBigVshow, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 
 // TODO move out to types
 interface OutputType {
@@ -83,6 +83,7 @@ export const reportRules = (groupBy: GroupBy, orderBy: OrderBy, level: OutputLev
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
+  processOffenses(reportNoInlineStyles)
 
   // Sort offenses grouped by key based on the `orderBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
