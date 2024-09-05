@@ -40,6 +40,7 @@ export const RULES = {
     'ifWithoutCurlyBraces',
     'magicNumbers',
     'nestedTernary',
+    'noInlineStyles',
     'noPropDestructure',
     'noVarDeclaration',
     'parameterCount',
