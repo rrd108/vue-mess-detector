@@ -13,13 +13,14 @@ const checkNoInlineStyles = (template: SFCTemplateBlock | null, filePath: string
   const regex = /style\s*=\s*['"][^'"]*['"]/g
 
   const matches = [...template.content.matchAll(regex)]
-
+  let from = 0
   matches?.forEach((match) => {
-    const lineNumber = getLineNumber(template.content.trim(), match[0])
+    const lineNumber = getLineNumber(template.content.trim(), match[0], from)
     results.push({
       filePath,
       message: `line #${lineNumber} ${BG_WARN}Found inline style: ${match[0]}${BG_RESET}`,
     })
+    from = lineNumber
   })
 }
 
