@@ -3,6 +3,8 @@
 Checks if the template has a `v-if` with more than 10 lines (warning) or 20 lines (error).
 Big `v-if` can be moved out to its own component.
 
+👉 Checkout this article [The Extract Conditional Pattern in Vue](https://michaelnthiessen.com/extract-conditional-pattern) by [Michael Thiessen](https://michaelnthiessen.com/)
+
 ## ❓ Why it's good to follow this rule?
 
 - **Readability**: Big `v-if` can be hard to read and understand.
