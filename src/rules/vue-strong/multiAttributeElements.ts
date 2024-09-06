@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 

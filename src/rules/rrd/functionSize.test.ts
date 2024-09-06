@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { MAX_FUNCTION_LENGTH, checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
+import { checkFunctionSize, MAX_FUNCTION_LENGTH, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { anyOf, char, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'

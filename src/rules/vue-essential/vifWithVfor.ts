@@ -1,8 +1,8 @@
-import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { FileCheckResult, Offense } from '../../types'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 

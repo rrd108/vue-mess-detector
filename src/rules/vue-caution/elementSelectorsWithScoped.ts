@@ -1,6 +1,6 @@
+import htmlTags from 'html-tags'
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import type { HtmlTags } from 'html-tags'
-import htmlTags from 'html-tags'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
