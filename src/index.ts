@@ -34,20 +34,28 @@ let config = {
   output: 'text',
 }
 
+const conflictingFlags: Record<string, boolean> = {
+  applyFromCLI: wasOptionPassed('apply'),
+  ignoreFromCLI: wasOptionPassed('ignore'),
+  applyFromFile: false,
+  ignoreFromFile: false,
+}
+
 // check if the project root has a vue-mess-detector.config.json file and if yes, then read it
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
+
+  // check if the file config has apply or ignore and set the corresponding flag to true
+  conflictingFlags.applyFromFile = !!fileConfig.apply
+  conflictingFlags.ignoreFromFile = !!fileConfig.ignore
+
   output.push({ info: `👉 Using configuration from ${configPath}` })
 }
 catch {
   output.push({ info: `👉 Using default configuration` })
 }
-
-// Check if `apply` or `ignore` options were explicitly passed
-const applyFromCLI = wasOptionPassed('apply')
-const ignoreFromCLI = wasOptionPassed('ignore')
 
 // eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
 yargs(hideBin(process.argv))
@@ -114,8 +122,11 @@ yargs(hideBin(process.argv))
           group: 'Output Format:',
         })
         .check(() => {
-          // Only check for conflict if both apply and ignore are provided from CLI
-          if (applyFromCLI && ignoreFromCLI) {
+          // check if both apply and ignore are provided (from CLI or file)
+          const hasApplyFlag = conflictingFlags.applyFromCLI || conflictingFlags.applyFromFile
+          const hasIgnoreFlag = conflictingFlags.ignoreFromCLI || conflictingFlags.ignoreFromFile
+
+          if (hasApplyFlag && hasIgnoreFlag) {
             console.error(`\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n`)
             // eslint-disable-next-line node/prefer-global/process
             process.exit(1)

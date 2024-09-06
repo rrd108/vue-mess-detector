@@ -122,4 +122,41 @@ describe('yarn analyze command with configuration file', () => {
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
     expect(stdout).toContain(`Applying 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
   })
+
+  it('should error out when both apply and ignore are used', async () => {
+    try {
+      await execa('yarn', ['analyze', '--ignore=vue-strong'])
+    }
+    catch (error: any) {
+      expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
+      expect(error.exitCode).toBe(1)
+    }
+  })
+})
+
+describe('yarn analyze command with conflicting flags in configuration file', () => {
+  const projectRoot = path.resolve(__dirname, '..')
+  const configPath = path.join(projectRoot, 'vue-mess-detector.json')
+  const config = JSON.stringify({
+    apply: 'vue-strong,vue-recommended',
+    ignore: 'rrd',
+  }, null, 2)
+
+  beforeAll(async () => {
+    await fs.writeFile(configPath, config)
+  })
+
+  afterAll(async () => {
+    await fs.unlink(configPath)
+  })
+
+  it('should error out when both apply and ignore are used', async () => {
+    try {
+      await execa('yarn', ['analyze'])
+    }
+    catch (error: any) {
+      expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
+      expect(error.exitCode).toBe(1)
+    }
+  })
 })
