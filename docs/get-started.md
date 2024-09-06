@@ -2,6 +2,10 @@
 
 Check your Vue and Nuxt projects for code smells and best practice violations with Vue Mess Detector.
 
+:::tip
+👉 You are welcome to join our [discord server](https://discord.gg/nXKwzk97jn)
+:::
+
 ## 💡What is Static Code Analysis?
 
 Static code analysis is a crucial tool for developers to automatically examine source code **without executing** it, helping identify potential bugs, vulnerabilities, and code quality issues early in the development process. By scanning for problematic patterns, it can catch best practice violations, all code paths, not just those executed during testing. While it has limitations like potential false positives and inability to detect runtime errors, static analysis tools are invaluable for improving code quality, maintainability, and security before the code ever runs.
