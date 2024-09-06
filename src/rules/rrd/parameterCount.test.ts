@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { MAX_PARAMETER_COUNT, checkParameterCount, reportParameterCount, resetParameterCount } from './parameterCount'
+import { checkParameterCount, MAX_PARAMETER_COUNT, reportParameterCount, resetParameterCount } from './parameterCount'
 
 describe('checkParameterCount', () => {
   beforeEach(() => {

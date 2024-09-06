@@ -1,18 +1,18 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import Table from 'cli-table3'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import Table from 'cli-table3'
 import { analyze } from './analyzer'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
-import { RULESETS } from './rules/rules'
-import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
-import { validateOption } from './helpers/validateOption'
-import getProjectRoot from './helpers/getProjectRoot'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULESETS_RULES } from './helpers/constants'
-import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import { getPackageJson } from './helpers/getPackageJson'
+import getProjectRoot from './helpers/getProjectRoot'
+import { validateOption } from './helpers/validateOption'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
+import { RULESETS } from './rules/rules'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
+import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 
 // eslint-disable-next-line node/prefer-global/process
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
@@ -182,4 +182,5 @@ yargs(hideBin(process.argv))
   )
   .version('version', 'Show version number', vmdPackageJson.version)
   .alias('version', 'v')
-  .help().argv
+  .help()
+  .argv

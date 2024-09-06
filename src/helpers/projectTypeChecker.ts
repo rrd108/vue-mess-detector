@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import getProjectRoot from './getProjectRoot'
 import { getPackageJson } from './getPackageJson'
+import getProjectRoot from './getProjectRoot'
 
 // eslint-disable-next-line node/prefer-global/process
 const projectPath = await getProjectRoot(process.cwd()) || ''

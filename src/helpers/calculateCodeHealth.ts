@@ -1,6 +1,6 @@
 import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from '../rules/asceeCodes'
-import type { CodeHealthResponse, Health } from '../types'
 import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from './constants'
+import type { CodeHealthResponse, Health } from '../types'
 
 export const calculateCodeHealth = (health: Health[], linesCount: number, filesCount: number): CodeHealthResponse => {
   const { errors, warnings } = health.reduce((acc, { errors, warnings }) => ({ errors: acc.errors + errors, warnings: acc.warnings + warnings }), { errors: 0, warnings: 0 })

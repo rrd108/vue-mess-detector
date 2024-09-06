@@ -81,11 +81,9 @@ const extractSidebarRules = async (configPath) => {
   // eslint-disable-next-line no-eval
   const sidebar = eval(sidebarArrayString)
 
-  return sidebar[0].items
-    .find(item => item.text === 'Rulesets')
-    .items.flatMap(ruleset =>
-      ruleset.items.map(rule => `${rule.link.replace('/rules/', '')}.md`),
-    )
+  return sidebar[0].items.find(item => item.text === 'Rulesets').items.flatMap(ruleset =>
+    ruleset.items.map(rule => `${rule.link.replace('/rules/', '')}.md`),
+  )
 }
 
 const checkIndexFiles = async (docsDir, rulesetIndexes) => {
