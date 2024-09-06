@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { execa } from 'execa'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {

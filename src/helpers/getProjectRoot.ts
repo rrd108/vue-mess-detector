@@ -1,5 +1,5 @@
-import path from 'node:path'
 import fs from 'node:fs/promises'
+import path from 'node:path'
 
 const getProjectRoot = async (startDir: string) => {
   let currentDir = startDir
