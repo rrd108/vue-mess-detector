@@ -38,4 +38,16 @@ describe('getLineNumber', () => {
     expect(getLineNumber(source, pattern)).toBe(firstResultLineNumber)
     expect(getLineNumber(source, pattern, firstResultLineNumber)).toBe(7)
   })
+
+  it('should return the correct line number when using the from parameter', () => {
+    const source = `line1
+        line2
+        pattern
+        line4
+        pattern
+        line6`
+    const pattern = 'pattern'
+    expect(getLineNumber(source, pattern)).toBe(3)
+    expect(getLineNumber(source, pattern, 3)).toBe(5)
+  })
 })

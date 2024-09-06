@@ -1,5 +1,5 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -32,9 +32,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
     + (_caseCount?.length || 0)
 
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
-    results.push({ filePath, message: `${cyclomaticComplexity > COMPLEXITY_HIGH ? BG_ERR : BG_WARN}(${
-      cyclomaticComplexity
-    })${BG_RESET}` })
+    results.push({ filePath, message: `Cyclomatic complexity is ${cyclomaticComplexity > COMPLEXITY_HIGH ? `${BG_ERR}very high` : `${BG_WARN}high`} (${cyclomaticComplexity})${BG_RESET}` })
   }
 }
 

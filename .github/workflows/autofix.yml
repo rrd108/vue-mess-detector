@@ -18,6 +18,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run yarn lint --fix
-        run: yarn lint --fix
+        run: yarn lint:fix
 
-      - uses: autofix-ci/action@dd55f44df8f7cdb7a6bf74c78677eb8acd40cd0a
+      - uses: autofix-ci/action@ff86a557419858bb967097bfc916833f5647fa8c

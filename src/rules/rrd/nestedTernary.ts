@@ -1,5 +1,5 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { char, createRegExp, oneOrMore, whitespace } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
@@ -20,8 +20,6 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
 
   const matches = script.content.match(regex)
 
-  // TODO add your rule logic, constants, etc here
-
   matches?.forEach((match) => {
     if (match.split('?').length - 1 > 1) {
       const lineNumber = getLineNumber(script.content, match)
@@ -41,7 +39,7 @@ const reportNestedTernary = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ nested Ternary${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
+        description: `👉 ${TEXT_WARN}Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
       formats: ['es'], // Use only 'es'
     },
     rollupOptions: {
-      external: ['yargs', 'node:fs/promises', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'url'],
+      external: ['yargs', 'node:fs/promises', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'node:url', 'url', 'os'],
       output: {
         globals: {
           'yargs': 'yargs',
@@ -26,7 +26,9 @@ export default defineConfig({
           'vue': 'Vue',
           'util': 'util',
           'assert': 'assert',
+          'node:url': 'node:url',
           'url': 'url',
+          'os': 'os',
         },
       },
     },

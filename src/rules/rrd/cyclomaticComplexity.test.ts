@@ -31,7 +31,7 @@ describe('checkCyclomaticComplexity', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `${BG_WARN}(6)${BG_RESET} 🚨`,
+      message: `Cyclomatic complexity is ${BG_WARN}high (6)${BG_RESET} 🚨`,
     }])
   })
 
@@ -47,7 +47,7 @@ describe('checkCyclomaticComplexity', () => {
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
       description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `${BG_ERR}(11)${BG_RESET} 🚨`,
+      message: `Cyclomatic complexity is ${BG_ERR}very high (11)${BG_RESET} 🚨`,
     }])
   })
 })

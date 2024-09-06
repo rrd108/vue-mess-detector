@@ -1,9 +1,8 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import { camelToKebab } from '../src/helpers/caseTransform.js'
 
 console.log('🛟  Checking if documentation has all rules')
-
-const camelToKebab = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
 const isValidSourceFile = (currentPath, file) => currentPath !== './src/rules' && file.endsWith('.ts') && !file.endsWith('.test.ts')
 
@@ -82,11 +81,9 @@ const extractSidebarRules = async (configPath) => {
   // eslint-disable-next-line no-eval
   const sidebar = eval(sidebarArrayString)
 
-  return sidebar[0].items
-    .find(item => item.text === 'Rulesets')
-    .items.flatMap(ruleset =>
-      ruleset.items.map(rule => `${rule.link.replace('/rules/', '')}.md`),
-    )
+  return sidebar[0].items.find(item => item.text === 'Rulesets').items.flatMap(ruleset =>
+    ruleset.items.map(rule => `${rule.link.replace('/rules/', '')}.md`),
+  )
 }
 
 const checkIndexFiles = async (docsDir, rulesetIndexes) => {
@@ -149,8 +146,7 @@ const main = async () => {
           console.log(`- ${rulesetName}: index.md file is missing`)
         }
         else {
-          console.log(`- ${rulesetName}:`)
-          missingRules.forEach(rule => console.log(`  - ${rule}`))
+          missingRules.forEach(rule => console.log(`  - ./docs/rules/${rulesetName}/index.md : ${rule}`))
         }
       })
     }

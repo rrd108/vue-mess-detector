@@ -1,6 +1,6 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, createRegExp, global } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -13,7 +13,7 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    results.push({ filePath, message: `${BG_WARN}Props type${BG_RESET} not defined` })
+    results.push({ filePath, message: `${BG_ERR}Props type${BG_RESET} not defined` })
   }
 }
 

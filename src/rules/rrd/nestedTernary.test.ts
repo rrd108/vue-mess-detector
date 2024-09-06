@@ -30,7 +30,7 @@ describe('checkNestedTernary', () => {
     expect(reportNestedTernary()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ nested Ternary${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO doc link */`,
+      description: `👉 ${TEXT_WARN}Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
       message: `line #2 has ${BG_WARN}nested ternary${BG_RESET} 🚨`,
     }])
   })

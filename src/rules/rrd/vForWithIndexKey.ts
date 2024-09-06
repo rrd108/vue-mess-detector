@@ -1,5 +1,5 @@
-import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { createRegExp, global, oneOrMore, whitespace, wordChar } from 'magic-regexp'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
@@ -43,7 +43,7 @@ const reportVForWithIndexKey = () => {
       offenses.push({
         file: result.filePath,
         rule: `${TEXT_INFO}rrd ~ VFor With Index Key${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://`,
+        description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
         message: `${result.message} 🚨`,
       })
     })

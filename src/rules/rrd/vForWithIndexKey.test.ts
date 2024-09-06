@@ -52,7 +52,7 @@ describe('checkVForWithIndexKey', () => {
     expect(reportVForWithIndexKey()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ VFor With Index Key${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://`,
+      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
       message: `line #2 ${BG_WARN}index is being used as :key in v-for${BG_RESET} 🚨`,
     }])
   })
@@ -73,7 +73,7 @@ describe('checkVForWithIndexKey', () => {
     expect(reportVForWithIndexKey()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ VFor With Index Key${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://`,
+      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
       message: `line #2 ${BG_WARN}index is being used as :key in v-for${BG_RESET} 🚨`,
     }])
   })
@@ -94,7 +94,7 @@ describe('checkVForWithIndexKey', () => {
     expect(reportVForWithIndexKey()).toStrictEqual([{
       file: fileName,
       rule: `${TEXT_INFO}rrd ~ VFor With Index Key${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://`,
+      description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
       message: `line #2 ${BG_WARN}index is being used as :key in v-for${BG_RESET} 🚨`,
     }])
   })

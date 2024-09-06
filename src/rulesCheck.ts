@@ -1,12 +1,12 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { RULES } from './rules/rules'
+import { getIsNuxt } from './context'
 
+import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { RULES } from './rules/rules'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
-import { checkBigVif, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoPropDestructure, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
-import { checkNoVarDeclaration } from './rules/rrd/noVarDeclaration'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
   const script = descriptor.scriptSetup || descriptor.script
@@ -45,24 +45,29 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
 
     // rrd
     bigVif: () => checkBigVif(descriptor.template, filePath),
+    bigVShow: () => checkBigVshow(descriptor.template, filePath),
+    complicatedConditions: () => checkComplicatedConditions(descriptor, filePath),
     cyclomaticComplexity: () => checkCyclomaticComplexity(script, filePath),
+    computedSideEffects: () => checkComputedSideEffects(script, filePath),
     deepIndentation: () => checkDeepIndentation(script, filePath),
     elseCondition: () => checkElseCondition(script, filePath),
     functionSize: () => checkFunctionSize(script, filePath),
+    htmlImageElements: () => getIsNuxt() && checkHtmlImageElements(descriptor.template, filePath),
+    htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
     ifWithoutCurlyBraces: () => checkIfWithoutCurlyBraces(script, filePath),
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
+    noPropDestructure: () => checkNoPropDestructure(script, filePath),
+    noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
     parameterCount: () => checkParameterCount(script, filePath),
+    plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     propsDrilling: () => checkPropsDrilling(script, filePath),
     scriptLength: () => checkScriptLength(script, filePath),
     shortVariableName: () => checkShortVariableName(script, filePath),
     tooManyProps: () => checkTooManyProps(script, filePath),
-    noPropDestructure: () => checkNoPropDestructure(script, filePath),
-    noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
-    zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
-    htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
-    plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
+    zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
+    noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
   }
 
   // Run the checks for each applied rule or ruleset

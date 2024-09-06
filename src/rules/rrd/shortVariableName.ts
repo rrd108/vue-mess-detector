@@ -1,10 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
 export const MIN_VARIABLE_NAME = 4 // completely rrd made-up number
+
+const allowedVariableNames = ['i', 'key']
 
 const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
@@ -18,8 +20,8 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
   while ((match = regex.exec(script.content)) !== null) {
     const variable = match[1]
 
-    if (variable.length < MIN_VARIABLE_NAME) {
-      results.push({ filePath, message: `${BG_ERR}(${variable})${BG_RESET}` })
+    if (variable.length < MIN_VARIABLE_NAME && !allowedVariableNames.includes(variable)) {
+      results.push({ filePath, message: `variable: ${BG_WARN}(${variable})${BG_RESET}` })
     }
   }
 }

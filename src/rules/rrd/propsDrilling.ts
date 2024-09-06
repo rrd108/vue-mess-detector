@@ -1,6 +1,6 @@
 /* eslint-disable no-cond-assign */
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { charIn, charNotIn, createRegExp, global, maybe, oneOrMore, whitespace, wordChar } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 

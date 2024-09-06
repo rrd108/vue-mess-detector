@@ -1,8 +1,8 @@
-import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import type { FileCheckResult, Offense } from '../../types'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -36,7 +36,7 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
   if (matches1?.length || matches2?.length) {
     const match = matches1?.length ? matches1[0] : matches2?.length ? matches2[0] : ''
     const lineNumber = getLineNumber(template.content, match)
-    results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}v-if used with v-for${BG_RESET}` })
+    results.push({ filePath, message: `line #${lineNumber} ${BG_ERR}v-if used with v-for${BG_RESET}` })
   }
 }
 

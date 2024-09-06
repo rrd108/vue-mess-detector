@@ -33,6 +33,16 @@ if [ $PREV_STEP -eq 1 ];then
 fi
 
 if [ $PREV_STEP -eq 1 ];then
+  echo $'\n' "Check rules for missing parts" $'\n'
+  yarn rules:missing
+fi
+
+if [ $PREV_STEP -eq 1 ];then
+  echo $'\n' "Run linter" $'\n'
+  yarn lint
+fi
+
+if [ $PREV_STEP -eq 1 ];then
   echo $'\n' "Run build to generate dist files" $'\n'
   yarn build
 fi

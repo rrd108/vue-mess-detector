@@ -1,5 +1,5 @@
-import type { RuleSetType } from '../rules/rules'
 import { RULES } from '../rules/rules'
+import type { RuleSetType } from '../rules/rules'
 
 export function groupRulesByRuleset(appliedRules: string[]): { rulesets: RuleSetType[], individualRules: string[] } {
   const rulesets: RuleSetType[] = []
