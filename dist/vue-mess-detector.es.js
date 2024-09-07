@@ -3652,12 +3652,7 @@ ${_}Allowed values are: ${ps.join(", ")}${m}
 
 `
   ), process.exit(1)), s;
-};
-function Kn(t) {
-  const e = new RegExp(`--${t}(?:=[^\\s]*)?$`);
-  return process.argv.some((n) => e.test(n));
-}
-const Ss = ["rule", "file"], Os = ["asc", "desc"], Rs = ["text", "json", "table"], _s = ["all", "error"], Wi = {
+}, Ss = ["rule", "file"], Os = ["asc", "desc"], Rs = ["text", "json", "table"], _s = ["all", "error"], Wi = {
   groupBy: Ss,
   sortBy: Os,
   outputLevel: _s,
@@ -3669,7 +3664,12 @@ const Ss = ["rule", "file"], Os = ["asc", "desc"], Rs = ["text", "json", "table"
 Invalid option ${k}${t}${$} provided for flag ${S}${e}${m}. Valid options are: ${Q}${n.join(", ")}${$}.
 `
   ), process.exit(1)), t;
-}, Ii = process.argv[2] == "analyze" ? process.argv[3] : process.argv[4], Mi = await hn(Ii || "./src"), ki = await ds(), Ge = [];
+};
+function Kn(t) {
+  const e = new RegExp(`--${t}(?:=[^\\s]*)?$`);
+  return process.argv.some((n) => e.test(n));
+}
+const Ii = process.argv[2] == "analyze" ? process.argv[3] : process.argv[4], Mi = await hn(Ii || "./src"), ki = await ds(), Ge = [];
 let re = {
   path: "./src",
   apply: Object.values(fn).join(","),
