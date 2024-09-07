@@ -91,7 +91,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   output.push({ info: `      Project type: ${BG_INFO}${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}${BG_RESET}` })
   output.push({
     info: `${applyingMessage}
-      Ignoring ${ignoredRulesets.length} rules/rulesets: ${ignoreRulesetsOutput}
+      Ignoring ${ignoredRulesets.length} rules: ${ignoreRulesetsOutput}
       Excluding ${exclude || '-'}
       Output level ${BG_INFO}${level}${BG_RESET}
       Grouping by ${BG_INFO}${groupBy}${BG_RESET}

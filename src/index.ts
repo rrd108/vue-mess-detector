@@ -9,6 +9,7 @@ import { FLAT_RULESETS_RULES } from './helpers/constants'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
+import { wasOptionPassed } from './helpers/wasOptionPassed'
 import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
@@ -32,11 +33,23 @@ let config = {
   output: 'text',
 }
 
+const conflictingFlags: Record<string, boolean> = {
+  applyFromCLI: wasOptionPassed('apply'),
+  ignoreFromCLI: wasOptionPassed('ignore'),
+  applyFromFile: false,
+  ignoreFromFile: false,
+}
+
 // check if the project root has a vue-mess-detector.config.json file and if yes, then read it
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
   const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf-8'))
   config = { ...config, ...fileConfig }
+
+  // check if the file config has apply or ignore and set the corresponding flag to true
+  conflictingFlags.applyFromFile = !!fileConfig.apply
+  conflictingFlags.ignoreFromFile = !!fileConfig.ignore
+
   configOutput.push({ info: `👉 Using configuration from ${configPath}` })
 }
 catch {
@@ -105,6 +118,19 @@ yargs(hideBin(process.argv))
         coerce: value => validateOption<OutputFormat>(value, 'outputFormat'),
         default: config.output,
         group: 'Output Format:',
+      })
+      .check(() => {
+        // check if both apply and ignore are provided (from CLI or file)
+        const hasApplyFlag = conflictingFlags.applyFromCLI || conflictingFlags.applyFromFile
+        const hasIgnoreFlag = conflictingFlags.ignoreFromCLI || conflictingFlags.ignoreFromFile
+
+        if (hasApplyFlag && hasIgnoreFlag) {
+          console.error(`\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n`)
+          // eslint-disable-next-line node/prefer-global/process
+          process.exit(1)
+        }
+
+        return true
       }),
     (argv) => {
       analyze({
