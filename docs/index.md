@@ -11,6 +11,9 @@ hero:
       text: Get Started
       link: /get-started
     - theme: alt
+      text: Discord →
+      link: https://discord.gg/nXKwzk97jn
+    - theme: alt
       text: Open on GitHub →
       link: https://github.com/rrd108/vue-mess-detector
 

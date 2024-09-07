@@ -150,6 +150,9 @@ The code health is:
 
 > 👉 For more information, see the [documentation](https://vue-mess-detector.webmania.cc/).
 
+## 👥 Discord Server
+👉 Join our [discord server](https://discord.gg/nXKwzk97jn)
+
 ## 🤝 How to contribute?
 
 See [CONTRIBUTING.md](https://github.com/rrd108/vue-mess-detector/blob/main/CONTRIBUTING.md) file.
