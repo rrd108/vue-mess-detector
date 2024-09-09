@@ -2,24 +2,24 @@ name: Continuous release to pkg.pr.new
 
 on:
   push:
-    branches: 
+    branches:
       - main
     tags:
       - '!**'
   pull_request:
     types: [closed]
-    branches: 
+    branches:
       - main
 
 jobs:
   build-and-release:
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-    
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -33,4 +33,3 @@ jobs:
 
       - name: Release
         run: npx pkg-pr-new publish
-    

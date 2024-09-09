@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
-import { checkShortVariableName, MIN_VARIABLE_NAME, reportShortVariableName, resetShortVariableName } from './shortVariableName'
+import { MIN_VARIABLE_NAME, checkShortVariableName, reportShortVariableName, resetShortVariableName } from './shortVariableName'
 
 describe('shortVariableName', () => {
   beforeEach(() => {
