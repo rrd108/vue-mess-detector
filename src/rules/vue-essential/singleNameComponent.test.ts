@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-
 import { checkSingleNameComponent, reportSingleNameComponent, resetSingleNameComponent } from './singleNameComponent'
 
 describe('checkSingleNameComponent', () => {

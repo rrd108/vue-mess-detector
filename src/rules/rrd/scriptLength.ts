@@ -13,7 +13,7 @@ const checkScriptLength = (script: SFCScriptBlock | null, filePath: string) => {
   if (lines.length > MAX_SCRIPT_LENGTH) {
     results.push({ filePath, message: `${lines.length > MAX_SCRIPT_LENGTH * 2 ? '<bg_err>' : '<bg_warn>'}(${
       lines.length
-      } lines)${lines.length > MAX_SCRIPT_LENGTH * 2 ? '</bg_err>' : '</bg_warn>'}` })
+    } lines)${lines.length > MAX_SCRIPT_LENGTH * 2 ? '</bg_err>' : '</bg_warn>'}` })
   }
 }
 

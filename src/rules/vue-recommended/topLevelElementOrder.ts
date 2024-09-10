@@ -1,4 +1,3 @@
-
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []

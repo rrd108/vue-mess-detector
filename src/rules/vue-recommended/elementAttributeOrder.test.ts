@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 
-
 import { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder } from './elementAttributeOrder'
 
 describe('checkElementAttributeOrder', () => {
