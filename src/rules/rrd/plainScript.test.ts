@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkPlainScript, reportPlainScript, resetPlainScript } from './plainScript'
 
 describe('plainScript', () => {
@@ -43,9 +43,9 @@ describe('plainScript', () => {
     expect(reportPlainScript().length).toBe(1)
     expect(reportPlainScript()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ Plain <script> blocks${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN} Consider using <script setup> to leverage the new SFC <script> syntax.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
-      message: `${BG_WARN}Plain <script> block${BG_RESET} found 🚨`,
+      rule: `<text_info>rrd ~ Plain <script> blocks</text_info>`,
+      description: `👉 <text_warn> Consider using <script setup> to leverage the new SFC <script> syntax.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
+      message: `<bg_warn>Plain <script> block</bg_warn> found 🚨`,
     }])
   })
 })

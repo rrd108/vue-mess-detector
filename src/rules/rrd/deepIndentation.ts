@@ -1,6 +1,6 @@
 import { createRegExp, global, tab, whitespace } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+import { BG_WARN, TEXT_INFO } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -21,7 +21,7 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
     const lineNumber = getLineNumber(script.content, match, from)
     results.push({
       filePath,
-      message: `line #${lineNumber} ${BG_WARN}indentation: ${match.length}${BG_RESET}`,
+      message: `line #${lineNumber} <bg_warn>indentation: ${match.length}</bg_warn>`,
     })
     from = lineNumber
   })
@@ -34,8 +34,8 @@ const reportDeepIndentation = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ deep indentation${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to refactor your component to child components, to avoid deep indentations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
+        rule: `<text_info>rrd ~ deep indentation</text_info>`,
+        description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
         message: `${result.message} 🚨`,
       })
     })

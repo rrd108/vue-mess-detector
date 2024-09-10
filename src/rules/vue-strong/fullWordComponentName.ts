@@ -1,5 +1,5 @@
 import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -27,7 +27,7 @@ const checkFullWordComponentName = (filePath: string) => {
     const consonantsMatch = filename.match(consonantsRegex)
 
     if (!consonantsMatch || consonantsMatch.length < MINIMAL_CONSONANTS) {
-      results.push({ filePath, message: `${filename} is not a ${BG_WARN}full word.${BG_RESET}` })
+      results.push({ filePath, message: `${filename} is not a <bg_warn>full word.</bg_warn>` })
     }
   }
 }
@@ -39,8 +39,8 @@ const reportFullWordComponentName = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ full-word component names${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Component names should prefer full words over abbreviations.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
+        rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
+        description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
         message: `${result.message} 🚨`,
       })
     })

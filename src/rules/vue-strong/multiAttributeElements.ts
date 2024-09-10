@@ -1,5 +1,5 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -26,7 +26,7 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
       // Check if attributes are on separate lines
       const attributeLines = attributesString.split('\n').length
       if (attributeLines === 1) {
-        results.push({ filePath, message: `Element ${BG_WARN}<${elementTag}>${BG_RESET} should have its attributes on separate lines` })
+        results.push({ filePath, message: `Element <bg_warn><${elementTag}></bg_warn> should have its attributes on separate lines` })
       }
     }
   }
@@ -39,8 +39,8 @@ const reportMultiAttributeElements = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ multi-attribute elements${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Elements with multiple attributes should span multiple lines, with one attribute per line.${TEXT_RESET}`,
+        rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+        description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
         message: `${result.message} 🚨`,
       })
     })

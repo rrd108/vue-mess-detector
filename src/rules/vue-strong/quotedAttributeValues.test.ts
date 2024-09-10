@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkQuotedAttributeValues, reportQuotedAttributeValues, resetQuotedAttributeValues } from './quotedAttributeValues'
 
 describe('checkQuotedAttributeValues', () => {
@@ -39,9 +39,9 @@ describe('checkQuotedAttributeValues', () => {
     expect(reportQuotedAttributeValues().length).toBe(1)
     expect(reportQuotedAttributeValues()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-strong ~ attribute value is not quoted${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
-      message: `line #2 ${BG_WARN}:style={${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ quoted attribute values</text_info>`,
+      description: `👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
+      message: `line #2 <bg_warn>:style={</bg_warn> 🚨`,
     }])
   })
 })

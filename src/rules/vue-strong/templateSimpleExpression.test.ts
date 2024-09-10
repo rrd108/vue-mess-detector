@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetTemplateSimpleExpression } from './templateSimpleExpression'
 
 describe('checkTemplateSimpleExpression', () => {
@@ -36,9 +36,9 @@ describe('checkTemplateSimpleExpression', () => {
     expect(reportTemplateSimpleExpression().length).toBe(1)
     expect(reportTemplateSimpleExpression()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
-      message: `line #3 ${BG_WARN}fullName.split(' ').map((word) => {${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ lengthy template expression</text_info>`,
+      description: `👉 <text_warn>Refactor the expression into a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
+      message: `line #3 <bg_warn>fullName.split(' ').map((word) => {</bg_warn> 🚨`,
     }])
   })
 })

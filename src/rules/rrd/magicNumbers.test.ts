@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkMagicNumbers, reportMagicNumbers, resetMagicNumbers } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {
@@ -23,9 +22,9 @@ describe('checkMagicNumbers', () => {
     expect(reportMagicNumbers().length).toBe(1)
     expect(reportMagicNumbers()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #1 ${BG_WARN}magic number: 100${BG_RESET}) 🚨`,
+      rule: `<text_info>rrd ~ magic numbers</text_info>`,
+      description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #1 <bg_warn>magic number: 100</bg_warn>) 🚨`,
     }])
   })
 
@@ -40,9 +39,9 @@ describe('checkMagicNumbers', () => {
     expect(reportMagicNumbers().length).toBe(1)
     expect(reportMagicNumbers()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #2 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
+      rule: `<text_info>rrd ~ magic numbers</text_info>`,
+      description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #2 <bg_warn>magic number: 18</bg_warn>) 🚨`,
     }])
   })
 
@@ -59,14 +58,14 @@ describe('checkMagicNumbers', () => {
     expect(reportMagicNumbers().length).toBe(2)
     expect(reportMagicNumbers()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #2 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
+      rule: `<text_info>rrd ~ magic numbers</text_info>`,
+      description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #2 <bg_warn>magic number: 18</bg_warn>) 🚨`,
     }, {
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ magic numbers${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Extract magic numbers to a constant.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
-      message: `magic numbers found (line #3 ${BG_WARN}magic number: 18${BG_RESET}) 🚨`,
+      rule: `<text_info>rrd ~ magic numbers</text_info>`,
+      description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
+      message: `magic numbers found (line #3 <bg_warn>magic number: 18</bg_warn>) 🚨`,
     }])
   })
 })

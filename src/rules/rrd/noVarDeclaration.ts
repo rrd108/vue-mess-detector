@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -17,7 +17,7 @@ const checkNoVarDeclaration = (script: SFCScriptBlock | null, filePath: string) 
     const lineNumber = getLineNumber(script.content, match)
     results.push({
       filePath,
-      message: `line #${lineNumber} ${BG_WARN}Avoid using 'var' for variable declarations: ${match}${BG_RESET}`,
+      message: `line #${lineNumber} <bg_warn>Avoid using 'var' for variable declarations: ${match}</bg_warn>`,
     })
   })
 }
@@ -29,8 +29,8 @@ const reportNoVarDeclaration = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
         message: `${result.message} 🚨`,
       })
     })

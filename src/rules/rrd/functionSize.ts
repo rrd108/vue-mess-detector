@@ -1,5 +1,4 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -25,11 +24,11 @@ function addFunctionToFiles({ funcName, funcBody, lineNumber, filePath }: AddFun
   const cleanedFuncName = cleanFunctionName(funcName)
 
   if (lineCount > 2 * MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_ERR}(${cleanedFuncName}#${lineNumber})${BG_RESET} is too long: ${BG_ERR}${lineCount} lines${BG_RESET}` })
+    results.push({ filePath, message: `function <bg_err>(${cleanedFuncName}#${lineNumber})</bg_err> is too long: <bg_err>${lineCount} lines</bg_err>` })
     return
   }
   if (lineCount >= MAX_FUNCTION_LENGTH) {
-    results.push({ filePath, message: `function ${BG_WARN}(${cleanedFuncName}#${lineNumber})${BG_RESET} is too long: ${BG_WARN}${lineCount} lines${BG_RESET}` })
+    results.push({ filePath, message: `function <bg_warn>(${cleanedFuncName}#${lineNumber})</bg_warn> is too long: <bg_warn>${lineCount} lines</bg_warn>` })
   }
 }
 
@@ -181,8 +180,8 @@ const reportFunctionSize = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ function size${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+        rule: `<text_info>rrd ~ function size</text_info>`,
+        description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -1,6 +1,6 @@
 import { createRegExp, exactly, global } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -28,7 +28,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
       const lineNumber = getLineNumber(script.content.trim(), vModelProp)
       results.push({
         filePath,
-        message: `line #${lineNumber} ${BG_WARN}(${vModelProp})${BG_RESET}`,
+        message: `line #${lineNumber} <bg_warn>(${vModelProp})</bg_warn>`,
       })
     }
   }
@@ -39,7 +39,7 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
     const lineNumber = getLineNumber(script.content.trim(), parentMatch[0])
     results.push({
       filePath,
-      message: `line #${lineNumber} ${BG_WARN}(${parentMatch[0]})${BG_RESET}`,
+      message: `line #${lineNumber} <bg_warn>(${parentMatch[0]})</bg_warn>`,
     })
   }
 }
@@ -51,8 +51,8 @@ const reportImplicitParentChildCommunication = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-caution ~ implicit parent-child communication${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid implicit parent-child communication to maintain clear and predictable component behavior.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
+        rule: `<text_info>vue-caution ~ implicit parent-child communication</text_info>`,
+        description: `👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
         message: `${result.message} 🚨`,
       })
     })

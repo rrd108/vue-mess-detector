@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkNoPropDestructure, reportNoPropDestructure, resetNoPropDestructure } from './noPropDestructure'
 
 describe('checkNoPropDestructure', () => {
@@ -38,9 +38,9 @@ describe('checkNoPropDestructure', () => {
     expect(offenses).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 ${BG_WARN}props destructuring found: const { propA } = defineProps()${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
       },
     ])
   })
@@ -61,15 +61,15 @@ describe('checkNoPropDestructure', () => {
     expect(offenses).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 ${BG_WARN}props destructuring found: const { propA } = defineProps()${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #4 ${BG_WARN}props destructuring found: const { propB } = defineProps()${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        message: `line #4 <bg_warn>props destructuring found: const { propB } = defineProps()</bg_warn> 🚨`,
       },
     ])
   })
@@ -89,9 +89,9 @@ describe('checkNoPropDestructure', () => {
     expect(offenses).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 ${BG_WARN}props destructuring found: const { propA = 'default', propB } = defineProps()${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        message: `line #3 <bg_warn>props destructuring found: const { propA = 'default', propB } = defineProps()</bg_warn> 🚨`,
       },
     ])
   })
@@ -126,9 +126,9 @@ describe('checkNoPropDestructure', () => {
     expect(offenses).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 ${BG_WARN}props destructuring found: const { propA } = defineProps()${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
       },
     ])
   })

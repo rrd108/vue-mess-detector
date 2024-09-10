@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -21,7 +21,7 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
     const variable = match[1]
 
     if (variable.length < MIN_VARIABLE_NAME && !allowedVariableNames.includes(variable)) {
-      results.push({ filePath, message: `variable: ${BG_WARN}(${variable})${BG_RESET}` })
+      results.push({ filePath, message: `variable: <bg_warn>(${variable})</bg_warn>` })
     }
   }
 }
@@ -33,8 +33,8 @@ const reportShortVariableName = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        rule: `<text_info>rrd ~ short variable names</text_info>`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
         message: `${result.message} 🚨`,
       })
     })

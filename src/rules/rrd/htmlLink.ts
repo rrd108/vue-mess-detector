@@ -1,6 +1,5 @@
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -14,7 +13,7 @@ const checkHtmlLink = (template: SFCTemplateBlock | null, filePath: string) => {
   const matches = template.content.match(regex)
 
   if (matches?.length) {
-    results.push({ filePath, message: `${matches?.length} ${BG_WARN}html link found${BG_RESET}` })
+    results.push({ filePath, message: `${matches?.length} <bg_warn>html link found</bg_warn>` })
   }
 }
 
@@ -25,8 +24,8 @@ const reportHtmlLink = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ html link${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use router-link or NuxtLink.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
+        rule: `<text_info>rrd ~ html link</text_info>`,
+        description: `👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
         message: `${result.message} 🚨`,
       })
     })

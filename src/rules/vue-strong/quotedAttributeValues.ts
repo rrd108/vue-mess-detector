@@ -1,6 +1,6 @@
 import { charIn, charNotIn, createRegExp, maybe, oneOrMore, wordChar } from 'magic-regexp'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -40,7 +40,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     const match = templateTag.match(regexUnquotedAttributeValue)
     if (match?.length) {
       const lineNumber = getLineNumber(descriptor.source, templateTag)
-      results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}${match}${BG_RESET}` })
+      results.push({ filePath, message: `line #${lineNumber} <bg_warn>${match}</bg_warn>` })
     }
   })
 }
@@ -52,8 +52,8 @@ const reportQuotedAttributeValues = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ attribute value is not quoted${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use quotes for attribute values.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
+        rule: `<text_info>vue-strong ~ quoted attribute values</text_info>`,
+        description: `👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -1,6 +1,6 @@
 import { createRegExp, global, oneOrMore, whitespace, wordChar } from 'magic-regexp'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -28,7 +28,7 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
         const lineNumber = getLineNumber(template.content.trim(), key as string)
         results.push({
           filePath,
-          message: `line #${lineNumber} ${BG_WARN}index is being used as :key in v-for${BG_RESET}`,
+          message: `line #${lineNumber} <bg_warn>index is being used as :key in v-for</bg_warn>`,
         })
       }
     })
@@ -42,8 +42,8 @@ const reportVForWithIndexKey = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ VFor With Index Key${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid using index as key in v-for loops.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
+        rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
+        description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
         message: `${result.message} 🚨`,
       })
     })

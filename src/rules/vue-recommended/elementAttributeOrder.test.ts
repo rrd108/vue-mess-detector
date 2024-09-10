@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder } from './elementAttributeOrder'
 
 describe('checkElementAttributeOrder', () => {
@@ -36,9 +36,9 @@ describe('checkElementAttributeOrder', () => {
     expect(reportElementAttributeOrder().length).toBe(1)
     expect(reportElementAttributeOrder()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
-      message: `tag has attributes out of order ${BG_WARN}(input)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
+      description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+      message: `tag has attributes out of order <bg_warn>(input)</bg_warn> 🚨`,
     }])
   })
 
@@ -55,9 +55,9 @@ describe('checkElementAttributeOrder', () => {
     expect(reportElementAttributeOrder().length).toBe(1)
     expect(reportElementAttributeOrder()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
-      message: `tag has attributes out of order ${BG_WARN}(div)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
+      description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+      message: `tag has attributes out of order <bg_warn>(div)</bg_warn> 🚨`,
     }])
   })
 })

@@ -10,7 +10,7 @@ import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
 import { wasOptionPassed } from './helpers/wasOptionPassed'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
+import { tags2Ascee } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
@@ -125,7 +125,7 @@ yargs(hideBin(process.argv))
         const hasIgnoreFlag = conflictingFlags.ignoreFromCLI || conflictingFlags.ignoreFromFile
 
         if (hasApplyFlag && hasIgnoreFlag) {
-          console.error(`\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n`)
+          console.error(`\n<bg_err>Cannot use both --ignore and --apply options together.</bg_err>\n`)
           // eslint-disable-next-line node/prefer-global/process
           process.exit(1)
         }
@@ -145,20 +145,20 @@ yargs(hideBin(process.argv))
         .then((result) => {
           if (argv.output == 'text') {
             [...configOutput, ...result.output].forEach((line) => {
-              console.log(line.info)
+              console.log(tags2Ascee(line.info))
             })
 
             for (const group in result.reportOutput) {
-              console.log(`\n- ${TEXT_INFO} ${group}${TEXT_RESET}`)
+              console.log(tags2Ascee(`\n- <text_info> ${group}</text_info>`))
               result.reportOutput[group].forEach((line) => {
-                console.log(`   ${line.id}`)
-                console.log(`   ${line.description}`)
-                console.log(`   ${line.message}\n`)
+                console.log(tags2Ascee(`   ${line.id}`))
+                console.log(tags2Ascee(`   ${line.description}`))
+                console.log(tags2Ascee(`   ${line.message}\n`))
               })
             }
 
             result.codeHealthOutput?.forEach((line) => {
-              console.log(line.info)
+              console.log(tags2Ascee(line.info))
             })
           }
 
@@ -177,14 +177,14 @@ yargs(hideBin(process.argv))
 
               console.log('-'.repeat(120))
               if (argv.group == 'rule') {
-                console.log(`${TEXT_INFO}Rule: ${group}${TEXT_RESET}`)
+                console.log(`<text_info>Rule: ${group}</text_info>`)
                 console.log(`Description: ${result.reportOutput[group][0].description}`)
                 result.reportOutput[group].forEach((line) => {
                   table.push([line.id, line.message])
                 })
               }
               if (argv.group == 'file') {
-                console.log(`${TEXT_INFO}File: ${group}${TEXT_RESET}`)
+                console.log(`<text_info>File: ${group}</text_info>`)
                 result.reportOutput[group].forEach((line) => {
                   table.push([`${line.id}\n${line.description.replace('See: ', 'See:\n')}`, line.message])
                 })
@@ -202,7 +202,7 @@ yargs(hideBin(process.argv))
           }
         })
         .catch((error) => {
-          console.error(`${BG_ERR}${error}${BG_RESET}`)
+          console.error(tags2Ascee(`<bg_err>${error}</bg_err>`))
         })
     },
   )

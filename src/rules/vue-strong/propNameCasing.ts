@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -25,7 +25,7 @@ const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) =>
       .filter(prop => !camelCasePattern.test(prop))
 
     if (propNames.length) {
-      results.push({ filePath, message: `prop names are ${BG_WARN}not camelCased${BG_RESET}` })
+      results.push({ filePath, message: `prop names are <bg_warn>not camelCased</bg_warn>` })
     }
   }
 }
@@ -37,8 +37,8 @@ const reportPropNameCasing = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ prop names are not camelCased${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Rename the props to camelCase.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
+        rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
+        description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
         message: `${result.message} 🚨`,
       })
     })

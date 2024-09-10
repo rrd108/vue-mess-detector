@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkSelfClosingComponents, reportSelfClosingComponents, resetSelfClosingComponents } from './selfClosingComponents'
 
 describe('checkSelfClosingComponents', () => {
@@ -55,9 +55,9 @@ describe('checkSelfClosingComponents', () => {
     expect(reportSelfClosingComponents().length).toBe(1)
     expect(reportSelfClosingComponents()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
-      message: `line #2 ${BG_WARN}<MyComponent></MyComponent>${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ component is not self closing</text_info>`,
+      description: `👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
+      message: `line #2 <bg_warn><MyComponent></MyComponent></bg_warn> 🚨`,
     }])
   })
 
@@ -78,9 +78,9 @@ describe('checkSelfClosingComponents', () => {
     expect(reportSelfClosingComponents().length).toBe(1)
     expect(reportSelfClosingComponents()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
-      message: `line #2 ${BG_WARN}></MyComponent>${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ component is not self closing</text_info>`,
+      description: `👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
+      message: `line #2 <bg_warn>></MyComponent></bg_warn> 🚨`,
     }])
   })
 })

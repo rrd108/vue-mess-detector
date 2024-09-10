@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { createRegExp, letter } from 'magic-regexp'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -20,7 +20,7 @@ const checkSingleNameComponent = (filePath: string) => {
   const matches = fileName.slice(1).match(regex) // ignore the first character
 
   if (!matches?.length) {
-    results.push({ filePath, message: `Component name is ${BG_ERR}single word${BG_RESET}` })
+    results.push({ filePath, message: `Component name is <bg_err>single word</bg_err>` })
   }
 }
 
@@ -31,8 +31,8 @@ const reportSingleNameComponent = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-essential ~ single name component${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
+        rule: `<text_info>vue-essential ~ single name component</text_info>`,
+        description: `👉 <text_warn>Rename the component to use multi-word name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
         message: `${result.message} 🚨`,
       })
     })

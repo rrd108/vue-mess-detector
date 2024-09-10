@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -24,7 +24,7 @@ const checkComputedSideEffects = (script: SFCScriptBlock | null, filePath: strin
       const truncatedBody = trimmedBody.length > 20 ? trimmedBody.slice(0, 20) : trimmedBody
       results.push({
         filePath,
-        message: `line #${lineNumber} side effect detected in computed property ${BG_ERR}(${truncatedBody})${BG_RESET}`,
+        message: `line #${lineNumber} side effect detected in computed property <bg_err>(${truncatedBody})</bg_err>`,
       })
     }
   })
@@ -37,8 +37,8 @@ const reportComputedSideEffects = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ computed side effects${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid side effects in computed properties. Computed properties should only derive and return a value.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
         message: `${result.message} 🚨`,
       })
     })

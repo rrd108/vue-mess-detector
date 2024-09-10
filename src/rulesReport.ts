@@ -1,6 +1,4 @@
-import { BG_ERR } from './rules/asceeCodes'
 import { reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
-
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
@@ -106,7 +104,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
     output[key] = []
 
     offensesGrouped[key].forEach((offense, i) => {
-      const isError = offense.message.includes(BG_ERR)
+      const isError = offense.message.includes('<bg_err>')
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
         const foundHealth = health.find(h => h.file === offense.file)
@@ -126,17 +124,13 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
       output[key][i] = { id: '', description: '', message: '' }
 
       if (groupBy === 'file') {
-        // output.push({ info: `   Rule: ${offense.rule}` })
         output[key][i].id = offense.rule
       }
 
       if (groupBy !== 'file') {
-        // output.push({ info: `   File: ${offense.file}` })
         output[key][i].id = offense.file
       }
-      // output.push({ info: `   Description: ${offense.description}` })
       output[key][i].description = offense.description
-      // output.push({ info: `   Message: ${offense.message || '🚨'}\n` })
       output[key][i].message = offense.message || '🚨'
     })
   })

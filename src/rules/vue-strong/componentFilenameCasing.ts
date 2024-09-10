@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -19,7 +19,7 @@ const checkComponentFilenameCasing = (filePath: string) => {
   const matchesKebabCase = fileName.match(regexKebabCase)
 
   if (!matchesPascalCase?.length && !matchesKebabCase?.length) {
-    results.push({ filePath, message: `component name is ${BG_WARN}not PascalCase, nor kebab-case.${BG_RESET}` })
+    results.push({ filePath, message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn>` })
   }
 }
 
@@ -30,8 +30,8 @@ const reportComponentFilenameCasing = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ component name is not PascalCase and not kebab-case${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Rename the component to use PascalCase or kebab-case file name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
+        rule: `<text_info>vue-strong ~ component name is not PascalCase and not kebab-case</text_info>`,
+        description: `👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
         message: `${result.message} 🚨`,
       })
     })

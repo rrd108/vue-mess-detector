@@ -1,6 +1,5 @@
 import { createRegExp, exactly, global } from 'magic-regexp'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -20,7 +19,7 @@ const checkHtmlImageElements = (template: SFCTemplateBlock | null, filePath: str
       const element = match.slice(1) // Remove the '<' from the match
       results.push({
         filePath,
-        message: `line #${lineNumber} ${BG_WARN}${element} element found${BG_RESET}`,
+        message: `line #${lineNumber} <bg_warn>${element} element found</bg_warn>`,
       })
       from = lineNumber
     })
@@ -34,8 +33,8 @@ const reportHtmlImageElements = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ html image elements${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
+        rule: `<text_info>rrd ~ html image elements</text_info>`,
+        description: `👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
         message: `${result.message} 🚨`,
       })
     })

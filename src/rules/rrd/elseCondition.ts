@@ -1,6 +1,6 @@
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -13,7 +13,7 @@ const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => 
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    results.push({ filePath, message: `else clauses found ${BG_ERR}(${matches.length})${BG_RESET}` })
+    results.push({ filePath, message: `else clauses found <bg_err>(${matches.length})</bg_err>` })
   }
 }
 
@@ -24,8 +24,8 @@ const reportElseCondition = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
+        rule: `<text_info>rrd ~ else conditions</text_info>`,
+        description: `👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
         message: `${result.message} 🚨`,
       })
     })

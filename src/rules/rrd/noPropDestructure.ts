@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -19,7 +19,7 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
     const lineNumber = getLineNumber(script.content, match)
     results.push({
       filePath,
-      message: `line #${lineNumber} ${BG_WARN}props destructuring found: ${match}${BG_RESET}`,
+      message: `line #${lineNumber} <bg_warn>props destructuring found: ${match}</bg_warn>`,
     })
   })
 }
@@ -31,8 +31,8 @@ const reportNoPropDestructure = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ no Prop Destructure${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
         message: `${result.message} 🚨`,
       })
     })

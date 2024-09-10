@@ -1,6 +1,6 @@
 import { charNotIn, createRegExp, letter, linefeed, maybe, oneOrMore, tab, wordChar } from 'magic-regexp'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -31,7 +31,7 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
   matches?.forEach((componentTag) => {
     const lineNumber = getLineNumber(descriptor.source, componentTag)
     const lastPart = componentTag.split('\n').at(-1)?.trim() || ''
-    results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}${lastPart}${BG_RESET}` })
+    results.push({ filePath, message: `line #${lineNumber} <bg_warn>${lastPart}</bg_warn>` })
   })
 }
 
@@ -42,8 +42,8 @@ const reportSelfClosingComponents = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ component is not self closing${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Components with no content should be self-closing.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
+        rule: `<text_info>vue-strong ~ component is not self closing</text_info>`,
+        description: `👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
         message: `${result.message} 🚨`,
       })
     })

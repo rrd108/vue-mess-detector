@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkNestedTernary, reportNestedTernary, resetNestedTernary } from './nestedTernary'
 
 describe('checkNestedTernary', () => {
@@ -29,9 +29,9 @@ describe('checkNestedTernary', () => {
     expect(reportNestedTernary().length).toBe(1)
     expect(reportNestedTernary()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ nested Ternary${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
-      message: `line #2 has ${BG_WARN}nested ternary${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+      message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
     }])
   })
 })

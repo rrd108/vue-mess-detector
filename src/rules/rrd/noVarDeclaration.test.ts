@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkNoVarDeclaration, reportNoVarDeclaration, resetNoVarDeclaration } from './noVarDeclaration'
 
 describe('checkNoVarDeclaration', () => {
@@ -36,9 +36,9 @@ describe('checkNoVarDeclaration', () => {
     expect(reportNoVarDeclaration()).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
-        message: `line #2 ${BG_WARN}Avoid using 'var' for variable declarations: var x = 5;${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        message: `line #2 <bg_warn>Avoid using 'var' for variable declarations: var x = 5;</bg_warn> 🚨`,
       },
     ])
   })
@@ -58,27 +58,27 @@ describe('checkNoVarDeclaration', () => {
     expect(reportNoVarDeclaration()).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
-        message: `line #2 ${BG_WARN}Avoid using 'var' for variable declarations: var a = 1;${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        message: `line #2 <bg_warn>Avoid using 'var' for variable declarations: var a = 1;</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
-        message: `line #3 ${BG_WARN}Avoid using 'var' for variable declarations: var b = 2;${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        message: `line #3 <bg_warn>Avoid using 'var' for variable declarations: var b = 2;</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
-        message: `line #4 ${BG_WARN}Avoid using 'var' for variable declarations: var c = 3;${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        message: `line #4 <bg_warn>Avoid using 'var' for variable declarations: var c = 3;</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ No Var Declaration${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Avoid var declaration, use const or let instead of that.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
-        message: `line #5 ${BG_WARN}Avoid using 'var' for variable declarations: var d = a + b;${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
+        description: `👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html`,
+        message: `line #5 <bg_warn>Avoid using 'var' for variable declarations: var d = a + b;</bg_warn> 🚨`,
       },
     ])
   })

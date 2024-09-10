@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkScriptLength, MAX_SCRIPT_LENGTH, reportScriptLength, resetScriptLength } from './scriptLength'
 
 describe('checkScriptLength', () => {
@@ -28,9 +28,9 @@ describe('checkScriptLength', () => {
     expect(reportScriptLength().length).toBe(1)
     expect(reportScriptLength()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ Long <script> blocks${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
-      message: `${BG_WARN}(104 lines)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ Long <script> blocks</text_info>`,
+      description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
+      message: `<bg_warn>(104 lines)</bg_warn> 🚨`,
     }])
   })
 })

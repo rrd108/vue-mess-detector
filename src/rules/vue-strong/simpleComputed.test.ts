@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkSimpleComputed, reportSimpleComputed, resetSimpleComputed } from './simpleComputed'
 
 describe('checkSimpleComputed', () => {
@@ -54,9 +54,9 @@ describe('checkSimpleComputed', () => {
     expect(reportSimpleComputed().length).toBe(1)
     expect(reportSimpleComputed()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-strong ~ complicated computed property${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Refactor the computed properties to smaller ones.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
-      message: `line #2 ${BG_WARN}computed${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ complicated computed property</text_info>`,
+      description: `👉 <text_warn>Refactor the computed properties to smaller ones.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
+      message: `line #2 <bg_warn>computed</bg_warn> 🚨`,
     }])
   })
 })

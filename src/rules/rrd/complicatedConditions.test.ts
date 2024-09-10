@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkComplicatedConditions, reportComplicatedConditions, resetComplicatedConditions } from './complicatedConditions'
 
 describe('checkComplicatedConditions', () => {
@@ -99,15 +98,15 @@ describe('checkComplicatedConditions', () => {
     expect(reportComplicatedConditions()).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ complicated conditions${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Simplify complex conditions by breaking them down into smaller, more manageable parts.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
-        message: `line #2 ${BG_WARN}script has a complicated condition with 6 blocks${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ complicated conditions</text_info>`,
+        description: `👉 <text_warn>Simplify complex conditions by breaking them down into smaller, more manageable parts.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
+        message: `line #2 <bg_warn>script has a complicated condition with 6 blocks</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ complicated conditions${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Simplify complex conditions by breaking them down into smaller, more manageable parts.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
-        message: `line #2 ${BG_ERR}template has a complicated condition with 11 blocks${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ complicated conditions</text_info>`,
+        description: `👉 <text_warn>Simplify complex conditions by breaking them down into smaller, more manageable parts.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
+        message: `line #2 <bg_err>template has a complicated condition with 11 blocks</bg_err> 🚨`,
       },
     ])
   })

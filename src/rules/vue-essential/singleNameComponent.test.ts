@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkSingleNameComponent, reportSingleNameComponent, resetSingleNameComponent } from './singleNameComponent'
 
 describe('checkSingleNameComponent', () => {
@@ -31,9 +31,9 @@ describe('checkSingleNameComponent', () => {
     expect(reportSingleNameComponent().length).toBe(1)
     expect(reportSingleNameComponent()).toStrictEqual([{
       file: 'components/Header.vue',
-      rule: `${TEXT_INFO}vue-essential ~ single name component${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Rename the component to use multi-word name.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
-      message: `Component name is ${BG_ERR}single word${BG_RESET} 🚨`,
+      rule: `<text_info>vue-essential ~ single name component</text_info>`,
+      description: `👉 <text_warn>Rename the component to use multi-word name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
+      message: `Component name is <bg_err>single word</bg_err> 🚨`,
     }])
   })
 })

@@ -1,5 +1,5 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -10,8 +10,7 @@ const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
   }
   styles.forEach((style) => {
     if (!style.scoped) {
-      results.push({ filePath, message: `${BG_ERR}global style${BG_RESET} used`,
-      })
+      results.push({ filePath, message: `<bg_err>global style</bg_err> used` })
     }
   })
 }
@@ -23,8 +22,8 @@ const reportGlobalStyle = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-essential ~ global style${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use <style scoped>.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
+        rule: `<text_info>vue-essential ~ global style</text_info>`,
+        description: `👉 <text_warn>Use <style scoped>.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html`,
         message: `${result.message} 🚨`,
       })
     })
