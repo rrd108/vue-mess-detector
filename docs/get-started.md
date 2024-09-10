@@ -104,7 +104,7 @@ Options:
 | `--ignore`  | Ignore **only** specific rulesets or rules (comma-separated) | -         | `--ignore=vue-caution,functionSize`  |
 | `--group`   | Group results by `file` or `rule`                            | `rule`    | `--group=file`                       |
 | `--sort`    | Order results `asc` or `desc`                                | `asc`     | `--sort=desc`                        |
-| `--level`   | Show only specific level (`error` or `warning`)              | Both      | `--level=error`                      |
+| `--level`   | Show only specific level `error` or all         | all    | `--level=error`                                      |
 | `--output`  | Output format `text` or `table` or `json`                    | `text`    | `--output=table`                     |
 | `--file-output`  | The name of the file to save output to               | None  | `--file-output=analysis.txt`                |
 
