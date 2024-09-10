@@ -164,7 +164,7 @@ yargs(hideBin(process.argv))
 
           if (argv.output == 'table') {
             [...configOutput, ...result.output].forEach((line) => {
-              console.log(line.info)
+              console.log(tags2Ascee(line.info))
             })
 
             for (const group in result.reportOutput) {
@@ -177,23 +177,23 @@ yargs(hideBin(process.argv))
 
               console.log('-'.repeat(120))
               if (argv.group == 'rule') {
-                console.log(`<text_info>Rule: ${group}</text_info>`)
-                console.log(`Description: ${result.reportOutput[group][0].description}`)
+                console.log(tags2Ascee(`<text_info>Rule: ${group}</text_info>`))
+                console.log(tags2Ascee(`Description: ${result.reportOutput[group][0].description}`))
                 result.reportOutput[group].forEach((line) => {
-                  table.push([line.id, line.message])
+                  table.push([tags2Ascee(line.id), tags2Ascee(line.message)])
                 })
               }
               if (argv.group == 'file') {
-                console.log(`<text_info>File: ${group}</text_info>`)
+                console.log(tags2Ascee(`<text_info>File: ${group}</text_info>`))
                 result.reportOutput[group].forEach((line) => {
-                  table.push([`${line.id}\n${line.description.replace('See: ', 'See:\n')}`, line.message])
+                  table.push([`${tags2Ascee(line.id)}\n${tags2Ascee(line.description.replace('See: ', 'See:\n'))}`, tags2Ascee(line.message)])
                 })
               }
               console.log(table.toString())
             }
 
             result.codeHealthOutput?.forEach((line) => {
-              console.log(line.info)
+              console.log(tags2Ascee(line.info))
             })
           }
 
