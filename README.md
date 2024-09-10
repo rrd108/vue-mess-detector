@@ -90,6 +90,7 @@ Options:
 | `--sort`   | Order results `asc` or `desc`                         | `asc`   | `--sort=desc`                                         |
 | `--level`   | Show only specific level (`error` or `warning`)         | Both    | `--level=error`                                        |
 | `--output`  | Output format `text` or `table` or `json`               | `text`  | `--output=table`                                        |
+| `--file-output`  | The name of the file to save output to               | None  | `--file-output=analysis.txt`                            |
 
 
 If you want to store your flags in a configuration file, you can create a `vue-mess-detector.json` file in the root of your project with the following content:

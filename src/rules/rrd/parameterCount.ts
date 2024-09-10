@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -13,7 +13,7 @@ const checkParameters = (funcName: string, params: string, filePath: string) => 
     .map(param => param.trim())
     .filter(param => param.length > 0)
   if (paramsArray.length > MAX_PARAMETER_COUNT) {
-    results.push({ filePath, message: `function ${BG_WARN}${funcName}${BG_RESET} has ${BG_WARN}${paramsArray.length}${BG_RESET} parameters` })
+    results.push({ filePath, message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsArray.length}</bg_warn> parameters` })
   }
 }
 
@@ -45,8 +45,8 @@ const reportParameterCount = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+        rule: `<text_info>rrd ~ parameter count</text_info>`,
+        description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkBigVshow, reportBigVshow, resetBigVshow } from './bigVshow'
 
 describe('checkBigVshow', () => {
@@ -44,9 +43,9 @@ describe('checkBigVshow', () => {
     expect(reportBigVshow().length).toBe(1)
     expect(reportBigVshow()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ big v-show${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Big v-show can be moved out to its own component.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
-      message: `line #1 ${BG_WARN}has a v-show with 14 lines${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ big v-show</text_info>`,
+      description: `👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
+      message: `line #1 <bg_warn>has a v-show with 14 lines</bg_warn> 🚨`,
     }])
   })
 })

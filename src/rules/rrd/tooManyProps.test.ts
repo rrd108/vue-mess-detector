@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkTooManyProps, reportTooManyProps, resetTooManyProps } from './tooManyProps'
 
 describe('checkTooManyProps', () => {
@@ -41,9 +41,9 @@ describe('checkTooManyProps', () => {
     expect(reportTooManyProps().length).toBe(1)
     expect(reportTooManyProps()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
-      message: `props found ${BG_ERR}(6)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ too many props</text_info>`,
+      description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+      message: `props found <bg_err>(6)</bg_err> 🚨`,
     }])
   })
 
@@ -56,9 +56,9 @@ describe('checkTooManyProps', () => {
     expect(reportTooManyProps().length).toBe(1)
     expect(reportTooManyProps()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
-      message: `props found ${BG_ERR}(6)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ too many props</text_info>`,
+      description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+      message: `props found <bg_err>(6)</bg_err> 🚨`,
     }])
   })
 })

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkShortVariableName, MIN_VARIABLE_NAME, reportShortVariableName, resetShortVariableName } from './shortVariableName'
 
 describe('shortVariableName', () => {
@@ -38,9 +38,9 @@ describe('shortVariableName', () => {
     expect(reportShortVariableName().length).toBe(1)
     expect(reportShortVariableName()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: ${BG_WARN}(${variable})${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ short variable names</text_info>`,
+      description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+      message: `variable: <bg_warn>(${variable})</bg_warn> 🚨`,
     }])
   })
 
@@ -61,19 +61,19 @@ describe('shortVariableName', () => {
     expect(reportShortVariableName().length).toBe(3)
     expect(reportShortVariableName()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: ${BG_WARN}(age)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ short variable names</text_info>`,
+      description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+      message: `variable: <bg_warn>(age)</bg_warn> 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: ${BG_WARN}(gps)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ short variable names</text_info>`,
+      description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+      message: `variable: <bg_warn>(gps)</bg_warn> 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ short variable names${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: ${BG_WARN}(lng)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ short variable names</text_info>`,
+      description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+      message: `variable: <bg_warn>(lng)</bg_warn> 🚨`,
     }])
   })
 })

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetIfWithoutCurlyBraces } from './ifWithoutCurlyBraces'
 
 describe('ifWithoutCurlyBraces', () => {
@@ -53,9 +53,9 @@ describe('ifWithoutCurlyBraces', () => {
     expect(reportIfWithoutCurlyBraces().length).toBe(1)
     expect(reportIfWithoutCurlyBraces()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ if without curly braces${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}All if statements must be enclosed in curly braces for better readability and maintainability.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #2 if statement without curly braces: ${BG_ERR}${statement}${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+      message: `line #2 if statement without curly braces: <bg_err>${statement}</bg_err> 🚨`,
     }])
   })
 
@@ -73,14 +73,14 @@ describe('ifWithoutCurlyBraces', () => {
     expect(reportIfWithoutCurlyBraces().length).toBe(2)
     expect(reportIfWithoutCurlyBraces()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ if without curly braces${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}All if statements must be enclosed in curly braces for better readability and maintainability.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #2 if statement without curly braces: ${BG_ERR}if (isLoading) doSomething();${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+      message: `line #2 if statement without curly braces: <bg_err>if (isLoading) doSomething();</bg_err> 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ if without curly braces${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}All if statements must be enclosed in curly braces for better readability and maintainability.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #3 if statement without curly braces: ${BG_ERR}if (isError) handleError();${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+      message: `line #3 if statement without curly braces: <bg_err>if (isError) handleError();</bg_err> 🚨`,
     }])
   })
 })

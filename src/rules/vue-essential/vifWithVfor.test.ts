@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkVifWithVfor, reportVifWithVfor, resetVIfWithVFor } from './vifWithVfor'
 
 describe('checkVifWithVfor', () => {
@@ -45,9 +45,9 @@ describe('checkVifWithVfor', () => {
     expect(reportVifWithVfor().length).toBe(1)
     expect(reportVifWithVfor()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
-      message: `line #3 ${BG_ERR}v-if used with v-for${BG_RESET} 🚨`,
+      rule: `<text_info>vue-essential ~ v-if used with v-for</text_info>`,
+      description: `👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
+      message: `line #3 <bg_err>v-if used with v-for</bg_err> 🚨`,
     }])
   })
 })

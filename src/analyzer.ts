@@ -7,7 +7,6 @@ import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
-import { BG_INFO, BG_OK, BG_RESET } from './rules/asceeCodes'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 import type { RuleSetType } from './rules/rules'
@@ -70,8 +69,8 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
 
   // Prepare output messages for applied rulesets and rules
-  const rulesetsOutput = rulesets.length ? `${BG_INFO}${rulesets.join(', ')}${BG_RESET}` : 'N/A'
-  const indRulesOutput = individualRules.length ? `${BG_INFO}${individualRules.join(', ')}${BG_RESET}` : 'N/A'
+  const rulesetsOutput = rulesets.length ? `<bg_info>${rulesets.join(', ')}</bg_info>` : 'N/A'
+  const indRulesOutput = individualRules.length ? `<bg_info>${individualRules.join(', ')}</bg_info>` : 'N/A'
 
   let applyingMessage = `      Applying ${rulesets.length} rulesets: ${rulesetsOutput}`
   if (individualRules.length > 0) {
@@ -80,22 +79,22 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
 
   // Prepare output message for ignored rulesets
   const ignoredRulesets = ignore.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
-  const ignoreRulesetsOutput = ignoredRulesets.length ? `${BG_INFO}${ignoredRulesets.join(', ')}${BG_RESET}` : 'N/A'
+  const ignoreRulesetsOutput = ignoredRulesets.length ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>` : 'N/A'
 
   const projectRoot = await getProjectRoot(dir)
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
   setIsNuxt(isNuxt)
 
-  output.push({ info: `${BG_INFO}Analyzing Vue, TS and JS files in ${dir}${BG_RESET}` })
-  output.push({ info: `      Project type: ${BG_INFO}${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}${BG_RESET}` })
+  output.push({ info: `<bg_info>Analyzing Vue, TS and JS files in ${dir}</bg_info>` })
+  output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
   output.push({
     info: `${applyingMessage}
       Ignoring ${ignoredRulesets.length} rules: ${ignoreRulesetsOutput}
       Excluding ${exclude || '-'}
-      Output level ${BG_INFO}${level}${BG_RESET}
-      Grouping by ${BG_INFO}${groupBy}${BG_RESET}
-      Sorting ${BG_INFO}${sortBy}${BG_RESET}`,
+      Output level <bg_info>${level}</bg_info>
+      Grouping by <bg_info>${groupBy}</bg_info>
+      Sorting <bg_info>${sortBy}</bg_info>`,
   })
 
   // Filter out ignored rules from the apply list
@@ -108,14 +107,14 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   // Start analysis
   await walkAsync(dir)
 
-  output.push({ info: `Found ${BG_INFO}${filesCount}${BG_RESET} files` })
+  output.push({ info: `Found <bg_info>${filesCount}</bg_info> files` })
 
   // Generate the report and calculate code health
   const { health, output: reportOutput } = reportRules(groupBy, sortBy, level)
   const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {
-    output.push({ info: `\n${BG_OK}No code smells detected!${BG_RESET}` })
+    output.push({ info: `\n<bg_ok>No code smells detected!</bg_ok>` })
   }
 
   return { output, codeHealthOutput, reportOutput }

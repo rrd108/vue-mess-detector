@@ -1,5 +1,5 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -21,7 +21,7 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
       const firstPart = expression.split('\n').at(0)?.trim() || ''
       results.push({
         filePath,
-        message: `line #${lineNumber} ${BG_WARN}${firstPart}${BG_RESET}`,
+        message: `line #${lineNumber} <bg_warn>${firstPart}</bg_warn>`,
       })
     }
   })
@@ -34,8 +34,8 @@ const reportTemplateSimpleExpression = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ lengthy template expression${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Refactor the expression into a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
+        rule: `<text_info>vue-strong ~ lengthy template expression</text_info>`,
+        description: `👉 <text_warn>Refactor the expression into a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html`,
         message: `${result.message} 🚨`,
       })
     })

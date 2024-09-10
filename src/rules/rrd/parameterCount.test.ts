@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkParameterCount, MAX_PARAMETER_COUNT, reportParameterCount, resetParameterCount } from './parameterCount'
 
 describe('checkParameterCount', () => {
@@ -44,9 +44,9 @@ describe('checkParameterCount', () => {
     expect(reportParameterCount().length).toBe(1)
     expect(reportParameterCount()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function ${BG_WARN}${funcName}${BG_RESET} has ${BG_WARN}${paramsCount}${BG_RESET} parameters 🚨`,
+      rule: `<text_info>rrd ~ parameter count</text_info>`,
+      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
     }])
   })
 
@@ -73,14 +73,14 @@ describe('checkParameterCount', () => {
     expect(reportParameterCount().length).toBe(2)
     expect(reportParameterCount()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function ${BG_WARN}dummyFuncOne${BG_RESET} has ${BG_WARN}5${BG_RESET} parameters 🚨`,
+      rule: `<text_info>rrd ~ parameter count</text_info>`,
+      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      message: `function <bg_warn>dummyFuncOne</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}rrd ~ parameter count${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Max number of function parameters should be ${MAX_PARAMETER_COUNT}.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function ${BG_WARN}dummyFuncTwo${BG_RESET} has ${BG_WARN}4${BG_RESET} parameters 🚨`,
+      rule: `<text_info>rrd ~ parameter count</text_info>`,
+      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      message: `function <bg_warn>dummyFuncTwo</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
     }])
   })
 })

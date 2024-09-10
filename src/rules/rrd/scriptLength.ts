@@ -1,5 +1,4 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -12,9 +11,9 @@ const checkScriptLength = (script: SFCScriptBlock | null, filePath: string) => {
   }
   const lines = script.content.split('\n')
   if (lines.length > MAX_SCRIPT_LENGTH) {
-    results.push({ filePath, message: `${lines.length > MAX_SCRIPT_LENGTH * 2 ? BG_ERR : BG_WARN}(${
+    results.push({ filePath, message: `${lines.length > MAX_SCRIPT_LENGTH * 2 ? '<bg_err>' : '<bg_warn>'}(${
       lines.length
-    } lines)${BG_RESET}` })
+      } lines)${lines.length > MAX_SCRIPT_LENGTH * 2 ? '</bg_err>' : '</bg_warn>'}` })
   }
 }
 
@@ -25,8 +24,8 @@ const reportScriptLength = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ Long <script> blocks${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
+        rule: `<text_info>rrd ~ Long <script> blocks</text_info>`,
+        description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${MAX_SCRIPT_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
         message: `${result.message} 🚨`,
       })
     })

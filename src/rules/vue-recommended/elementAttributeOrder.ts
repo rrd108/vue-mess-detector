@@ -1,6 +1,6 @@
 /* eslint-disable no-cond-assign */
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -53,7 +53,7 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
         if (currIdx !== -1 && currIdx < lastIdx) {
           results.push({
             filePath,
-            message: `tag has attributes out of order ${BG_WARN}(${tagName})${BG_RESET}`,
+            message: `tag has attributes out of order <bg_warn>(${tagName})</bg_warn>`,
           })
           break
         }
@@ -70,8 +70,8 @@ const reportElementAttributeOrder = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-recommended ~ element attribute order${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}The attributes of elements (including components) should be ordered consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+        rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
+        description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
         message: `${result.message} 🚨`,
       })
     })

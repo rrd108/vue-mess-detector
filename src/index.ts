@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import Table from 'cli-table3'
@@ -10,12 +11,11 @@ import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
 import { wasOptionPassed } from './helpers/wasOptionPassed'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
+import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 
-// eslint-disable-next-line node/prefer-global/process
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 const projectRoot = await getProjectRoot(pathArg || './src')
 
@@ -40,6 +40,8 @@ const conflictingFlags: Record<string, boolean> = {
   ignoreFromFile: false,
 }
 
+let outputFile = ''
+
 // check if the project root has a vue-mess-detector.config.json file and if yes, then read it
 try {
   const configPath = path.join(projectRoot, 'vue-mess-detector.json')
@@ -56,7 +58,7 @@ catch {
   configOutput.push({ info: `👉 Using default configuration` })
 }
 
-// eslint-disable-next-line ts/no-unused-expressions, node/prefer-global/process
+// eslint-disable-next-line ts/no-unused-expressions
 yargs(hideBin(process.argv))
   .command(
     'analyze [path]',
@@ -119,20 +121,37 @@ yargs(hideBin(process.argv))
         default: config.output,
         group: 'Output Format:',
       })
+      .option('fileOutput', {
+        alias: 'f',
+        describe: 'Output file',
+        default: '',
+        group: 'Output:',
+      })
       .check(() => {
         // check if both apply and ignore are provided (from CLI or file)
         const hasApplyFlag = conflictingFlags.applyFromCLI || conflictingFlags.applyFromFile
         const hasIgnoreFlag = conflictingFlags.ignoreFromCLI || conflictingFlags.ignoreFromFile
 
         if (hasApplyFlag && hasIgnoreFlag) {
-          console.error(`\n${BG_ERR}Cannot use both --ignore and --apply options together.${BG_RESET}\n`)
-          // eslint-disable-next-line node/prefer-global/process
+          console.error(`\n<bg_err>Cannot use both --ignore and --apply options together.</bg_err>\n`)
+
           process.exit(1)
         }
 
         return true
       }),
     (argv) => {
+      outputFile = argv.fileOutput as string
+      const log = (message: string) => {
+        if (outputFile) {
+          fs.appendFile(outputFile, `${message}\n`)
+          return message
+        }
+
+        console.log(tags2Ascee(message))
+        return tags2Ascee(message)
+      }
+
       analyze({
         dir: argv.path as string,
         apply: argv.apply as string[],
@@ -141,69 +160,71 @@ yargs(hideBin(process.argv))
         groupBy: argv.group,
         level: argv.level,
         sortBy: argv.sort,
-      })
-        .then((result) => {
-          if (argv.output == 'text') {
-            [...configOutput, ...result.output].forEach((line) => {
-              console.log(line.info)
+      }).then((result) => {
+        if (argv.output == 'text') {
+          [...configOutput, ...result.output].forEach((line) => {
+            log(line.info)
+          })
+
+          for (const group in result.reportOutput) {
+            log(`\n- <text_info> ${group}</text_info>`)
+            result.reportOutput[group].forEach((line) => {
+              log(`   ${line.id}`)
+              log(`   ${line.description}`)
+              log(`   ${line.message}\n`)
+            })
+          }
+
+          result.codeHealthOutput?.forEach((line) => {
+            log(line.info)
+          })
+        }
+
+        if (argv.output == 'table') {
+          if (outputFile) {
+            console.log(`We can not output ${BG_ERR}to a file in table mode${BG_RESET}`)
+            process.exit(1)
+          }
+          [...configOutput, ...result.output].forEach((line) => {
+            log(line.info)
+          })
+
+          for (const group in result.reportOutput) {
+            const table = new Table({
+              head: ['id', 'message'],
+              colWidths: [60, 60],
+              wordWrap: true,
+              wrapOnWordBoundary: false,
             })
 
-            for (const group in result.reportOutput) {
-              console.log(`\n- ${TEXT_INFO} ${group}${TEXT_RESET}`)
+            log('-'.repeat(120))
+            if (argv.group == 'rule') {
+              log(`<text_info>Rule: ${group}</text_info>`)
+              log(`Description: ${result.reportOutput[group][0].description}`)
               result.reportOutput[group].forEach((line) => {
-                console.log(`   ${line.id}`)
-                console.log(`   ${line.description}`)
-                console.log(`   ${line.message}\n`)
+                table.push([log(line.id), log(line.message)])
               })
             }
-
-            result.codeHealthOutput?.forEach((line) => {
-              console.log(line.info)
-            })
-          }
-
-          if (argv.output == 'table') {
-            [...configOutput, ...result.output].forEach((line) => {
-              console.log(line.info)
-            })
-
-            for (const group in result.reportOutput) {
-              const table = new Table({
-                head: ['id', 'message'],
-                colWidths: [60, 60],
-                wordWrap: true,
-                wrapOnWordBoundary: false,
+            if (argv.group == 'file') {
+              log(`<text_info>File: ${group}</text_info>`)
+              result.reportOutput[group].forEach((line) => {
+                table.push([`${line.id}\n${line.description.replace('See: ', 'See:\n')}`, line.message])
               })
-
-              console.log('-'.repeat(120))
-              if (argv.group == 'rule') {
-                console.log(`${TEXT_INFO}Rule: ${group}${TEXT_RESET}`)
-                console.log(`Description: ${result.reportOutput[group][0].description}`)
-                result.reportOutput[group].forEach((line) => {
-                  table.push([line.id, line.message])
-                })
-              }
-              if (argv.group == 'file') {
-                console.log(`${TEXT_INFO}File: ${group}${TEXT_RESET}`)
-                result.reportOutput[group].forEach((line) => {
-                  table.push([`${line.id}\n${line.description.replace('See: ', 'See:\n')}`, line.message])
-                })
-              }
-              console.log(table.toString())
             }
-
-            result.codeHealthOutput?.forEach((line) => {
-              console.log(line.info)
-            })
+            log(table.toString())
           }
 
-          if (argv.output == 'json') {
-            console.log(JSON.stringify(result, null, 2))
-          }
-        })
-        .catch((error) => {
-          console.error(`${BG_ERR}${error}${BG_RESET}`)
-        })
+          result.codeHealthOutput?.forEach((line) => {
+            log(line.info)
+          })
+        }
+
+        if (argv.output == 'json') {
+          log(JSON.stringify(result, null, 2))
+        }
+      }).catch((error) => {
+        console.error(`${BG_ERR}${error}${BG_RESET}`)
+      })
     },
   )
   .version('version', 'Show version number', vmdPackageJson.version)

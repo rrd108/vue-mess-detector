@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkHtmlImageElements, reportHtmlImageElements, resetHtmlImageElements } from './htmlImageElements'
 
 describe('checkHtmlImageElements', () => {
@@ -41,21 +40,21 @@ describe('checkHtmlImageElements', () => {
     expect(reportHtmlImageElements()).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ html image elements${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
-        message: `line #3 ${BG_WARN}img element found${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ html image elements</text_info>`,
+        description: `👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
+        message: `line #3 <bg_warn>img element found</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ html image elements${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
-        message: `line #4 ${BG_WARN}picture element found${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ html image elements</text_info>`,
+        description: `👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
+        message: `line #4 <bg_warn>picture element found</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}rrd ~ html image elements${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
-        message: `line #6 ${BG_WARN}img element found${BG_RESET} 🚨`,
+        rule: `<text_info>rrd ~ html image elements</text_info>`,
+        description: `👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html`,
+        message: `line #6 <bg_warn>img element found</bg_warn> 🚨`,
       },
     ])
   })

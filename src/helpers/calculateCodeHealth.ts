@@ -1,4 +1,3 @@
-import { BG_ERR, BG_INFO, BG_OK, BG_RESET, BG_WARN } from '../rules/asceeCodes'
 import { ERROR_WEIGHT, LOW_HEALTH_THRESHOLD, MEDIUM_HEALTH_THRESHOLD, OK_HEALTH_THRESHOLD } from './constants'
 import type { CodeHealthResponse, Health } from '../types'
 
@@ -7,7 +6,7 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
 
   const output: { info: string }[] = []
 
-  output.push({ info: `Found ${BG_ERR}${Intl.NumberFormat('en-US').format(errors)} errors${BG_RESET}, and ${BG_WARN}${Intl.NumberFormat('en-US').format(warnings)} warnings${BG_RESET}, ${BG_INFO}${Intl.NumberFormat('en-US').format(linesCount)} lines${BG_RESET} of code in ${BG_INFO}${Intl.NumberFormat('en-US').format(filesCount)} files${BG_RESET}` })
+  output.push({ info: `Found <bg_err>${Intl.NumberFormat('en-US').format(errors)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat('en-US').format(warnings)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat('en-US').format(linesCount)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat('en-US').format(filesCount)} files</bg_info>` })
 
   const codeHealth = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
 
@@ -16,23 +15,23 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   const redLength = !errors ? 0 : Math.max(1, BAR_WIDTH - Math.ceil(codeHealth * BAR_WIDTH / 100) - yellowLength)
   const greenLength = BAR_WIDTH - redLength - yellowLength
 
-  const healthBar = `${BG_OK}${' '.repeat(greenLength)}${BG_WARN}${' '.repeat(yellowLength)}${BG_ERR}${' '.repeat(redLength)}${BG_RESET}`
+  const healthBar = `<bg_ok>${' '.repeat(greenLength)}<bg_warn>${' '.repeat(yellowLength)}<bg_err>${' '.repeat(redLength)}</bg_err>`
   output.push({ info: `Code Health: [${healthBar}] ${codeHealth}%\n` })
 
   if (codeHealth < LOW_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_ERR}Code health is LOW: ${codeHealth}%${BG_RESET}\n` })
+    output.push({ info: `<bg_err>Code health is LOW: ${codeHealth}%</bg_err>\n` })
   }
 
   if (codeHealth >= LOW_HEALTH_THRESHOLD && codeHealth < MEDIUM_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_WARN}Code health is MEDIUM ${codeHealth}%${BG_RESET}\n` })
+    output.push({ info: `<bg_warn>Code health is MEDIUM ${codeHealth}%$</bg_warn>\n` })
   }
 
   if (codeHealth >= MEDIUM_HEALTH_THRESHOLD && codeHealth < OK_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_INFO}Code health is OK: ${codeHealth}%${BG_RESET}\n` })
+    output.push({ info: `<bg_info>Code health is OK: ${codeHealth}%</bg_info>\n` })
   }
 
   if (codeHealth >= OK_HEALTH_THRESHOLD) {
-    output.push({ info: `${BG_OK}Code health is GOOD: ${codeHealth}%${BG_RESET}\n` })
+    output.push({ info: `<bg_ok>Code health is GOOD: ${codeHealth}%</bg_ok>\n` })
   }
 
   return { errors, warnings, output }

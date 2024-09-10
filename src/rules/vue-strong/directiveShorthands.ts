@@ -1,5 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -18,7 +18,7 @@ const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: st
   directivesToCheck.forEach((directive) => {
     if (template?.content.includes(`${directive}:`)) {
       const lineNumber = getLineNumber(descriptor.source, directive)
-      results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}${directive}${BG_RESET}` })
+      results.push({ filePath, message: `line #${lineNumber} <bg_warn>${directive}</bg_warn>` })
 
       if (!directiveShorthandsFiles.some(file => file.filePath === filePath)) {
         directiveShorthandsFiles.push({ filePath })
@@ -34,8 +34,8 @@ const reportDirectiveShorthands = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
+        rule: `<text_info>vue-strong ~ directive shorthands not used</text_info>`,
+        description: `👉 <text_warn>Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
         message: `${result.message} 🚨`,
       })
     })

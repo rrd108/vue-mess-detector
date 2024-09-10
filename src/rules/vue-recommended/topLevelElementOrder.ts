@@ -1,4 +1,4 @@
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -29,7 +29,7 @@ const checkTopLevelElementOrder = (source: string, filePath: string) => {
   if (isCorrectOrder)
     return // If it's correct, do nothing
 
-  results.push({ filePath, message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET}` })
+  results.push({ filePath, message: `Top level elements are <bg_warn>not following the correct order.</bg_warn>` })
 }
 
 const reportTopLevelElementOrder = () => {
@@ -39,8 +39,8 @@ const reportTopLevelElementOrder = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+        rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
+        description: `👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
         message: `${result.message} 🚨`,
       })
     })

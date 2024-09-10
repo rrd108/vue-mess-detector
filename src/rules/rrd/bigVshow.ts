@@ -1,5 +1,4 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -23,14 +22,14 @@ const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string) => {
     if (lineCount > MAX_VSHOW_LINES * 2) {
       results.push({
         filePath,
-        message: `line #${lineNumber} ${BG_ERR}has a v-show with ${lineCount} lines${BG_RESET}`,
+        message: `line #${lineNumber} <bg_err>has a v-show with ${lineCount} lines</bg_err>`,
       })
       return
     }
     if (lineCount > MAX_VSHOW_LINES) {
       results.push({
         filePath,
-        message: `line #${lineNumber} ${BG_WARN}has a v-show with ${lineCount} lines${BG_RESET}`,
+        message: `line #${lineNumber} <bg_warn>has a v-show with ${lineCount} lines</bg_warn>`,
       })
     }
   })
@@ -43,8 +42,8 @@ const reportBigVshow = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ big v-show${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Big v-show can be moved out to its own component.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
+        rule: `<text_info>rrd ~ big v-show</text_info>`,
+        description: `👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
         message: `${result.message} 🚨`,
       })
     })

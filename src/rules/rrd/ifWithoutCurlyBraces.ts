@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -22,7 +22,7 @@ const checkIfWithoutCurlyBraces = (script: SFCScriptBlock | null, filePath: stri
       if (!nextLine || (!nextLine.startsWith('{') && !trimmedLine.endsWith('{'))) {
         results.push({
           filePath,
-          message: `line #${index} if statement without curly braces: ${BG_ERR}${trimmedLine}${BG_RESET}`,
+          message: `line #${index} if statement without curly braces: <bg_err>${trimmedLine}</bg_err>`,
         })
       }
     }
@@ -36,8 +36,8 @@ const reportIfWithoutCurlyBraces = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ if without curly braces${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}All if statements must be enclosed in curly braces for better readability and maintainability.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+        rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+        description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
         message: `${result.message} 🚨`,
       })
     })

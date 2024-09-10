@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -17,7 +17,7 @@ const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) =>
   matches.forEach((match) => {
     const lineNumber = getLineNumber(script.content.trim(), match)
     const firstPart = match.split('\n').at(0)?.trim() || ''
-    results.push({ filePath, message: `line #${lineNumber} ${BG_WARN}(${firstPart})${BG_RESET}` })
+    results.push({ filePath, message: `line #${lineNumber} <bg_warn>(${firstPart})</bg_warn>` })
   })
 }
 
@@ -28,8 +28,8 @@ const reportComponentFiles = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+        rule: `<text_info>vue-strong ~ component files</text_info>`,
+        description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
         message: `${result.message} 🚨`,
       })
     })

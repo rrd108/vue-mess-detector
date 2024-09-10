@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkDirectiveShorthands, reportDirectiveShorthands, resetDirectiveShorthands } from './directiveShorthands'
 
 describe('checkDirectiveShorthands', () => {
@@ -46,21 +46,21 @@ describe('checkDirectiveShorthands', () => {
     expect(reportDirectiveShorthands()).toStrictEqual([
       {
         file: fileName,
-        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
-        message: `line #1 ${BG_WARN}v-slot${BG_RESET} 🚨`,
+        rule: `<text_info>vue-strong ~ directive shorthands not used</text_info>`,
+        description: `👉 <text_warn>Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
+        message: `line #1 <bg_warn>v-slot</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
-        message: `line #3 ${BG_WARN}v-bind${BG_RESET} 🚨`,
+        rule: `<text_info>vue-strong ~ directive shorthands not used</text_info>`,
+        description: `👉 <text_warn>Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
+        message: `line #3 <bg_warn>v-bind</bg_warn> 🚨`,
       },
       {
         file: fileName,
-        rule: `${TEXT_INFO}vue-strong ~ directive shorthands not used${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
-        message: `line #4 ${BG_WARN}v-on${BG_RESET} 🚨`,
+        rule: `<text_info>vue-strong ~ directive shorthands not used</text_info>`,
+        description: `👉 <text_warn>Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html`,
+        message: `line #4 <bg_warn>v-on</bg_warn> 🚨`,
       },
     ])
   })

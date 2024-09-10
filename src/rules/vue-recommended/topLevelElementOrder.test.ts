@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { SFCBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder } from './topLevelElementOrder'
 
 describe('checkTopLevelElementOrder', () => {
@@ -54,9 +54,9 @@ describe('checkTopLevelElementOrder', () => {
     expect(reportTopLevelElementOrder().length).toBe(1)
     expect(reportTopLevelElementOrder()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
-      message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET} 🚨`,
+      rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
+      description: `👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+      message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
     }])
   })
 
@@ -78,9 +78,9 @@ describe('checkTopLevelElementOrder', () => {
     expect(reportTopLevelElementOrder().length).toBe(1)
     expect(reportTopLevelElementOrder()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-recommended ~ top level element order${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Single-File Components should always order <script>, <template>, and <style> tags consistently.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
-      message: `Top level elements are ${BG_WARN}not following the correct order.${BG_RESET} 🚨`,
+      rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
+      description: `👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+      message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
     }])
   })
 })

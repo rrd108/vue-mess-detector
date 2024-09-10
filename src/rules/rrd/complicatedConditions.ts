@@ -1,6 +1,5 @@
 import { anyOf, char, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -47,7 +46,7 @@ const checkComplicatedConditions = (descriptor: SFCDescriptor, filePath: string)
           const lineNumber = getLineNumber(content, match)
           results.push({
             filePath,
-            message: `line #${lineNumber} ${conditionBlocks > ERROR_THRESHOLD ? BG_ERR : BG_WARN}${type} has a complicated condition with ${conditionBlocks} blocks${BG_RESET}`,
+            message: `line #${lineNumber} ${conditionBlocks > ERROR_THRESHOLD ? '<bg_err>' : '<bg_warn>'}${type} has a complicated condition with ${conditionBlocks} blocks${conditionBlocks > ERROR_THRESHOLD ? '</bg_err>' : '</bg_warn>'}`,
           })
         }
       })
@@ -70,8 +69,8 @@ const reportComplicatedConditions = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ complicated conditions${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Simplify complex conditions by breaking them down into smaller, more manageable parts.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
+        rule: `<text_info>rrd ~ complicated conditions</text_info>`,
+        description: `👉 <text_warn>Simplify complex conditions by breaking them down into smaller, more manageable parts.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html`,
         message: `${result.message} 🚨`,
       })
     })

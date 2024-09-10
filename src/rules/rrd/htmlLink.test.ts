@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkHtmlLink, reportHtmlLink, resetHtmlLink } from './htmlLink'
 
 describe('checkHtmlLink', () => {
@@ -36,9 +35,9 @@ describe('checkHtmlLink', () => {
     expect(reportHtmlLink().length).toBe(1)
     expect(reportHtmlLink()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ html link${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Use router-link or NuxtLink.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
-      message: `2 ${BG_WARN}html link found${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ html link</text_info>`,
+      description: `👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
+      message: `2 <bg_warn>html link found</bg_warn> 🚨`,
     }])
   })
 })

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkMultiAttributeElements, reportMultiAttributeElements, resetMultiAttributeElements } from './multiAttributeElements'
 
 describe('multiAttributeElements', () => {
@@ -37,9 +37,9 @@ describe('multiAttributeElements', () => {
     expect(reportMultiAttributeElements().length).toBe(1)
     expect(reportMultiAttributeElements()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-strong ~ multi-attribute elements${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Elements with multiple attributes should span multiple lines, with one attribute per line.${TEXT_RESET}`,
-      message: `Element ${BG_WARN}<${element}>${BG_RESET} should have its attributes on separate lines 🚨`,
+      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+      message: `Element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
     }])
   })
 
@@ -57,14 +57,14 @@ describe('multiAttributeElements', () => {
     expect(reportMultiAttributeElements().length).toBe(2)
     expect(reportMultiAttributeElements()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-strong ~ multi-attribute elements${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Elements with multiple attributes should span multiple lines, with one attribute per line.${TEXT_RESET}`,
-      message: `Element ${BG_WARN}<div>${BG_RESET} should have its attributes on separate lines 🚨`,
+      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+      message: `Element <bg_warn><div></bg_warn> should have its attributes on separate lines 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}vue-strong ~ multi-attribute elements${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Elements with multiple attributes should span multiple lines, with one attribute per line.${TEXT_RESET}`,
-      message: `Element ${BG_WARN}<button>${BG_RESET} should have its attributes on separate lines 🚨`,
+      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+      message: `Element <bg_warn><button></bg_warn> should have its attributes on separate lines 🚨`,
     }])
   })
 })

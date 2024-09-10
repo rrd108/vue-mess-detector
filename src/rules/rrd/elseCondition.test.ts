@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkElseCondition, reportElseCondition, resetElseCondition } from './elseCondition'
 
 describe('checkElseCondition', () => {
@@ -23,9 +23,9 @@ describe('checkElseCondition', () => {
     expect(reportElseCondition().length).toBe(1)
     expect(reportElseCondition()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ else conditions${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to rewrite the conditions in a way that the else clause is not necessary.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
-      message: `else clauses found ${BG_ERR}(1)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ else conditions</text_info>`,
+      description: `👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
+      message: `else clauses found <bg_err>(1)</bg_err> 🚨`,
     }])
   })
 })

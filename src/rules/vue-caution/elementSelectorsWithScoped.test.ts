@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetElementSelectorWithScoped } from './elementSelectorsWithScoped'
 
 describe('checkElementSelectorsWithScoped', () => {
@@ -23,9 +23,9 @@ describe('checkElementSelectorsWithScoped', () => {
     expect(reportElementSelectorsWithScoped().length).toBe(1)
     expect(reportElementSelectorsWithScoped()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
-      message: `${BG_WARN}(button)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-caution ~ element selectors with scoped</text_info>`,
+      description: `👉 <text_warn>Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
+      message: `<bg_warn>(button)</bg_warn> 🚨`,
     }])
   })
 
@@ -36,14 +36,14 @@ describe('checkElementSelectorsWithScoped', () => {
     expect(reportElementSelectorsWithScoped().length).toBe(2)
     expect(reportElementSelectorsWithScoped()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
-      message: `${BG_WARN}(button)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-caution ~ element selectors with scoped</text_info>`,
+      description: `👉 <text_warn>Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
+      message: `<bg_warn>(button)</bg_warn> 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
-      message: `${BG_WARN}(div)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-caution ~ element selectors with scoped</text_info>`,
+      description: `👉 <text_warn>Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
+      message: `<bg_warn>(div)</bg_warn> 🚨`,
     }])
   })
 })

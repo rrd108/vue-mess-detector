@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity, resetCyclomaticComplexity } from './cyclomaticComplexity'
 
 describe('checkCyclomaticComplexity', () => {
@@ -29,9 +28,9 @@ describe('checkCyclomaticComplexity', () => {
     expect(reportCyclomaticComplexity().length).toBe(1)
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `Cyclomatic complexity is ${BG_WARN}high (6)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
+      description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+      message: `Cyclomatic complexity is <bg_warn>high (6)</bg_warn> 🚨`,
     }])
   })
 
@@ -45,9 +44,9 @@ describe('checkCyclomaticComplexity', () => {
     expect(reportCyclomaticComplexity().length).toBe(1)
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `Cyclomatic complexity is ${BG_ERR}very high (11)${BG_RESET} 🚨`,
+      rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
+      description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+      message: `Cyclomatic complexity is <bg_err>very high (11)</bg_err> 🚨`,
     }])
   })
 })

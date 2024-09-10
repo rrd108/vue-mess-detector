@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkComponentFiles, reportComponentFiles, resetComponentFiles } from './componentFiles'
 
 describe('checkComponentFiles', () => {
@@ -41,14 +41,14 @@ describe('checkComponentFiles', () => {
     expect(reportComponentFiles().length).toBe(2)
     expect(reportComponentFiles()).toStrictEqual([{
       file: filename,
-      rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
-      message: `line #2 ${BG_WARN}(TodoList)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ component files</text_info>`,
+      description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+      message: `line #2 <bg_warn>(TodoList)</bg_warn> 🚨`,
     }, {
       file: filename,
-      rule: `${TEXT_INFO}vue-strong ~ component files${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Whenever a build system is available to concatenate files, each component should be in its own file.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
-      message: `line #6 ${BG_WARN}(TodoItem)${BG_RESET} 🚨`,
+      rule: `<text_info>vue-strong ~ component files</text_info>`,
+      description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+      message: `line #6 <bg_warn>(TodoItem)</bg_warn> 🚨`,
     }])
   })
 })

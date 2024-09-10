@@ -1,6 +1,6 @@
 import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -36,7 +36,7 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
   if (matches1?.length || matches2?.length) {
     const match = matches1?.length ? matches1[0] : matches2?.length ? matches2[0] : ''
     const lineNumber = getLineNumber(template.content, match)
-    results.push({ filePath, message: `line #${lineNumber} ${BG_ERR}v-if used with v-for${BG_RESET}` })
+    results.push({ filePath, message: `line #${lineNumber} <bg_err>v-if used with v-for</bg_err>` })
   }
 }
 
@@ -47,8 +47,8 @@ const reportVifWithVfor = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-essential ~ v-if used with v-for${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Move out the v-if to a computed property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
+        rule: `<text_info>vue-essential ~ v-if used with v-for</text_info>`,
+        description: `👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
         message: `${result.message} 🚨`,
       })
     })

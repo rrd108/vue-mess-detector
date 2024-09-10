@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -21,7 +21,7 @@ const checkZeroLengthComparison = (script: SFCScriptBlock | null, filePath: stri
     const lineNumber = getLineNumber(script.content.trim(), fullMatch)
     results.push({
       filePath,
-      message: `line #${lineNumber} zero length comparison found ${BG_WARN}(${arrayName})${BG_RESET}`,
+      message: `line #${lineNumber} zero length comparison found <bg_warn>(${arrayName})</bg_warn>`,
     })
   }
 }
@@ -33,8 +33,8 @@ const reportZeroLengthComparison = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ Zero Length Comparison${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
+        rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
+        description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
         message: `${result.message} 🚨`,
       })
     })

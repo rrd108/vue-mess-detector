@@ -1,6 +1,6 @@
 import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -16,7 +16,7 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string) => {
   if (matches?.length) {
     const propsCount = matches[0].split(',').length
     if (propsCount > TOO_MANY_PROPS) {
-      results.push({ filePath, message: `props found ${BG_ERR}(${propsCount})${BG_RESET}` })
+      results.push({ filePath, message: `props found <bg_err>(${propsCount})</bg_err>` })
     }
   }
 }
@@ -28,8 +28,8 @@ const reportTooManyProps = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ too many props${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to refactor your code to use less properties.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+        rule: `<text_info>rrd ~ too many props</text_info>`,
+        description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
         message: `${result.message} 🚨`,
       })
     })

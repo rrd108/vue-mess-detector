@@ -1,7 +1,7 @@
 /* eslint-disable no-cond-assign */
 import { charIn, charNotIn, createRegExp, global, maybe, oneOrMore, whitespace, wordChar } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -63,7 +63,7 @@ const checkPropsDrilling = (script: SFCScriptBlock | null, filePath: string) => 
     if (props.has(parentProp) && childProp === parentProp) {
       results.push({
         filePath,
-        message: `Prop ${BG_WARN}(${parentProp})${BG_RESET} is being drilled through ${BG_WARN}${childComponent}${BG_RESET} component unmodified.`,
+        message: `Prop <bg_warn>(${parentProp})</bg_warn> is being drilled through <bg_warn>${childComponent}</bg_warn> component unmodified.`,
       })
     }
   }
@@ -76,8 +76,8 @@ const reportPropsDrilling = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ props drilling${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Props should not be forwarded unmodified. Consider refactoring.${TEXT_RESET}`,
+        rule: `<text_info>rrd ~ props drilling</text_info>`,
+        description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
         message: `${result.message} 🚨`,
       })
     })

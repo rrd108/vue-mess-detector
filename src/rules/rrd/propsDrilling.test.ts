@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import { checkPropsDrilling, reportPropsDrilling, resetPropsDrilling } from './propsDrilling'
 
 describe('checkPropsDrilling', () => {
@@ -59,9 +59,9 @@ describe('checkPropsDrilling', () => {
     expect(reportPropsDrilling().length).toBe(1)
     expect(reportPropsDrilling()).toStrictEqual([{
       file: filePath,
-      rule: `${TEXT_INFO}rrd ~ props drilling${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Props should not be forwarded unmodified. Consider refactoring.${TEXT_RESET}`,
-      message: `Prop ${BG_WARN}(items)${BG_RESET} is being drilled through ${BG_WARN}ChildComponent${BG_RESET} component unmodified. 🚨`,
+      rule: `<text_info>rrd ~ props drilling</text_info>`,
+      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+      message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
     }])
   })
 
@@ -80,14 +80,14 @@ describe('checkPropsDrilling', () => {
     expect(reportPropsDrilling().length).toBe(2)
     expect(reportPropsDrilling()).toStrictEqual([{
       file: filePath,
-      rule: `${TEXT_INFO}rrd ~ props drilling${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Props should not be forwarded unmodified. Consider refactoring.${TEXT_RESET}`,
-      message: `Prop ${BG_WARN}(items)${BG_RESET} is being drilled through ${BG_WARN}ChildComponent${BG_RESET} component unmodified. 🚨`,
+      rule: `<text_info>rrd ~ props drilling</text_info>`,
+      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+      message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
     }, {
       file: filePath,
-      rule: `${TEXT_INFO}rrd ~ props drilling${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}Props should not be forwarded unmodified. Consider refactoring.${TEXT_RESET}`,
-      message: `Prop ${BG_WARN}(title)${BG_RESET} is being drilled through ${BG_WARN}AnotherComponent${BG_RESET} component unmodified. 🚨`,
+      rule: `<text_info>rrd ~ props drilling</text_info>`,
+      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+      message: `Prop <bg_warn>(title)</bg_warn> is being drilled through <bg_warn>AnotherComponent</bg_warn> component unmodified. 🚨`,
     }])
   })
 })

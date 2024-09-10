@@ -1,6 +1,5 @@
 import { caseInsensitive, createRegExp, global } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -13,7 +12,7 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   const matches = script.content.match(regex)
 
   if (matches?.length) {
-    results.push({ filePath, message: `${BG_ERR}Props type${BG_RESET} not defined` })
+    results.push({ filePath, message: `<bg_err>Props type</bg_err> not defined` })
   }
 }
 
@@ -24,8 +23,8 @@ const reportSimpleProp = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-essential ~ simple prop${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Add at least type definition.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
         message: `${result.message} 🚨`,
       })
     })

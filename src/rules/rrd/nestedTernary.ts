@@ -1,6 +1,6 @@
 import { char, createRegExp, oneOrMore, whitespace } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
 
@@ -25,7 +25,7 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
       const lineNumber = getLineNumber(script.content, match)
       results.push({
         filePath,
-        message: `line #${lineNumber} has ${BG_WARN}nested ternary${BG_RESET}`,
+        message: `line #${lineNumber} has <bg_warn>nested ternary</bg_warn>`,
       })
     }
   })
@@ -38,8 +38,8 @@ const reportNestedTernary = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ nested Ternary${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+        rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+        description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
         message: `${result.message} 🚨`,
       })
     })

@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import { check_RULENAME_, report_RULENAME_, reset_RULENAME_ } from './_RULENAME_CAMELCASE_'
 
 describe('check_RULENAME_', () => {
@@ -27,9 +26,9 @@ describe('check_RULENAME_', () => {
     expect(report_RULENAME_().length).toBe(1)
     expect(report_RULENAME_()).toStrictEqual([{
       file: fileName,
-      rule: `${TEXT_INFO}_RULESET_ ~ _HUMANRULENAME_${TEXT_RESET}`,
-      description: `👉 ${TEXT_WARN}/* TODO tip to fix this issue */.${TEXT_RESET} See: https:///* TODO add doc link */`,
-      message: `line #/* TODO line number from your content above*/ ${BG_WARN}/* TODO message from the rule file */${BG_RESET} 🚨`,
+      rule: `<text_info>_RULESET_ ~ _HUMANRULENAME_</text_info>`,
+      description: `👉 <text_warn>/* TODO tip to fix this issue */.</text_warn> See: https:///* TODO add doc link */`,
+      message: `line #/* TODO line number from your content above*/ <bg_warn>/* TODO message from the rule file */</bg_warn> 🚨`,
     }])
   })
 })

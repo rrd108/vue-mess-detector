@@ -1,6 +1,5 @@
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { BG_ERR, BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -32,7 +31,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
     + (_caseCount?.length || 0)
 
   if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
-    results.push({ filePath, message: `Cyclomatic complexity is ${cyclomaticComplexity > COMPLEXITY_HIGH ? `${BG_ERR}very high` : `${BG_WARN}high`} (${cyclomaticComplexity})${BG_RESET}` })
+    results.push({ filePath, message: `Cyclomatic complexity is ${cyclomaticComplexity > COMPLEXITY_HIGH ? `<bg_err>very high` : `<bg_warn>high`} (${cyclomaticComplexity})${cyclomaticComplexity > COMPLEXITY_HIGH ? `</bg_err>` : `</bg_warn>`}` })
   }
 }
 
@@ -48,8 +47,8 @@ const reportCyclomaticComplexity = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}rrd ~ cyclomatic complexity${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Try to reduce complexity.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+        rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
+        description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
         message: `${result.message} 🚨`,
       })
     })

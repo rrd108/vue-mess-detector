@@ -1,7 +1,7 @@
 import htmlTags from 'html-tags'
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import type { HtmlTags } from 'html-tags'
-import { BG_RESET, BG_WARN, TEXT_INFO, TEXT_RESET, TEXT_WARN } from '../asceeCodes'
+
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -19,7 +19,7 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
     while ((match = elementSelectorRegex.exec(style.content)) !== null) {
       const selector = match[1] as HtmlTags
       if (htmlTags.includes(selector)) {
-        results.push({ filePath, message: `${BG_WARN}(${selector})${BG_RESET}` })
+        results.push({ filePath, message: `<bg_warn>(${selector})</bg_warn>` })
       }
     }
   })
@@ -32,8 +32,8 @@ const reportElementSelectorsWithScoped = () => {
     results.forEach((result) => {
       offenses.push({
         file: result.filePath,
-        rule: `${TEXT_INFO}vue-caution ~ element selectors with scoped${TEXT_RESET}`,
-        description: `👉 ${TEXT_WARN}Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.${TEXT_RESET} See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
+        rule: `<text_info>vue-caution ~ element selectors with scoped</text_info>`,
+        description: `👉 <text_warn>Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html`,
         message: `${result.message} 🚨`,
       })
     })
