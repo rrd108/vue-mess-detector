@@ -27,6 +27,7 @@ export const RULES = {
     'templateSimpleExpression',
   ],
   'rrd': [
+    'apiWithoutMethod',
     'bigVif',
     'bigVshow',
     'complicatedConditions',
