@@ -10,6 +10,7 @@ import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 import type { RuleSetType } from './rules/rules'
+import type { OutputType } from './rulesReport'
 import type { AnalyzeParams } from './types'
 
 let filesCount = 0
@@ -63,7 +64,7 @@ const walkAsync = async (dir: string) => {
   }
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams) => {
+export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams): Promise<OutputType> => {
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)

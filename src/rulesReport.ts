@@ -4,11 +4,8 @@ import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportV
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
+import { OutputType } from './types/OutputType'
 
-// TODO move out to types
-interface OutputType {
-  [key: string]: { id: string, description: string, message: string }[]
-}
 
 export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
