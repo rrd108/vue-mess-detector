@@ -1,8 +1,8 @@
-import htmlTags from 'html-tags'
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import type { HtmlTags } from 'html-tags'
-
 import type { FileCheckResult, Offense } from '../../types'
+
+import htmlTags from 'html-tags'
 
 const results: FileCheckResult[] = []
 

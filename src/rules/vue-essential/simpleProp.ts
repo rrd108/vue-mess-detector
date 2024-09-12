@@ -1,6 +1,6 @@
-import { caseInsensitive, createRegExp, global } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
+import { caseInsensitive, createRegExp, global } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 

@@ -1,7 +1,7 @@
-import { createRegExp, exactly, global } from 'magic-regexp'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
+import { createRegExp, exactly, global } from 'magic-regexp'
+import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 

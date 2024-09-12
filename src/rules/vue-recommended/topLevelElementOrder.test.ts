@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-
 import type { SFCBlock } from '@vue/compiler-sfc'
+
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder } from './topLevelElementOrder'
 
