@@ -1,4 +1,5 @@
 /* eslint-disable node/prefer-global/process */
+import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import Table from 'cli-table3'
@@ -14,7 +15,6 @@ import { wasOptionPassed } from './helpers/wasOptionPassed'
 import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
-import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 const projectRoot = await getProjectRoot(pathArg || './src')

@@ -1,6 +1,6 @@
-import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
-
 import type { FileCheckResult, Offense } from '../../types'
+
+import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 

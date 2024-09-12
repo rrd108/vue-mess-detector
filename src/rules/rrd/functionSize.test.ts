@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
+
+import { beforeEach, describe, expect, it } from 'vitest'
 import { checkFunctionSize, MAX_FUNCTION_LENGTH, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
