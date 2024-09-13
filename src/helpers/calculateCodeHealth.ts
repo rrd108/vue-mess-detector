@@ -15,7 +15,7 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   const redLength = !errors ? 0 : Math.max(1, BAR_WIDTH - Math.ceil(codeHealth * BAR_WIDTH / 100) - yellowLength)
   const greenLength = BAR_WIDTH - redLength - yellowLength
 
-  const healthBar = `<bg_ok>${' '.repeat(greenLength)}<bg_warn>${' '.repeat(yellowLength)}<bg_err>${' '.repeat(redLength)}</bg_err>`
+  const healthBar = `<bg_ok>${'_'.repeat(greenLength)}</bg_ok><bg_warn>${'_'.repeat(yellowLength)}</bg_warn><bg_err>${'_'.repeat(redLength)}</bg_err>`
   output.push({ info: `Code Health: [${healthBar}] ${codeHealth}%\n` })
 
   if (codeHealth < LOW_HEALTH_THRESHOLD) {
