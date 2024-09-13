@@ -151,7 +151,6 @@ getProjectRoot(pathArg || './src').then((projectRoot) => {
               return tags2Ascee(message)
             }
 
-            
             analyze({
               dir: argv.path as string,
               apply: argv.apply as string[],
