@@ -8,6 +8,7 @@ import type { OutputType } from './types/OutputType'
 
 export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel) => {
   const offensesGrouped: OffensesGrouped = {}
+  const output: OutputType = {}
   const health: Health[] = []
 
   // Helper function to add offenses
@@ -94,9 +95,6 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
     return countA - countB
   })
 
-  // Output the report grouped by the sorted keys
-  const output: OutputType = {}
-
   sortedKeys.forEach((key) => {
     output[key] = []
 
@@ -111,7 +109,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
         }
       }
       else {
-        health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1 })
+        health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1, output: [] })
       }
 
       if (level === 'error' && !isError) {
