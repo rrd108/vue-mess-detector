@@ -18,12 +18,21 @@
     "code smell",
     "cli"
   ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/vue-mess-detector.es.js",
+      "require": "./dist/vue-mess-detector.umd.js"
+    }
+  },
   "main": "dist/vue-mess-detector.es.js",
+  "types": "index.d.ts",
   "bin": {
     "vue-mess-detector": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "vite build && cp ./src/cli.js ./dist/",
