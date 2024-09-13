@@ -1,8 +1,8 @@
-import { anyOf, createRegExp, digit, global, linefeed, oneOrMore } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
-import getLineNumber from '../getLineNumber'
 import type { FileCheckResult, Offense } from '../../types'
+
+import { anyOf, createRegExp, digit, global, linefeed, oneOrMore } from 'magic-regexp'
+import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
