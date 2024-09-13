@@ -52,7 +52,7 @@ export interface Health {
   file: string
   errors: number
   warnings: number
-  output?: { info: string }[]
+  output: { info: string }[]
 }
 
 export type CodeHealthResponse = Omit<Health, 'file'>
