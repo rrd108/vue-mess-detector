@@ -20,8 +20,6 @@ let _apply: string[] = []
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
 
-const output: { info: string }[] = []
-
 const checkFile = async (fileName: string, filePath: string) => {
   if (excludeFiles.some(file => fileName.endsWith(file))) {
     return
@@ -36,17 +34,22 @@ const checkFile = async (fileName: string, filePath: string) => {
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
-    output.push({ info: `Analyzing ${filePath}...` })
     checkRules(descriptor, filePath, _apply)
+    return `Analyzing ${filePath}...`
   }
 }
 
 // Recursive function to walk through directories
 const walkAsync = async (dir: string) => {
+  const overwievMessages: string[] = []
   const file = await fs.stat(dir)
+
   if (!file.isDirectory()) {
-    await checkFile(dir, dir)
-    return
+    const info = await checkFile(dir, dir)
+    if (info) {
+      overwievMessages.push(info)
+    }
+    return overwievMessages
   }
 
   const files = await fs.readdir(dir)
@@ -55,12 +58,19 @@ const walkAsync = async (dir: string) => {
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
       if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(dir => filePath.endsWith(dir))) {
-        await walkAsync(filePath)
+        const subDirInfo = await walkAsync(filePath)
+        if (subDirInfo) {
+          overwievMessages.push(...subDirInfo)
+        }
       }
     }
 
-    await checkFile(filePath, filePath)
+    const info = await checkFile(filePath, filePath)
+    if (info) {
+      overwievMessages.push(info)
+    }
   }
+  return overwievMessages
 }
 
 export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams) => {
@@ -86,6 +96,8 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const isNuxt = await isNuxtProject(projectRoot)
   setIsNuxt(isNuxt)
 
+  const output: { info: string }[] = []
+
   output.push({ info: `<bg_info>Analyzing Vue, TS and JS files in ${dir}</bg_info>` })
   output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
   output.push({
@@ -104,8 +116,8 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
     excludeFiles.push(...exclude.split(','))
   }
 
-  // Start analysis
-  await walkAsync(dir)
+  const overview = await walkAsync(dir)
+  output.push(...overview.map(info => ({ info })))
 
   output.push({ info: `Found <bg_info>${filesCount}</bg_info> files` })
 
