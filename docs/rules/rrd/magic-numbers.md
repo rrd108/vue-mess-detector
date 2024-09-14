@@ -2,6 +2,12 @@
 
 Check if there are magic numbers present.
 
+:::tip 💡IMPORTANT
+  Certain numbers are frequently used in programming for common purposes and are not considered "magic" because their meaning is generally understood. Therefore, this rule **does not report** the following numbers:
+  - `0`: Represents the concept of "nothing" or a "default state" in many contexts (e.g., resetting values, initializing variables).
+  - `1`: Commonly used to represent the first element in a series, for simple counting or incrementing (e.g., loop counters, array indexes).
+:::
+
 ## 📖 What are magic numbers?
 
 Magic numbers are hard-coded numeric values that appear directly in your code without an obvious explanation of their meaning or purpose.
