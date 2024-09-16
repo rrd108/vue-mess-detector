@@ -1,4 +1,4 @@
-import type { OverwriteConfig } from './Overwrite'
+import type { OverrideConfig } from './Override'
 
 export type Flag = 'groupBy' | 'sortBy' | 'outputLevel' | 'outputFormat'
 /*
@@ -69,5 +69,5 @@ export interface VueMessDetectorConfig {
   level: string
   sort: string
   output: string
-  overwrite: OverwriteConfig
+  override: OverrideConfig
 }

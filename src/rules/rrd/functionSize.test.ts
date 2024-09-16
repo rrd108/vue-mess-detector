@@ -1,7 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
 import { beforeEach, describe, expect, it } from 'vitest'
-import { DEFAULT_OVERWRITE_CONFIG } from '../../helpers/constants'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
@@ -26,7 +26,7 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(0)
     expect(reportFunctionSize(maxSize)).toStrictEqual([])
@@ -50,7 +50,7 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(0)
     expect(reportFunctionSize(maxSize)).toStrictEqual([])
@@ -67,7 +67,7 @@ describe('checkFunctionSize', () => {
     `,
     } as SFCScriptBlock
     const fileName = 'multiple-short-functions.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(0)
     expect(reportFunctionSize(maxSize)).toStrictEqual([])
@@ -111,7 +111,7 @@ describe('checkFunctionSize', () => {
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
     const funcName = 'dummyRegularFunction'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(1)
     expect(reportFunctionSize(maxSize)).toStrictEqual([{
@@ -187,7 +187,7 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(2)
     expect(reportFunctionSize(maxSize)).toStrictEqual([{
@@ -252,7 +252,7 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(1)
     expect(reportFunctionSize(maxSize)).toStrictEqual([{
@@ -299,7 +299,7 @@ describe('checkFunctionSize', () => {
         }`,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    const maxSize = DEFAULT_OVERWRITE_CONFIG.maxFunctionSize
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     expect(reportFunctionSize(maxSize).length).toBe(1)
     expect(reportFunctionSize(maxSize)).toStrictEqual([{

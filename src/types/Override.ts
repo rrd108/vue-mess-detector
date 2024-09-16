@@ -3,6 +3,6 @@ const OVERWRITABLE_RULES = ['functionSize', 'scriptLength'] as const
 
 type RuleConfig = number
 
-export interface OverwriteConfig {
+export interface OverrideConfig {
   [key: string]: RuleConfig
 }

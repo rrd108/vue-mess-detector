@@ -1,6 +1,6 @@
 /* eslint-disable node/prefer-global/process */
 import type { GroupBy, OutputFormat, OutputLevel, SortBy, VueMessDetectorConfig } from './types'
-import type { OverwriteConfig } from './types/Overwrite'
+import type { OverrideConfig } from './types/Override'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import Table from 'cli-table3'
@@ -8,7 +8,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
 import coerceRules from './helpers/coerceRules'
-import { DEFAULT_OVERWRITE_CONFIG, FLAT_RULESETS_RULES } from './helpers/constants'
+import { DEFAULT_OVERRIDE_CONFIG, FLAT_RULESETS_RULES } from './helpers/constants'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
@@ -19,7 +19,7 @@ import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 
-export const overwriteConfig: OverwriteConfig[] = []
+export const overrideConfig: OverrideConfig[] = []
 
 getProjectRoot(pathArg || './src').then((projectRoot) => {
   getPackageJson().then((vmdPackageJson) => {
@@ -35,7 +35,7 @@ getProjectRoot(pathArg || './src').then((projectRoot) => {
       sort: 'desc',
       output: 'text',
 
-      overwrite: DEFAULT_OVERWRITE_CONFIG,
+      override: DEFAULT_OVERRIDE_CONFIG,
     }
 
     const conflictingFlags: Record<string, boolean> = {
@@ -156,7 +156,7 @@ getProjectRoot(pathArg || './src').then((projectRoot) => {
               return tags2Ascee(message)
             }
 
-            overwriteConfig.push(config.overwrite)
+            overrideConfig.push(config.override)
 
             analyze({
               dir: argv.path as string,
