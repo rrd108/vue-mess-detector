@@ -11,6 +11,7 @@ import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 import type { RuleSetType } from './rules/rules'
 import type { AnalyzeParams } from './types'
+import { AnalyzeOutput } from './types/AnalyzeOutput'
 
 let filesCount = 0
 let linesCount = 0
@@ -73,7 +74,7 @@ const walkAsync = async (dir: string) => {
   return overwievMessages
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams) => {
+export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams): Promise<AnalyzeOutput> => {
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
