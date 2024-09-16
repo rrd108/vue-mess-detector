@@ -1,6 +1,6 @@
-import path from 'node:path'
-
 import type { FileCheckResult, Offense } from '../../types'
+
+import path from 'node:path'
 
 const results: FileCheckResult[] = []
 

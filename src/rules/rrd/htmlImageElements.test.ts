@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { checkHtmlImageElements, reportHtmlImageElements, resetHtmlImageElements } from './htmlImageElements'
 
 describe('checkHtmlImageElements', () => {
