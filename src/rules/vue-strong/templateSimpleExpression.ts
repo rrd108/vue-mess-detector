@@ -1,7 +1,7 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 
-import type { FileCheckResult, Offense } from '../../types'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 

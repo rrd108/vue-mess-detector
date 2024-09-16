@@ -1,5 +1,5 @@
-import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { checkComplicatedConditions, reportComplicatedConditions, resetComplicatedConditions } from './complicatedConditions'
 
 describe('checkComplicatedConditions', () => {

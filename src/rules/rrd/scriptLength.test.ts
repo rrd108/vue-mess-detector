@@ -1,5 +1,5 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkScriptLength, reportScriptLength, resetScriptLength } from './scriptLength'

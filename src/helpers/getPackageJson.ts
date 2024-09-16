@@ -1,7 +1,7 @@
-import type { PackageJson } from '../types/PackageJson'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import type { PackageJson } from '../types/PackageJson'
 
 export const getPackageJson = async (projectRoot?: string): Promise<PackageJson> => {
   let packageJsonPath = ''

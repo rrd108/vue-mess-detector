@@ -1,5 +1,5 @@
-import type { SFCStyleBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCStyleBlock } from '@vue/compiler-sfc'
 
 import { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle } from './globalStyle'
 

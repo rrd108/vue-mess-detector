@@ -1,5 +1,5 @@
-import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { checkApiWithoutMethod, reportApiWithoutMethod, resetApiWithoutMethod } from './apiWithoutMethod'
 
 describe('checkApiWithoutMethod', () => {

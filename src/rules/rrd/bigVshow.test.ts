@@ -1,5 +1,5 @@
-import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { checkBigVshow, reportBigVshow, resetBigVshow } from './bigVshow'
 
 describe('checkBigVshow', () => {

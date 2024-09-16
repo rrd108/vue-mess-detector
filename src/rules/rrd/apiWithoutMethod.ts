@@ -1,6 +1,6 @@
+import { createRegExp, exactly, oneOrMore } from 'magic-regexp'
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import { createRegExp, exactly, oneOrMore } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 

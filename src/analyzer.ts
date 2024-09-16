@@ -1,9 +1,7 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { RuleSetType } from './rules/rules'
-import type { AnalyzeParams } from './types'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 import getProjectRoot from './helpers/getProjectRoot'
@@ -11,6 +9,8 @@ import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
+import type { RuleSetType } from './rules/rules'
+import type { AnalyzeParams } from './types'
 
 let filesCount = 0
 let linesCount = 0

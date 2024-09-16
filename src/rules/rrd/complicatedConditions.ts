@@ -1,7 +1,7 @@
-import type { SFCDescriptor } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
 import { anyOf, char, charNotIn, createRegExp, global, oneOrMore } from 'magic-regexp'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 

@@ -1,8 +1,8 @@
 /* eslint-disable no-cond-assign */
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
-
 import { charIn, charNotIn, createRegExp, global, maybe, oneOrMore, whitespace, wordChar } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
