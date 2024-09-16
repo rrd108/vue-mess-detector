@@ -1,5 +1,5 @@
-import { RULES, RULESETS } from '../rules/rules'
 import type { OverrideConfig } from '../types/Override'
+import { RULES, RULESETS } from '../rules/rules'
 
 export const ERROR_WEIGHT = 1.5
 export const LOW_HEALTH_THRESHOLD = 75
