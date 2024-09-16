@@ -1,3 +1,5 @@
+import type { OverwriteConfig } from './Overwrite'
+
 export type Flag = 'groupBy' | 'sortBy' | 'outputLevel' | 'outputFormat'
 /*
   - `asc` is the default order, as the checks run.
@@ -56,3 +58,16 @@ export interface Health {
 }
 
 export type CodeHealthResponse = Omit<Health, 'file'>
+
+// Overall configuration type
+export interface VueMessDetectorConfig {
+  path: string
+  apply: string
+  ignore?: string
+  exclude?: string
+  group: string
+  level: string
+  sort: string
+  output: string
+  overwrite: OverwriteConfig
+}
