@@ -68,4 +68,13 @@ describe('checkMagicNumbers', () => {
       message: `magic numbers found (line #3 <bg_warn>magic number: 18</bg_warn>) 🚨`,
     }])
   })
+
+  it('should not report when there is a character before a number', () => {
+    const script = {
+      content: `window.atob(base64).split('')`,
+    } as SFCScriptBlock
+    const fileName = 'number-inside-string.vue'
+    checkMagicNumbers(script, fileName)
+    expect(reportMagicNumbers().length).toBe(0)
+  })
 })

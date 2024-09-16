@@ -1,7 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 
-import { anyOf, createRegExp, digit, global, linefeed, oneOrMore } from 'magic-regexp'
+import { anyOf, createRegExp, digit, global, linefeed, oneOrMore, wordBoundary } from 'magic-regexp'
 import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
@@ -10,7 +10,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
-  const regex = createRegExp(oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
+  const regex = createRegExp(anyOf(wordBoundary), oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
 
   let match
   let lastLine = 0
