@@ -151,9 +151,9 @@
     "@algolia/requester-common" "4.24.0"
 
 "@antfu/eslint-config@^3.0.0":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@antfu/eslint-config/-/eslint-config-3.6.1.tgz#b63216b929c56d792125ebe1499c919c61d64006"
-  integrity sha512-alvCtEwFjXtfx11Zi7Cy2ufYhRgkk6iJ4ObWJ//o8H9Kreds08ZsNdc36UQkwifzeTRs7MEcujPx9BZnJz/asw==
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@antfu/eslint-config/-/eslint-config-3.6.2.tgz#daacf2384922e8e40125eaa3135eb55d868c0949"
+  integrity sha512-cewFaIEuSSOjbIsNts8gjeMLQrrMDhZjZJHMWk+OyVGJLHRE09JiF5Yg5+XjMVYlG/7fPqeuwEehLrer+8zMfA==
   dependencies:
     "@antfu/install-pkg" "^0.4.1"
     "@clack/prompts" "^0.7.0"
