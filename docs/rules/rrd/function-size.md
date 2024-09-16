@@ -1,6 +1,22 @@
 # Function Size
 
-Checks if functions inside `script setup` block are less than 20 lines of code. It handles regular and arrow functions.
+Checks if functions inside `script setup` block are less than **20** lines of code. It handles regular and arrow functions.
+
+:::tip
+  The default max size for this rule is **20**.
+  
+  You can override through the new `override` option in `vue-mess-detector.json`.
+
+  ```json
+  {
+    // Other fields...
+
+    "override": {
+      "maxFunctionSize": 50
+    }
+  }
+  ```
+:::
 
 ## ❓ Why it's good to follow this rule?
 
