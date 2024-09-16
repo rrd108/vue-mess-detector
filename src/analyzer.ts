@@ -11,7 +11,7 @@ import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 import type { RuleSetType } from './rules/rules'
 import type { AnalyzeParams } from './types'
-import { AnalyzeOutput } from './types/AnalyzeOutput'
+import type { AnalyzeOutput } from './types/AnalyzeOutput'
 
 let filesCount = 0
 let linesCount = 0
