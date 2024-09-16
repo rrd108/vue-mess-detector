@@ -108,7 +108,6 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
       if (health.some(h => h.file === offense.file)) {
         const foundHealth = health.find(h => h.file === offense.file)
         if (foundHealth) {
-          // eslint-disable-next-line ts/no-unused-expressions
           isError ? foundHealth.errors++ : foundHealth.warnings++
         }
       }
