@@ -117,6 +117,18 @@ If you want to store your flags in a configuration file, you can create a `vue-m
 }
 ```
 
+You can override the limits set for `functionSize` and `scriptLength` rules using our new `override` field in the json file:
+
+```json
+{
+  // other flags
+  "override": {
+    "maxFunctionSize": 20, // default value
+    "maxScriptLength": 100 // default value
+  }
+}
+```
+
 Then you can run the command without flags:
 
 ```bash

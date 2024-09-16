@@ -2,22 +2,6 @@
 
 Checks if functions inside `script setup` block are less than **20** lines of code. It handles regular and arrow functions.
 
-:::tip
-  The default max size for this rule is **20**.
-  
-  You can override through the new `override` option in `vue-mess-detector.json`.
-
-  ```json
-  {
-    // Other fields...
-
-    "override": {
-      "maxFunctionSize": 50
-    }
-  }
-  ```
-:::
-
 ## ❓ Why it's good to follow this rule?
 
 - **Simple Responsibility**: A function that is too long is likely doing too many things. It is better to split your function into smaller functions/composables.
@@ -136,4 +120,18 @@ const getOpenBookings = page =>
     .get(`${import.meta.env.VITE_APP_API_URL}bookings/listOpen.json?page=${page}`, store.tokenHeader)
     .then(handleResponse)
     .catch(err => console.error(err))
+```
+
+## 🛠 How to override?
+The default max size for this rule is **20**.
+  
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  // other flags
+  "override": {
+    "maxFunctionSize": 50
+  }
+}
 ```

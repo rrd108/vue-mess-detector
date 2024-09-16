@@ -2,22 +2,6 @@
 
 Checks if the script section of a Vue component is too long. The default threshold is **100** lines. Between 100 and 200 lines you get a warning, above **200** lines you get an error.
 
-:::tip
-  The default max length for this rule is **100** for the warning threshold, and **twice that value** for the error threshold. 
-  
-  You can override through the new `override` option in `vue-mess-detector.json`.
-
-  ```json
-  {
-    // Other fields...
-
-    "override": {
-      "maxScriptLength": 250 // the error threshold would be 2 * 250
-    }
-  }
-  ```
-:::
-
 ## ❓ Why it's good to follow this rule?
 
 - **Simple Responsibility**: A script that is too long is likely doing too many things. It is better to split your component into smaller components and/or composables.
@@ -87,4 +71,18 @@ import { setupEventListeners } from './eventListeners'
 processUserData(user)
 setupEventListeners()
 </script>
+```
+
+## 🛠 How to override?
+The default max length for this rule is **100** for the warning threshold, and **twice that value** for the error threshold.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+  {
+    // Other flags...
+    "override": {
+      "maxScriptLength": 250 // the error threshold would be 2 * 250
+    }
+  }
 ```
