@@ -1,8 +1,8 @@
-import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
-import { skipComments } from '../../helpers/skipComments'
 import type { FileCheckResult, Offense } from '../../types'
+
+import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
+import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 

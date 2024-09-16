@@ -1,7 +1,7 @@
-import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { skipComments } from '../../helpers/skipComments'
 import type { FileCheckResult, Offense } from '../../types'
+import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 

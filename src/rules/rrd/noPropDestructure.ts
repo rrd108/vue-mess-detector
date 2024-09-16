@@ -1,8 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
+import type { FileCheckResult, Offense } from '../../types'
 import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
-import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 

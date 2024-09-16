@@ -1,4 +1,4 @@
-import type { ReportOutput } from "./ReportOutput"
+import type { ReportOutput } from './ReportOutput'
 
 export interface AnalyzeOutput {
   output: { info: string }[]
