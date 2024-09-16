@@ -1,7 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
 import { beforeEach, describe, expect, it } from 'vitest'
-import { checkFunctionSize, MAX_FUNCTION_LENGTH, reportFunctionSize, resetFunctionSize } from './functionSize'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
+import { checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
   beforeEach(() => {
@@ -25,9 +26,10 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(0)
-    expect(reportFunctionSize()).toStrictEqual([])
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(0)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([])
   })
 
   it('should not report files where arrow functions without curly braces do not exceed the recommended limit', () => {
@@ -48,9 +50,10 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(0)
-    expect(reportFunctionSize()).toStrictEqual([])
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(0)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([])
   })
 
   it('should not report files with multiple short functions', () => {
@@ -64,9 +67,10 @@ describe('checkFunctionSize', () => {
     `,
     } as SFCScriptBlock
     const fileName = 'multiple-short-functions.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(0)
-    expect(reportFunctionSize()).toStrictEqual([])
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(0)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([])
   })
 
   it('should report files with one function exceeding the limit', () => {
@@ -107,12 +111,13 @@ describe('checkFunctionSize', () => {
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
     const funcName = 'dummyRegularFunction'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(1)
-    expect(reportFunctionSize()).toStrictEqual([{
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(1)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
-      description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function <bg_warn>(${funcName}#2)</bg_warn> is too long: <bg_warn>23 lines</bg_warn> 🚨`,
     }])
   })
@@ -182,17 +187,18 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'function-size.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(2)
-    expect(reportFunctionSize()).toStrictEqual([{
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(2)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
-      description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function <bg_warn>(dummyRegularFunction#2)</bg_warn> is too long: <bg_warn>29 lines</bg_warn> 🚨`,
     }, {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
-      description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function <bg_warn>(dummyArrowFunction#34)</bg_warn> is too long: <bg_warn>23 lines</bg_warn> 🚨`,
     }])
   })
@@ -246,12 +252,13 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(1)
-    expect(reportFunctionSize()).toStrictEqual([{
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(1)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
-      description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function <bg_err>(getOpenBookings#2)</bg_err> is too long: <bg_err>41 lines</bg_err> 🚨`,
     }])
   })
@@ -292,12 +299,13 @@ describe('checkFunctionSize', () => {
         }`,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
-    checkFunctionSize(script, fileName)
-    expect(reportFunctionSize().length).toBe(1)
-    expect(reportFunctionSize()).toStrictEqual([{
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    expect(reportFunctionSize(maxSize).length).toBe(1)
+    expect(reportFunctionSize(maxSize)).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
-      description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+      description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `function <bg_warn>(createFiles#10)</bg_warn> is too long: <bg_warn>20 lines</bg_warn> 🚨`,
     }])
   })

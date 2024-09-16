@@ -1,6 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
+import type { OverrideConfig } from './types/Override'
+import { overrideConfig } from '.'
 import { getIsNuxt } from './context'
-
 import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
@@ -13,6 +14,8 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
 
   // ⚠️ contributors ⚠️ script rules can be used for ts, js and vue files, but template and style rules are only for vue files
   const isVueFile = filePath.endsWith('.vue')
+
+  const { ...limits } = overrideConfig[0] as OverrideConfig
 
   // Create an object that maps rule names to their check functions
   const ruleChecks: Record<string, () => void> = {
@@ -52,7 +55,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     computedSideEffects: () => checkComputedSideEffects(script, filePath),
     deepIndentation: () => checkDeepIndentation(script, filePath),
     elseCondition: () => checkElseCondition(script, filePath),
-    functionSize: () => checkFunctionSize(script, filePath),
+    functionSize: () => checkFunctionSize(script, filePath, limits.maxFunctionSize),
     htmlImageElements: () => getIsNuxt() && checkHtmlImageElements(descriptor.template, filePath),
     htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
     ifWithoutCurlyBraces: () => checkIfWithoutCurlyBraces(script, filePath),
@@ -63,7 +66,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     parameterCount: () => checkParameterCount(script, filePath),
     plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     propsDrilling: () => checkPropsDrilling(script, filePath),
-    scriptLength: () => checkScriptLength(script, filePath),
+    scriptLength: () => checkScriptLength(script, filePath, limits.maxScriptLength),
     shortVariableName: () => checkShortVariableName(script, filePath),
     tooManyProps: () => checkTooManyProps(script, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),

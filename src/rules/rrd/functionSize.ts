@@ -7,27 +7,24 @@ interface AddFunctionToFilesParams {
   funcBody: string
   lineNumber: number
   filePath: string
+  max: number
 }
 
 const results: FileCheckResult[] = []
 
-// Maximum allowed function length in lines
-// This is an arbitrary number defined by the rrd ruleset
-export const MAX_FUNCTION_LENGTH = 20
-
 const CONST_KEYWORD_LENGTH = 'const'.length
 const FUNCTION_KEYWORD_LENGTH = 'function'.length
 
-function addFunctionToFiles({ funcName, funcBody, lineNumber, filePath }: AddFunctionToFilesParams) {
+function addFunctionToFiles({ funcName, funcBody, lineNumber, filePath, max }: AddFunctionToFilesParams) {
   const lineCount = funcBody.split('\n').length
 
   const cleanedFuncName = cleanFunctionName(funcName)
 
-  if (lineCount > 2 * MAX_FUNCTION_LENGTH) {
+  if (lineCount > 2 * max) {
     results.push({ filePath, message: `function <bg_err>(${cleanedFuncName}#${lineNumber})</bg_err> is too long: <bg_err>${lineCount} lines</bg_err>` })
     return
   }
-  if (lineCount >= MAX_FUNCTION_LENGTH) {
+  if (lineCount >= max) {
     results.push({ filePath, message: `function <bg_warn>(${cleanedFuncName}#${lineNumber})</bg_warn> is too long: <bg_warn>${lineCount} lines</bg_warn>` })
   }
 }
@@ -129,7 +126,7 @@ function cleanFunctionName(funcName: string): string {
   return funcName.replace(/^const\s*/, '')
 }
 
-const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
+const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string, max: number) => {
   if (!script) {
     return
   }
@@ -165,7 +162,7 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
 
     if (isFunction) {
       const lineNumber = getLineNumber(content.trim(), funcName)
-      addFunctionToFiles({ funcName, funcBody, lineNumber, filePath })
+      addFunctionToFiles({ funcName, funcBody, lineNumber, filePath, max })
     }
     else {
       index++
@@ -173,7 +170,7 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string) => {
   }
 }
 
-const reportFunctionSize = () => {
+const reportFunctionSize = (max: number) => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
@@ -181,7 +178,7 @@ const reportFunctionSize = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ function size</text_info>`,
-        description: `👉 <text_warn>Functions must be shorter than ${MAX_FUNCTION_LENGTH} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
+        description: `👉 <text_warn>Functions must be shorter than ${max} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
         message: `${result.message} 🚨`,
       })
     })

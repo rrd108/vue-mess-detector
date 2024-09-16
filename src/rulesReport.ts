@@ -1,5 +1,7 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import type { OutputType } from './types/OutputType'
+import type { OverrideConfig } from './types/Override'
+import { overrideConfig } from '.'
 import { reportApiWithoutMethod, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
@@ -10,6 +12,8 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   const offensesGrouped: OffensesGrouped = {}
   const output: OutputType = {}
   const health: Health[] = []
+
+  const { ...limits } = overrideConfig[0] as OverrideConfig
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {
@@ -65,7 +69,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportComputedSideEffects)
   processOffenses(reportDeepIndentation)
   processOffenses(reportElseCondition)
-  processOffenses(reportFunctionSize)
+  processOffenses(() => reportFunctionSize(limits.maxFunctionSize))
   processOffenses(reportHtmlImageElements)
   processOffenses(reportHtmlLink)
   processOffenses(reportIfWithoutCurlyBraces)
@@ -76,7 +80,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
-  processOffenses(reportScriptLength)
+  processOffenses(() => reportScriptLength(limits.maxScriptLength))
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
