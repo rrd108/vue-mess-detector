@@ -1,7 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
-import type { FileCheckResult, Offense } from '../../types'
+import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -13,12 +14,13 @@ const checkZeroLengthComparison = (script: SFCScriptBlock | null, filePath: stri
   const regex = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g
 
   let match
+  const content = skipComments(script.content)
   // eslint-disable-next-line no-cond-assign
-  while ((match = regex.exec(script.content)) !== null) {
+  while ((match = regex.exec(content)) !== null) {
     const fullMatch = match[0]
     const arrayName = match[1]
 
-    const lineNumber = getLineNumber(script.content.trim(), fullMatch)
+    const lineNumber = getLineNumber(content.trim(), fullMatch)
     results.push({
       filePath,
       message: `line #${lineNumber} zero length comparison found <bg_warn>(${arrayName})</bg_warn>`,

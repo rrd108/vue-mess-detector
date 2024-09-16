@@ -1,6 +1,7 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { skipComments } from '../../helpers/skipComments'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -17,11 +18,13 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
   const _while = createRegExp(wordBoundary, 'while', wordBoundary, [global, caseInsensitive])
   const _case = createRegExp(wordBoundary, 'case', wordBoundary, [global, caseInsensitive])
 
-  const _ifCount = script.content.match(_if)
-  const _elseCount = script.content.match(_else)
-  const _forCount = script.content.match(_for)
-  const _whileCount = script.content.match(_while)
-  const _caseCount = script.content.match(_case)
+  const content = skipComments(script.content)
+
+  const _ifCount = content.match(_if)
+  const _elseCount = content.match(_else)
+  const _forCount = content.match(_for)
+  const _whileCount = content.match(_while)
+  const _caseCount = content.match(_case)
 
   const cyclomaticComplexity
     = (_ifCount?.length || 0)

@@ -1,5 +1,3 @@
-import type { GroupBy, OutputFormat, OutputLevel, SortBy, VueMessDetectorConfig } from './types'
-import type { OverrideConfig } from './types/Override'
 /* eslint-disable node/prefer-global/process */
 import fs from 'node:fs/promises'
 import path from 'node:path'
@@ -16,6 +14,8 @@ import { wasOptionPassed } from './helpers/wasOptionPassed'
 import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
 import { RULESETS } from './rules/rules'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
+import type { GroupBy, OutputFormat, OutputLevel, SortBy, VueMessDetectorConfig } from './types'
+import type { OverrideConfig } from './types/Override'
 
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 

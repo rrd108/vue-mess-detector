@@ -1,5 +1,4 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import type { OverrideConfig } from './types/Override'
 import { getIsNuxt } from './context'
 import { overrideConfig } from './index'
 import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
@@ -8,6 +7,7 @@ import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication 
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
+import type { OverrideConfig } from './types/Override'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
   const script = descriptor.scriptSetup || descriptor.script

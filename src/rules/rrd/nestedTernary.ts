@@ -1,8 +1,9 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
-
 import { char, createRegExp, oneOrMore, whitespace } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+
+import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -18,7 +19,8 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
   }
   const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, oneOrMore(char), whitespace, ':', whitespace, oneOrMore(char))
 
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
 
   matches?.forEach((match) => {
     if (match.split('?').length - 1 > 1) {

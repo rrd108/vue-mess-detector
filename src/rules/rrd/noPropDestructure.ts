@@ -1,7 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
-import type { FileCheckResult, Offense } from '../../types'
+import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -13,7 +14,8 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
 
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
 
   matches?.forEach((match) => {
     const lineNumber = getLineNumber(script.content, match)

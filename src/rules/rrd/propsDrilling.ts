@@ -1,8 +1,9 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
-
 /* eslint-disable no-cond-assign */
 import { charIn, charNotIn, createRegExp, global, maybe, oneOrMore, whitespace, wordChar } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+
+import { skipComments } from '../../helpers/skipComments'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -45,7 +46,8 @@ const checkPropsDrilling = (script: SFCScriptBlock | null, filePath: string) => 
   const props = new Set<string>()
 
   // Extract props defined in the component
-  while ((matchProps = regexDefineProps.exec(script.content)) !== null) {
+  const content = skipComments(script.content)
+  while ((matchProps = regexDefineProps.exec(content)) !== null) {
     const propList = matchProps[0]
       .replace(/defineProps\(|[)[\]'"\s]/g, '') // Clean up the matched string to extract prop names
       .split(',')

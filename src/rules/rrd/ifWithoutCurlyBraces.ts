@@ -1,5 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
+import { skipComments } from '../../helpers/skipComments'
 import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
@@ -9,7 +10,7 @@ const checkIfWithoutCurlyBraces = (script: SFCScriptBlock | null, filePath: stri
     return
   }
 
-  const content = script.content
+  const content = skipComments(script.content)
   const lines = content.split('\n')
 
   lines.forEach((line, index) => {

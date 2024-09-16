@@ -1,7 +1,7 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
-
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { skipComments } from '../../helpers/skipComments'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -10,7 +10,8 @@ const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => 
     return
   }
   const regex = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
 
   if (matches?.length) {
     results.push({ filePath, message: `else clauses found <bg_err>(${matches.length})</bg_err>` })

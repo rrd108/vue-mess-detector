@@ -1,7 +1,8 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import type { FileCheckResult, Offense } from '../../types'
 import { createRegExp, global, tab, whitespace } from 'magic-regexp'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
+import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
@@ -13,7 +14,8 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) =
     return
   }
   const regex = createRegExp(tab.times.atLeast(MAX_TABS).at.lineStart().or(whitespace.times.atLeast(WHITESPACE_TO_TABS * MAX_TABS).at.lineStart()), [global])
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
 
   let from = 0
   matches?.forEach((match) => {

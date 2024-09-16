@@ -1,5 +1,5 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
 import { checkElseCondition, reportElseCondition, resetElseCondition } from './elseCondition'
 
@@ -27,5 +27,21 @@ describe('checkElseCondition', () => {
       description: `👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
       message: `else clauses found <bg_err>(1)</bg_err> 🚨`,
     }])
+  })
+
+  it('should not report files with else conditions in comments', () => {
+    const script = { content: `
+      <script setup>
+        // eslint-disable-next-line no-else-return
+        if (true) {
+          return 'Hello'
+        } //else {
+          //return 'World'
+        //}
+      </script>
+    ` } as SFCScriptBlock
+    const fileName = 'commented-else.vue'
+    checkElseCondition(script, fileName)
+    expect(reportElseCondition().length).toBe(0)
   })
 })
