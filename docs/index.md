@@ -29,7 +29,7 @@ features:
   - title: 🧲 The Rules You Want
     details: Run all checks or ignore the ones you don't like, or apply only the ones you want
   - title: 🔩 Focus on Important Rules
-    details: 30+ rules supported
+    details: 40+ rules supported
 ---
 
 <span id="morphBlur"></span>
