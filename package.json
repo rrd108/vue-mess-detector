@@ -6,7 +6,10 @@
   "description": "A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects",
   "author": "rrd",
   "license": "MIT",
-  "repository": "https://github.com/rrd108/vue-mess-detector",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rrd108/vue-mess-detector.git"
+  },
   "keywords": [
     "nuxt",
     "vue",
