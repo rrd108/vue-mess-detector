@@ -1,5 +1,5 @@
 import ie from "node:fs/promises";
-import H from "node:path";
+import V from "node:path";
 import Hs, { format as Un, inspect as Vs } from "util";
 import Gs from "os";
 import Us from "yargs";
@@ -111,14 +111,14 @@ function pr(t, e, n, s) {
   return t;
 }
 let he = {};
-function we(t, e, n) {
+function _e(t, e, n) {
   e = "\x1B[" + e + "m", n = "\x1B[" + n + "m", he[e] = { set: t, to: !0 }, he[n] = { set: t, to: !1 }, he[t] = { on: e, off: n };
 }
-we("bold", 1, 22);
-we("italics", 3, 23);
-we("underline", 4, 24);
-we("inverse", 7, 27);
-we("strikethrough", 9, 29);
+_e("bold", 1, 22);
+_e("italics", 3, 23);
+_e("underline", 4, 24);
+_e("inverse", 7, 27);
+_e("strikethrough", 9, 29);
 function Jn(t, e) {
   let n = e[1] ? parseInt(e[1].split(";")[0]) : 0;
   if (n >= 30 && n <= 39 || n >= 90 && n <= 97) {
@@ -798,8 +798,8 @@ function Wr() {
     t.exports = e;
   }(ze)), ze.exports;
 }
-const { info: Ir, debug: ts } = Xt, V = Xn;
-let Mr = class $e {
+const { info: Ir, debug: ts } = Xt, G = Xn;
+let Mr = class Be {
   /**
    * A representation of a cell within the table.
    * Implementations must have `init` and `draw` methods,
@@ -832,7 +832,7 @@ let Mr = class $e {
       Xe(s, r, c, o);
     }), this.truncate = this.options.truncate || e.truncate;
     let u = this.options.style = this.options.style || {}, i = e.style;
-    Xe(u, i, "padding-left", this), Xe(u, i, "padding-right", this), this.head = u.head || i.head, this.border = u.border || i.border, this.fixedWidth = e.colWidths[this.x], this.lines = this.computeLines(e), this.desiredWidth = V.strlen(this.content) + this.paddingLeft + this.paddingRight, this.desiredHeight = this.lines.length;
+    Xe(u, i, "padding-left", this), Xe(u, i, "padding-right", this), this.head = u.head || i.head, this.border = u.border || i.border, this.fixedWidth = e.colWidths[this.x], this.lines = this.computeLines(e), this.desiredWidth = G.strlen(this.content) + this.paddingLeft + this.paddingRight, this.desiredHeight = this.lines.length;
   }
   computeLines(e) {
     const n = e.wordWrap || e.textWrap, { wordWrap: s = n } = this.options;
@@ -843,14 +843,14 @@ let Mr = class $e {
           this.fixedWidth += e.colWidths[this.x + u], u++;
       }
       const { wrapOnWordBoundary: r = !0 } = e, { wrapOnWordBoundary: o = r } = this.options;
-      return this.wrapLines(V.wordWrap(this.fixedWidth, this.content, o));
+      return this.wrapLines(G.wordWrap(this.fixedWidth, this.content, o));
     }
     return this.wrapLines(this.content.split(`
 `));
   }
   wrapLines(e) {
-    const n = V.colorizeLines(e);
-    return this.href ? n.map((s) => V.hyperlink(this.href, s)) : n;
+    const n = G.colorizeLines(e);
+    return this.href ? n.map((s) => G.hyperlink(this.href, s)) : n;
   }
   /**
    * Initializes the Cells data structure.
@@ -876,7 +876,7 @@ let Mr = class $e {
   draw(e, n) {
     if (e == "top") return this.drawTop(this.drawRight);
     if (e == "bottom") return this.drawBottom(this.drawRight);
-    let s = V.truncate(this.content, 10, this.truncate);
+    let s = G.truncate(this.content, 10, this.truncate);
     e || Ir(`${this.y}-${this.x}: ${this.rowSpan - e}x${this.colSpan} Cell ${s}`);
     let r = Math.max(this.height - this.lines.length, 0), o;
     switch (this.vAlign) {
@@ -902,8 +902,8 @@ let Mr = class $e {
   drawTop(e) {
     let n = [];
     return this.cells ? this.widths.forEach(function(s, r) {
-      n.push(this._topLeftChar(r)), n.push(V.repeat(this.chars[this.y == 0 ? "top" : "mid"], s));
-    }, this) : (n.push(this._topLeftChar(0)), n.push(V.repeat(this.chars[this.y == 0 ? "top" : "mid"], this.width))), e && n.push(this.chars[this.y == 0 ? "topRight" : "rightMid"]), this.wrapWithStyleColors("border", n.join(""));
+      n.push(this._topLeftChar(r)), n.push(G.repeat(this.chars[this.y == 0 ? "top" : "mid"], s));
+    }, this) : (n.push(this._topLeftChar(0)), n.push(G.repeat(this.chars[this.y == 0 ? "top" : "mid"], this.width))), e && n.push(this.chars[this.y == 0 ? "topRight" : "rightMid"]), this.wrapWithStyleColors("border", n.join(""));
   }
   _topLeftChar(e) {
     let n = this.x + e, s;
@@ -911,11 +911,11 @@ let Mr = class $e {
       s = n == 0 ? "topLeft" : e == 0 ? "topMid" : "top";
     else if (n == 0)
       s = "leftMid";
-    else if (s = e == 0 ? "midMid" : "bottomMid", this.cells && (this.cells[this.y - 1][n] instanceof $e.ColSpanCell && (s = e == 0 ? "topMid" : "mid"), e == 0)) {
+    else if (s = e == 0 ? "midMid" : "bottomMid", this.cells && (this.cells[this.y - 1][n] instanceof Be.ColSpanCell && (s = e == 0 ? "topMid" : "mid"), e == 0)) {
       let o = 1;
-      for (; this.cells[this.y][n - o] instanceof $e.ColSpanCell; )
+      for (; this.cells[this.y][n - o] instanceof Be.ColSpanCell; )
         o++;
-      this.cells[this.y][n - o] instanceof $e.RowSpanCell && (s = "leftMid");
+      this.cells[this.y][n - o] instanceof Be.RowSpanCell && (s = "leftMid");
     }
     return this.chars[s];
   }
@@ -951,10 +951,10 @@ let Mr = class $e {
         C = this.cells[C.y][C.x - 1];
       C instanceof at || (o = this.chars.rightMid);
     }
-    let u = V.repeat(" ", this.paddingLeft), i = n ? this.chars.right : "", c = V.repeat(" ", this.paddingRight), h = this.lines[e], d = this.width - (this.paddingLeft + this.paddingRight);
+    let u = G.repeat(" ", this.paddingLeft), i = n ? this.chars.right : "", c = G.repeat(" ", this.paddingRight), h = this.lines[e], d = this.width - (this.paddingLeft + this.paddingRight);
     s && (h += this.truncate || "…");
-    let E = V.truncate(h, d, this.truncate);
-    return E = V.pad(E, d, " ", this.hAlign), E = u + E + c, this.stylizeLine(o, E, i);
+    let E = G.truncate(h, d, this.truncate);
+    return E = G.pad(E, d, " ", this.hAlign), E = u + E + c, this.stylizeLine(o, E, i);
   }
   stylizeLine(e, n, s) {
     return e = this.wrapWithStyleColors("border", e), s = this.wrapWithStyleColors("border", s), this.y === 0 && (n = this.wrapWithStyleColors("head", n)), e + n + s;
@@ -965,7 +965,7 @@ let Mr = class $e {
    * @returns {String}
    */
   drawBottom(e) {
-    let n = this.chars[this.x == 0 ? "bottomLeft" : "bottomMid"], s = V.repeat(this.chars.bottom, this.width), r = e ? this.chars.bottomRight : "";
+    let n = this.chars[this.x == 0 ? "bottomLeft" : "bottomMid"], s = G.repeat(this.chars.bottom, this.width), r = e ? this.chars.bottomRight : "";
     return this.wrapWithStyleColors("border", n + s + r);
   }
   /**
@@ -982,7 +982,7 @@ let Mr = class $e {
         u = this.cells[u.y][u.x - 1];
       u instanceof at || (s = this.chars.rightMid);
     }
-    let r = e ? this.chars.right : "", o = V.repeat(" ", this.width);
+    let r = e ? this.chars.right : "", o = G.repeat(" ", this.width);
     return this.stylizeLine(s, o, r);
   }
 }, it = class {
@@ -1460,7 +1460,7 @@ class so {
     for (let a = 0; a < r.length; a++) {
       const f = r[a], F = f.replace(/^-{3,}/, "---");
       let p, D, _, x, A, I;
-      if (f !== "--" && /^-/.test(f) && Ae(f))
+      if (f !== "--" && /^-/.test(f) && ve(f))
         ce(f);
       else if (F.match(/^---+(=|$)/)) {
         ce(f);
@@ -1518,7 +1518,7 @@ class so {
       i["camel-case-expansion"] && a.includes("-") && delete O[a.split(".").map((f) => be(f)).join(".")], delete O[a];
     });
     function ce(a) {
-      const f = ye("_", a);
+      const f = Ae("_", a);
       (typeof f == "string" || typeof f == "number") && O._.push(f);
     }
     function oe(a, f, F, p) {
@@ -1529,7 +1529,7 @@ class so {
       if (i["nargs-eats-options"])
         F.length - (a + 1) + x < _ && (S = Error(g("Not enough arguments following: %s", f))), x = _;
       else {
-        for (D = a + 1; D < F.length && (!F[D].match(/^-[^0-9]/) || F[D].match(w) || Ae(F[D])); D++)
+        for (D = a + 1; D < F.length && (!F[D].match(/^-[^0-9]/) || F[D].match(w) || ve(F[D])); D++)
           x++;
         x < _ && (S = Error(g("Not enough arguments following: %s", f)));
       }
@@ -1543,14 +1543,14 @@ class so {
       const x = $(f, l.nargs);
       if ($(f, l.bools) && !/^(true|false)$/.test(_))
         D.push(!0);
-      else if (te(_) || te(p) && /^-/.test(_) && !w.test(_) && !Ae(_)) {
+      else if (te(_) || te(p) && /^-/.test(_) && !w.test(_) && !ve(_)) {
         if (c[f] !== void 0) {
           const A = c[f];
           D = Array.isArray(A) ? A : [A];
         }
       } else {
         te(p) || D.push(ke(f, p, !0));
-        for (let A = a + 1; A < F.length && !(!i["greedy-arrays"] && D.length > 0 || x && typeof x == "number" && D.length >= x || (_ = F[A], /^-/.test(_) && !w.test(_) && !Ae(_))); A++)
+        for (let A = a + 1; A < F.length && !(!i["greedy-arrays"] && D.length > 0 || x && typeof x == "number" && D.length >= x || (_ = F[A], /^-/.test(_) && !w.test(_) && !ve(_))); A++)
           a = A, D.push(ke(f, _, o));
       }
       return typeof x == "number" && (x && D.length < x || isNaN(x) && D.length === 0) && (S = Error(g("Not enough arguments following: %s", f))), L(f, D), a;
@@ -1588,11 +1588,11 @@ class so {
     function ke(a, f, F) {
       F && (f = oo(f)), ($(a, l.bools) || $(a, l.counts)) && typeof f == "string" && (f = f === "true");
       let p = Array.isArray(f) ? f.map(function(D) {
-        return ye(a, D);
-      }) : ye(a, f);
+        return Ae(a, D);
+      }) : Ae(a, f);
       return $(a, l.counts) && (te(p) || typeof p == "boolean") && (p = nt()), $(a, l.normalize) && $(a, l.arrays) && (Array.isArray(f) ? p = f.map((D) => ne.normalize(D)) : p = ne.normalize(f)), p;
     }
-    function ye(a, f) {
+    function Ae(a, f) {
       return !i["parse-positional-numbers"] && a === "_" || !$(a, l.strings) && !$(a, l.bools) && !Array.isArray(f) && (os(f) && i["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${f}`))) || !te(f) && $(a, l.numbers)) && (f = Number(f)), f;
     }
     function Rs(a) {
@@ -1651,7 +1651,7 @@ class so {
       Object.keys(a).forEach(function(p) {
         if (!F.has(p) && (f = $(p, l.coercions), typeof f == "function"))
           try {
-            const D = ye(p, f(a[p]));
+            const D = Ae(p, f(a[p]));
             [].concat(l.aliases[p] || [], p).forEach((_) => {
               F.add(_), a[_] = D;
             });
@@ -1741,7 +1741,7 @@ class so {
       }
       return f;
     }
-    function Ae(a) {
+    function ve(a) {
       return i["unknown-options-as-args"] && Ms(a);
     }
     function Ms(a) {
@@ -1838,19 +1838,19 @@ const uo = process ? process.env : {}, us = new so({
       return JSON.parse(Yt(t, "utf8"));
     throw Error("only .json config files are supported in ESM");
   }
-}), _e = function(e, n) {
+}), ye = function(e, n) {
   return us.parse(e.slice(), n).argv;
 };
-_e.detailed = function(t, e) {
+ye.detailed = function(t, e) {
   return us.parse(t.slice(), e);
 };
-_e.camelCase = be;
-_e.decamelize = rs;
-_e.looksLikeNumber = os;
+ye.camelCase = be;
+ye.decamelize = rs;
+ye.looksLikeNumber = os;
 const io = {
   right: ho,
   center: po
-}, ao = 0, Be = 1, co = 2, Se = 3;
+}, ao = 0, Se = 1, co = 2, Oe = 3;
 class lo {
   constructor(e) {
     var n;
@@ -1877,7 +1877,7 @@ class lo {
 `).map((r) => r.split("	"));
     let s = 0;
     return n.forEach((r) => {
-      r.length > 1 && G.stringWidth(r[0]) > s && (s = Math.min(Math.floor(this.width * 0.5), G.stringWidth(r[0])));
+      r.length > 1 && U.stringWidth(r[0]) > s && (s = Math.min(Math.floor(this.width * 0.5), U.stringWidth(r[0])));
     }), n.forEach((r) => {
       this.div(...r.map((o, u) => ({
         text: o.trim(),
@@ -1893,7 +1893,7 @@ class lo {
     };
   }
   measurePadding(e) {
-    const n = G.stripAnsi(e);
+    const n = U.stripAnsi(e);
     return [0, n.match(/\s*$/)[0].length, 0, n.match(/^\s*/)[0].length];
   }
   toString() {
@@ -1909,12 +1909,12 @@ class lo {
       s.forEach((u, i) => {
         const { width: c } = e[i], h = this.negatePadding(e[i]);
         let d = u;
-        if (h > G.stringWidth(u) && (d += " ".repeat(h - G.stringWidth(u))), e[i].align && e[i].align !== "left" && this.wrap) {
+        if (h > U.stringWidth(u) && (d += " ".repeat(h - U.stringWidth(u))), e[i].align && e[i].align !== "left" && this.wrap) {
           const C = io[e[i].align];
-          d = C(d, h), G.stringWidth(d) < h && (d += " ".repeat((c || 0) - G.stringWidth(d) - 1));
+          d = C(d, h), U.stringWidth(d) < h && (d += " ".repeat((c || 0) - U.stringWidth(d) - 1));
         }
         const E = e[i].padding || [0, 0, 0, 0];
-        E[Se] && (o += " ".repeat(E[Se])), o += Sn(e[i], d, "| "), o += d, o += Sn(e[i], d, " |"), E[Be] && (o += " ".repeat(E[Be])), r === 0 && n.length > 0 && (o = this.renderInline(o, n[n.length - 1]));
+        E[Oe] && (o += " ".repeat(E[Oe])), o += Sn(e[i], d, "| "), o += d, o += Sn(e[i], d, " |"), E[Se] && (o += " ".repeat(E[Se])), r === 0 && n.length > 0 && (o = this.renderInline(o, n[n.length - 1]));
       }), n.push({
         text: o.replace(/ +$/, ""),
         span: e.span
@@ -1924,14 +1924,14 @@ class lo {
   // if the full 'source' can render in
   // the target line, do so.
   renderInline(e, n) {
-    const s = e.match(/^ */), r = s ? s[0].length : 0, o = n.text, u = G.stringWidth(o.trimRight());
+    const s = e.match(/^ */), r = s ? s[0].length : 0, o = n.text, u = U.stringWidth(o.trimRight());
     return n.span ? this.wrap ? r < u ? e : (n.hidden = !0, o.trimRight() + " ".repeat(r - u) + e.trimLeft()) : (n.hidden = !0, o + e) : e;
   }
   rasterize(e) {
     const n = [], s = this.columnWidths(e);
     let r;
     return e.forEach((o, u) => {
-      o.width = s[u], this.wrap ? r = G.wrap(o.text, this.negatePadding(o), { hard: !0 }).split(`
+      o.width = s[u], this.wrap ? r = U.wrap(o.text, this.negatePadding(o), { hard: !0 }).split(`
 `) : r = o.text.split(`
 `), o.border && (r.unshift("." + "-".repeat(this.negatePadding(o) + 2) + "."), r.push("'" + "-".repeat(this.negatePadding(o) + 2) + "'")), o.padding && (r.unshift(...new Array(o.padding[ao] || 0).fill("")), r.push(...new Array(o.padding[co] || 0).fill(""))), r.forEach((i, c) => {
         n[c] || n.push([]);
@@ -1944,11 +1944,11 @@ class lo {
   }
   negatePadding(e) {
     let n = e.width || 0;
-    return e.padding && (n -= (e.padding[Se] || 0) + (e.padding[Be] || 0)), e.border && (n -= 4), n;
+    return e.padding && (n -= (e.padding[Oe] || 0) + (e.padding[Se] || 0)), e.border && (n -= 4), n;
   }
   columnWidths(e) {
     if (!this.wrap)
-      return e.map((u) => u.width || G.stringWidth(u.text));
+      return e.map((u) => u.width || U.stringWidth(u.text));
     let n = e.length, s = this.width;
     const r = e.map((u) => {
       if (u.width)
@@ -1961,7 +1961,7 @@ function Sn(t, e, n) {
   return t.border ? /[.']-+[.']/.test(e) ? "" : e.trim().length !== 0 ? n : "  " : "";
 }
 function Do(t) {
-  const e = t.padding || [], n = 1 + (e[Se] || 0) + (e[Be] || 0);
+  const e = t.padding || [], n = 1 + (e[Oe] || 0) + (e[Se] || 0);
   return t.border ? n + 4 : n;
 }
 function fo() {
@@ -1969,17 +1969,17 @@ function fo() {
 }
 function ho(t, e) {
   t = t.trim();
-  const n = G.stringWidth(t);
+  const n = U.stringWidth(t);
   return n < e ? " ".repeat(e - n) + t : t;
 }
 function po(t, e) {
   t = t.trim();
-  const n = G.stringWidth(t);
+  const n = U.stringWidth(t);
   return n >= e ? t : " ".repeat(e - n >> 1) + t;
 }
-let G;
+let U;
 function go(t, e) {
-  return G = e, new lo({
+  return U = e, new lo({
     width: t?.width || fo(),
     wrap: t?.wrap
   });
@@ -2126,15 +2126,15 @@ function xo(t, e) {
   };
 }
 const wo = (t) => xo(t, Co), _o = "require is not supported by ESM", On = "loading a directory of commands is not supported yet for ESM";
-let Ce;
+let Ee;
 try {
-  Ce = tr(import.meta.url);
+  Ee = tr(import.meta.url);
 } catch {
-  Ce = process.cwd();
+  Ee = process.cwd();
 }
-const yo = Ce.substring(0, Ce.lastIndexOf("node_modules"));
+const yo = Ee.substring(0, Ee.lastIndexOf("node_modules"));
 Xs, er, Vs, yo || process.cwd(), Zs, ut, Ks, Ys, pe, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, Yt, wo({
-  directory: pe(Ce, "../../../locales"),
+  directory: pe(Ee, "../../../locales"),
   updateFiles: !1
 });
 let cs = !1;
@@ -2210,12 +2210,12 @@ const Ao = (t) => {
 ` }), { errors: s, warnings: r, output: o };
 }, sn = async (t) => {
   let e = t;
-  for (; e !== H.parse(e).root; ) {
-    const n = H.join(e, "package.json");
+  for (; e !== V.parse(e).root; ) {
+    const n = V.join(e, "package.json");
     try {
       return await ie.access(n), e;
     } catch {
-      e = H.dirname(e);
+      e = V.dirname(e);
     }
   }
   throw new Error("Project root not found");
@@ -2234,19 +2234,19 @@ function So(t) {
 const Ds = async (t) => {
   let e = "";
   if (!t) {
-    const s = sr(import.meta.url), r = H.dirname(s), o = H.resolve(r, "..");
-    e = H.join(o, "package.json");
+    const s = sr(import.meta.url), r = V.dirname(s), o = V.resolve(r, "..");
+    e = V.join(o, "package.json");
   }
-  return t && (e = H.join(t, "package.json")), JSON.parse(await ie.readFile(e, "utf-8"));
+  return t && (e = V.join(t, "package.json")), JSON.parse(await ie.readFile(e, "utf-8"));
 }, rn = async () => await sn(process?.cwd() || "./") || "", fs = async (t, e) => {
-  const n = await rn(), s = H.join(n, "package.json");
+  const n = await rn(), s = V.join(n, "package.json");
   return Jt.existsSync(s) ? !!(await Ds(e)).dependencies[t] : !1;
 }, hs = async (t) => {
   const e = await rn(), n = ["nuxt.config.js", "nuxt.config.ts"];
-  return await fs("nuxt", t) || n.some((s) => Jt.existsSync(H.join(e, s)));
+  return await fs("nuxt", t) || n.some((s) => Jt.existsSync(V.join(e, s)));
 }, Oo = async (t) => {
   const e = await rn(), n = ["vue.config.js", "vue.config.ts"];
-  return !await hs(t) && (await fs("vue", t) || n.some((r) => Jt.existsSync(H.join(e, r))));
+  return !await hs(t) && (await fs("vue", t) || n.some((r) => Jt.existsSync(V.join(e, r))));
 }, Ro = /^(\(.*\)|\\?.)$/;
 function ue(t) {
   const e = t.toString();
@@ -2282,18 +2282,18 @@ function v(t) {
   };
 }
 const jo = /[.*+?^${}()|[\]\\/]/g;
-function Ee(t) {
+function xe(t) {
   return v(`[${t.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
 function k(t) {
   return v(`[^${t.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
-function Oe(...t) {
+function Ce(...t) {
   return v(`(?:${t.map((e) => M(e)).join("|")})`);
 }
 const le = v(".");
 v("\\b\\w+\\b");
-const Z = v("\\w"), U = v("\\b"), To = v("\\d"), W = v("\\s"), ps = Object.assign(v("[a-zA-Z]"), {
+const Z = v("\\w"), H = v("\\b"), To = v("\\d"), W = v("\\s"), ps = Object.assign(v("[a-zA-Z]"), {
   lowercase: v("[a-z]"),
   uppercase: v("[A-Z]")
 }), ds = v("\\t"), gs = v("\\n");
@@ -2429,7 +2429,7 @@ const Q = "i", j = "g", R = (...t) => {
   if (!n && !s)
     return;
   const r = R(
-    Oe(
+    Ce(
       "if",
       'v-if="',
       B(le).groupedAs("condition").and("?").and(B(le)).and(":"),
@@ -2437,7 +2437,7 @@ const Q = "i", j = "g", R = (...t) => {
       "="
     ).and(
       B(
-        Oe(
+        Ce(
           "&&",
           "||",
           k(`"'`)
@@ -2446,7 +2446,7 @@ const Q = "i", j = "g", R = (...t) => {
     ),
     [j]
   ), o = R(
-    Oe("&&", "||"),
+    Ce("&&", "||"),
     [j]
   ), u = (i, c) => {
     i = X(i);
@@ -2500,7 +2500,7 @@ const Q = "i", j = "g", R = (...t) => {
 }, ht = [], bs = 5, Wn = 2 * bs, Zo = (t, e) => {
   if (!t)
     return;
-  const n = R(U, "if", U, [j, Q]), s = R(U, "else", U, [j, Q]), r = R(U, "for", U, [j, Q]), o = R(U, "while", U, [j, Q]), u = R(U, "case", U, [j, Q]), i = X(t.content), c = i.match(n), h = i.match(s), d = i.match(r), E = i.match(o), C = i.match(u), m = (c?.length || 0) + (h?.length || 0) + (d?.length || 0) + (E?.length || 0) + (C?.length || 0);
+  const n = R(H, "if", H, [j, Q]), s = R(H, "else", H, [j, Q]), r = R(H, "for", H, [j, Q]), o = R(H, "while", H, [j, Q]), u = R(H, "case", H, [j, Q]), i = X(t.content), c = i.match(n), h = i.match(s), d = i.match(r), E = i.match(o), C = i.match(u), m = (c?.length || 0) + (h?.length || 0) + (d?.length || 0) + (E?.length || 0) + (C?.length || 0);
   m > bs && ht.push({ filePath: e, message: `Cyclomatic complexity is ${m > Wn ? "<bg_err>very high" : "<bg_warn>high"} (${m})${m > Wn ? "</bg_err>" : "</bg_warn>"}` });
 }, Ko = () => {
   const t = [];
@@ -2537,7 +2537,7 @@ const Q = "i", j = "g", R = (...t) => {
 }, dt = [], Xo = (t, e) => {
   if (!t)
     return;
-  const n = R(U, "else", U, [j, Q]), r = X(t.content).match(n);
+  const n = R(H, "else", H, [j, Q]), r = X(t.content).match(n);
   r?.length && dt.push({ filePath: e, message: `else clauses found <bg_err>(${r.length})</bg_err>` });
 }, eu = () => {
   const t = [];
@@ -2663,7 +2663,7 @@ const iu = (t, e, n) => {
 }, mt = [], Du = (t, e) => {
   if (!t)
     return;
-  const n = R("<a", U, [j, Q]), s = t.content.match(n);
+  const n = R("<a", H, [j, Q]), s = t.content.match(n);
   s?.length && mt.push({ filePath: e, message: `${s?.length} <bg_warn>html link found</bg_warn>` });
 }, fu = () => {
   const t = [];
@@ -2703,7 +2703,7 @@ const iu = (t, e, n) => {
 }, Ft = [], du = (t, e) => {
   if (!t)
     return;
-  const n = R(B(To).as("magicNumber"), Oe(")", gs), [j]);
+  const n = R(Ce(H), B(To).as("magicNumber"), Ce(")", gs), [j]);
   let s, r = 0;
   for (; (s = n.exec(t.content)) !== null; ) {
     const o = s.groups?.magicNumber, u = Number.parseInt(o ?? "0");
@@ -2852,7 +2852,7 @@ const iu = (t, e, n) => {
     W.times.any(),
     "[",
     W.times.any(),
-    B(Ee(`'"`), B(Z), Ee(`'"`), W.times.any(), J(",", W.times.any())),
+    B(xe(`'"`), B(Z), xe(`'"`), W.times.any(), J(",", W.times.any())),
     "]",
     W.times.any(),
     ")",
@@ -3201,7 +3201,7 @@ const iu = (t, e, n) => {
 }, jt = [], Qu = (t) => {
   if (t.includes("pages"))
     return;
-  const e = H.basename(t);
+  const e = V.basename(t);
   if (e === "App.vue")
     return;
   const n = R(ps.uppercase);
@@ -3340,7 +3340,7 @@ const iu = (t, e, n) => {
 }, kt = [], ai = (t) => {
   if (t.includes("pages") || t.includes("layouts"))
     return;
-  const e = H.basename(t), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), r = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, o = e.match(r);
+  const e = V.basename(t), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), r = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, o = e.match(r);
   !s?.length && !o?.length && kt.push({ filePath: t, message: "component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn>" });
 }, ci = () => {
   const t = [];
@@ -3398,7 +3398,7 @@ const iu = (t, e, n) => {
   ), n = t.match(e);
   if (n) {
     const s = n[0]?.split(".vue")[0], r = R(
-      Ee("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
+      xe("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
       [j]
     ), o = s.match(r);
     (!o || o.length < di) && Ht.push({ filePath: t, message: `${s} is not a <bg_warn>full word.</bg_warn>` });
@@ -3456,10 +3456,10 @@ const iu = (t, e, n) => {
   const n = t.template, s = R(
     "<",
     B(Z),
-    J(B(Ee(` 	
+    J(B(xe(` 	
 \r`))),
     B(k("/>")),
-    J(B(Ee(` 	
+    J(B(xe(` 	
 \r`))),
     J("/"),
     ">",
@@ -3661,7 +3661,7 @@ const ji = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   }
   const s = await ie.readdir(t);
   for (const r of s) {
-    const o = H.join(t, r);
+    const o = V.join(t, r);
     if ((await ie.stat(o)).isDirectory() && !ji.some((c) => o.includes(c)) && !on.some((c) => o.endsWith(c))) {
       const c = await _s(o);
       c && e.push(...c);
@@ -3691,7 +3691,7 @@ const ji = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   const { health: N, output: O } = Li(r, u, o), { errors: De, warnings: ce, output: oe } = Bo(N, xs, Kt);
   return !De && !ce && y.push({ info: `
 <bg_ok>No code smells detected!</bg_ok>` }), { output: y, codeHealthOutput: oe, reportOutput: O };
-}, ys = "\x1B[44m", Wi = "\x1B[43m", xe = "\x1B[41m", Ii = "\x1B[42m", re = "\x1B[0m", As = "\x1B[33m", vs = "\x1B[36m", Ie = "\x1B[0m", Hn = (t) => t.replace(/<bg_err>/g, xe).replace(/<bg_warn>/g, Wi).replace(/<bg_info>/g, ys).replace(/<bg_ok>/g, Ii).replace(/<\/bg_err>/g, re).replace(/<\/bg_warn>/g, re).replace(/<\/bg_info>/g, re).replace(/<\/bg_ok>/g, re).replace(/<text_warn>/g, As).replace(/<text_info>/g, vs).replace(/<\/text_warn>/g, Ie).replace(/<\/text_info>/g, Ie), Vn = (t) => (e) => {
+}, ys = "\x1B[44m", Wi = "\x1B[43m", we = "\x1B[41m", Ii = "\x1B[42m", re = "\x1B[0m", As = "\x1B[33m", vs = "\x1B[36m", Ie = "\x1B[0m", Hn = (t) => t.replace(/<bg_err>/g, we).replace(/<bg_warn>/g, Wi).replace(/<bg_info>/g, ys).replace(/<bg_ok>/g, Ii).replace(/<\/bg_err>/g, re).replace(/<\/bg_warn>/g, re).replace(/<\/bg_info>/g, re).replace(/<\/bg_ok>/g, re).replace(/<text_warn>/g, As).replace(/<text_info>/g, vs).replace(/<\/text_warn>/g, Ie).replace(/<\/text_info>/g, Ie), Vn = (t) => (e) => {
   if (!e)
     return t === "apply" ? Object.keys(ae) : void 0;
   const n = e.split(","), s = [], r = [];
@@ -3699,7 +3699,7 @@ const ji = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
     nn.includes(o) ? s.push(...ae[o]) : Object.values(ae).some((u) => u.includes(o)) ? s.push(o) : r.push(o);
   }), r.length > 0 && (console.error(
     `
-${xe}Invalid ${t} values: ${r.join(", ")}${re}. 
+${we}Invalid ${t} values: ${r.join(", ")}${re}. 
 ${As}Allowed values are: ${ls.join(", ")}${Ie}
 
 `
@@ -3709,11 +3709,11 @@ ${As}Allowed values are: ${ls.join(", ")}${Ie}
   sortBy: Bs,
   outputLevel: Os,
   outputFormat: Ss
-}, ve = (t, e) => {
+}, $e = (t, e) => {
   const n = Mi[e];
   return (!Array.isArray(n) || !n.includes(t)) && (console.error(
     `
-Invalid option ${xe}${t}${re} provided for flag ${vs}${e}${Ie}. Valid options are: ${ys}${n.join(", ")}${re}.
+Invalid option ${we}${t}${re} provided for flag ${vs}${e}${Ie}. Valid options are: ${ys}${n.join(", ")}${re}.
 `
   ), process.exit(1)), t;
 };
@@ -3743,7 +3743,7 @@ sn(ki || "./src").then((t) => {
       ignoreFromFile: !1
     };
     let o = "";
-    const u = H.join(t, "vue-mess-detector.json");
+    const u = V.join(t, "vue-mess-detector.json");
     ie.readFile(u, "utf-8").then((i) => {
       const c = JSON.parse(i);
       s = { ...s, ...c }, r.applyFromFile = !!c.apply, r.ignoreFromFile = !!c.ignore, n.push({ info: `👉 Using configuration from ${u}` });
@@ -3772,14 +3772,14 @@ sn(ki || "./src").then((t) => {
           alias: "g",
           describe: "Group results at the output",
           choices: $s,
-          coerce: (c) => ve(c, "groupBy"),
+          coerce: (c) => $e(c, "groupBy"),
           default: s.group,
           group: "Group Results:"
         }).option("level", {
           alias: "l",
           describe: "Output level",
           choices: Os,
-          coerce: (c) => ve(c, "outputLevel"),
+          coerce: (c) => $e(c, "outputLevel"),
           default: s.level,
           group: "Output:"
         }).option("ignore", {
@@ -3792,13 +3792,13 @@ sn(ki || "./src").then((t) => {
           alias: "s",
           describe: "Sort results at the output",
           choices: Bs,
-          coerce: (c) => ve(c, "sortBy"),
+          coerce: (c) => $e(c, "sortBy"),
           default: s.sort,
           group: "Sort Results:"
         }).option("output", {
           describe: "Output format",
           choices: Ss,
-          coerce: (c) => ve(c, "outputFormat"),
+          coerce: (c) => $e(c, "outputFormat"),
           default: s.output,
           group: "Output Format:"
         }).option("fileOutput", {
@@ -3840,7 +3840,7 @@ sn(ki || "./src").then((t) => {
               });
             }
             if (i.output == "table") {
-              o && (console.log(`We can not output ${xe}to a file in table mode${re}`), process.exit(1)), [...n, ...h.output].forEach((d) => {
+              o && (console.log(`We can not output ${we}to a file in table mode${re}`), process.exit(1)), [...n, ...h.output].forEach((d) => {
                 c(d.info);
               });
               for (const d in h.reportOutput) {
@@ -3864,7 +3864,7 @@ ${C.description.replace("See: ", `See:
             }
             i.output == "json" && c(JSON.stringify(h, null, 2));
           }).catch((h) => {
-            console.error(`${xe}${h}${re}`);
+            console.error(`${we}${h}${re}`);
           });
         }
       ).version("version", "Show version number", e.version).alias("version", "v").help().argv

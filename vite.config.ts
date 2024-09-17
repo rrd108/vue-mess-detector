@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(__dirname, 'src/cli.ts'),
       name: 'VueMessDetector',
       fileName: format => `vue-mess-detector.${format}.js`,
       formats: ['es'], // Use only 'es'
