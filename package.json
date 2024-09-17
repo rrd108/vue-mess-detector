@@ -28,15 +28,15 @@
   "main": "dist/vue-mess-detector.es.js",
   "types": "index.d.ts",
   "bin": {
-    "vue-mess-detector": "dist/cli.js"
+    "vue-mess-detector": "dist/cliStart.js"
   },
   "files": [
     "dist",
     "index.d.ts"
   ],
   "scripts": {
-    "build": "vite build && cp ./src/cli.js ./dist/",
-    "analyze": "node ./dist/cli.js analyze",
+    "build": "vite build && cp ./src/cliStart.js ./dist/",
+    "analyze": "node ./dist/cliStart.js analyze",
     "test": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
