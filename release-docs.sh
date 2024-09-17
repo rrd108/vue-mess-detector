@@ -40,6 +40,12 @@ if [ $PREV_STEP -eq 1 ];then
 
     if [ $? -eq 0 ]; then
         echo -e $'\n' "${GREEN} \u2714 docs:dist folder uploaded ${NC}" $'\n'
+        
+        # Update docs/.release file with current date and time in 24-hour format
+        current_datetime=$(date "+%Y-%m-%d %H:%M:%S %Z")
+        echo "Last release: $current_datetime" > ./docs/.release
+        echo -e "${GREEN} \u2714 Updated docs/.release file ${NC}" $'\n'
+
     else
         echo -e $'\n' "${RED} \u2a2f docs:dist folder upload failed ${NC}" $'\n'
         PREV_STEP=0
