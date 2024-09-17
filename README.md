@@ -169,3 +169,25 @@ The code health is:
 ## 🤝 How to contribute?
 
 See [CONTRIBUTING.md](https://github.com/rrd108/vue-mess-detector/blob/main/CONTRIBUTING.md) file.
+
+## 🚀 PKG:PREVIEW Continuous Releases
+
+We use [pkg.pr.new](https://github.com/stackblitz-labs/pkg.pr.new) for continuous releases. This allows contributors and users to test new features and bug fixes immediately, without waiting for official releases.
+
+### How it works:
+
+1. Each commit and pull request triggers an instant preview release.
+2. These preview releases are published to a temporary registry, not to NPM.
+3. You can access and test these preview releases using special URLs.
+
+### Using a preview release:
+
+To use a preview release, install it using the following format:
+
+```
+yarn add https://pkg.pr.new/rrd108/vue-mess-detector/vue-mess-detector@{commit-hash}
+```
+
+Replace `{commit-hash}` with the actual commit hash you want to test.
+
+This feature enables faster feedback loops and helps
