@@ -4,23 +4,18 @@ import type { FileCheckResult, Offense } from '../../types'
 const results: FileCheckResult[] = []
 
 const WARNING_THRESHOLD = 300
-const ERROR_THRESHOLD = 500
+const ERROR_THRESHOLD = 2 * WARNING_THRESHOLD
 
-const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string) => {
-  const { scriptSetup, template, styles } = descriptor
-
+const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: boolean) => {
   let totalLines = 0
 
-  if (scriptSetup) {
-    totalLines += scriptSetup.content.trim().split('\n').length
+  if (isVueFile) {
+    totalLines = descriptor.scriptSetup?.content.trim().split('\n').length ?? 0
+    totalLines += descriptor.template?.content.trim().split('\n').length ?? 0
+    totalLines += descriptor.styles?.reduce((acc, style) => acc + style.content.trim().split('\n').length, 0) ?? 0
   }
-
-  if (template) {
-    totalLines += template.content.trim().split('\n').length
-  }
-
-  if (styles) {
-    totalLines += styles.reduce((acc, style) => acc + style.content.trim().split('\n').length, 0)
+  else {
+    totalLines = descriptor.scriptSetup?.content.trim().split('\n').length ?? 0
   }
 
   if (totalLines > ERROR_THRESHOLD) {

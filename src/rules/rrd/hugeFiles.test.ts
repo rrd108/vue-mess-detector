@@ -7,10 +7,9 @@ describe('checkHugeFiles', () => {
     resetHugeFiles()
   })
 
-  it('should not report for a small file', () => {
+  it('should not report vue sfc files with small content', () => {
+    const filePath = 'small-file.vue'
     const smallFile = {
-      filename: 'small.vue',
-      source: '',
       template: {
         type: 'template',
         content: '<template>\n'.repeat(100),
@@ -42,15 +41,25 @@ describe('checkHugeFiles', () => {
         attrs: {},
       }],
     } as SFCDescriptor
-    checkHugeFiles(smallFile, 'small.vue')
+    checkHugeFiles(smallFile, filePath, true)
     expect(reportHugeFiles().length).toBe(0)
     expect(reportHugeFiles()).toStrictEqual([])
   })
 
-  it('should report a warning for a large file', () => {
+  it('should not report js/ts files with small content', () => {
+    const filePath = 'small-file.ts'
+    const smallNotVueFile = {
+      scriptSetup: {
+        content: 'const a = 1\nconst b = 2\nconst c = 3\n'.repeat(100),
+      },
+    } as SFCDescriptor
+    checkHugeFiles(smallNotVueFile, filePath, true)
+    expect(reportHugeFiles().length).toBe(0)
+    expect(reportHugeFiles()).toStrictEqual([])
+  })
+
+  it('should report vue sfc files with large content', () => {
     const largeFile = {
-      filename: 'large.vue',
-      source: '',
       template: {
         type: 'template',
         content: '<template>\n'.repeat(150),
@@ -82,11 +91,10 @@ describe('checkHugeFiles', () => {
         attrs: {},
       }],
     } as SFCDescriptor
-    const filePath = 'large.vue'
-    checkHugeFiles(largeFile, filePath)
-    const result = reportHugeFiles()
-    expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
+    const filePath = 'large-file.vue'
+    checkHugeFiles(largeFile, filePath, true)
+    expect(reportHugeFiles().length).toBe(1)
+    expect(reportHugeFiles()).toStrictEqual([{
       file: filePath,
       rule: `<text_info>rrd ~ huge files</text_info>`,
       description: `👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html`,
@@ -94,17 +102,34 @@ describe('checkHugeFiles', () => {
     }])
   })
 
-  it('should report an error for a huge file', () => {
+  it('should report a warning for a large js/ts file', () => {
+    const largeNotVueFile = {
+      scriptSetup: {
+        content: 'console.log("hello world")\n'.repeat(400),
+      },
+    } as SFCDescriptor
+    const filePath = 'large-file.ts'
+    checkHugeFiles(largeNotVueFile, filePath, true)
+    expect(reportHugeFiles().length).toBe(1)
+    expect(reportHugeFiles()).toStrictEqual([{
+      file: filePath,
+      rule: `<text_info>rrd ~ huge files</text_info>`,
+      description: `👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html`,
+      message: '<bg_warn>large file (400 lines)</bg_warn> 🚨',
+    }])
+  })
+
+  it('should report vue sfc files with huge content', () => {
     const hugeFile = {
       filename: 'huge.vue',
       source: '',
       template: {
         type: 'template',
-        content: '<template>\n'.repeat(200),
+        content: '<template>\n'.repeat(300),
         loc: {
           source: '',
           start: { line: 1, column: 1, offset: 0 },
-          end: { line: 200, column: 1, offset: 200 * 9 },
+          end: { line: 300, column: 1, offset: 300 * 9 },
         },
       },
       scriptSetup: {
@@ -127,14 +152,31 @@ describe('checkHugeFiles', () => {
       }],
     } as SFCDescriptor
     const filePath = 'huge.vue'
-    checkHugeFiles(hugeFile, filePath)
+    checkHugeFiles(hugeFile, filePath, true)
     const result = reportHugeFiles()
     expect(result.length).toBe(1)
     expect(result).toStrictEqual([{
       file: filePath,
       rule: `<text_info>rrd ~ huge files</text_info>`,
       description: `👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html`,
-      message: '<bg_err>huge file (550 lines)</bg_err> 🚨',
+      message: '<bg_err>huge file (650 lines)</bg_err> 🚨',
+    }])
+  })
+
+  it('should report an error for a huge js/ts file', () => {
+    const hugeNotVueFile = {
+      scriptSetup: {
+        content: 'console.log("hello world")\n'.repeat(700),
+      },
+    } as SFCDescriptor
+    const filePath = 'huge-file.ts'
+    checkHugeFiles(hugeNotVueFile, filePath, true)
+    expect(reportHugeFiles().length).toBe(1)
+    expect(reportHugeFiles()).toStrictEqual([{
+      file: filePath,
+      rule: `<text_info>rrd ~ huge files</text_info>`,
+      description: `👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html`,
+      message: '<bg_err>huge file (700 lines)</bg_err> 🚨',
     }])
   })
 })
