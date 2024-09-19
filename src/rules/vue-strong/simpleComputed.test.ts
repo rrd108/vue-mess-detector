@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
-
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkSimpleComputed, reportSimpleComputed, resetSimpleComputed } from './simpleComputed'
 
 describe('checkSimpleComputed', () => {
@@ -15,14 +15,15 @@ describe('checkSimpleComputed', () => {
       const isWeekend2 = computed(() => today.getDay() === 0 || today.getDay() === 6)`,
     } as SFCScriptBlock
     const fileName = 'simple-computed.vue'
-    checkSimpleComputed(script, fileName)
+    const maxComputedLength = DEFAULT_OVERRIDE_CONFIG.maxComputedLength
+    checkSimpleComputed(script, fileName, maxComputedLength)
     expect(reportSimpleComputed().length).toBe(0)
     expect(reportSimpleComputed()).toStrictEqual([])
 
     script = {
       content: `const isWeekend = computed(()=>today.getDay() === 0 || today.getDay() === 6)`,
     } as SFCScriptBlock
-    checkSimpleComputed(script, fileName)
+    checkSimpleComputed(script, fileName, maxComputedLength)
     expect(reportSimpleComputed().length).toBe(0)
     expect(reportSimpleComputed()).toStrictEqual([])
   })
@@ -50,7 +51,8 @@ describe('checkSimpleComputed', () => {
     </script>`,
     } as SFCScriptBlock
     const fileName = 'complicated-computed.vue'
-    checkSimpleComputed(script, fileName)
+    const maxComputedLength = DEFAULT_OVERRIDE_CONFIG.maxComputedLength
+    checkSimpleComputed(script, fileName, maxComputedLength)
     expect(reportSimpleComputed().length).toBe(1)
     expect(reportSimpleComputed()).toStrictEqual([{
       file: fileName,

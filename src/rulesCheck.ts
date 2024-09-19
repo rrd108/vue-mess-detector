@@ -24,7 +24,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     vifWithVfor: () => isVueFile && checkVifWithVfor(descriptor.template, filePath),
 
     // vue-strong
-    simpleComputed: () => checkSimpleComputed(script, filePath),
+    simpleComputed: () => checkSimpleComputed(script, filePath, override.maxComputedLength),
     componentFiles: () => isVueFile && checkComponentFiles(script, filePath),
     propNameCasing: () => isVueFile && checkPropNameCasing(script, filePath),
     componentFilenameCasing: () => isVueFile && checkComponentFilenameCasing(filePath),

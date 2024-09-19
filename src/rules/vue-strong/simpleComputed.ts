@@ -7,9 +7,7 @@ const results: FileCheckResult[] = []
 
 const complicatedComputedFiles: { filePath: string }[] = []
 
-const MAX_COMPUTED_LENGTH = 5 // completely rrd made-up number
-
-const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string) => {
+const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string, maxComputedLength: number) => {
   if (!script) {
     return
   }
@@ -20,7 +18,7 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string) =>
   const matches = script.content.match(regex)
   if (matches?.length) {
     matches.forEach((match) => {
-      if (match.split('\n').length > MAX_COMPUTED_LENGTH) {
+      if (match.split('\n').length > maxComputedLength) {
         const firstLine = match.split('\n')[0]
         const lineNumber = getLineNumber(script.content, firstLine)
         results.push({ filePath, message: `line #${lineNumber} <bg_warn>computed</bg_warn>` })
