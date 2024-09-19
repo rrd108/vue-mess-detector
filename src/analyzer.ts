@@ -7,6 +7,7 @@ import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
 import { setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
+import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
@@ -74,7 +75,19 @@ const walkAsync = async (dir: string) => {
   return overwievMessages
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams): Promise<AnalyzeOutput> => {
+// TODO use values from config
+export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
+  const projectRoot = await getProjectRoot(dir)
+  const config = await getConfig(projectRoot)
+
+  // Use config values if not provided in cli params
+  apply = apply.length ? apply : config.apply.split(',')
+  ignore = ignore.length ? ignore : config.ignore ? config.ignore.split(',') : []
+  exclude = exclude || config.exclude
+  groupBy = groupBy || config.group
+  level = level || config.level
+  sortBy = sortBy || config.sort
+
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
@@ -92,7 +105,6 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const ignoredRulesets = ignore.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
   const ignoreRulesetsOutput = ignoredRulesets.length ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>` : 'N/A'
 
-  const projectRoot = await getProjectRoot(dir)
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
   setIsNuxt(isNuxt)
@@ -100,6 +112,10 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const output: { info: string }[] = []
 
   output.push({ info: `<bg_info>Analyzing Vue, TS and JS files in ${dir}</bg_info>` })
+
+  const configMessage = config.isDefault ? `👉 Using <bg_info>default</bg_info> configuration` : `👉 Using configuration from <bg_info>vue-mess-detector.json</bg_info>`
+  output.push({ info: configMessage })
+
   output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
   output.push({
     info: `${applyingMessage}

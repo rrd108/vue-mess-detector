@@ -1,7 +1,6 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
-import { overrideConfig } from './cli'
 import { reportApiWithoutMethod, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
@@ -13,7 +12,8 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   const output: ReportOutput = {}
   const health: Health[] = []
 
-  const { ...limits } = overrideConfig[0] as OverrideConfig
+  // TODO const { ...limits } = overrideConfig[0] as OverrideConfig
+  const limits = {}
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {

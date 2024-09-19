@@ -31,7 +31,6 @@ describe('skipComments', () => {
         
     
         const y = 10`
-    console.info(skipComments(input))
     expect(normalizeWhitespace(skipComments(input))).toBe(normalizeWhitespace(expected))
   })
 

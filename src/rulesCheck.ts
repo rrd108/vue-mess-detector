@@ -1,6 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
-import { overrideConfig } from './cli'
 import { getIsNuxt } from './context'
 import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
@@ -15,7 +14,8 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
   // ⚠️ contributors ⚠️ script rules can be used for ts, js and vue files, but template and style rules are only for vue files
   const isVueFile = filePath.endsWith('.vue')
 
-  const { ...limits } = overrideConfig[0] as OverrideConfig
+  // TODO const { ...limits } = overrideConfig[0] as OverrideConfig
+  const limits = {}
 
   // Create an object that maps rule names to their check functions
   const ruleChecks: Record<string, () => void> = {
