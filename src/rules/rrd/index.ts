@@ -1,5 +1,3 @@
-import { checkHugeFiles, reportHugeFiles, resetHugeFiles } from './hugeFiles'
-
 export * from './apiWithoutMethod'
 export * from './bigVif'
 export * from './bigVshow'
