@@ -1,6 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
-import { overrideConfig } from './cli'
 import { getIsNuxt } from './context'
 import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
@@ -9,13 +8,11 @@ import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforN
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
 
-export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[]) => {
+export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[], override: OverrideConfig) => {
   const script = descriptor.scriptSetup || descriptor.script
 
   // ⚠️ contributors ⚠️ script rules can be used for ts, js and vue files, but template and style rules are only for vue files
   const isVueFile = filePath.endsWith('.vue')
-
-  const { ...limits } = overrideConfig[0] as OverrideConfig
 
   // Create an object that maps rule names to their check functions
   const ruleChecks: Record<string, () => void> = {
@@ -32,7 +29,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     propNameCasing: () => isVueFile && checkPropNameCasing(script, filePath),
     componentFilenameCasing: () => isVueFile && checkComponentFilenameCasing(filePath),
     selfClosingComponents: () => isVueFile && checkSelfClosingComponents(descriptor, filePath),
-    templateSimpleExpression: () => isVueFile && checkTemplateSimpleExpression(descriptor.template, filePath),
+    templateSimpleExpression: () => isVueFile && checkTemplateSimpleExpression(descriptor.template, filePath, override.maxExpressionLength),
     quotedAttributeValues: () => isVueFile && checkQuotedAttributeValues(descriptor, filePath),
     directiveShorthands: () => isVueFile && checkDirectiveShorthands(descriptor, filePath),
     fullWordComponentName: () => isVueFile && checkFullWordComponentName(filePath),
@@ -55,7 +52,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     computedSideEffects: () => checkComputedSideEffects(script, filePath),
     deepIndentation: () => checkDeepIndentation(script, filePath),
     elseCondition: () => checkElseCondition(script, filePath),
-    functionSize: () => checkFunctionSize(script, filePath, limits.maxFunctionSize),
+    functionSize: () => checkFunctionSize(script, filePath, override.maxFunctionSize),
     htmlImageElements: () => getIsNuxt() && checkHtmlImageElements(descriptor.template, filePath),
     htmlLink: () => isVueFile && checkHtmlLink(descriptor.template, filePath),
     hugeFiles: () => checkHugeFiles(descriptor, filePath, isVueFile),
@@ -67,7 +64,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     parameterCount: () => checkParameterCount(script, filePath),
     plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     propsDrilling: () => checkPropsDrilling(script, filePath),
-    scriptLength: () => checkScriptLength(script, filePath, limits.maxScriptLength),
+    scriptLength: () => checkScriptLength(script, filePath, override.maxScriptLength),
     shortVariableName: () => checkShortVariableName(script, filePath),
     tooManyProps: () => checkTooManyProps(script, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),

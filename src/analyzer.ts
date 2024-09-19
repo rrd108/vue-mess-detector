@@ -2,11 +2,13 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { RuleSetType } from './rules/rules'
 import type { AnalyzeParams } from './types'
 import type { AnalyzeOutput } from './types/AnalyzeOutput'
+import type { OverrideConfig } from './types/Override'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
 import { setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
+import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
@@ -16,6 +18,7 @@ import { reportRules } from './rulesReport'
 let filesCount = 0
 let linesCount = 0
 let _apply: string[] = []
+let _override: OverrideConfig = {} as OverrideConfig
 
 // Directories to skip during analysis
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
@@ -35,7 +38,8 @@ const checkFile = async (fileName: string, filePath: string) => {
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
-    checkRules(descriptor, filePath, _apply)
+
+    checkRules(descriptor, filePath, _apply, _override)
     return `Analyzing ${filePath}...`
   }
 }
@@ -74,7 +78,20 @@ const walkAsync = async (dir: string) => {
   return overwievMessages
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, level, sortBy }: AnalyzeParams): Promise<AnalyzeOutput> => {
+export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
+  const projectRoot = await getProjectRoot(dir)
+  const config = await getConfig(projectRoot)
+
+  // Use config values if not provided in cli params
+  apply = apply.length ? apply : config.apply.split(',')
+  ignore = ignore.length ? ignore : config.ignore ? config.ignore.split(',') : []
+  exclude = exclude || config.exclude
+  groupBy = groupBy || config.group
+  level = level || config.level
+  sortBy = sortBy || config.sort
+
+  _override = config.override
+
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
   const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
@@ -92,7 +109,6 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const ignoredRulesets = ignore.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
   const ignoreRulesetsOutput = ignoredRulesets.length ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>` : 'N/A'
 
-  const projectRoot = await getProjectRoot(dir)
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
   setIsNuxt(isNuxt)
@@ -100,6 +116,10 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   const output: { info: string }[] = []
 
   output.push({ info: `<bg_info>Analyzing Vue, TS and JS files in ${dir}</bg_info>` })
+
+  const configMessage = config.isDefault ? `👉 Using <bg_info>default</bg_info> configuration` : `👉 Using configuration from <bg_info>vue-mess-detector.json</bg_info>`
+  output.push({ info: configMessage })
+
   output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
   output.push({
     info: `${applyingMessage}
@@ -123,7 +143,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude, groupBy, 
   output.push({ info: `Found <bg_info>${filesCount}</bg_info> files` })
 
   // Generate the report and calculate code health
-  const { health, output: reportOutput } = reportRules(groupBy, sortBy, level)
+  const { health, output: reportOutput } = reportRules(groupBy, sortBy, level, config.override)
   const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {

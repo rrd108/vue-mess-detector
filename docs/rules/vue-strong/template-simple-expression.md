@@ -45,3 +45,16 @@ const normalizedFullName = computed(() => {
   {{ normalizedFullName }}
 </template>
 ```
+
+## 🛠 How to override?
+
+The default max expression length for this rule is **40**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxExpressionLength": 50
+  }
+}
