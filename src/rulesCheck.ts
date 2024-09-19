@@ -1,5 +1,4 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import type { OverrideConfig } from './types/Override'
 import { getIsNuxt } from './context'
 import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
