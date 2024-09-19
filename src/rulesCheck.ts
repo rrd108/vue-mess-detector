@@ -32,7 +32,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     templateSimpleExpression: () => isVueFile && checkTemplateSimpleExpression(descriptor.template, filePath, override.maxExpressionLength),
     quotedAttributeValues: () => isVueFile && checkQuotedAttributeValues(descriptor, filePath),
     directiveShorthands: () => isVueFile && checkDirectiveShorthands(descriptor, filePath),
-    fullWordComponentName: () => isVueFile && checkFullWordComponentName(filePath, override.minimalConsonantCount),
+    fullWordComponentName: () => isVueFile && checkFullWordComponentName(filePath, override.minimumConsonantCount),
     multiAttributeElements: () => isVueFile && checkMultiAttributeElements(descriptor.template, filePath),
 
     // vue-recommended

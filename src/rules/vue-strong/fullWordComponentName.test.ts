@@ -9,8 +9,8 @@ describe('checkFullWordComponentName', () => {
 
   it('should not report files where filename has at least three consonants', () => {
     const filename = 'path/to/file/fullWordComponentNames.vue'
-    const minimalConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimalConsonantCount
-    checkFullWordComponentName(filename, minimalConsonantCount)
+    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
+    checkFullWordComponentName(filename, minimumConsonantCount)
     expect(reportFullWordComponentName().length).toBe(0)
     expect(reportFullWordComponentName()).toStrictEqual([])
   })
@@ -18,8 +18,8 @@ describe('checkFullWordComponentName', () => {
   it('should report files where filename has less than three consonants', () => {
     const filename = 'menu.vue'
     const componentName = 'menu'
-    const minimalConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimalConsonantCount
-    checkFullWordComponentName(filename, minimalConsonantCount)
+    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
+    checkFullWordComponentName(filename, minimumConsonantCount)
     expect(reportFullWordComponentName().length).toBe(1)
     expect(reportFullWordComponentName()).toStrictEqual([{
       file: filename,
@@ -32,8 +32,8 @@ describe('checkFullWordComponentName', () => {
   it('should report files where filename has less than three consonants ', () => {
     const filename = 'nav.vue'
     const componentName = 'nav'
-    const minimalConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimalConsonantCount
-    checkFullWordComponentName(filename, minimalConsonantCount)
+    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
+    checkFullWordComponentName(filename, minimumConsonantCount)
     expect(reportFullWordComponentName().length).toBe(1)
     expect(reportFullWordComponentName()).toStrictEqual([{
       file: filename,

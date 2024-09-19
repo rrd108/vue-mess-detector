@@ -45,6 +45,6 @@ You can override through the new `override` option in `vue-mess-detector.json` â
 ```json
 {
   "override": {
-    "minimalConsonantCount": 8
+    "minimumConsonantCount": 8
   }
 }
