@@ -7,7 +7,8 @@ export const MEDIUM_HEALTH_THRESHOLD = 85
 export const OK_HEALTH_THRESHOLD = 95
 
 // In case you need to display all allowed rules/rulesets ⬇️
-export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...Object.values(RULES).flat()]
+export const FLAT_RULES = [...Object.values(RULES).flat()]
+export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...FLAT_RULES]
 
 // Override Config ~ Default
 export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {

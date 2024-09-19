@@ -6,7 +6,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
 import coerceRules from './helpers/coerceRules'
-import { FLAT_RULESETS_RULES } from './helpers/constants'
+import { FLAT_RULES, FLAT_RULESETS_RULES } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
@@ -173,4 +173,4 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
   )
 })
 
-export { analyze, FLAT_RULESETS_RULES }
+export { analyze, FLAT_RULES }

@@ -82,7 +82,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
         }
       })
     }
-    else if (item in ruleChecks) {
+    if (item in ruleChecks) {
       // If it's an individual rule, apply it directly
       ruleChecks[item]()
     }
