@@ -98,7 +98,6 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
 
   sortedKeys.forEach((key) => {
     output[key] = []
-
     offensesGrouped[key].forEach((offense, i) => {
       const isError = offense.message.includes('<bg_err>')
       // if health already has the file, push the error
