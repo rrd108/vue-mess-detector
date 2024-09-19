@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
-
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetTemplateSimpleExpression } from './templateSimpleExpression'
 
 describe('checkTemplateSimpleExpression', () => {
@@ -16,7 +16,8 @@ describe('checkTemplateSimpleExpression', () => {
     </template>`,
     } as SFCTemplateBlock
     const fileName = 'simple-expression.vue'
-    checkTemplateSimpleExpression(template, fileName)
+    const maxExpressionLength = DEFAULT_OVERRIDE_CONFIG.maxExpressionLength
+    checkTemplateSimpleExpression(template, fileName, maxExpressionLength)
     expect(reportTemplateSimpleExpression().length).toBe(0)
     expect(reportTemplateSimpleExpression()).toStrictEqual([])
   })
@@ -32,7 +33,8 @@ describe('checkTemplateSimpleExpression', () => {
     </template>`,
     } as SFCTemplateBlock
     const fileName = 'not-simple-expression.vue'
-    checkTemplateSimpleExpression(template, fileName)
+    const maxExpressionLength = DEFAULT_OVERRIDE_CONFIG.maxExpressionLength
+    checkTemplateSimpleExpression(template, fileName, maxExpressionLength)
     expect(reportTemplateSimpleExpression().length).toBe(1)
     expect(reportTemplateSimpleExpression()).toStrictEqual([{
       file: fileName,

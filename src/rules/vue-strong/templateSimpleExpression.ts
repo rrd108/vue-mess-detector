@@ -5,9 +5,7 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
-const MAX_EXPRESSION_LENGTH = 40 // completely rrd made-up number
-
-const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePath: string) => {
+const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePath: string, maxExpressionLength: number) => {
   if (!template) {
     return
   }
@@ -16,7 +14,7 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
   const matches = [...template.content.matchAll(regex)].map(match => match[1].trim())
 
   matches.forEach((expression) => {
-    if (expression.length > MAX_EXPRESSION_LENGTH) {
+    if (expression.length > maxExpressionLength) {
       const lineNumber = getLineNumber(template.content, expression)
       const firstPart = expression.split('\n').at(0)?.trim() || ''
       results.push({

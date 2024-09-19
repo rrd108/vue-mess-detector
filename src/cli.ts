@@ -52,7 +52,17 @@ getProjectRoot(pathArg || './src').then((projectRoot) => {
     fs.readFile(configPath, 'utf-8')
       .then((fileContent) => {
         const fileConfig = JSON.parse(fileContent)
-        config = { ...config, ...fileConfig }
+
+        config = {
+          ...config,
+          ...fileConfig,
+          override: {
+            ...config.override,
+            ...fileConfig.override,
+          },
+        }
+
+        console.log('config', config)
 
         // check if the file config has apply or ignore and set the corresponding flag to true
         conflictingFlags.applyFromFile = !!fileConfig.apply
