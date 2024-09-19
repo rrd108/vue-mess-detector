@@ -38,7 +38,7 @@ const checkFile = async (fileName: string, filePath: string) => {
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
-    
+
     checkRules(descriptor, filePath, _apply, _override)
     return `Analyzing ${filePath}...`
   }
