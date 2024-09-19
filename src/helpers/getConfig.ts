@@ -21,6 +21,7 @@ export const getConfig = async (projectRoot: string): Promise<Config> => {
   try {
     const fileContent = await fs.readFile(configPath, 'utf-8')
     const fileConfig = JSON.parse(fileContent)
+
     return {
       ...defaultConfig,
       ...fileConfig,

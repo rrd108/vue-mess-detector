@@ -2,6 +2,7 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { RuleSetType } from './rules/rules'
 import type { AnalyzeParams } from './types'
 import type { AnalyzeOutput } from './types/AnalyzeOutput'
+import type { OverrideConfig } from './types/Override'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
@@ -17,6 +18,7 @@ import { reportRules } from './rulesReport'
 let filesCount = 0
 let linesCount = 0
 let _apply: string[] = []
+let _override: OverrideConfig = {} as OverrideConfig
 
 // Directories to skip during analysis
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
@@ -36,7 +38,8 @@ const checkFile = async (fileName: string, filePath: string) => {
     if (fileName.endsWith('.ts') || fileName.endsWith('.js')) {
       descriptor.script = { content } as SFCScriptBlock
     }
-    checkRules(descriptor, filePath, _apply)
+    
+    checkRules(descriptor, filePath, _apply, _override)
     return `Analyzing ${filePath}...`
   }
 }
@@ -75,7 +78,6 @@ const walkAsync = async (dir: string) => {
   return overwievMessages
 }
 
-// TODO use values from config
 export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
   const projectRoot = await getProjectRoot(dir)
   const config = await getConfig(projectRoot)
@@ -87,6 +89,8 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   groupBy = groupBy || config.group
   level = level || config.level
   sortBy = sortBy || config.sort
+
+  _override = config.override
 
   const appliedRules = apply.filter(rule => !ignore.includes(rule))
 
@@ -139,7 +143,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   output.push({ info: `Found <bg_info>${filesCount}</bg_info> files` })
 
   // Generate the report and calculate code health
-  const { health, output: reportOutput } = reportRules(groupBy, sortBy, level)
+  const { health, output: reportOutput } = reportRules(groupBy, sortBy, level, config.override)
   const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
   if (!errors && !warnings) {

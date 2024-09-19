@@ -2,12 +2,14 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { execa } from 'execa'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
+import { DEFAULT_OVERRIDE_CONFIG } from './helpers/constants'
+import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
     const { stdout } = await execa('yarn', ['analyze'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+    expect(stdout).toContain(`👉 ${TEXT_WARN}Functions must be shorter than ${DEFAULT_OVERRIDE_CONFIG.maxFunctionSize} lines.${TEXT_RESET}`)
   })
 
   it('should execute without any flags with path', async () => {
@@ -195,5 +197,30 @@ describe('yarn analyze command with conflicting flags in configuration file', ()
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
       expect(error.exitCode).toBe(1)
     }
+  })
+})
+
+describe('yarn analyze command with override in configuration file', () => {
+  const projectRoot = path.resolve(__dirname, '..')
+  const configPath = path.join(projectRoot, 'vue-mess-detector.json')
+  const maxFunctionSize = 100
+  const config = JSON.stringify({
+    override: {
+      maxFunctionSize,
+    },
+  }, null, 2)
+
+  beforeAll(async () => {
+    await fs.writeFile(configPath, config)
+  })
+
+  afterAll(async () => {
+    await fs.unlink(configPath)
+  })
+
+  it('should execute with and use override', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--apply=functionSize'])
+    expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
+    expect(stdout).toContain(`👉 ${TEXT_WARN}Functions must be shorter than ${maxFunctionSize} lines.${TEXT_RESET}`)
   })
 })

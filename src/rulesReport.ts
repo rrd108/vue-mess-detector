@@ -1,4 +1,5 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
+import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
 import { reportApiWithoutMethod, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
@@ -6,13 +7,10 @@ import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportV
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
 
-export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel) => {
+export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel, override: OverrideConfig) => {
   const offensesGrouped: OffensesGrouped = {}
   const output: ReportOutput = {}
   const health: Health[] = []
-
-  // TODO const { ...limits } = overrideConfig[0] as OverrideConfig
-  const limits = {}
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {
@@ -68,7 +66,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportComputedSideEffects)
   processOffenses(reportDeepIndentation)
   processOffenses(reportElseCondition)
-  processOffenses(() => reportFunctionSize(limits.maxFunctionSize))
+  processOffenses(() => reportFunctionSize(override.maxFunctionSize))
   processOffenses(reportHtmlImageElements)
   processOffenses(reportHtmlLink)
   processOffenses(reportIfWithoutCurlyBraces)
@@ -79,7 +77,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportParameterCount)
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
-  processOffenses(() => reportScriptLength(limits.maxScriptLength))
+  processOffenses(() => reportScriptLength(override.maxScriptLength))
   processOffenses(reportShortVariableName)
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
