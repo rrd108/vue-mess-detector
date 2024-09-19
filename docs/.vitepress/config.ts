@@ -79,6 +79,7 @@ export default defineConfig({
                 { text: 'Function Size', link: '/rules/rrd/function-size' },
                 { text: 'HTML Image Elements', link: '/rules/rrd/html-image-elements' },
                 { text: 'HTML links', link: '/rules/rrd/html-link' },
+                { text: 'Huge Files', link: '/rules/rrd/huge-files' },
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },

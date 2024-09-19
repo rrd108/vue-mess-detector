@@ -1,3 +1,5 @@
+import { checkHugeFiles, reportHugeFiles, resetHugeFiles } from './hugeFiles'
+
 export * from './apiWithoutMethod'
 export * from './bigVif'
 export * from './bigVshow'
@@ -9,6 +11,7 @@ export * from './elseCondition'
 export * from './functionSize'
 export * from './htmlImageElements'
 export * from './htmlLink'
+export * from './hugeFiles'
 export * from './ifWithoutCurlyBraces'
 export * from './magicNumbers'
 export * from './nestedTernary'

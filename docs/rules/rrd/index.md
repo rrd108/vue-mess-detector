@@ -13,6 +13,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [Function Size](./function-size.md)
 - [HTML Image Elements](./html-image-elements.md)
 - [HTML links](./html-link.md)
+- [Huge Files](./huge-files.md)
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
 - [Nested Ternary](./nested-ternary.md)
