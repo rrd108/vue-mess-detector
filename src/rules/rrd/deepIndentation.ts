@@ -6,14 +6,13 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
-const MAX_TABS = 5
 const WHITESPACE_TO_TABS = 3
 
-const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string) => {
+const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string, maxTabs: number) => {
   if (!script) {
     return
   }
-  const regex = createRegExp(tab.times.atLeast(MAX_TABS).at.lineStart().or(whitespace.times.atLeast(WHITESPACE_TO_TABS * MAX_TABS).at.lineStart()), [global])
+  const regex = createRegExp(tab.times.atLeast(maxTabs).at.lineStart().or(whitespace.times.atLeast(WHITESPACE_TO_TABS * maxTabs).at.lineStart()), [global])
   const content = skipComments(script.content)
   const matches = content.match(regex)
 

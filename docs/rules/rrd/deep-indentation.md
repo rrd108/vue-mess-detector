@@ -47,3 +47,16 @@ function handleLoops() {
 ```
 
 In the refactored example, the deeply nested logic is moved into a separate function or even a custom composable (like useHandleCondition), which reduces the indentation level and makes the main code more concise and easier to read.
+
+## 🛠 How to override?
+
+The default max tabs for this rule is **5**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxTabs": 3
+  }
+}

@@ -1,5 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkDeepIndentation, reportDeepIndentation, resetDeepIndentation } from './deepIndentation'
 
 describe('checkDeepIndentation', () => {
@@ -10,13 +11,14 @@ describe('checkDeepIndentation', () => {
   it('should not report files without deep indentations', () => {
     let script = { content: '<script setup>\n\t\tconsole.log("Hello")\n</script>' } as SFCScriptBlock
     let fileName = 'no-deep-indentation-tab.vue'
-    checkDeepIndentation(script, fileName)
+    const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
+    checkDeepIndentation(script, fileName, maxTabs)
     expect(reportDeepIndentation().length).toBe(0)
     expect(reportDeepIndentation()).toStrictEqual([])
 
     script = { content: '<script setup>\n        console.log("Hello")\n</script>' } as SFCScriptBlock
     fileName = 'no-deep-indentation-space.vue'
-    checkDeepIndentation(script, fileName)
+    checkDeepIndentation(script, fileName, maxTabs)
     expect(reportDeepIndentation().length).toBe(0)
     expect(reportDeepIndentation()).toStrictEqual([])
   })
@@ -24,7 +26,8 @@ describe('checkDeepIndentation', () => {
   it('should report files with deep tab indentation', () => {
     const script = { content: '\t\t\t\t\tif (true) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-deep-indentation-tab.vue'
-    checkDeepIndentation(script, fileName)
+    const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
+    checkDeepIndentation(script, fileName, maxTabs)
     expect(reportDeepIndentation().length).toBe(1)
     expect(reportDeepIndentation()).toStrictEqual([{
       file: fileName,
@@ -37,7 +40,8 @@ describe('checkDeepIndentation', () => {
   it('should report files with deep space indentation', () => {
     const script = { content: '               if (true) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-deep-indentation-space.vue'
-    checkDeepIndentation(script, fileName)
+    const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
+    checkDeepIndentation(script, fileName, maxTabs)
     expect(reportDeepIndentation().length).toBe(1)
     expect(reportDeepIndentation()).toStrictEqual([{
       file: fileName,
