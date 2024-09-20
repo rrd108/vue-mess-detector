@@ -38,6 +38,7 @@ export const RULES = {
     'functionSize',
     'htmlImageElements',
     'htmlLink',
+    'hugeFiles',
     'ifWithoutCurlyBraces',
     'magicNumbers',
     'nestedTernary',
