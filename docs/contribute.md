@@ -1,13 +1,24 @@
-# Contributing to vue-mess-detector
+# 📚 Contributing to vue-mess-detector
 
-Thank you for your interest in contributing to vue-mess-detector! Follow these steps to get started and do not hesitate to ask questions if you need help.
+Thank you for your interest in contributing to `vue-mess-detector`! 
 
-In this guide we use `yarn` but if you prefer `npm`, `pnpm` or `bun`, you can use it instead.
+We welcome contributions of all kinds, here are some ways you can contribute:
+
+- **Create new rules**: Implement new rules to improve code quality.
+- **Improve existing rules**: Enhance or fix bugs in existing rules.
+- **Documentation**: Help make our docs clearer, more comprehensive, or fix typos.
+- **Bug fixes**: Address open issues or report new bugs you encounter.
+- **Feature requests**: Suggest new features or improvements.
+- **Code refactoring**: Help improve the project's codebase structure and efficiency.
+
+Whether you're new to open source or an experienced contributor, there's a way for you to help. Don't hesitate to ask questions if you need guidance.
 
 > [!IMPORTANT] IMPORTANT👨‍💻
 > Issues labeled as `good first issue` are marked for new contributors to jump in.
 
 ## 🛠️ Steps to Contribute
+
+In this guide we use `yarn` but if you prefer `npm`, `pnpm` or `bun`, you can use it instead.
 
 1. **Fork the Original Repo**
 
