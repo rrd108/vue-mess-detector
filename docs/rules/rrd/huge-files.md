@@ -1,6 +1,6 @@
 # Huge Files
 
-Checks if the combined length of script, template, and CSS in a Vue component is too long. The default threshold for a warning is 300 lines, and for an error is 500 lines.
+Checks if the combined length of script, template, and CSS in a Vue component is too long. The default threshold for a warning is **300** lines, and for an error is **twice that length**.
 
 ## ❓ Why it's good to follow this rule?
 
