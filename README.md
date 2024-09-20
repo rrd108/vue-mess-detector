@@ -1,6 +1,6 @@
 # Vue Mess Detector
 
-A static code analysis tool for detecting code smells and best practice violations in Vue.js and Nuxt.js projects.
+A comprehensive code analysis and quality assessment tool that provides actionable insights into code health, helping developers identify and resolve potential issues in Vue.js and Nuxt.js projects.
 
 ## 👥 Core Team
 

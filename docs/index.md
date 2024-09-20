@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Vue Mess Detector"
-  text: "Static code analysis for Vue and Nuxt"
-  tagline: A tool for detecting code smells and best practice violations in Vue and Nuxt projects.
+  text: "A comprehensive code analysis and quality assessment tool"
+  tagline: That provides actionable insights into code health, helping developers identify and resolve potential issues in Vue.js and Nuxt.js projects.
   actions:
     - theme: brand
       text: Get Started
