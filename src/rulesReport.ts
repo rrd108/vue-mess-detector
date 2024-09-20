@@ -78,7 +78,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
   processOffenses(() => reportScriptLength(override.maxScriptLength))
-  processOffenses(reportShortVariableName)
+  processOffenses(() => reportShortVariableName(override.minVariableName))
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
