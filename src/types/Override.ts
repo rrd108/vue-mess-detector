@@ -5,7 +5,7 @@ export interface OverrideConfig {
   readonly maxScriptLength: RuleConfig // rule: scriptLength
   readonly maxExpressionLength: RuleConfig // rule: templateSimpleExpression
   readonly maxComputedLength: RuleConfig // rule: simpleComputed
-  readonly minimalConsonantCount: RuleConfig // rule: fullwordComponentName
+  readonly minimumConsonantCount: RuleConfig // rule: fullwordComponentName
   readonly maxPropsCount: RuleConfig // rule: tooManyProps
   readonly minVariableName: RuleConfig // rule: shortVariableName
   readonly maxParameterCount: RuleConfig // rule: parameterCount

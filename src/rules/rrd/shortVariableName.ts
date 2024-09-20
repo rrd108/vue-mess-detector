@@ -4,11 +4,9 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
-export const MIN_VARIABLE_NAME = 4 // completely rrd made-up number
-
 const allowedVariableNames = ['i', 'key']
 
-const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string) => {
+const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string, minVariableName: number) => {
   if (!script) {
     return
   }
@@ -20,13 +18,13 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string)
   while ((match = regex.exec(script.content)) !== null) {
     const variable = match[1]
 
-    if (variable.length < MIN_VARIABLE_NAME && !allowedVariableNames.includes(variable)) {
+    if (variable.length < minVariableName && !allowedVariableNames.includes(variable)) {
       results.push({ filePath, message: `variable: <bg_warn>(${variable})</bg_warn>` })
     }
   }
 }
 
-const reportShortVariableName = () => {
+const reportShortVariableName = (minVariableName: number) => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
@@ -34,7 +32,7 @@ const reportShortVariableName = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ short variable names</text_info>`,
-        description: `👉 <text_warn>Variable names must have a minimum length of ${MIN_VARIABLE_NAME}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
         message: `${result.message} 🚨`,
       })
     })

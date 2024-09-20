@@ -2,7 +2,8 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { checkParameterCount, MAX_PARAMETER_COUNT, reportParameterCount, resetParameterCount } from './parameterCount'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
+import { checkParameterCount, reportParameterCount, resetParameterCount } from './parameterCount'
 
 describe('checkParameterCount', () => {
   beforeEach(() => {
@@ -20,9 +21,10 @@ describe('checkParameterCount', () => {
       `,
     } as SFCScriptBlock
     const filename = 'no-parameters.vue'
-    checkParameterCount(script, filename)
-    expect(reportParameterCount().length).toBe(0)
-    expect(reportParameterCount()).toStrictEqual([])
+    const maxParameterCount = DEFAULT_OVERRIDE_CONFIG.maxParameterCount
+    checkParameterCount(script, filename, maxParameterCount)
+    expect(reportParameterCount(maxParameterCount).length).toBe(0)
+    expect(reportParameterCount(maxParameterCount)).toStrictEqual([])
   })
 
   it('should report files where one function exceeds the recommended limit', () => {
@@ -40,12 +42,13 @@ describe('checkParameterCount', () => {
     const filename = 'one-parameter.vue'
     const funcName = 'dummyFuncTwo'
     const paramsCount = 4
-    checkParameterCount(script, filename)
-    expect(reportParameterCount().length).toBe(1)
-    expect(reportParameterCount()).toStrictEqual([{
+    const maxParameterCount = DEFAULT_OVERRIDE_CONFIG.maxParameterCount
+    checkParameterCount(script, filename, maxParameterCount)
+    expect(reportParameterCount(maxParameterCount).length).toBe(1)
+    expect(reportParameterCount(maxParameterCount)).toStrictEqual([{
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
     }])
   })
@@ -69,17 +72,18 @@ describe('checkParameterCount', () => {
       `,
     } as SFCScriptBlock
     const filename = 'multiple-parameters.vue'
-    checkParameterCount(script, filename)
-    expect(reportParameterCount().length).toBe(2)
-    expect(reportParameterCount()).toStrictEqual([{
+    const maxParameterCount = DEFAULT_OVERRIDE_CONFIG.maxParameterCount
+    checkParameterCount(script, filename, maxParameterCount)
+    expect(reportParameterCount(maxParameterCount).length).toBe(2)
+    expect(reportParameterCount(maxParameterCount)).toStrictEqual([{
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function <bg_warn>dummyFuncOne</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
     }, {
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${MAX_PARAMETER_COUNT}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `function <bg_warn>dummyFuncTwo</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
     }])
   })

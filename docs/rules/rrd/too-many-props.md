@@ -48,3 +48,16 @@ const props = defineProps({
 ```
 
 In the refactored example, the props are grouped into two objects, meta and interaction, reducing the overall number of props and making the component easier to manage and understand.
+
+## 🛠 How to override?
+
+The default max props count for this rule is **5**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxPropsCount": 7
+  }
+}

@@ -54,3 +54,16 @@ const total = computed(() => {
 const isWeekend = computed(() => today.getDay() === 0 || today.getDay() === 6)
 </script>
 ```
+
+## 🛠 How to override?
+
+The default max computed length for this rule is **5**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxComputedLength": 10
+  }
+}

@@ -33,3 +33,16 @@ const greetingMessage = 'Hello'
 ```
 
 In the refactored example, `userAge`, `maxItems`, and `greetingMessage` are descriptive and provide clear context, making the code easier to understand and maintain.
+
+## 🛠 How to override?
+
+The default max expression length for this rule is **40**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "minVariableName": 7
+  }
+}

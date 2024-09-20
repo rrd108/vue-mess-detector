@@ -24,7 +24,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     vifWithVfor: () => isVueFile && checkVifWithVfor(descriptor.template, filePath),
 
     // vue-strong
-    simpleComputed: () => checkSimpleComputed(script, filePath),
+    simpleComputed: () => checkSimpleComputed(script, filePath, override.maxComputedLength),
     componentFiles: () => isVueFile && checkComponentFiles(script, filePath),
     propNameCasing: () => isVueFile && checkPropNameCasing(script, filePath),
     componentFilenameCasing: () => isVueFile && checkComponentFilenameCasing(filePath),
@@ -32,7 +32,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     templateSimpleExpression: () => isVueFile && checkTemplateSimpleExpression(descriptor.template, filePath, override.maxExpressionLength),
     quotedAttributeValues: () => isVueFile && checkQuotedAttributeValues(descriptor, filePath),
     directiveShorthands: () => isVueFile && checkDirectiveShorthands(descriptor, filePath),
-    fullWordComponentName: () => isVueFile && checkFullWordComponentName(filePath),
+    fullWordComponentName: () => isVueFile && checkFullWordComponentName(filePath, override.minimumConsonantCount),
     multiAttributeElements: () => isVueFile && checkMultiAttributeElements(descriptor.template, filePath),
 
     // vue-recommended
@@ -60,12 +60,12 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     nestedTernary: () => checkNestedTernary(script, filePath),
     noPropDestructure: () => checkNoPropDestructure(script, filePath),
     noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
-    parameterCount: () => checkParameterCount(script, filePath),
+    parameterCount: () => checkParameterCount(script, filePath, override.maxParameterCount),
     plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
     propsDrilling: () => checkPropsDrilling(script, filePath),
     scriptLength: () => checkScriptLength(script, filePath, override.maxScriptLength),
-    shortVariableName: () => checkShortVariableName(script, filePath),
-    tooManyProps: () => checkTooManyProps(script, filePath),
+    shortVariableName: () => checkShortVariableName(script, filePath, override.minVariableName),
+    tooManyProps: () => checkTooManyProps(script, filePath, override.maxPropsCount),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
     noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
