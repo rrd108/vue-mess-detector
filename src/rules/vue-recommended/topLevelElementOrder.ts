@@ -2,8 +2,12 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 /* The opinionated correct order is: script, template, style */
 const checkTopLevelElementOrder = (source: string, filePath: string) => {
+  resetResults()
+
   // Apply `toString()` because it throws `indexOf` error otherwise
   const content = source.toString()
 
@@ -48,6 +52,4 @@ const reportTopLevelElementOrder = () => {
   return offenses
 }
 
-const resetTopLevelElementOrder = () => (results.length = 0)
-
-export { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder }
+export { checkTopLevelElementOrder, reportTopLevelElementOrder }

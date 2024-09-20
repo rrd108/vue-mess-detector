@@ -24,10 +24,14 @@ const ATTRIBUTE_ORDER = [
   'v-text',
 ]
 
+const resetResults = () => (results.length = 0)
+
 const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
 
   // Remove the <template> tags to avoid checking them
   const innerTemplate = template.content.replace(/<\/?template>/g, '')
@@ -79,6 +83,4 @@ const reportElementAttributeOrder = () => {
   return offenses
 }
 
-const resetElementAttributeOrder = () => (results.length = 0)
-
-export { checkElementAttributeOrder, reportElementAttributeOrder, resetElementAttributeOrder }
+export { checkElementAttributeOrder, reportElementAttributeOrder }

@@ -6,10 +6,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
@@ -42,6 +46,4 @@ const reportNoPropDestructure = () => {
   return offenses
 }
 
-const resetNoPropDestructure = () => (results.length = 0)
-
-export { checkNoPropDestructure, reportNoPropDestructure, resetNoPropDestructure }
+export { checkNoPropDestructure, reportNoPropDestructure }

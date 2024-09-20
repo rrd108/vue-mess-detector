@@ -6,10 +6,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkNoVarDeclaration = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   const regex = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g
   const content = skipComments(script.content)
@@ -40,6 +44,4 @@ const reportNoVarDeclaration = () => {
   return offenses
 }
 
-const resetNoVarDeclaration = () => (results.length = 0)
-
-export { checkNoVarDeclaration, reportNoVarDeclaration, resetNoVarDeclaration }
+export { checkNoVarDeclaration, reportNoVarDeclaration }

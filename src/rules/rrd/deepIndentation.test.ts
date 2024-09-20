@@ -1,13 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkDeepIndentation, reportDeepIndentation, resetDeepIndentation } from './deepIndentation'
+import { describe, expect, it } from 'vitest'
+import { checkDeepIndentation, reportDeepIndentation } from './deepIndentation'
 
 describe('checkDeepIndentation', () => {
-  beforeEach(() => {
-    resetDeepIndentation()
-  })
-
   it('should not report files without deep indentations', () => {
     let script = { content: '<script setup>\n\t\tconsole.log("Hello")\n</script>' } as SFCScriptBlock
     let fileName = 'no-deep-indentation-tab.vue'

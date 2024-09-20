@@ -5,10 +5,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePath: string, maxExpressionLength: number) => {
   if (!template) {
     return
   }
+
+  resetResults()
+
   // eslint-disable-next-line regexp/strict, regexp/no-super-linear-backtracking
   const regex = /{{\s*([\s\S]*?)\s*}}/g
   const matches = [...template.content.matchAll(regex)].map(match => match[1].trim())
@@ -41,6 +46,4 @@ const reportTemplateSimpleExpression = () => {
   return offenses
 }
 
-const resetTemplateSimpleExpression = () => (results.length = 0)
-
-export { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetTemplateSimpleExpression }
+export { checkTemplateSimpleExpression, reportTemplateSimpleExpression }

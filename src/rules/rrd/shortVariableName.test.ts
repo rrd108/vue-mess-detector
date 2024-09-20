@@ -1,15 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
-import { beforeEach, describe, expect, it } from 'vitest'
-
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkShortVariableName, reportShortVariableName, resetShortVariableName } from './shortVariableName'
+import { checkShortVariableName, reportShortVariableName } from './shortVariableName'
 
 describe('shortVariableName', () => {
-  beforeEach(() => {
-    resetShortVariableName()
-  })
-
   it('should not report files where variable names are not too short', () => {
     const script = {
       content: `

@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { checkMagicNumbers, reportMagicNumbers, resetMagicNumbers } from './magicNumbers'
+import { checkMagicNumbers, reportMagicNumbers } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {
-  beforeEach(() => {
-    resetMagicNumbers()
-  })
-
   it('should not report files without magic numbers', () => {
     const script = { content: '<script setup>\n\t\tconst vat = 27 \n</script>' } as SFCScriptBlock
     const fileName = 'no-magic-number.vue'
@@ -16,7 +12,7 @@ describe('checkMagicNumbers', () => {
   })
 
   it('should report files with magic number before a closing bracet', () => {
-    const script = { content: '\t\t\t\t\tif (ms < 100) { ... } else { ... }' } as SFCScriptBlock
+    const script = { content: 'if (ms < 100) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-magic-number-before-bracket.vue'
     checkMagicNumbers(script, fileName)
     expect(reportMagicNumbers().length).toBe(1)

@@ -1,13 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkComponentFiles, reportComponentFiles, resetComponentFiles } from './componentFiles'
+import { describe, expect, it } from 'vitest'
+import { checkComponentFiles, reportComponentFiles } from './componentFiles'
 
 describe('checkComponentFiles', () => {
-  beforeEach(() => {
-    resetComponentFiles()
-  })
-
   it('should not report files where each component is its own file', () => {
     const script = {
       content: `

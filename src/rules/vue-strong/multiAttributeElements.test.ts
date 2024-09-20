@@ -1,13 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkMultiAttributeElements, reportMultiAttributeElements, resetMultiAttributeElements } from './multiAttributeElements'
+import { describe, expect, it } from 'vitest'
+import { checkMultiAttributeElements, reportMultiAttributeElements } from './multiAttributeElements'
 
 describe('multiAttributeElements', () => {
-  beforeEach(() => {
-    resetMultiAttributeElements()
-  })
-
   it('should not report files where elements have single attributes', () => {
     const template = {
       content: `

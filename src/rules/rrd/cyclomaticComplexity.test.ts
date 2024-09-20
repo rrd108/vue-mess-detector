@@ -1,13 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkCyclomaticComplexity, reportCyclomaticComplexity, resetCyclomaticComplexity } from './cyclomaticComplexity'
+import { describe, expect, it } from 'vitest'
+import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './cyclomaticComplexity'
 
 describe('checkCyclomaticComplexity', () => {
-  beforeEach(() => {
-    resetCyclomaticComplexity()
-  })
-
   it('should not report simple scripts', () => {
     const content = `if (condition) {
         console.log("True");

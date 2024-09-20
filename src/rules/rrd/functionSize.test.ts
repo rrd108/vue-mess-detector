@@ -1,14 +1,10 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkFunctionSize, reportFunctionSize, resetFunctionSize } from './functionSize'
+import { checkFunctionSize, reportFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
-  beforeEach(() => {
-    resetFunctionSize()
-  })
-
   it('should not report files where functions do not exceed the recommended limit', () => {
     const script = {
       content: `

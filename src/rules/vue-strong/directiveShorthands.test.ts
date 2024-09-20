@@ -1,13 +1,8 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkDirectiveShorthands, reportDirectiveShorthands, resetDirectiveShorthands } from './directiveShorthands'
+import { describe, expect, it } from 'vitest'
+import { checkDirectiveShorthands, reportDirectiveShorthands } from './directiveShorthands'
 
 describe('checkDirectiveShorthands', () => {
-  beforeEach(() => {
-    resetDirectiveShorthands()
-  })
-
   it('should not report files where directive shorthands are used', () => {
     const template = `<template #header>
       <input

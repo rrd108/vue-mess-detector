@@ -6,10 +6,14 @@ import htmlTags from 'html-tags'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePath: string) => {
   if (!styles) {
     return
   }
+
+  resetResults()
 
   const elementSelectorRegex = /([a-z]+)\s*\{[^}]*\}/gi
 
@@ -42,6 +46,4 @@ const reportElementSelectorsWithScoped = () => {
   return offenses
 }
 
-const resetElementSelectorWithScoped = () => (results.length = 0)
-
-export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetElementSelectorWithScoped }
+export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped }

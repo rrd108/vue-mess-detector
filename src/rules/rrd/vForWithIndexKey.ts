@@ -6,10 +6,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
 
   const vForRegex = createRegExp('v-for="(', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ',', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ')', oneOrMore(whitespace), 'in', oneOrMore(whitespace), oneOrMore(wordChar).grouped(), [global])
   const keyRegex = createRegExp(':key="', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), '"', [global])
@@ -51,6 +55,4 @@ const reportVForWithIndexKey = () => {
   return offenses
 }
 
-const resetVForWithIndexKey = () => (results.length = 0)
-
-export { checkVForWithIndexKey, reportVForWithIndexKey, resetVForWithIndexKey }
+export { checkVForWithIndexKey, reportVForWithIndexKey }

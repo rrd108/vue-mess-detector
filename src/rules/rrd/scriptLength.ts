@@ -3,10 +3,15 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkScriptLength = (script: SFCScriptBlock | null, filePath: string, maxLength: number) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const lines = script.content.split('\n')
   if (lines.length > maxLength) {
     results.push({ filePath, message: `${lines.length > maxLength * 2 ? '<bg_err>' : '<bg_warn>'}(${
@@ -31,6 +36,4 @@ const reportScriptLength = (maxLength: number) => {
   return offenses
 }
 
-const resetScriptLength = () => (results.length = 0)
-
-export { checkScriptLength, reportScriptLength, resetScriptLength }
+export { checkScriptLength, reportScriptLength }

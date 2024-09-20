@@ -7,10 +7,14 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkPropsDrilling = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   // Matches `defineProps(['prop1', 'prop2', ...])` and extracts the prop names
   const regexDefineProps = createRegExp(
@@ -87,6 +91,4 @@ const reportPropsDrilling = () => {
   return offenses
 }
 
-const resetPropsDrilling = () => (results.length = 0)
-
-export { checkPropsDrilling, reportPropsDrilling, resetPropsDrilling }
+export { checkPropsDrilling, reportPropsDrilling }

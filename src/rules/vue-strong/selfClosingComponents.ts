@@ -6,10 +6,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
     return
   }
+
+  resetResults()
+
   const template = descriptor.template
 
   const regexSelfClosingComponent = createRegExp(
@@ -51,6 +56,4 @@ const reportSelfClosingComponents = () => {
   return offenses
 }
 
-const resetSelfClosingComponents = () => (results.length = 0)
-
-export { checkSelfClosingComponents, reportSelfClosingComponents, resetSelfClosingComponents }
+export { checkSelfClosingComponents, reportSelfClosingComponents }

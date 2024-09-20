@@ -5,12 +5,15 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: string, complexityModerate: number) => {
   if (!script) {
     return
   }
+  resetResults()
 
-  const COMPLEXITY_HIGH = 2 * complexityModerate
+    const COMPLEXITY_HIGH = 2 * complexityModerate
 
   const _if = createRegExp(wordBoundary, 'if', wordBoundary, [global, caseInsensitive])
   const _else = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
@@ -59,6 +62,4 @@ const reportCyclomaticComplexity = () => {
   return offenses
 }
 
-const resetCyclomaticComplexity = () => (results.length = 0)
-
-export { checkCyclomaticComplexity, reportCyclomaticComplexity, resetCyclomaticComplexity }
+export { checkCyclomaticComplexity, reportCyclomaticComplexity }

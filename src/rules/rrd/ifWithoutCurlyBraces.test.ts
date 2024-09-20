@@ -1,13 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetIfWithoutCurlyBraces } from './ifWithoutCurlyBraces'
+import { describe, expect, it } from 'vitest'
+import { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces } from './ifWithoutCurlyBraces'
 
 describe('ifWithoutCurlyBraces', () => {
-  beforeEach(() => {
-    resetIfWithoutCurlyBraces()
-  })
-
   it('should not report files where if statements use curly braces', () => {
     const script = {
       content: `

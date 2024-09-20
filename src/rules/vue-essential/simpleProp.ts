@@ -4,10 +4,15 @@ import { caseInsensitive, createRegExp, global } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp('defineProps([', [global, caseInsensitive])
   const matches = script.content.match(regex)
 
@@ -32,6 +37,4 @@ const reportSimpleProp = () => {
   return offenses
 }
 
-const resetSimpleProp = () => (results.length = 0)
-
-export { checkSimpleProp, reportSimpleProp, resetSimpleProp }
+export { checkSimpleProp, reportSimpleProp }

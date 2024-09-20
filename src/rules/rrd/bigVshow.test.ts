@@ -1,13 +1,9 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkBigVshow, reportBigVshow, resetBigVshow } from './bigVshow'
+import { describe, expect, it } from 'vitest'
+import { checkBigVshow, reportBigVshow } from './bigVshow'
 
 describe('checkBigVshow', () => {
-  beforeEach(() => {
-    resetBigVshow()
-  })
-
   it('should not report files with small v-show', () => {
     const template = {
       content: `<button v-show="isReady"></button>

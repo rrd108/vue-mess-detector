@@ -1,16 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-
+import { describe, expect, it } from 'vitest'
 import {
   checkComponentFilenameCasing,
   reportComponentFilenameCasing,
-  resetComponentFilenameCasing,
 } from './componentFilenameCasing'
 
 describe('checkComponentFilenameCasing', () => {
-  beforeEach(() => {
-    resetComponentFilenameCasing()
-  })
-
   it('ignores PascalCase component file names', () => {
     checkComponentFilenameCasing('components/AppHeader.vue')
     expect(reportComponentFilenameCasing().length).toBe(0)

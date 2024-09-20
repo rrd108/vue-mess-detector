@@ -79,6 +79,8 @@ const walkAsync = async (dir: string) => {
 }
 
 export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
+  filesCount = 0
+  linesCount = 0
   const projectRoot = await getProjectRoot(dir)
   const config = await getConfig(projectRoot)
 

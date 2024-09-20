@@ -6,14 +6,17 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkComplicatedConditions = (descriptor: SFCDescriptor, filePath: string, warningThreshold: number) => {
   const { script, template } = descriptor
   if (!script && !template) {
     return
   }
 
-  const ERROR_THRESHOLD = 2 * warningThreshold
+  resetResults()
 
+  const ERROR_THRESHOLD = 2 * warningThreshold
   const conditionalRegex = createRegExp(
     anyOf(
       'if',
@@ -79,6 +82,4 @@ const reportComplicatedConditions = () => {
   return offenses
 }
 
-const resetComplicatedConditions = () => (results.length = 0)
-
-export { checkComplicatedConditions, reportComplicatedConditions, resetComplicatedConditions }
+export { checkComplicatedConditions, reportComplicatedConditions }

@@ -1,13 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkPropsDrilling, reportPropsDrilling, resetPropsDrilling } from './propsDrilling'
+import { describe, expect, it } from 'vitest'
+import { checkPropsDrilling, reportPropsDrilling } from './propsDrilling'
 
 describe('checkPropsDrilling', () => {
-  beforeEach(() => {
-    resetPropsDrilling()
-  })
-
   it('should not report when a prop is used within the component', () => {
     const script = {
       content: `

@@ -4,12 +4,17 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const allowedVariableNames = ['i', 'key']
 
 const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string, minVariableName: number) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   // Regular expression to match variable names
   const regex = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g
 
@@ -40,6 +45,4 @@ const reportShortVariableName = (minVariableName: number) => {
   return offenses
 }
 
-const resetShortVariableName = () => (results.length = 0)
-
-export { checkShortVariableName, reportShortVariableName, resetShortVariableName }
+export { checkShortVariableName, reportShortVariableName }

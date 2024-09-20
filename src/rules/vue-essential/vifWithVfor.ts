@@ -6,10 +6,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
+
   const regex1 = createRegExp(
     '<',
     oneOrMore(charNotIn('>')),
@@ -56,6 +61,4 @@ const reportVifWithVfor = () => {
   return offenses
 }
 
-const resetVIfWithVFor = () => (results.length = 0)
-
-export { checkVifWithVfor, reportVifWithVfor, resetVIfWithVFor }
+export { checkVifWithVfor, reportVifWithVfor }

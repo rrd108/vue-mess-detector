@@ -1,15 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
-import { beforeEach, describe, expect, it } from 'vitest'
-
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkParameterCount, reportParameterCount, resetParameterCount } from './parameterCount'
+import { checkParameterCount, reportParameterCount } from './parameterCount'
 
 describe('checkParameterCount', () => {
-  beforeEach(() => {
-    resetParameterCount()
-  })
-
   it('should not report files where functions do not exceed the recommended limit', () => {
     const script = {
       content: `

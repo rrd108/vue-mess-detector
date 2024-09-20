@@ -1,14 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkTooManyProps, reportTooManyProps, resetTooManyProps } from './tooManyProps'
+import { checkTooManyProps, reportTooManyProps } from './tooManyProps'
 
 describe('checkTooManyProps', () => {
-  beforeEach(() => {
-    resetTooManyProps()
-  })
-
   it('should not report files with less then or exactly 5 props without annotation', () => {
     const script = { content: `<script setup>defineProps({title: String, likes: Number})\n</script>` } as SFCScriptBlock
     const fileName = '2-props-no-annotate.vue'

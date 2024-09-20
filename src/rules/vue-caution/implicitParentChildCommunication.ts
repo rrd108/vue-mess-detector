@@ -6,10 +6,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const propsRegex = /defineProps\(([^)]+)\)/
   const vModelRegex = /v-model\s*=\s*"([^"]+)"/
   const parentRegex = createRegExp(exactly('$parent').or('getCurrentInstance'), [global])
@@ -61,6 +66,4 @@ const reportImplicitParentChildCommunication = () => {
   return offenses
 }
 
-const resetImplicitParentChildCommunicationFiles = () => (results.length = 0)
-
-export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetImplicitParentChildCommunicationFiles }
+export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication }

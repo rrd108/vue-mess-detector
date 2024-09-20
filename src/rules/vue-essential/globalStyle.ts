@@ -4,10 +4,15 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
   if (!styles) {
     return
   }
+
+  resetResults()
+
   styles.forEach((style) => {
     if (!style.scoped) {
       results.push({ filePath, message: `<bg_err>global style</bg_err> used` })
@@ -31,6 +36,4 @@ const reportGlobalStyle = () => {
   return offenses
 }
 
-const resetGlobalStyle = () => (results.length = 0)
-
-export { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle }
+export { checkGlobalStyle, reportGlobalStyle }

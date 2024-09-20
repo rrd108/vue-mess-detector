@@ -4,10 +4,6 @@ import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkBigVif, reportBigVif, resetBigVif } from './bigVif'
 
 describe('checkBigVif', () => {
-  beforeEach(() => {
-    resetBigVif()
-  })
-
   it('should not report files with small v-if', () => {
     const template = {
       content: `<button v-if="isReady"></button>

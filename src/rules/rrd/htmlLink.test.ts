@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkHtmlLink, reportHtmlLink, resetHtmlLink } from './htmlLink'
+import { describe, expect, it } from 'vitest'
+import { checkHtmlLink, reportHtmlLink } from './htmlLink'
 
 describe('checkHtmlLink', () => {
-  beforeEach(() => {
-    resetHtmlLink()
-  })
-
   it('should not report files without HTML links', () => {
     const template = {
       content: `<template>

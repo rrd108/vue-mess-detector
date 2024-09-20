@@ -3,7 +3,11 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: boolean, warningThreshold: number) => {
+  resetResults()
+
   const ERROR_THRESHOLD = 2 * warningThreshold
 
   let totalLines = 0
@@ -47,8 +51,4 @@ const reportHugeFiles = () => {
   return offenses
 }
 
-const resetHugeFiles = () => {
-  results.length = 0
-}
-
-export { checkHugeFiles, reportHugeFiles, resetHugeFiles }
+export { checkHugeFiles, reportHugeFiles }

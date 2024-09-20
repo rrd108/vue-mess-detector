@@ -4,10 +4,15 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkPlainScript = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script || script.setup) {
     return
   }
+
+  resetResults()
+
   results.push({ filePath, message: `<bg_warn>Plain <script> block</bg_warn> found` })
 }
 
@@ -27,6 +32,4 @@ const reportPlainScript = () => {
   return offenses
 }
 
-const resetPlainScript = () => (results.length = 0)
-
-export { checkPlainScript, reportPlainScript, resetPlainScript }
+export { checkPlainScript, reportPlainScript }

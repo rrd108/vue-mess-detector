@@ -5,10 +5,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkNoInlineStyles = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
 
   const regex = /style\s*=\s*['"][^'"]*['"]/g
 
@@ -40,6 +44,4 @@ const reportNoInlineStyles = () => {
   return offenses
 }
 
-const resetNoInlineStyles = () => (results.length = 0)
-
-export { checkNoInlineStyles, reportNoInlineStyles, resetNoInlineStyles }
+export { checkNoInlineStyles, reportNoInlineStyles }
