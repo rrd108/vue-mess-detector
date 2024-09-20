@@ -73,3 +73,16 @@ else {
 ```
 
 In the refactored example, the complex nested logic is moved into separate functions or composables (`handleCondition1`, `handleCondition2`), reducing the overall cyclomatic complexity of the script. This makes the code more modular, easier to test, and maintain.
+
+## 🛠 How to override?
+
+The default complexity moderate threshold for this rule is **5**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "complexityModerate": 10
+  }
+}

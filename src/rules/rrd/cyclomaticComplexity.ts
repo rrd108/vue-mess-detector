@@ -5,13 +5,13 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
-const COMPLEXITY_MODERATE = 5
-const COMPLEXITY_HIGH = 2 * COMPLEXITY_MODERATE
-
-const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: string) => {
+const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: string, complexityModerate: number) => {
   if (!script) {
     return
   }
+
+  const COMPLEXITY_HIGH = 2 * complexityModerate
+
   const _if = createRegExp(wordBoundary, 'if', wordBoundary, [global, caseInsensitive])
   const _else = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
   const _for = createRegExp(wordBoundary, 'for', wordBoundary, [global, caseInsensitive])
@@ -33,7 +33,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
     + (_whileCount?.length || 0)
     + (_caseCount?.length || 0)
 
-  if (cyclomaticComplexity > COMPLEXITY_MODERATE) {
+  if (cyclomaticComplexity > complexityModerate) {
     results.push({ filePath, message: `Cyclomatic complexity is ${cyclomaticComplexity > COMPLEXITY_HIGH ? `<bg_err>very high` : `<bg_warn>high`} (${cyclomaticComplexity})${cyclomaticComplexity > COMPLEXITY_HIGH ? `</bg_err>` : `</bg_warn>`}` })
   }
 }

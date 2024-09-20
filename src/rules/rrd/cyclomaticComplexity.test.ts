@@ -1,5 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity, resetCyclomaticComplexity } from './cyclomaticComplexity'
 
 describe('checkCyclomaticComplexity', () => {
@@ -13,7 +14,8 @@ describe('checkCyclomaticComplexity', () => {
       }`.repeat(4)
     const script = { content } as SFCScriptBlock
     const fileName = 'simple.vue'
-    checkCyclomaticComplexity(script, fileName)
+    const complexityModerate = DEFAULT_OVERRIDE_CONFIG.complexityModerate
+    checkCyclomaticComplexity(script, fileName, complexityModerate)
     expect(reportCyclomaticComplexity().length).toBe(0)
     expect(reportCyclomaticComplexity()).toStrictEqual([])
   })
@@ -24,7 +26,8 @@ describe('checkCyclomaticComplexity', () => {
       }`.repeat(6)
     const script = { content } as SFCScriptBlock
     const fileName = 'moderate.vue'
-    checkCyclomaticComplexity(script, fileName)
+    const complexityModerate = DEFAULT_OVERRIDE_CONFIG.complexityModerate
+    checkCyclomaticComplexity(script, fileName, complexityModerate)
     expect(reportCyclomaticComplexity().length).toBe(1)
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
@@ -40,7 +43,8 @@ describe('checkCyclomaticComplexity', () => {
       }`.repeat(11)
     const script = { content } as SFCScriptBlock
     const fileName = 'high.vue'
-    checkCyclomaticComplexity(script, fileName)
+    const complexityModerate = DEFAULT_OVERRIDE_CONFIG.complexityModerate
+    checkCyclomaticComplexity(script, fileName, complexityModerate)
     expect(reportCyclomaticComplexity().length).toBe(1)
     expect(reportCyclomaticComplexity()).toStrictEqual([{
       file: fileName,
