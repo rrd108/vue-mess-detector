@@ -1,5 +1,6 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkComplicatedConditions, reportComplicatedConditions, resetComplicatedConditions } from './complicatedConditions'
 
 describe('checkComplicatedConditions', () => {
@@ -26,7 +27,8 @@ describe('checkComplicatedConditions', () => {
       },
     } as SFCDescriptor
     const fileName = 'simpleConditions.vue'
-    checkComplicatedConditions(descriptor, fileName)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
+    checkComplicatedConditions(descriptor, fileName, warningThreshold)
     expect(reportComplicatedConditions().length).toBe(0)
     expect(reportComplicatedConditions()).toStrictEqual([])
   })
@@ -42,7 +44,8 @@ describe('checkComplicatedConditions', () => {
       },
     } as SFCDescriptor
     const fileName = 'complicatedConditions-warning.vue'
-    checkComplicatedConditions(descriptor, fileName)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
+    checkComplicatedConditions(descriptor, fileName, warningThreshold)
     expect(reportComplicatedConditions().length).toBe(1)
     expect(reportComplicatedConditions()[0].message).toContain('script has a complicated condition with 6 blocks')
   })
@@ -58,7 +61,8 @@ describe('checkComplicatedConditions', () => {
       },
     } as SFCDescriptor
     const fileName = 'complicatedConditions-error.vue'
-    checkComplicatedConditions(descriptor, fileName)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
+    checkComplicatedConditions(descriptor, fileName, warningThreshold)
     expect(reportComplicatedConditions().length).toBe(1)
     expect(reportComplicatedConditions()[0].message).toContain('template has a complicated condition with 12 blocks')
   })
@@ -72,7 +76,8 @@ describe('checkComplicatedConditions', () => {
       },
     } as SFCDescriptor
     const fileName = 'complicatedTernary.vue'
-    checkComplicatedConditions(descriptor, fileName)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
+    checkComplicatedConditions(descriptor, fileName, warningThreshold)
     expect(reportComplicatedConditions().length).toBe(1)
     expect(reportComplicatedConditions()[0].message).toContain('script has a complicated condition with 6 blocks')
   })
@@ -93,7 +98,8 @@ describe('checkComplicatedConditions', () => {
       },
     } as SFCDescriptor
     const fileName = 'multipleComplicatedConditions.vue'
-    checkComplicatedConditions(descriptor, fileName)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
+    checkComplicatedConditions(descriptor, fileName, warningThreshold)
     expect(reportComplicatedConditions().length).toBe(2)
     expect(reportComplicatedConditions()).toStrictEqual([
       {
