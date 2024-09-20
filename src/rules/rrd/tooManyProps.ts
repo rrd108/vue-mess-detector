@@ -6,9 +6,7 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
-const TOO_MANY_PROPS = 5
-
-const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string) => {
+const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxPropsCount: number) => {
   if (!script) {
     return
   }
@@ -17,7 +15,7 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string) => {
   const matches = content.match(regex)
   if (matches?.length) {
     const propsCount = matches[0].split(',').length
-    if (propsCount > TOO_MANY_PROPS) {
+    if (propsCount > maxPropsCount) {
       results.push({ filePath, message: `props found <bg_err>(${propsCount})</bg_err>` })
     }
   }

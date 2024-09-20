@@ -1,6 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
 
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkTooManyProps, reportTooManyProps, resetTooManyProps } from './tooManyProps'
 
 describe('checkTooManyProps', () => {
@@ -11,7 +12,8 @@ describe('checkTooManyProps', () => {
   it('should not report files with less then or exactly 5 props without annotation', () => {
     const script = { content: `<script setup>defineProps({title: String, likes: Number})\n</script>` } as SFCScriptBlock
     const fileName = '2-props-no-annotate.vue'
-    checkTooManyProps(script, fileName)
+    const maxPropsCount = DEFAULT_OVERRIDE_CONFIG.maxPropsCount
+    checkTooManyProps(script, fileName, maxPropsCount)
     expect(reportTooManyProps().length).toBe(0)
     expect(reportTooManyProps()).toStrictEqual([])
 
@@ -19,7 +21,7 @@ describe('checkTooManyProps', () => {
       content: `<script setup>\nconst props = defineProps({\n\ttitle: String,\n\tlikes: Number})\n</script>`,
     } as SFCScriptBlock
     const fileName2 = '2-props-newline-no-annotate.vue'
-    checkTooManyProps(script2, fileName2)
+    checkTooManyProps(script2, fileName2, maxPropsCount)
     expect(reportTooManyProps().length).toBe(0)
     expect(reportTooManyProps()).toStrictEqual([])
   })
@@ -27,7 +29,8 @@ describe('checkTooManyProps', () => {
   it('should not report files with less then or exactly 5 props with annotations', () => {
     const script = { content: `<script setup>\ndefineProps<{title: string,likes: number}>()\n</script>` } as SFCScriptBlock
     const fileName = '2-props-annotate.vue'
-    checkTooManyProps(script, fileName)
+    const maxPropsCount = DEFAULT_OVERRIDE_CONFIG.maxPropsCount
+    checkTooManyProps(script, fileName, maxPropsCount)
     expect(reportTooManyProps().length).toBe(0)
     expect(reportTooManyProps()).toStrictEqual([])
   })
@@ -37,7 +40,8 @@ describe('checkTooManyProps', () => {
       content: `<script setup>\ndefineProps({title: String,likes: Number,\nlink: String, shares: Number, show: Boolean, published: Date})\n</script>`,
     } as SFCScriptBlock
     const fileName = '6-props-no-annotate.vue'
-    checkTooManyProps(script, fileName)
+    const maxPropsCount = DEFAULT_OVERRIDE_CONFIG.maxPropsCount
+    checkTooManyProps(script, fileName, maxPropsCount)
     expect(reportTooManyProps().length).toBe(1)
     expect(reportTooManyProps()).toStrictEqual([{
       file: fileName,
@@ -52,7 +56,8 @@ describe('checkTooManyProps', () => {
       content: `<script setup>\nconst props = defineProps<{\n\ttitle: String,\n\tlikes: Number,\n\tlink: String,\n\tshares: Number,\n\tshow: Boolean,\n\tpublished: Date}>()\n</script>`,
     } as SFCScriptBlock
     const fileName = '6-props-annotate.vue'
-    checkTooManyProps(script, fileName)
+    const maxPropsCount = DEFAULT_OVERRIDE_CONFIG.maxPropsCount
+    checkTooManyProps(script, fileName, maxPropsCount)
     expect(reportTooManyProps().length).toBe(1)
     expect(reportTooManyProps()).toStrictEqual([{
       file: fileName,
