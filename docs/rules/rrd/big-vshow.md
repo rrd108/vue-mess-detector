@@ -48,3 +48,16 @@ Move out the `v-show` block to its own component.
   <ItemsTable v-show="!isReady" :data="items" />
 </template>
 ```
+
+## 🛠 How to override?
+
+The default max v-show lines for this rule is **10**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxVshowLines": 15
+  }
+}

@@ -1,5 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkBigVshow, reportBigVshow, resetBigVshow } from './bigVshow'
 
 describe('checkBigVshow', () => {
@@ -16,7 +17,8 @@ describe('checkBigVshow', () => {
       </div>`,
     } as SFCTemplateBlock
     const fileName = 'bigVshow.vue'
-    checkBigVshow(template, fileName)
+    const maxVshowLines = DEFAULT_OVERRIDE_CONFIG.maxVshowLines
+    checkBigVshow(template, fileName, maxVshowLines)
     expect(reportBigVshow().length).toBe(0)
     expect(reportBigVshow()).toStrictEqual([])
   })
@@ -39,7 +41,8 @@ describe('checkBigVshow', () => {
       </div>`,
     } as SFCTemplateBlock
     const fileName = 'bigVshow-problem.vue'
-    checkBigVshow(template, fileName)
+    const maxVshowLines = DEFAULT_OVERRIDE_CONFIG.maxVshowLines
+    checkBigVshow(template, fileName, maxVshowLines)
     expect(reportBigVshow().length).toBe(1)
     expect(reportBigVshow()).toStrictEqual([{
       file: fileName,

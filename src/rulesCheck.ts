@@ -46,7 +46,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // rrd
     apiWithoutMethod: () => getIsNuxt() && checkApiWithoutMethod(descriptor, filePath),
     bigVif: () => checkBigVif(descriptor.template, filePath),
-    bigVShow: () => checkBigVshow(descriptor.template, filePath),
+    bigVShow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
     complicatedConditions: () => checkComplicatedConditions(descriptor, filePath),
     cyclomaticComplexity: () => checkCyclomaticComplexity(script, filePath),
     computedSideEffects: () => checkComputedSideEffects(script, filePath),

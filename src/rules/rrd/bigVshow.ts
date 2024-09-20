@@ -4,12 +4,10 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
-const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string) => {
+const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string, maxVshowLines: number) => {
   if (!template) {
     return
   }
-
-  const MAX_VSHOW_LINES = 10
 
   // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/optimal-quantifier-concatenation
   const vifRegex = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi
@@ -19,14 +17,14 @@ const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string) => {
     const lineCount = vifMatch.split('\n').length
 
     const lineNumber = getLineNumber(template.content, vifMatch)
-    if (lineCount > MAX_VSHOW_LINES * 2) {
+    if (lineCount > maxVshowLines * 2) {
       results.push({
         filePath,
         message: `line #${lineNumber} <bg_err>has a v-show with ${lineCount} lines</bg_err>`,
       })
       return
     }
-    if (lineCount > MAX_VSHOW_LINES) {
+    if (lineCount > maxVshowLines) {
       results.push({
         filePath,
         message: `line #${lineNumber} <bg_warn>has a v-show with ${lineCount} lines</bg_warn>`,
