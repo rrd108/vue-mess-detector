@@ -47,3 +47,16 @@ const dummyFuncTwo = ({ param1, param2, param3, param4 }) => {
 ```
 
 This refactor also combines parameters into an object, reducing the cognitive load when using the function. This approach can help avoid the issue of excessive parameters while keeping the codebase clean and maintainable.
+
+## 🛠 How to override?
+
+The default max parameter count for this rule is **3**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxParameterCount": 7
+  }
+}

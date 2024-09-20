@@ -74,7 +74,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportNestedTernary)
   processOffenses(reportNoPropDestructure)
   processOffenses(reportNoVarDeclaration)
-  processOffenses(reportParameterCount)
+  processOffenses(() => reportParameterCount(override.maxParameterCount))
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
   processOffenses(() => reportScriptLength(override.maxScriptLength))
