@@ -1,7 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 
-import { char, createRegExp, maybe, oneOrMore } from 'magic-regexp'
+import { char, charNotIn, createRegExp, maybe, oneOrMore } from 'magic-regexp'
 import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
@@ -10,7 +10,7 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxP
   if (!script) {
     return
   }
-  const regex = createRegExp('defineProps', maybe('<'), maybe('('), '{', oneOrMore(char), '}', ['g', 's'])
+  const regex = createRegExp('defineProps', maybe('<'), maybe('('), '{', oneOrMore(charNotIn('}')), '}', ['g', 's'])
   const content = skipComments(script.content)
   const matches = content.match(regex)
   if (matches?.length) {
@@ -20,6 +20,8 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxP
     }
   }
 }
+
+const resetTooManyProps = () => (results.length = 0)
 
 const reportTooManyProps = () => {
   const offenses: Offense[] = []
@@ -36,7 +38,5 @@ const reportTooManyProps = () => {
   }
   return offenses
 }
-
-const resetTooManyProps = () => (results.length = 0)
 
 export { checkTooManyProps, reportTooManyProps, resetTooManyProps }
