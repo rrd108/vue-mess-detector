@@ -13,7 +13,7 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
   }
   resetResults()
 
-    const COMPLEXITY_HIGH = 2 * complexityModerate
+  const COMPLEXITY_HIGH = 2 * complexityModerate
 
   const _if = createRegExp(wordBoundary, 'if', wordBoundary, [global, caseInsensitive])
   const _else = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])

@@ -1,5 +1,5 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { checkMagicNumbers, reportMagicNumbers } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {

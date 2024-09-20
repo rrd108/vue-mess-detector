@@ -11,7 +11,7 @@ const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string, maxV
   }
 
   resetResults()
-  
+
   // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/optimal-quantifier-concatenation
   const vifRegex = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi
   const vshowMatches = template.content.match(vifRegex) || []

@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkCyclomaticComplexity, reportCyclomaticComplexity } from './cyclomaticComplexity'
 
 describe('checkCyclomaticComplexity', () => {
