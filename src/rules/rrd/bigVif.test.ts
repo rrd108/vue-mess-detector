@@ -1,5 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkBigVif, reportBigVif, resetBigVif } from './bigVif'
 
 describe('checkBigVif', () => {
@@ -16,7 +17,8 @@ describe('checkBigVif', () => {
       </div>`,
     } as SFCTemplateBlock
     const fileName = 'bigVif.vue'
-    checkBigVif(template, fileName)
+    const maxVifLines = DEFAULT_OVERRIDE_CONFIG.maxVifLines
+    checkBigVif(template, fileName, maxVifLines)
     expect(reportBigVif().length).toBe(0)
     expect(reportBigVif()).toStrictEqual([])
   })
@@ -39,7 +41,8 @@ describe('checkBigVif', () => {
       </div>`,
     } as SFCTemplateBlock
     const fileName = 'bigVif-problem.vue'
-    checkBigVif(template, fileName)
+    const maxVifLines = DEFAULT_OVERRIDE_CONFIG.maxVifLines
+    checkBigVif(template, fileName, maxVifLines)
     expect(reportBigVif().length).toBe(1)
     expect(reportBigVif()).toStrictEqual([{
       file: fileName,
