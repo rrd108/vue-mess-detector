@@ -1,5 +1,6 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkHugeFiles, reportHugeFiles, resetHugeFiles } from './hugeFiles'
 
 describe('checkHugeFiles', () => {
@@ -41,7 +42,8 @@ describe('checkHugeFiles', () => {
         attrs: {},
       }],
     } as SFCDescriptor
-    checkHugeFiles(smallFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(smallFile, filePath, true, warningThreshold)
     expect(reportHugeFiles().length).toBe(0)
     expect(reportHugeFiles()).toStrictEqual([])
   })
@@ -53,7 +55,8 @@ describe('checkHugeFiles', () => {
         content: 'const a = 1\nconst b = 2\nconst c = 3\n'.repeat(100),
       },
     } as SFCDescriptor
-    checkHugeFiles(smallNotVueFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(smallNotVueFile, filePath, true, warningThreshold)
     expect(reportHugeFiles().length).toBe(0)
     expect(reportHugeFiles()).toStrictEqual([])
   })
@@ -92,7 +95,8 @@ describe('checkHugeFiles', () => {
       }],
     } as SFCDescriptor
     const filePath = 'large-file.vue'
-    checkHugeFiles(largeFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(largeFile, filePath, true, warningThreshold)
     expect(reportHugeFiles().length).toBe(1)
     expect(reportHugeFiles()).toStrictEqual([{
       file: filePath,
@@ -109,7 +113,8 @@ describe('checkHugeFiles', () => {
       },
     } as SFCDescriptor
     const filePath = 'large-file.ts'
-    checkHugeFiles(largeNotVueFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(largeNotVueFile, filePath, true, warningThreshold)
     expect(reportHugeFiles().length).toBe(1)
     expect(reportHugeFiles()).toStrictEqual([{
       file: filePath,
@@ -152,7 +157,8 @@ describe('checkHugeFiles', () => {
       }],
     } as SFCDescriptor
     const filePath = 'huge.vue'
-    checkHugeFiles(hugeFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(hugeFile, filePath, true, warningThreshold)
     const result = reportHugeFiles()
     expect(result.length).toBe(1)
     expect(result).toStrictEqual([{
@@ -170,7 +176,8 @@ describe('checkHugeFiles', () => {
       },
     } as SFCDescriptor
     const filePath = 'huge-file.ts'
-    checkHugeFiles(hugeNotVueFile, filePath, true)
+    const warningThreshold = DEFAULT_OVERRIDE_CONFIG.maxFileSize
+    checkHugeFiles(hugeNotVueFile, filePath, true, warningThreshold)
     expect(reportHugeFiles().length).toBe(1)
     expect(reportHugeFiles()).toStrictEqual([{
       file: filePath,

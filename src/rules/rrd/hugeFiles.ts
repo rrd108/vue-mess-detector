@@ -3,10 +3,9 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
-const WARNING_THRESHOLD = 300
-const ERROR_THRESHOLD = 2 * WARNING_THRESHOLD
+const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: boolean, warningThreshold: number) => {
+  const ERROR_THRESHOLD = 2 * warningThreshold
 
-const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: boolean) => {
   let totalLines = 0
 
   if (isVueFile) {
@@ -24,7 +23,7 @@ const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: 
       message: `<bg_err>huge file (${totalLines} lines)</bg_err>`,
     })
   }
-  else if (totalLines > WARNING_THRESHOLD) {
+  else if (totalLines > warningThreshold) {
     results.push({
       filePath,
       message: `<bg_warn>large file (${totalLines} lines)</bg_warn>`,

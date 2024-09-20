@@ -25,4 +25,5 @@ export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {
   warningThreshold: 4,
   maxFunctionSize: 20,
   maxScriptLength: 100,
+  maxFileSize: 300,
 }

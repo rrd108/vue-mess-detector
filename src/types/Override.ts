@@ -14,4 +14,5 @@ export interface OverrideConfig {
   readonly maxVifLines: RuleConfig // rule: bigVif
   readonly complexityModerate: RuleConfig // rule: cyclomaticComplexity
   readonly warningThreshold: RuleConfig // rule: complicatedConditions
+  readonly maxFileSize: RuleConfig // rule: hugeFiles
 }

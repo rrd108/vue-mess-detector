@@ -21,3 +21,16 @@ A Vue component file with more than 300 lines of combined script, template, and 
 - Extract complex logic into separate composable functions.
 - Move styles to separate CSS files or use a CSS-in-JS solution.
 - Consider using mixins or extending base components for shared functionality.
+
+## 🛠 How to override?
+
+The default max file size for this rule is **300** lines for the warning threshold, and **twice that value** for the error threshold.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "maxFileSize": 400
+  }
+}
