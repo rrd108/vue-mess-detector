@@ -15,8 +15,6 @@ const checkDeepIndentation = (script: SFCScriptBlock | null, filePath: string, m
     return
   }
 
-  resetResults()
-
   const regex = createRegExp(tab.times.atLeast(maxTabs).at.lineStart().or(whitespace.times.atLeast(WHITESPACE_TO_TABS * maxTabs).at.lineStart()), [global])
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -45,7 +43,9 @@ const reportDeepIndentation = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkDeepIndentation, reportDeepIndentation }
+export { checkDeepIndentation, reportDeepIndentation, resetResults }

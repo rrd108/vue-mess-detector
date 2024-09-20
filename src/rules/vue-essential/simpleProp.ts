@@ -11,8 +11,6 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   const regex = createRegExp('defineProps([', [global, caseInsensitive])
   const matches = script.content.match(regex)
 
@@ -34,7 +32,9 @@ const reportSimpleProp = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkSimpleProp, reportSimpleProp }
+export { checkSimpleProp, reportSimpleProp, resetResults }

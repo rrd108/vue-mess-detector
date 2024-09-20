@@ -22,8 +22,6 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string, ma
     return
   }
 
-  resetResults()
-
   // regular expression to match both regular and arrow functions and capture their params
   const regex = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g
   let match
@@ -55,7 +53,9 @@ const reportParameterCount = (maxParameterCount: number) => {
     })
   }
 
+  resetResults()
+
   return offenses
 }
 
-export { checkParameterCount, reportParameterCount }
+export { checkParameterCount, reportParameterCount, resetResults }

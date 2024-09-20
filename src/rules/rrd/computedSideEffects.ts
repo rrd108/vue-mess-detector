@@ -12,8 +12,6 @@ const checkComputedSideEffects = (script: SFCScriptBlock | null, filePath: strin
     return
   }
 
-  resetResults()
-
   const computedRegex = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g
   // eslint-disable-next-line regexp/no-unused-capturing-group
   const sideEffectRegex = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/
@@ -47,7 +45,9 @@ const reportComputedSideEffects = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkComputedSideEffects, reportComputedSideEffects }
+export { checkComputedSideEffects, reportComputedSideEffects, resetResults }

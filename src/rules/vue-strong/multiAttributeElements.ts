@@ -11,8 +11,6 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
     return
   }
 
-  resetResults()
-
   // Regex to match elements with attributes
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const elementRegex = /<(\w+)([^>]*)>/g
@@ -50,7 +48,9 @@ const reportMultiAttributeElements = () => {
     })
   }
 
+  resetResults()
+
   return offenses
 }
 
-export { checkMultiAttributeElements, reportMultiAttributeElements }
+export { checkMultiAttributeElements, reportMultiAttributeElements, resetResults }

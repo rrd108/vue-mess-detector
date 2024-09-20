@@ -13,8 +13,6 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string, ma
     return
   }
 
-  resetResults()
-
   // eslint-disable-next-line regexp/prefer-w, regexp/strict, regexp/no-useless-flag
   const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
 
@@ -47,7 +45,9 @@ const reportSimpleComputed = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkSimpleComputed, reportSimpleComputed }
+export { checkSimpleComputed, reportSimpleComputed, resetResults }

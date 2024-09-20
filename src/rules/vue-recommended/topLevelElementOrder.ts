@@ -6,8 +6,6 @@ const resetResults = () => (results.length = 0)
 
 /* The opinionated correct order is: script, template, style */
 const checkTopLevelElementOrder = (source: string, filePath: string) => {
-  resetResults()
-
   // Apply `toString()` because it throws `indexOf` error otherwise
   const content = source.toString()
 
@@ -49,7 +47,9 @@ const reportTopLevelElementOrder = () => {
     })
   }
 
+  resetResults()
+
   return offenses
 }
 
-export { checkTopLevelElementOrder, reportTopLevelElementOrder }
+export { checkTopLevelElementOrder, reportTopLevelElementOrder, resetResults }

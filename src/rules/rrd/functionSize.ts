@@ -133,8 +133,6 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string, max:
     return
   }
 
-  resetResults()
-
   const content = script.content
   const length = content.length
   let index = 0
@@ -187,7 +185,9 @@ const reportFunctionSize = (max: number) => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkFunctionSize, reportFunctionSize }
+export { checkFunctionSize, reportFunctionSize, resetResults }

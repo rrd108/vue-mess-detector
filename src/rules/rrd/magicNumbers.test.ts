@@ -1,22 +1,28 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkMagicNumbers, reportMagicNumbers } from './magicNumbers'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkMagicNumbers, reportMagicNumbers, resetResults } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without magic numbers', () => {
     const script = { content: '<script setup>\n\t\tconst vat = 27 \n</script>' } as SFCScriptBlock
     const fileName = 'no-magic-number.vue'
     checkMagicNumbers(script, fileName)
-    expect(reportMagicNumbers().length).toBe(0)
-    expect(reportMagicNumbers()).toStrictEqual([])
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with magic number before a closing bracet', () => {
     const script = { content: 'if (ms < 100) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-magic-number-before-bracket.vue'
     checkMagicNumbers(script, fileName)
-    expect(reportMagicNumbers().length).toBe(1)
-    expect(reportMagicNumbers()).toStrictEqual([{
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ magic numbers</text_info>`,
       description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
@@ -32,8 +38,9 @@ describe('checkMagicNumbers', () => {
     } as SFCScriptBlock
     const fileName = 'with-magic-number-before-new-line.vue'
     checkMagicNumbers(script, fileName)
-    expect(reportMagicNumbers().length).toBe(1)
-    expect(reportMagicNumbers()).toStrictEqual([{
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ magic numbers</text_info>`,
       description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
@@ -51,8 +58,9 @@ describe('checkMagicNumbers', () => {
     } as SFCScriptBlock
     const fileName = 'with-multiple-magic-numbers.vue'
     checkMagicNumbers(script, fileName)
-    expect(reportMagicNumbers().length).toBe(2)
-    expect(reportMagicNumbers()).toStrictEqual([{
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ magic numbers</text_info>`,
       description: `👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html`,
@@ -71,6 +79,8 @@ describe('checkMagicNumbers', () => {
     } as SFCScriptBlock
     const fileName = 'number-inside-string.vue'
     checkMagicNumbers(script, fileName)
-    expect(reportMagicNumbers().length).toBe(0)
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 })

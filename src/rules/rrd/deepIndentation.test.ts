@@ -1,22 +1,28 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkDeepIndentation, reportDeepIndentation } from './deepIndentation'
+import { checkDeepIndentation, reportDeepIndentation, resetResults } from './deepIndentation'
 
 describe('checkDeepIndentation', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without deep indentations', () => {
     let script = { content: '<script setup>\n\t\tconsole.log("Hello")\n</script>' } as SFCScriptBlock
     let fileName = 'no-deep-indentation-tab.vue'
     const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
     checkDeepIndentation(script, fileName, maxTabs)
-    expect(reportDeepIndentation().length).toBe(0)
-    expect(reportDeepIndentation()).toStrictEqual([])
+    const result = reportDeepIndentation()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
 
     script = { content: '<script setup>\n        console.log("Hello")\n</script>' } as SFCScriptBlock
     fileName = 'no-deep-indentation-space.vue'
     checkDeepIndentation(script, fileName, maxTabs)
-    expect(reportDeepIndentation().length).toBe(0)
-    expect(reportDeepIndentation()).toStrictEqual([])
+    const result2 = reportDeepIndentation()
+    expect(result2.length).toBe(0)
+    expect(result2).toStrictEqual([])
   })
 
   it('should report files with deep tab indentation', () => {
@@ -24,8 +30,9 @@ describe('checkDeepIndentation', () => {
     const fileName = 'with-deep-indentation-tab.vue'
     const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
     checkDeepIndentation(script, fileName, maxTabs)
-    expect(reportDeepIndentation().length).toBe(1)
-    expect(reportDeepIndentation()).toStrictEqual([{
+    const result = reportDeepIndentation()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ deep indentation</text_info>`,
       description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
@@ -38,8 +45,9 @@ describe('checkDeepIndentation', () => {
     const fileName = 'with-deep-indentation-space.vue'
     const maxTabs = DEFAULT_OVERRIDE_CONFIG.maxTabs
     checkDeepIndentation(script, fileName, maxTabs)
-    expect(reportDeepIndentation().length).toBe(1)
-    expect(reportDeepIndentation()).toStrictEqual([{
+    const result = reportDeepIndentation()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ deep indentation</text_info>`,
       description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,

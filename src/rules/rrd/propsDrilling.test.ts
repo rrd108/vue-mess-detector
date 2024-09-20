@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkPropsDrilling, reportPropsDrilling } from './propsDrilling'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkPropsDrilling, reportPropsDrilling, resetResults } from './propsDrilling'
 
 describe('checkPropsDrilling', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report when a prop is used within the component', () => {
     const script = {
       content: `
@@ -14,8 +18,9 @@ describe('checkPropsDrilling', () => {
     } as SFCScriptBlock
     const filePath = 'component.vue'
     checkPropsDrilling(script, filePath)
-    expect(reportPropsDrilling().length).toBe(0)
-    expect(reportPropsDrilling()).toStrictEqual([])
+    const result = reportPropsDrilling()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report when a prop is modified before being passed to a child component', () => {
@@ -34,8 +39,9 @@ describe('checkPropsDrilling', () => {
     } as SFCScriptBlock
     const filePath = 'component.vue'
     checkPropsDrilling(script, filePath)
-    expect(reportPropsDrilling().length).toBe(0)
-    expect(reportPropsDrilling()).toStrictEqual([])
+    const result = reportPropsDrilling()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report when a prop is forwarded unmodified to a child component', () => {
@@ -51,8 +57,9 @@ describe('checkPropsDrilling', () => {
     } as SFCScriptBlock
     const filePath = 'component.vue'
     checkPropsDrilling(script, filePath)
-    expect(reportPropsDrilling().length).toBe(1)
-    expect(reportPropsDrilling()).toStrictEqual([{
+    const result = reportPropsDrilling()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filePath,
       rule: `<text_info>rrd ~ props drilling</text_info>`,
       description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
@@ -72,8 +79,9 @@ describe('checkPropsDrilling', () => {
     } as SFCScriptBlock
     const filePath = 'component.vue'
     checkPropsDrilling(script, filePath)
-    expect(reportPropsDrilling().length).toBe(2)
-    expect(reportPropsDrilling()).toStrictEqual([{
+    const result = reportPropsDrilling()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: filePath,
       rule: `<text_info>rrd ~ props drilling</text_info>`,
       description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,

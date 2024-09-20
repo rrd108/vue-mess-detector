@@ -13,8 +13,6 @@ const checkNoVarDeclaration = (script: SFCScriptBlock | null, filePath: string) 
     return
   }
 
-  resetResults()
-
   const regex = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -41,7 +39,9 @@ const reportNoVarDeclaration = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkNoVarDeclaration, reportNoVarDeclaration }
+export { checkNoVarDeclaration, reportNoVarDeclaration, resetResults }

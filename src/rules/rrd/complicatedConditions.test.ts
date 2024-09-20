@@ -1,9 +1,13 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkComplicatedConditions, reportComplicatedConditions } from './complicatedConditions'
+import { checkComplicatedConditions, reportComplicatedConditions, resetResults } from './complicatedConditions'
 
 describe('checkComplicatedConditions', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with simple conditions', () => {
     const descriptor = {
       script: {
@@ -25,8 +29,9 @@ describe('checkComplicatedConditions', () => {
     const fileName = 'simpleConditions.vue'
     const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
     checkComplicatedConditions(descriptor, fileName, warningThreshold)
-    expect(reportComplicatedConditions().length).toBe(0)
-    expect(reportComplicatedConditions()).toStrictEqual([])
+    const result = reportComplicatedConditions()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with complicated conditions (warning)', () => {
@@ -42,8 +47,9 @@ describe('checkComplicatedConditions', () => {
     const fileName = 'complicatedConditions-warning.vue'
     const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
     checkComplicatedConditions(descriptor, fileName, warningThreshold)
-    expect(reportComplicatedConditions().length).toBe(1)
-    expect(reportComplicatedConditions()[0].message).toContain('script has a complicated condition with 6 blocks')
+    const result = reportComplicatedConditions()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('script has a complicated condition with 6 blocks')
   })
 
   it('should report files with very complicated conditions (error)', () => {
@@ -59,8 +65,9 @@ describe('checkComplicatedConditions', () => {
     const fileName = 'complicatedConditions-error.vue'
     const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
     checkComplicatedConditions(descriptor, fileName, warningThreshold)
-    expect(reportComplicatedConditions().length).toBe(1)
-    expect(reportComplicatedConditions()[0].message).toContain('template has a complicated condition with 12 blocks')
+    const result = reportComplicatedConditions()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('template has a complicated condition with 12 blocks')
   })
 
   it('should report complicated ternary conditions', () => {
@@ -74,8 +81,9 @@ describe('checkComplicatedConditions', () => {
     const fileName = 'complicatedTernary.vue'
     const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
     checkComplicatedConditions(descriptor, fileName, warningThreshold)
-    expect(reportComplicatedConditions().length).toBe(1)
-    expect(reportComplicatedConditions()[0].message).toContain('script has a complicated condition with 6 blocks')
+    const result = reportComplicatedConditions()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('script has a complicated condition with 6 blocks')
   })
 
   it('should report multiple complicated conditions', () => {
@@ -96,8 +104,9 @@ describe('checkComplicatedConditions', () => {
     const fileName = 'multipleComplicatedConditions.vue'
     const warningThreshold = DEFAULT_OVERRIDE_CONFIG.warningThreshold
     checkComplicatedConditions(descriptor, fileName, warningThreshold)
-    expect(reportComplicatedConditions().length).toBe(2)
-    expect(reportComplicatedConditions()).toStrictEqual([
+    const result = reportComplicatedConditions()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ complicated conditions</text_info>`,

@@ -12,8 +12,6 @@ const checkNoInlineStyles = (template: SFCTemplateBlock | null, filePath: string
     return
   }
 
-  resetResults()
-
   const regex = /style\s*=\s*['"][^'"]*['"]/g
 
   const matches = [...template.content.matchAll(regex)]
@@ -41,7 +39,9 @@ const reportNoInlineStyles = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkNoInlineStyles, reportNoInlineStyles }
+export { checkNoInlineStyles, reportNoInlineStyles, resetResults }

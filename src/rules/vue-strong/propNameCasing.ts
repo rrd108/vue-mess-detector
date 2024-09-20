@@ -14,8 +14,6 @@ const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) =>
     return
   }
 
-  resetResults()
-
   // eslint-disable-next-line regexp/strict
   const regex = /defineProps\({([^}]+)/g
   let match
@@ -48,7 +46,9 @@ const reportPropNameCasing = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkPropNameCasing, reportPropNameCasing }
+export { checkPropNameCasing, reportPropNameCasing, resetResults }

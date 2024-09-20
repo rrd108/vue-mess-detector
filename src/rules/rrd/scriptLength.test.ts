@@ -1,16 +1,21 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkScriptLength, reportScriptLength } from './scriptLength'
+import { checkScriptLength, reportScriptLength, resetResults } from './scriptLength'
 
 describe('checkScriptLength', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report "long scripts" for a short script', () => {
     const shortScript = { content: '<script setup>\nconsole.log("Hello")\n</script>' } as SFCScriptBlock
     const fileName = 'short.vue'
     const maxLength = DEFAULT_OVERRIDE_CONFIG.maxScriptLength
     checkScriptLength(shortScript, fileName, maxLength)
-    expect(reportScriptLength(maxLength).length).toBe(0)
-    expect(reportScriptLength(maxLength)).toStrictEqual([])
+    const result = reportScriptLength(maxLength)
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report long scripts for a long script', () => {
@@ -23,8 +28,9 @@ describe('checkScriptLength', () => {
     const fileName = 'long.vue'
     const maxLength = DEFAULT_OVERRIDE_CONFIG.maxScriptLength
     checkScriptLength(longScript, fileName, maxLength)
-    expect(reportScriptLength(maxLength).length).toBe(1)
-    expect(reportScriptLength(maxLength)).toStrictEqual([{
+    const result = reportScriptLength(maxLength)
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ Long <script> blocks</text_info>`,
       description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${maxLength} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,

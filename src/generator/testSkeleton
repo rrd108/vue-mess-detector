@@ -1,16 +1,21 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { check_RULENAME_, report_RULENAME_ } from './_RULENAME_CAMELCASE_'
+import { check_RULENAME_, report_RULENAME_, resetResults } from './_RULENAME_CAMELCASE_'
 
 describe('check_RULENAME_', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with /* TODO add test description */', () => {
     const script = {
       content: ` // TODO add code content to test`,
     } as SFCScriptBlock
     const fileName = '_RULENAME_CAMELCASE_.vue'
     check_RULENAME_(script, fileName)
-    expect(report_RULENAME_().length).toBe(0)
-    expect(report_RULENAME_()).toStrictEqual([])
+    const result = report_RULENAME_()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with /* TODO add test description */', () => {
@@ -19,8 +24,9 @@ describe('check_RULENAME_', () => {
     } as SFCScriptBlock
     const fileName = '_RULENAME_CAMELCASE_-problem.vue'
     check_RULENAME_(script, fileName)
-    expect(report_RULENAME_().length).toBe(1)
-    expect(report_RULENAME_()).toStrictEqual([{
+    const result = report_RULENAME_()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>_RULESET_ ~ _HUMANRULENAME_</text_info>`,
       description: `👉 <text_warn>/* TODO tip to fix this issue */.</text_warn> See: https:///* TODO add doc link */`,

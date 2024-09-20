@@ -2360,7 +2360,6 @@ const J = "i", j = "g", O = (...t) => {
 }, Pe = [], Oo = ["get", "post", "put", "delete", "patch", "options", "head"], No = () => Pe.length = 0, Lo = (t, e) => {
   if (!e.includes("/server/api/"))
     return;
-  No();
   const n = e.replace(/\.[^/.]+$/, "");
   if (Oo.some((u) => n.toLowerCase().endsWith(`.${u}`)))
     return;
@@ -2386,7 +2385,7 @@ const J = "i", j = "g", O = (...t) => {
       description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., ${n}.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/api-without-method.html`,
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), No(), t;
 }, W = (t, e, n = 0) => {
   if (!e.includes(`
 `))
@@ -2399,7 +2398,6 @@ const J = "i", j = "g", O = (...t) => {
 }, _e = [], Wo = () => _e.length = 0, To = (t, e, n) => {
   if (!t)
     return;
-  Wo();
   const s = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi;
   (t.content.match(s) || []).forEach((o) => {
     const u = o.split(`
@@ -2425,11 +2423,10 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Big v-if can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Wo(), t;
 }, ye = [], Io = () => ye.length = 0, Mo = (t, e, n) => {
   if (!t)
     return;
-  Io();
   const s = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi;
   (t.content.match(s) || []).forEach((o) => {
     const u = o.split(`
@@ -2455,7 +2452,7 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Io(), t;
 }, Q = (t) => {
   const e = O(
     I("/*").and(M("*").times.any(), Y(`
@@ -2472,7 +2469,6 @@ const J = "i", j = "g", O = (...t) => {
   const { script: s, template: r } = t;
   if (!s && !r)
     return;
-  zo();
   const o = 2 * n, u = O(
     Ee(
       "if",
@@ -2517,11 +2513,10 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Simplify complex conditions by breaking them down into smaller, more manageable parts.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), zo(), t;
 }, He = [], qo = () => He.length = 0, Uo = (t, e) => {
   if (!t)
     return;
-  qo();
   const n = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g, s = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/;
   [...t.content.matchAll(n)].forEach((o) => {
     const u = o[1];
@@ -2542,11 +2537,10 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), qo(), t;
 }, Ve = [], Zo = () => Ve.length = 0, Ko = (t, e, n) => {
   if (!t)
     return;
-  Zo();
   const s = 2 * n, r = O(H, "if", H, [j, J]), o = O(H, "else", H, [j, J]), u = O(H, "for", H, [j, J]), i = O(H, "while", H, [j, J]), c = O(H, "case", H, [j, J]), p = Q(t.content), d = p.match(r), x = p.match(o), E = p.match(u), b = p.match(i), m = p.match(c), g = (d?.length || 0) + (x?.length || 0) + (E?.length || 0) + (b?.length || 0) + (m?.length || 0);
   g > n && Ve.push({ filePath: e, message: `Cyclomatic complexity is ${g > s ? "<bg_err>very high" : "<bg_warn>high"} (${g})${g > s ? "</bg_err>" : "</bg_warn>"}` });
 }, Yo = () => {
@@ -2558,11 +2552,10 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Zo(), t;
 }, qe = [], Jo = 3, Qo = () => qe.length = 0, Xo = (t, e, n) => {
   if (!t)
     return;
-  Qo();
   const s = O(ps.times.atLeast(n).at.lineStart().or(T.times.atLeast(Jo * n).at.lineStart()), [j]), o = Q(t.content).match(s);
   let u = 0;
   o?.forEach((i) => {
@@ -2581,11 +2574,10 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Qo(), t;
 }, Ue = [], tu = () => Ue.length = 0, nu = (t, e) => {
   if (!t)
     return;
-  tu();
   const n = O(H, "else", H, [j, J]), r = Q(t.content).match(n);
   r?.length && Ue.push({ filePath: e, message: `else clauses found <bg_err>(${r.length})</bg_err>` });
 }, su = () => {
@@ -2597,7 +2589,7 @@ const J = "i", j = "g", O = (...t) => {
       description: "👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), tu(), t;
 }, $e = [], ru = 5, ou = 8;
 function uu({ funcName: t, funcBody: e, lineNumber: n, filePath: s, max: r }) {
   const o = e.split(`
@@ -2657,7 +2649,6 @@ function cu(t) {
 const lu = () => $e.length = 0, Du = (t, e, n) => {
   if (!t)
     return;
-  lu();
   const s = t.content, r = s.length;
   let o = 0;
   for (; o < r; ) {
@@ -2685,11 +2676,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: `👉 <text_warn>Functions must be shorter than ${t} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `${n.message} 🚨`
     });
-  }), e;
+  }), lu(), e;
 }, Ge = [], hu = () => Ge.length = 0, pu = (t, e) => {
   if (!t)
     return;
-  hu();
   const n = O("<", I("img").or("picture"), [j]), s = t.content.match(n);
   if (s?.length) {
     let r = 0;
@@ -2710,11 +2700,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), hu(), t;
 }, Ze = [], gu = () => Ze.length = 0, mu = (t, e) => {
   if (!t)
     return;
-  gu();
   const n = O("<a", H, [j, J]), s = t.content.match(n);
   s?.length && Ze.push({ filePath: e, message: `${s?.length} <bg_warn>html link found</bg_warn>` });
 }, bu = () => {
@@ -2726,9 +2715,8 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), gu(), t;
 }, Ae = [], Cu = () => Ae.length = 0, Fu = (t, e, n, s) => {
-  Cu();
   const r = 2 * s;
   let o = 0;
   n ? (o = t.scriptSetup?.content.trim().split(`
@@ -2751,11 +2739,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Cu(), t;
 }, Ke = [], xu = () => Ke.length = 0, wu = (t, e) => {
   if (!t)
     return;
-  xu();
   const s = Q(t.content).split(`
 `);
   s.forEach((r, o) => {
@@ -2777,11 +2764,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), xu(), t;
 }, Ye = [], yu = () => Ye.length = 0, $u = (t, e) => {
   if (!t)
     return;
-  yu();
   const n = O(Ee(H), S(Ro).as("magicNumber"), Ee(")", ds), [j]);
   let s, r = 0;
   for (; (s = n.exec(t.content)) !== null; ) {
@@ -2803,11 +2789,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html",
       message: `magic numbers found (${e.message}) 🚨`
     });
-  }), t;
+  }), yu(), t;
 }, Je = [], vu = () => Je.length = 0, Bu = (t, e) => {
   if (!t)
     return;
-  vu();
   const n = O(S(pe), T, "?", T, S(pe), T, ":", T, S(pe));
   Q(t.content).match(n)?.forEach((o) => {
     if (o.split("?").length - 1 > 1) {
@@ -2827,11 +2812,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), vu(), t;
 }, Qe = [], Ru = () => Qe.length = 0, Ou = (t, e) => {
   if (!t)
     return;
-  Ru();
   const n = /style\s*=\s*['"][^'"]*['"]/g, s = [...t.content.matchAll(n)];
   let r = 0;
   s?.forEach((o) => {
@@ -2850,11 +2834,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Avoid using inline styles. Consider moving the styles to a CSS or SCSS file, or use a Vue scoped style.</text_warn>",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ru(), t;
 }, Xe = [], Lu = () => Xe.length = 0, ju = (t, e) => {
   if (!t)
     return;
-  Lu();
   const n = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g;
   Q(t.content).match(n)?.forEach((o) => {
     const u = W(t.content, o);
@@ -2872,11 +2855,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Avoid destructuring props in the setup function. Use `props.propName` instead of `const { propName } = defineProps()`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Lu(), t;
 }, et = [], Tu = () => et.length = 0, ku = (t, e) => {
   if (!t)
     return;
-  Tu();
   const n = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g;
   Q(t.content).match(n)?.forEach((o) => {
     const u = W(t.content, o);
@@ -2894,14 +2876,13 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Tu(), t;
 }, tt = [], Mu = () => tt.length = 0, kn = (t, e, n, s) => {
   const r = e.split(",").map((o) => o.trim()).filter((o) => o.length > 0);
   r.length > s && tt.push({ filePath: n, message: `function <bg_warn>${t}</bg_warn> has <bg_warn>${r.length}</bg_warn> parameters` });
 }, Pu = (t, e, n) => {
   if (!t)
     return;
-  Mu();
   const s = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g;
   let r;
   for (; (r = s.exec(t.content)) !== null; )
@@ -2915,9 +2896,9 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: `👉 <text_warn>Max number of function parameters should be ${t}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `${n.message} 🚨`
     });
-  }), e;
+  }), Mu(), e;
 }, nt = [], Hu = () => nt.length = 0, Vu = (t, e) => {
-  !t || t.setup || (Hu(), nt.push({ filePath: e, message: "<bg_warn>Plain <script> block</bg_warn> found" }));
+  !t || t.setup || nt.push({ filePath: e, message: "<bg_warn>Plain <script> block</bg_warn> found" });
 }, qu = () => {
   const t = [];
   return nt.length > 0 && nt.forEach((e) => {
@@ -2927,11 +2908,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn> Consider using <script setup> to leverage the new SFC <script> syntax.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Hu(), t;
 }, st = [], Uu = () => st.length = 0, Gu = (t, e) => {
   if (!t)
     return;
-  Uu();
   const n = O(
     "defineProps(",
     T.times.any(),
@@ -2978,11 +2958,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Uu(), t;
 }, rt = [], Ku = () => rt.length = 0, Yu = (t, e, n) => {
   if (!t)
     return;
-  Ku();
   const s = t.content.split(`
 `);
   s.length > n && rt.push({ filePath: e, message: `${s.length > n * 2 ? "<bg_err>" : "<bg_warn>"}(${s.length} lines)${s.length > n * 2 ? "</bg_err>" : "</bg_warn>"}` });
@@ -2995,11 +2974,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${t} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
       message: `${n.message} 🚨`
     });
-  }), e;
+  }), Ku(), e;
 }, ot = [], Qu = () => ot.length = 0, Xu = ["i", "key"], ei = (t, e, n) => {
   if (!t)
     return;
-  Qu();
   const s = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g;
   let r;
   for (; (r = s.exec(t.content)) !== null; ) {
@@ -3015,11 +2993,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: `👉 <text_warn>Variable names must have a minimum length of ${t}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${n.message} 🚨`
     });
-  }), e;
+  }), Qu(), e;
 }, ut = [], ni = () => ut.length = 0, si = (t, e, n) => {
   if (!t)
     return;
-  ni();
   const s = O("defineProps", Y("<"), Y("("), "{", S(M("}")), "}", ["g", "s"]), o = Q(t.content).match(s);
   if (o?.length) {
     const u = o[0].split(",").length;
@@ -3034,11 +3011,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), ni(), t;
 }, it = [], oi = () => it.length = 0, ui = (t, e) => {
   if (!t)
     return;
-  oi();
   const n = O('v-for="(', T.times.any(), S(G).grouped(), T.times.any(), ",", T.times.any(), S(G).grouped(), T.times.any(), ")", S(T), "in", S(T), S(G).grouped(), [j]), s = O(':key="', T.times.any(), S(G).grouped(), T.times.any(), '"', [j]), r = [...t.content.matchAll(n)], o = [...t.content.matchAll(s)];
   r.forEach((u) => {
     const [i, c, p, d] = u;
@@ -3062,11 +3038,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), oi(), t;
 }, at = [], ai = () => at.length = 0, ci = (t, e) => {
   if (!t)
     return;
-  ai();
   const n = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g;
   let s;
   const r = Q(t.content);
@@ -3086,7 +3061,7 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), ai(), t;
 }, Di = [
   "a",
   "abbr",
@@ -3209,7 +3184,6 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
 ], ct = [], fi = () => ct.length = 0, hi = (t, e) => {
   if (!t)
     return;
-  fi();
   const n = /([a-z]+)\s*\{[^}]*\}/gi;
   t.forEach((s) => {
     let r;
@@ -3227,11 +3201,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Prefer class selectors over element selectors in scoped styles, because large numbers of element selectors are slow.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/element-selectors-with-scoped.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), fi(), t;
 }, ve = [], di = () => ve.length = 0, gi = (t, e) => {
   if (!t)
     return;
-  di();
   const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, r = O(I("$parent").or("getCurrentInstance"), [j]), o = t.content.match(n), u = t.content.match(s);
   if (u) {
     const c = u[1].split(".")[0];
@@ -3260,11 +3233,11 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), di(), t;
 }, lt = [], bi = () => lt.length = 0, Ci = (t, e) => {
-  t && (bi(), t.forEach((n) => {
+  t && t.forEach((n) => {
     n.scoped || lt.push({ filePath: e, message: "<bg_err>global style</bg_err> used" });
-  }));
+  });
 }, Fi = () => {
   const t = [];
   return lt.length > 0 && lt.forEach((e) => {
@@ -3274,11 +3247,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Use <style scoped>.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/global-style.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), bi(), t;
 }, Dt = [], Ei = () => Dt.length = 0, xi = (t, e) => {
   if (!t)
     return;
-  Ei();
   const n = O("defineProps([", [j, J]);
   t.content.match(n)?.length && Dt.push({ filePath: e, message: "<bg_err>Props type</bg_err> not defined" });
 }, wi = () => {
@@ -3290,11 +3262,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ei(), t;
 }, ft = [], _i = () => ft.length = 0, yi = (t) => {
   if (t.includes("pages"))
     return;
-  _i();
   const e = V.basename(t);
   if (e === "App.vue")
     return;
@@ -3309,11 +3280,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Rename the component to use multi-word name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), _i(), t;
 }, ht = [], Ai = () => ht.length = 0, vi = (t, e) => {
   if (!t)
     return;
-  Ai();
   const n = O("<", S(M(">")), " v-for", S(M(">")), ">", [
     j,
     J
@@ -3328,11 +3298,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Add a `:key` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ai(), t;
 }, pt = [], Si = () => pt.length = 0, Ri = (t, e) => {
   if (!t)
     return;
-  Si();
   const n = O(
     "<",
     S(M(">")),
@@ -3365,7 +3334,7 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Si(), t;
 }, dt = [], In = [
   "is",
   "v-for",
@@ -3386,7 +3355,6 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
 ], Ni = () => dt.length = 0, Li = (t, e) => {
   if (!t)
     return;
-  Ni();
   const n = t.content.replace(/<\/?template>/g, ""), s = /<(\w+)(\s[^>]+)?>/g, r = /(\w+(?:-\w+)*)(?:="[^"]*")?/g;
   let o;
   for (; (o = s.exec(n)) !== null; ) {
@@ -3416,9 +3384,8 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ni(), t;
 }, gt = [], Wi = () => gt.length = 0, Ti = (t, e) => {
-  Wi();
   const n = t.toString(), s = n.indexOf("<script setup>"), r = n.indexOf("<template>"), o = n.indexOf("<style>"), u = [
     { name: "script", index: s },
     { name: "template", index: r },
@@ -3434,11 +3401,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Wi(), t;
 }, mt = [], Ii = () => mt.length = 0, Mi = (t) => {
   if (t.includes("pages") || t.includes("layouts"))
     return;
-  Ii();
   const e = V.basename(t), n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), r = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, o = e.match(r);
   !s?.length && !o?.length && mt.push({ filePath: t, message: "component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn>" });
 }, Pi = () => {
@@ -3450,11 +3416,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ii(), t;
 }, bt = [], zi = () => bt.length = 0, Hi = (t, e) => {
   if (!t)
     return;
-  zi();
   const n = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g;
   [...t.content.matchAll(n)].map((r) => r[1].trim()).forEach((r) => {
     const o = W(t.content.trim(), r), u = r.split(`
@@ -3470,11 +3435,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), zi(), t;
 }, Ct = [], Mn = [], qi = ["v-slot", "v-bind", "v-on"], Ui = () => Ct.length = 0, Gi = (t, e) => {
   if (!t)
     return;
-  Ui();
   const n = t.template;
   qi.forEach((s) => {
     if (n?.content.includes(`${s}:`)) {
@@ -3491,9 +3455,8 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: '👉 <text_warn>Use ":" for v-bind:, "@" for v-on: and "#" for v-slot.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/directive-shorthands.html',
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ui(), t;
 }, Ft = [], Ki = () => Ft.length = 0, Yi = (t, e) => {
-  Ki();
   const n = O(
     S(M("/")).grouped(),
     I(".vue").at.lineEnd()
@@ -3514,11 +3477,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Ki(), t;
 }, Et = [], Qi = () => Et.length = 0, Xi = (t, e) => {
   if (!t)
     return;
-  Qi();
   const n = /<(\w+)([^>]*)>/g;
   let s;
   for (; (s = n.exec(t.content)) !== null; ) {
@@ -3535,11 +3497,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Qi(), t;
 }, xt = [], ta = /^[a-z]+([A-Z][a-z]*)*$/, na = () => xt.length = 0, sa = (t, e) => {
   if (!t)
     return;
-  na();
   const n = /defineProps\({([^}]+)/g;
   let s;
   for (; (s = n.exec(t.content)) !== null; )
@@ -3553,11 +3514,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), na(), t;
 }, wt = [], oa = () => wt.length = 0, ua = (t, e) => {
   if (!t)
     return;
-  oa();
   const n = t.template, s = O(
     "<",
     S(G),
@@ -3593,11 +3553,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), oa(), t;
 }, _t = [], aa = () => _t.length = 0, ca = (t, e) => {
   if (!t)
     return;
-  aa();
   const n = t.template, s = O(
     "<",
     S(hs.uppercase, G),
@@ -3622,11 +3581,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), aa(), t;
 }, cn = [], ke = [], Da = () => cn.length = 0, fa = (t, e, n) => {
   if (!t)
     return;
-  Da();
   const s = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, r = t.content.match(s);
   r?.length && r.forEach((o) => {
     if (o.split(`
@@ -3645,11 +3603,10 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Refactor the computed properties to smaller ones.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), Da(), t;
 }, yt = [], pa = () => yt.length = 0, da = (t, e, n) => {
   if (!t)
     return;
-  pa();
   const s = /{{\s*([\s\S]*?)\s*}}/g;
   [...t.content.matchAll(s)].map((o) => o[1].trim()).forEach((o) => {
     if (o.length > n) {
@@ -3670,7 +3627,7 @@ const lu = () => $e.length = 0, Du = (t, e, n) => {
       description: "👉 <text_warn>Refactor the expression into a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/template-simple-expression.html",
       message: `${e.message} 🚨`
     });
-  }), t;
+  }), pa(), t;
 }, ma = (t, e, n, s) => {
   const r = t.scriptSetup || t.script, o = e.endsWith(".vue"), u = {
     // vue-essential

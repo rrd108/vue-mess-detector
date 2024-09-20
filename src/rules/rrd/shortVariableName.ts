@@ -13,8 +13,6 @@ const checkShortVariableName = (script: SFCScriptBlock | null, filePath: string,
     return
   }
 
-  resetResults()
-
   // Regular expression to match variable names
   const regex = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g
 
@@ -42,7 +40,9 @@ const reportShortVariableName = (minVariableName: number) => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkShortVariableName, reportShortVariableName }
+export { checkShortVariableName, reportShortVariableName, resetResults }

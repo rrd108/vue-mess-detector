@@ -1,8 +1,12 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkSelfClosingComponents, reportSelfClosingComponents } from './selfClosingComponents'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkSelfClosingComponents, reportSelfClosingComponents, resetResults } from './selfClosingComponents'
 
 describe('checkSelfClosingComponents', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report simple html tags', () => {
     const template = `<template>
       <td></td>
@@ -15,8 +19,9 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents().length).toBe(0)
-    expect(reportSelfClosingComponents()).toStrictEqual([])
+    const result = reportSelfClosingComponents()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report files where the components self close', () => {
@@ -31,8 +36,9 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents().length).toBe(0)
-    expect(reportSelfClosingComponents()).toStrictEqual([])
+    const result = reportSelfClosingComponents()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where the components does not self close - single line', () => {
@@ -47,8 +53,9 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'not-self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents().length).toBe(1)
-    expect(reportSelfClosingComponents()).toStrictEqual([{
+    const result = reportSelfClosingComponents()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ component is not self closing</text_info>`,
       description: `👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,
@@ -70,8 +77,9 @@ describe('checkSelfClosingComponents', () => {
     } as SFCDescriptor
     const fileName = 'not-self-close-component.vue'
     checkSelfClosingComponents(descriptor, fileName)
-    expect(reportSelfClosingComponents().length).toBe(1)
-    expect(reportSelfClosingComponents()).toStrictEqual([{
+    const result = reportSelfClosingComponents()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ component is not self closing</text_info>`,
       description: `👉 <text_warn>Components with no content should be self-closing.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/self-closing-components.html`,

@@ -1,8 +1,12 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkDirectiveShorthands, reportDirectiveShorthands } from './directiveShorthands'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkDirectiveShorthands, reportDirectiveShorthands, resetResults } from './directiveShorthands'
 
 describe('checkDirectiveShorthands', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where directive shorthands are used', () => {
     const template = `<template #header>
       <input
@@ -18,8 +22,9 @@ describe('checkDirectiveShorthands', () => {
     } as SFCDescriptor
     const fileName = 'directive-shorthands.vue'
     checkDirectiveShorthands(descriptor, fileName)
-    expect(reportDirectiveShorthands().length).toBe(0)
-    expect(reportDirectiveShorthands()).toStrictEqual([])
+    const result = reportDirectiveShorthands()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where directive shorthands are not used', () => {
@@ -37,8 +42,9 @@ describe('checkDirectiveShorthands', () => {
     } as SFCDescriptor
     const fileName = 'no-directive-shorthands.vue'
     checkDirectiveShorthands(descriptor, fileName)
-    expect(reportDirectiveShorthands().length).toBe(3)
-    expect(reportDirectiveShorthands()).toStrictEqual([
+    const result = reportDirectiveShorthands()
+    expect(result.length).toBe(3)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>vue-strong ~ directive shorthands not used</text_info>`,

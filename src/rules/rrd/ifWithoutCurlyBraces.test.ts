@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces } from './ifWithoutCurlyBraces'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetResults } from './ifWithoutCurlyBraces'
 
 describe('ifWithoutCurlyBraces', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where if statements use curly braces', () => {
     const script = {
       content: `
@@ -15,8 +19,9 @@ describe('ifWithoutCurlyBraces', () => {
     } as SFCScriptBlock
     const filename = 'if-with-curly-braces.vue'
     checkIfWithoutCurlyBraces(script, filename)
-    expect(reportIfWithoutCurlyBraces().length).toBe(0)
-    expect(reportIfWithoutCurlyBraces()).toStrictEqual([])
+    const result = reportIfWithoutCurlyBraces()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report files where if statements are written in a single line with curly braces', () => {
@@ -30,8 +35,9 @@ describe('ifWithoutCurlyBraces', () => {
     } as SFCScriptBlock
     const filename = 'if-with-single-line-curly-braces.vue'
     checkIfWithoutCurlyBraces(script, filename)
-    expect(reportIfWithoutCurlyBraces().length).toBe(0)
-    expect(reportIfWithoutCurlyBraces()).toStrictEqual([])
+    const result = reportIfWithoutCurlyBraces()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where an if statement does not use curly braces', () => {
@@ -45,8 +51,9 @@ describe('ifWithoutCurlyBraces', () => {
     const filename = 'if-without-curly-braces.vue'
     const statement = 'if (isLoading) doSomething();'
     checkIfWithoutCurlyBraces(script, filename)
-    expect(reportIfWithoutCurlyBraces().length).toBe(1)
-    expect(reportIfWithoutCurlyBraces()).toStrictEqual([{
+    const result = reportIfWithoutCurlyBraces()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>rrd ~ if without curly braces</text_info>`,
       description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
@@ -65,8 +72,9 @@ describe('ifWithoutCurlyBraces', () => {
     } as SFCScriptBlock
     const filename = 'multiple-if-without-curly-braces.vue'
     checkIfWithoutCurlyBraces(script, filename)
-    expect(reportIfWithoutCurlyBraces().length).toBe(2)
-    expect(reportIfWithoutCurlyBraces()).toStrictEqual([{
+    const result = reportIfWithoutCurlyBraces()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>rrd ~ if without curly braces</text_info>`,
       description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,

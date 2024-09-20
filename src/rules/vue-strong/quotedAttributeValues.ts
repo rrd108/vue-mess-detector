@@ -13,8 +13,6 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     return
   }
 
-  resetResults()
-
   const template = descriptor.template
 
   const regexTempltaTag = createRegExp(
@@ -63,7 +61,9 @@ const reportQuotedAttributeValues = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkQuotedAttributeValues, reportQuotedAttributeValues }
+export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetResults }

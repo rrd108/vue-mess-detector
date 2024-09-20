@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkVForWithIndexKey, reportVForWithIndexKey } from './vForWithIndexKey'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkVForWithIndexKey, reportVForWithIndexKey, resetResults } from './vForWithIndexKey'
 
 describe('checkVForWithIndexKey', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with a unique identifier as key', () => {
     const template = {
       content: `
@@ -13,8 +17,9 @@ describe('checkVForWithIndexKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vForWithIndexKey.vue'
     checkVForWithIndexKey(template, fileName)
-    expect(reportVForWithIndexKey().length).toBe(0)
-    expect(reportVForWithIndexKey()).toStrictEqual([])
+    const result = reportVForWithIndexKey()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report files with index where using a unique identifier as key', () => {
@@ -27,8 +32,9 @@ describe('checkVForWithIndexKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vForWithIndexKey.vue'
     checkVForWithIndexKey(template, fileName)
-    expect(reportVForWithIndexKey().length).toBe(0)
-    expect(reportVForWithIndexKey()).toStrictEqual([])
+    const result = reportVForWithIndexKey()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with index as key', () => {
@@ -43,8 +49,9 @@ describe('checkVForWithIndexKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vForWithIndexKey-problem.vue'
     checkVForWithIndexKey(template, fileName)
-    expect(reportVForWithIndexKey().length).toBe(1)
-    expect(reportVForWithIndexKey()).toStrictEqual([{
+    const result = reportVForWithIndexKey()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
       description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
@@ -64,8 +71,9 @@ describe('checkVForWithIndexKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vForWithIndexKey-problem.vue'
     checkVForWithIndexKey(template, fileName)
-    expect(reportVForWithIndexKey().length).toBe(1)
-    expect(reportVForWithIndexKey()).toStrictEqual([{
+    const result = reportVForWithIndexKey()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
       description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
@@ -85,8 +93,9 @@ describe('checkVForWithIndexKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vForWithIndexKey-problem.vue'
     checkVForWithIndexKey(template, fileName)
-    expect(reportVForWithIndexKey().length).toBe(1)
-    expect(reportVForWithIndexKey()).toStrictEqual([{
+    const result = reportVForWithIndexKey()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
       description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,

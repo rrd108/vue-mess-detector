@@ -12,8 +12,6 @@ const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) =>
     return
   }
 
-  resetResults()
-
   // regular expression to match `.component('anyString', { ... })` pattern
   const regex = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g
 
@@ -39,7 +37,9 @@ const reportComponentFiles = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkComponentFiles, reportComponentFiles }
+export { checkComponentFiles, reportComponentFiles, resetResults }

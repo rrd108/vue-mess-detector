@@ -13,8 +13,6 @@ const checkSingleNameComponent = (filePath: string) => {
     return
   }
 
-  resetResults()
-
   const fileName = path.basename(filePath)
   if (fileName === 'App.vue') {
     return
@@ -41,7 +39,9 @@ const reportSingleNameComponent = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkSingleNameComponent, reportSingleNameComponent }
+export { checkSingleNameComponent, reportSingleNameComponent, resetResults }

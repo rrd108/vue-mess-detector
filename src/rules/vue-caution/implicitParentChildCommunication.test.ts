@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './implicitParentChildCommunication'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetResults } from './implicitParentChildCommunication'
 
 describe('checkImplicitParentChildCommunication', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where there is no implicit parent-child communication', () => {
     const script = {
       content: `
@@ -24,8 +28,9 @@ describe('checkImplicitParentChildCommunication', () => {
     } as SFCScriptBlock
     const filename = 'no-implicit-pcc.vue'
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(0)
-    expect(reportImplicitParentChildCommunication()).toStrictEqual([])
+    const result = reportImplicitParentChildCommunication()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where there is a prop mutation', () => {
@@ -54,8 +59,9 @@ describe('checkImplicitParentChildCommunication', () => {
       message: `line #${lineNumber} <bg_warn>(todo)</bg_warn> 🚨`,
     }]
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(1)
-    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
+    const result = reportImplicitParentChildCommunication()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual(offenses)
   })
 
   it('should report files where $parent/getCurrentInstance is present', () => {
@@ -100,8 +106,9 @@ describe('checkImplicitParentChildCommunication', () => {
       message: `line #${lineNumber} <bg_warn>(getCurrentInstance)</bg_warn> 🚨`,
     }]
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(1)
-    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
+    const result = reportImplicitParentChildCommunication()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual(offenses)
   })
 
   it('should report files where props mutation & $parent/getCurrentInstance are present', () => {
@@ -153,7 +160,8 @@ describe('checkImplicitParentChildCommunication', () => {
       },
     ]
     checkImplicitParentChildCommunication(script, filename)
-    expect(reportImplicitParentChildCommunication().length).toBe(2)
-    expect(reportImplicitParentChildCommunication()).toStrictEqual(offenses)
+    const result = reportImplicitParentChildCommunication()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual(offenses)
   })
 })

@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkSimpleProp, reportSimpleProp } from './simpleProp'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkSimpleProp, reportSimpleProp, resetResults } from './simpleProp'
 
 describe('checkSimpleProp', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with detailed props definition', () => {
     const script = {
       content: `<script setup>
@@ -13,8 +17,9 @@ describe('checkSimpleProp', () => {
     } as SFCScriptBlock
     const fileName = 'proper-prop.vue'
     checkSimpleProp(script, fileName)
-    expect(reportSimpleProp().length).toBe(0)
-    expect(reportSimpleProp()).toStrictEqual([])
+    const result = reportSimpleProp()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with simple props defeiniton', () => {
@@ -25,8 +30,9 @@ describe('checkSimpleProp', () => {
     } as SFCScriptBlock
     const fileName = 'simple-prop.vue'
     checkSimpleProp(script, fileName)
-    expect(reportSimpleProp().length).toBe(1)
-    expect(reportSimpleProp()).toStrictEqual([{
+    const result = reportSimpleProp()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-essential ~ simple prop</text_info>`,
       description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,

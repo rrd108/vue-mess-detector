@@ -12,8 +12,6 @@ const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => 
     return
   }
 
-  resetResults()
-
   const regex = createRegExp('<', oneOrMore(charNotIn('>')), ' v-for', oneOrMore(charNotIn('>')), '>', [
     global,
     caseInsensitive,
@@ -41,7 +39,9 @@ const reportVforNoKey = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkVforNoKey, reportVforNoKey }
+export { checkVforNoKey, reportVforNoKey, resetResults }

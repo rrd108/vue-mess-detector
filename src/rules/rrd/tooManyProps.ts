@@ -13,8 +13,6 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxP
     return
   }
 
-  resetResults()
-
   const regex = createRegExp('defineProps', maybe('<'), maybe('('), '{', oneOrMore(charNotIn('}')), '}', ['g', 's'])
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -39,7 +37,9 @@ const reportTooManyProps = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkTooManyProps, reportTooManyProps }
+export { checkTooManyProps, reportTooManyProps, resetResults }

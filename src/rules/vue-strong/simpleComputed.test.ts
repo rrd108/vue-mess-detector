@@ -1,9 +1,13 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkSimpleComputed, reportSimpleComputed } from './simpleComputed'
+import { checkSimpleComputed, reportSimpleComputed, resetResults } from './simpleComputed'
 
 describe('checkSimpleComputed', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with simple computed properties', () => {
     let script = {
       content: `const isWeekend = computed(() => today.getDay() === 0 || today.getDay() === 6)
@@ -13,15 +17,17 @@ describe('checkSimpleComputed', () => {
     const fileName = 'simple-computed.vue'
     const maxComputedLength = DEFAULT_OVERRIDE_CONFIG.maxComputedLength
     checkSimpleComputed(script, fileName, maxComputedLength)
-    expect(reportSimpleComputed().length).toBe(0)
-    expect(reportSimpleComputed()).toStrictEqual([])
+    const result = reportSimpleComputed()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
 
     script = {
       content: `const isWeekend = computed(()=>today.getDay() === 0 || today.getDay() === 6)`,
     } as SFCScriptBlock
     checkSimpleComputed(script, fileName, maxComputedLength)
-    expect(reportSimpleComputed().length).toBe(0)
-    expect(reportSimpleComputed()).toStrictEqual([])
+    const result2 = reportSimpleComputed()
+    expect(result2.length).toBe(0)
+    expect(result2).toStrictEqual([])
   })
 
   it('should report files with complicated computed properties', () => {
@@ -49,8 +55,9 @@ describe('checkSimpleComputed', () => {
     const fileName = 'complicated-computed.vue'
     const maxComputedLength = DEFAULT_OVERRIDE_CONFIG.maxComputedLength
     checkSimpleComputed(script, fileName, maxComputedLength)
-    expect(reportSimpleComputed().length).toBe(1)
-    expect(reportSimpleComputed()).toStrictEqual([{
+    const result = reportSimpleComputed()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ complicated computed property</text_info>`,
       description: `👉 <text_warn>Refactor the computed properties to smaller ones.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,

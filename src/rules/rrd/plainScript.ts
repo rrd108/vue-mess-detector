@@ -11,8 +11,6 @@ const checkPlainScript = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   results.push({ filePath, message: `<bg_warn>Plain <script> block</bg_warn> found` })
 }
 
@@ -29,7 +27,9 @@ const reportPlainScript = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkPlainScript, reportPlainScript }
+export { checkPlainScript, reportPlainScript, resetResults }

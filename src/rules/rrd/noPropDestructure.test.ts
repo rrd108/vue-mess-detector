@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkNoPropDestructure, reportNoPropDestructure } from './noPropDestructure'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkNoPropDestructure, reportNoPropDestructure, resetResults } from './noPropDestructure'
 
 describe('checkNoPropDestructure', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without props destructuring', () => {
     const script = {
       content: `
@@ -14,8 +18,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure.vue'
     checkNoPropDestructure(script, fileName)
-    expect(reportNoPropDestructure().length).toBe(0)
-    expect(reportNoPropDestructure()).toStrictEqual([])
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with single props destructuring using defineProps', () => {
@@ -28,9 +33,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure-single.vue'
     checkNoPropDestructure(script, fileName)
-    const offenses = reportNoPropDestructure()
-    expect(offenses.length).toBe(1)
-    expect(offenses).toStrictEqual([
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
@@ -51,9 +56,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure-multiple.vue'
     checkNoPropDestructure(script, fileName)
-    const offenses = reportNoPropDestructure()
-    expect(offenses.length).toBe(2)
-    expect(offenses).toStrictEqual([
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
@@ -79,9 +84,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure-default.vue'
     checkNoPropDestructure(script, fileName)
-    const offenses = reportNoPropDestructure()
-    expect(offenses.length).toBe(1)
-    expect(offenses).toStrictEqual([
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
@@ -101,8 +106,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure-other-vars.vue'
     checkNoPropDestructure(script, fileName)
-    expect(reportNoPropDestructure().length).toBe(0)
-    expect(reportNoPropDestructure()).toStrictEqual([])
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where props are destructured and used in expressions', () => {
@@ -116,9 +122,9 @@ describe('checkNoPropDestructure', () => {
     } as SFCScriptBlock
     const fileName = 'noPropDestructure-expressions.vue'
     checkNoPropDestructure(script, fileName)
-    const offenses = reportNoPropDestructure()
-    expect(offenses.length).toBe(1)
-    expect(offenses).toStrictEqual([
+    const result = reportNoPropDestructure()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,

@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkVifWithVfor, reportVifWithVfor } from './vifWithVfor'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkVifWithVfor, reportVifWithVfor, resetResults } from './vifWithVfor'
 
 describe('checkVifWithVfor', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where v-for and v-if is not used together', () => {
     const script = {
       content: `<template>
@@ -17,8 +21,9 @@ describe('checkVifWithVfor', () => {
     } as SFCTemplateBlock
     const fileName = 'separate-vif-vfor.vue'
     checkVifWithVfor(script, fileName)
-    expect(reportVifWithVfor().length).toBe(0)
-    expect(reportVifWithVfor()).toStrictEqual([])
+    const result = reportVifWithVfor()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where v-for is used with v-if', () => {
@@ -37,8 +42,9 @@ describe('checkVifWithVfor', () => {
     } as SFCTemplateBlock
     const fileName = 'vif-with-vfor.vue'
     checkVifWithVfor(script, fileName)
-    expect(reportVifWithVfor().length).toBe(1)
-    expect(reportVifWithVfor()).toStrictEqual([{
+    const result = reportVifWithVfor()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-essential ~ v-if used with v-for</text_info>`,
       description: `👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,

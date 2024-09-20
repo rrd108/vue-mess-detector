@@ -1,8 +1,12 @@
 import type { SFCBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkTopLevelElementOrder, reportTopLevelElementOrder } from './topLevelElementOrder'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetResults } from './topLevelElementOrder'
 
 describe('checkTopLevelElementOrder', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where top-level element order is correct', () => {
     const script = {
       content: `
@@ -22,8 +26,9 @@ describe('checkTopLevelElementOrder', () => {
     } as SFCBlock
     const filename = 'sfc-correct-order.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder().length).toBe(0)
-    expect(reportTopLevelElementOrder()).toStrictEqual([])
+    const result = reportTopLevelElementOrder()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where top-level element order is incorrect', () => {
@@ -45,8 +50,9 @@ describe('checkTopLevelElementOrder', () => {
     } as SFCBlock
     const filename = 'sfc-incorrect-order.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder().length).toBe(1)
-    expect(reportTopLevelElementOrder()).toStrictEqual([{
+    const result = reportTopLevelElementOrder()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
       description: `👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
@@ -69,8 +75,9 @@ describe('checkTopLevelElementOrder', () => {
     } as SFCBlock
     const filename = 'sfc-missing-element.vue'
     checkTopLevelElementOrder(script.content, filename)
-    expect(reportTopLevelElementOrder().length).toBe(1)
-    expect(reportTopLevelElementOrder()).toStrictEqual([{
+    const result = reportTopLevelElementOrder()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
       description: `👉 <text_warn>Single-File Components should always order <script>, <template>, and <style> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,

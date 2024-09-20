@@ -7,8 +7,6 @@ const results: FileCheckResult[] = []
 const resetResults = () => (results.length = 0)
 
 const checkFullWordComponentName = (filePath: string, minimumConsonantCount: number) => {
-  resetResults()
-
   // regular expression to match `filename.vue` pattern
   const regex = createRegExp(
     oneOrMore(charNotIn('/')).grouped(),
@@ -47,7 +45,9 @@ const reportFullWordComponentName = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkFullWordComponentName, reportFullWordComponentName }
+export { checkFullWordComponentName, reportFullWordComponentName, resetResults }

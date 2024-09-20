@@ -12,8 +12,6 @@ const checkHtmlImageElements = (template: SFCTemplateBlock | null, filePath: str
     return
   }
 
-  resetResults()
-
   const regex = createRegExp('<', exactly('img').or('picture'), [global])
   const matches = template.content.match(regex)
 
@@ -44,7 +42,9 @@ const reportHtmlImageElements = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkHtmlImageElements, reportHtmlImageElements }
+export { checkHtmlImageElements, reportHtmlImageElements, resetResults }

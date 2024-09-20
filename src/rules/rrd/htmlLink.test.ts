@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkHtmlLink, reportHtmlLink } from './htmlLink'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkHtmlLink, reportHtmlLink, resetResults } from './htmlLink'
 
 describe('checkHtmlLink', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without HTML links', () => {
     const template = {
       content: `<template>
@@ -13,8 +17,9 @@ describe('checkHtmlLink', () => {
     } as SFCTemplateBlock
     const fileName = 'no-html-link.vue'
     checkHtmlLink(template, fileName)
-    expect(reportHtmlLink().length).toBe(0)
-    expect(reportHtmlLink()).toStrictEqual([])
+    const result = reportHtmlLink()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with HTML links', () => {
@@ -28,8 +33,9 @@ describe('checkHtmlLink', () => {
     } as SFCTemplateBlock
     const fileName = 'with-html-link.vue'
     checkHtmlLink(template, fileName)
-    expect(reportHtmlLink().length).toBe(1)
-    expect(reportHtmlLink()).toStrictEqual([{
+    const result = reportHtmlLink()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ html link</text_info>`,
       description: `👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,

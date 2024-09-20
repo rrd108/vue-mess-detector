@@ -12,8 +12,6 @@ const checkIfWithoutCurlyBraces = (script: SFCScriptBlock | null, filePath: stri
     return
   }
 
-  resetResults()
-
   const content = skipComments(script.content)
   const lines = content.split('\n')
 
@@ -47,7 +45,9 @@ const reportIfWithoutCurlyBraces = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces }
+export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetResults }

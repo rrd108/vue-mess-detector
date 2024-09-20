@@ -11,8 +11,6 @@ const checkGlobalStyle = (styles: SFCStyleBlock[] | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   styles.forEach((style) => {
     if (!style.scoped) {
       results.push({ filePath, message: `<bg_err>global style</bg_err> used` })
@@ -33,7 +31,9 @@ const reportGlobalStyle = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkGlobalStyle, reportGlobalStyle }
+export { checkGlobalStyle, reportGlobalStyle, resetResults }

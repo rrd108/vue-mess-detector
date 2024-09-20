@@ -16,8 +16,6 @@ const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: st
     return
   }
 
-  resetResults()
-
   const template = descriptor.template
 
   directivesToCheck.forEach((directive) => {
@@ -45,7 +43,9 @@ const reportDirectiveShorthands = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkDirectiveShorthands, reportDirectiveShorthands }
+export { checkDirectiveShorthands, reportDirectiveShorthands, resetResults }

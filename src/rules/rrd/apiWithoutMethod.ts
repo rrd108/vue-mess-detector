@@ -13,8 +13,6 @@ const checkApiWithoutMethod = (descriptor: SFCDescriptor, filePath: string) => {
     return
   }
 
-  resetResults()
-
   const fileNameWithoutExt = filePath.replace(/\.[^/.]+$/, '')
 
   // Check if the file name has a valid HTTP method postfix
@@ -57,7 +55,9 @@ const reportApiWithoutMethod = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkApiWithoutMethod, reportApiWithoutMethod }
+export { checkApiWithoutMethod, reportApiWithoutMethod, resetResults }

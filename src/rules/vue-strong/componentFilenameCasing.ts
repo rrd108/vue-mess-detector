@@ -11,8 +11,6 @@ const checkComponentFilenameCasing = (filePath: string) => {
     return
   }
 
-  resetResults()
-
   const fileName = path.basename(filePath)
 
   // eslint-disable-next-line regexp/optimal-quantifier-concatenation, regexp/no-useless-assertions, regexp/no-optional-assertion
@@ -40,7 +38,9 @@ const reportComponentFilenameCasing = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkComponentFilenameCasing, reportComponentFilenameCasing }
+export { checkComponentFilenameCasing, reportComponentFilenameCasing, resetResults }

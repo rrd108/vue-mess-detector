@@ -31,8 +31,6 @@ const checkElementAttributeOrder = (template: SFCTemplateBlock | null, filePath:
     return
   }
 
-  resetResults()
-
   // Remove the <template> tags to avoid checking them
   const innerTemplate = template.content.replace(/<\/?template>/g, '')
 
@@ -80,7 +78,9 @@ const reportElementAttributeOrder = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkElementAttributeOrder, reportElementAttributeOrder }
+export { checkElementAttributeOrder, reportElementAttributeOrder, resetResults }

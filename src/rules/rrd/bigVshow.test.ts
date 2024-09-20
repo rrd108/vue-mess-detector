@@ -1,9 +1,13 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkBigVshow, reportBigVshow } from './bigVshow'
+import { checkBigVshow, reportBigVshow, resetResults } from './bigVshow'
 
 describe('checkBigVshow', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with small v-show', () => {
     const template = {
       content: `<button v-show="isReady"></button>
@@ -15,8 +19,9 @@ describe('checkBigVshow', () => {
     const fileName = 'bigVshow.vue'
     const maxVshowLines = DEFAULT_OVERRIDE_CONFIG.maxVshowLines
     checkBigVshow(template, fileName, maxVshowLines)
-    expect(reportBigVshow().length).toBe(0)
-    expect(reportBigVshow()).toStrictEqual([])
+    const result = reportBigVshow()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with big v-show', () => {
@@ -39,8 +44,9 @@ describe('checkBigVshow', () => {
     const fileName = 'bigVshow-problem.vue'
     const maxVshowLines = DEFAULT_OVERRIDE_CONFIG.maxVshowLines
     checkBigVshow(template, fileName, maxVshowLines)
-    expect(reportBigVshow().length).toBe(1)
-    expect(reportBigVshow()).toStrictEqual([{
+    const result = reportBigVshow()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ big v-show</text_info>`,
       description: `👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,

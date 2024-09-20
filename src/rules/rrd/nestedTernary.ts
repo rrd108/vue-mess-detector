@@ -20,8 +20,6 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
     return
   }
 
-  resetResults()
-
   const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, oneOrMore(char), whitespace, ':', whitespace, oneOrMore(char))
 
   const content = skipComments(script.content)
@@ -51,7 +49,9 @@ const reportNestedTernary = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkNestedTernary, reportNestedTernary }
+export { checkNestedTernary, reportNestedTernary, resetResults }

@@ -13,8 +13,6 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
     return
   }
 
-  resetResults()
-
   const template = descriptor.template
 
   const regexSelfClosingComponent = createRegExp(
@@ -53,7 +51,9 @@ const reportSelfClosingComponents = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkSelfClosingComponents, reportSelfClosingComponents }
+export { checkSelfClosingComponents, reportSelfClosingComponents, resetResults }

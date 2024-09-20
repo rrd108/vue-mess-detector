@@ -10,7 +10,6 @@ const checkBigVif = (template: SFCTemplateBlock | null, filePath: string, maxVif
   if (!template) {
     return
   }
-  resetResults()
 
   // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/optimal-quantifier-concatenation
   const vifRegex = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi
@@ -49,7 +48,9 @@ const reportBigVif = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkBigVif, reportBigVif }
+export { checkBigVif, reportBigVif, resetResults }

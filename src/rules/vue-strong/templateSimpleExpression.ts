@@ -12,8 +12,6 @@ const checkTemplateSimpleExpression = (template: SFCTemplateBlock | null, filePa
     return
   }
 
-  resetResults()
-
   // eslint-disable-next-line regexp/strict, regexp/no-super-linear-backtracking
   const regex = /{{\s*([\s\S]*?)\s*}}/g
   const matches = [...template.content.matchAll(regex)].map(match => match[1].trim())
@@ -43,7 +41,10 @@ const reportTemplateSimpleExpression = () => {
       })
     })
   }
+
+  resetResults()
+
   return offenses
 }
 
-export { checkTemplateSimpleExpression, reportTemplateSimpleExpression }
+export { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetResults }

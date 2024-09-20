@@ -13,8 +13,6 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
     return
   }
 
-  resetResults()
-
   const vForRegex = createRegExp('v-for="(', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ',', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ')', oneOrMore(whitespace), 'in', oneOrMore(whitespace), oneOrMore(wordChar).grouped(), [global])
   const keyRegex = createRegExp(':key="', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), '"', [global])
 
@@ -52,7 +50,9 @@ const reportVForWithIndexKey = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkVForWithIndexKey, reportVForWithIndexKey }
+export { checkVForWithIndexKey, reportVForWithIndexKey, resetResults }

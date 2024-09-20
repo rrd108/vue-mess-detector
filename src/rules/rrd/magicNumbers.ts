@@ -13,8 +13,6 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   const regex = createRegExp(anyOf(wordBoundary), oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
 
   let match
@@ -47,7 +45,10 @@ const reportMagicNumbers = () => {
       })
     })
   }
+
+  resetResults()
+
   return offenses
 }
 
-export { checkMagicNumbers, reportMagicNumbers }
+export { checkMagicNumbers, reportMagicNumbers, resetResults }

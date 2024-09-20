@@ -10,8 +10,6 @@ const checkScriptLength = (script: SFCScriptBlock | null, filePath: string, maxL
     return
   }
 
-  resetResults()
-
   const lines = script.content.split('\n')
   if (lines.length > maxLength) {
     results.push({ filePath, message: `${lines.length > maxLength * 2 ? '<bg_err>' : '<bg_warn>'}(${
@@ -33,7 +31,9 @@ const reportScriptLength = (maxLength: number) => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkScriptLength, reportScriptLength }
+export { checkScriptLength, reportScriptLength, resetResults }

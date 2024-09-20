@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkNoVarDeclaration, reportNoVarDeclaration } from './noVarDeclaration'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkNoVarDeclaration, reportNoVarDeclaration, resetResults } from './noVarDeclaration'
 
 describe('checkNoVarDeclaration', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with no var declarations', () => {
     const script = {
       content: `
@@ -15,8 +19,9 @@ describe('checkNoVarDeclaration', () => {
     } as SFCScriptBlock
     const fileName = 'noVarDeclaration.vue'
     checkNoVarDeclaration(script, fileName)
-    expect(reportNoVarDeclaration().length).toBe(0)
-    expect(reportNoVarDeclaration()).toStrictEqual([])
+    const result = reportNoVarDeclaration()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with a single var declaration', () => {
@@ -27,8 +32,9 @@ describe('checkNoVarDeclaration', () => {
     } as SFCScriptBlock
     const fileName = 'noVarDeclaration-single.vue'
     checkNoVarDeclaration(script, fileName)
-    expect(reportNoVarDeclaration().length).toBe(1)
-    expect(reportNoVarDeclaration()).toStrictEqual([
+    const result = reportNoVarDeclaration()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ No Var Declaration</text_info>`,
@@ -49,8 +55,9 @@ describe('checkNoVarDeclaration', () => {
     } as SFCScriptBlock
     const fileName = 'noVarDeclaration-multiple.vue'
     checkNoVarDeclaration(script, fileName)
-    expect(reportNoVarDeclaration().length).toBe(4)
-    expect(reportNoVarDeclaration()).toStrictEqual([
+    const result = reportNoVarDeclaration()
+    expect(result.length).toBe(4)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ No Var Declaration</text_info>`,

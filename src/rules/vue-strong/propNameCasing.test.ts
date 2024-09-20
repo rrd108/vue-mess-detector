@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkPropNameCasing, reportPropNameCasing } from './propNameCasing'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkPropNameCasing, reportPropNameCasing, resetResults } from './propNameCasing'
 
 describe('checkPropNameCasing', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with camelCase props name', () => {
     const script = {
       content: `<script setup>
@@ -12,8 +16,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'proper-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(0)
-    expect(reportPropNameCasing()).toStrictEqual([])
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report files with lowercased single-words props name', () => {
@@ -27,8 +32,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'camelCase-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(0)
-    expect(reportPropNameCasing()).toStrictEqual([])
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report files with lowercased single-words + camelCase props name', () => {
@@ -43,8 +49,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'camelCase-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(0)
-    expect(reportPropNameCasing()).toStrictEqual([])
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with kebab-case props name', () => {
@@ -57,8 +64,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'mixed-case-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(1)
-    expect(reportPropNameCasing()).toStrictEqual([{
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
       description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
@@ -77,8 +85,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'capitalized-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(1)
-    expect(reportPropNameCasing()).toStrictEqual([{
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
       description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
@@ -99,8 +108,9 @@ describe('checkPropNameCasing', () => {
     } as SFCScriptBlock
     const fileName = 'capitalized-prop-name.vue'
     checkPropNameCasing(script, fileName)
-    expect(reportPropNameCasing().length).toBe(1)
-    expect(reportPropNameCasing()).toStrictEqual([{
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
       description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,

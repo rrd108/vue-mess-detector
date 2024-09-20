@@ -13,8 +13,6 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
     return
   }
 
-  resetResults()
-
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
 
@@ -43,7 +41,9 @@ const reportNoPropDestructure = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkNoPropDestructure, reportNoPropDestructure }
+export { checkNoPropDestructure, reportNoPropDestructure, resetResults }

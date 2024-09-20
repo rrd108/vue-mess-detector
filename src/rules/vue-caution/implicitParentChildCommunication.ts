@@ -13,8 +13,6 @@ const checkImplicitParentChildCommunication = (script: SFCScriptBlock | null, fi
     return
   }
 
-  resetResults()
-
   const propsRegex = /defineProps\(([^)]+)\)/
   const vModelRegex = /v-model\s*=\s*"([^"]+)"/
   const parentRegex = createRegExp(exactly('$parent').or('getCurrentInstance'), [global])
@@ -63,7 +61,9 @@ const reportImplicitParentChildCommunication = () => {
     })
   }
 
+  resetResults()
+
   return offenses
 }
 
-export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication }
+export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetResults }

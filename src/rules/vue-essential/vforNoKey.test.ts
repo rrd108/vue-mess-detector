@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkVforNoKey, reportVforNoKey } from './vforNoKey'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkVforNoKey, reportVforNoKey, resetResults } from './vforNoKey'
 
 describe('checkVforNoKey', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where v-for has key property', () => {
     const script = {
       content: `<template>
@@ -18,8 +22,9 @@ describe('checkVforNoKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vfor-with-key.vue'
     checkVforNoKey(script, fileName)
-    expect(reportVforNoKey().length).toBe(0)
-    expect(reportVforNoKey()).toStrictEqual([])
+    const result = reportVforNoKey()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where v-for has no key property', () => {
@@ -34,8 +39,9 @@ describe('checkVforNoKey', () => {
     } as SFCTemplateBlock
     const fileName = 'vfor-no-key.vue'
     checkVforNoKey(script, fileName)
-    expect(reportVforNoKey().length).toBe(1)
-    expect(reportVforNoKey()).toStrictEqual([{
+    const result = reportVforNoKey()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>vue-essential ~ v-for has no key</text_info>`,
       description: `👉 <text_warn>Add a \`:key\` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,

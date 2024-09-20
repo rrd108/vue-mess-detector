@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkZeroLengthComparison, reportZeroLengthComparison } from './zeroLengthComparison'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkZeroLengthComparison, reportZeroLengthComparison, resetResults } from './zeroLengthComparison'
 
 describe('checkZeroLengthComparison', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with none zero-length comparison', () => {
     const script = {
       content: `
@@ -15,8 +19,9 @@ describe('checkZeroLengthComparison', () => {
     } as SFCScriptBlock
     const fileName = 'zeroLengthComparison.vue'
     checkZeroLengthComparison(script, fileName)
-    expect(reportZeroLengthComparison().length).toBe(0)
-    expect(reportZeroLengthComparison()).toStrictEqual([])
+    const result = reportZeroLengthComparison()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with with zero-length comparison in script', () => {
@@ -31,8 +36,9 @@ describe('checkZeroLengthComparison', () => {
     } as SFCScriptBlock
     const fileName = 'zeroLengthComparison-problem.vue'
     checkZeroLengthComparison(script, fileName)
-    expect(reportZeroLengthComparison().length).toBe(1)
-    expect(reportZeroLengthComparison()).toStrictEqual([{
+    const result = reportZeroLengthComparison()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
       description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
@@ -61,8 +67,9 @@ describe('checkZeroLengthComparison', () => {
     } as SFCScriptBlock
     const fileName = 'zeroLengthComparison-problem.vue'
     checkZeroLengthComparison(script, fileName)
-    expect(reportZeroLengthComparison().length).toBe(1)
-    expect(reportZeroLengthComparison()).toStrictEqual([{
+    const result = reportZeroLengthComparison()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
       description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,

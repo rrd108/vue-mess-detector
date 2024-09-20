@@ -13,8 +13,6 @@ const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePat
     return
   }
 
-  resetResults()
-
   const elementSelectorRegex = /([a-z]+)\s*\{[^}]*\}/gi
 
   styles.forEach((style) => {
@@ -43,7 +41,9 @@ const reportElementSelectorsWithScoped = () => {
     })
   }
 
+  resetResults()
+
   return offenses
 }
 
-export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped }
+export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetResults }

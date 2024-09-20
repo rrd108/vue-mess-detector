@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkComputedSideEffects, reportComputedSideEffects } from './computedSideEffects'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkComputedSideEffects, reportComputedSideEffects, resetResults } from './computedSideEffects'
 
 describe('checkComputedSideEffects', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without side effects in computed properties', () => {
     const script = {
       content: `
@@ -19,8 +23,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'no-side-effects.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(0)
-    expect(reportComputedSideEffects()).toStrictEqual([])
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should not report comparison operators as side effects', () => {
@@ -37,8 +42,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'no-side-effects-comparison.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(0)
-    expect(reportComputedSideEffects()).toStrictEqual([])
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with array mutation side effects in computed properties', () => {
@@ -58,8 +64,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'with-array-mutation.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(1)
-    expect(reportComputedSideEffects()).toStrictEqual([{
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
@@ -84,8 +91,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'with-assignment.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(1)
-    expect(reportComputedSideEffects()).toStrictEqual([{
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
@@ -116,8 +124,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'multiple-side-effects.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(2)
-    expect(reportComputedSideEffects()).toStrictEqual([{
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
@@ -141,8 +150,9 @@ describe('checkComputedSideEffects', () => {
     } as SFCScriptBlock
     const fileName = 'with-assignment-in-jsts.vue'
     checkComputedSideEffects(script, fileName)
-    expect(reportComputedSideEffects().length).toBe(1)
-    expect(reportComputedSideEffects()).toStrictEqual([{
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,

@@ -11,8 +11,6 @@ const checkCyclomaticComplexity = (script: SFCScriptBlock | null, filePath: stri
   if (!script) {
     return
   }
-  resetResults()
-
   const COMPLEXITY_HIGH = 2 * complexityModerate
 
   const _if = createRegExp(wordBoundary, 'if', wordBoundary, [global, caseInsensitive])
@@ -59,7 +57,9 @@ const reportCyclomaticComplexity = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkCyclomaticComplexity, reportCyclomaticComplexity }
+export { checkCyclomaticComplexity, reportCyclomaticComplexity, resetResults }

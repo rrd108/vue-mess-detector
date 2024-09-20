@@ -11,8 +11,6 @@ const checkHtmlLink = (template: SFCTemplateBlock | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   const regex = createRegExp('<a', wordBoundary, [global, caseInsensitive])
   // TODO - getLineNumber will not help us here as it will return the line number of the first match for all matches
   const matches = template.content.match(regex)
@@ -35,7 +33,9 @@ const reportHtmlLink = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkHtmlLink, reportHtmlLink }
+export { checkHtmlLink, reportHtmlLink, resetResults }

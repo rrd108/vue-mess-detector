@@ -14,8 +14,6 @@ const checkComplicatedConditions = (descriptor: SFCDescriptor, filePath: string,
     return
   }
 
-  resetResults()
-
   const ERROR_THRESHOLD = 2 * warningThreshold
   const conditionalRegex = createRegExp(
     anyOf(
@@ -79,7 +77,9 @@ const reportComplicatedConditions = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkComplicatedConditions, reportComplicatedConditions }
+export { checkComplicatedConditions, reportComplicatedConditions, resetResults }

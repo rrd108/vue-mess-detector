@@ -1,14 +1,19 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkFullWordComponentName, reportFullWordComponentName } from './fullWordComponentName'
+import { checkFullWordComponentName, reportFullWordComponentName, resetResults } from './fullWordComponentName'
 
 describe('fullWordComponentName', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where filename has at least three consonants', () => {
     const filename = 'path/to/file/fullWordComponentNames.vue'
     const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
     checkFullWordComponentName(filename, minimumConsonantCount)
-    expect(reportFullWordComponentName().length).toBe(0)
-    expect(reportFullWordComponentName()).toStrictEqual([])
+    const result = reportFullWordComponentName()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where filename has less than three consonants', () => {
@@ -16,8 +21,9 @@ describe('fullWordComponentName', () => {
     const componentName = 'menu'
     const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
     checkFullWordComponentName(filename, minimumConsonantCount)
-    expect(reportFullWordComponentName().length).toBe(1)
-    expect(reportFullWordComponentName()).toStrictEqual([{
+    const result = reportFullWordComponentName()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
       description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
@@ -30,8 +36,9 @@ describe('fullWordComponentName', () => {
     const componentName = 'nav'
     const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
     checkFullWordComponentName(filename, minimumConsonantCount)
-    expect(reportFullWordComponentName().length).toBe(1)
-    expect(reportFullWordComponentName()).toStrictEqual([{
+    const result = reportFullWordComponentName()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
       description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,

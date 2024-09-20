@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkMultiAttributeElements, reportMultiAttributeElements } from './multiAttributeElements'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkMultiAttributeElements, reportMultiAttributeElements, resetResults } from './multiAttributeElements'
 
 describe('multiAttributeElements', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where elements have single attributes', () => {
     const template = {
       content: `
@@ -14,8 +18,9 @@ describe('multiAttributeElements', () => {
     } as SFCTemplateBlock
     const filename = 'single-attribute-element.vue'
     checkMultiAttributeElements(template, filename)
-    expect(reportMultiAttributeElements().length).toBe(0)
-    expect(reportMultiAttributeElements()).toStrictEqual([])
+    const result = reportMultiAttributeElements()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where one element has multiple attributes on the same line', () => {
@@ -29,8 +34,9 @@ describe('multiAttributeElements', () => {
     const filename = 'multi-attribute-element.vue'
     const element = 'div'
     checkMultiAttributeElements(template, filename)
-    expect(reportMultiAttributeElements().length).toBe(1)
-    expect(reportMultiAttributeElements()).toStrictEqual([{
+    const result = reportMultiAttributeElements()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
@@ -49,8 +55,9 @@ describe('multiAttributeElements', () => {
     } as SFCTemplateBlock
     const filename = 'multiple-multi-attribute-elements.vue'
     checkMultiAttributeElements(template, filename)
-    expect(reportMultiAttributeElements().length).toBe(2)
-    expect(reportMultiAttributeElements()).toStrictEqual([{
+    const result = reportMultiAttributeElements()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,

@@ -8,7 +8,7 @@ describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
     const { stdout } = await execa('yarn', ['analyze'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
-    expect(stdout).toContain(`No code smells detected!`)
+    expect(stdout).toContain(`Functions must be shorter than`)
   })
 
   it('should execute without any flags with path', async () => {
@@ -102,7 +102,7 @@ describe('yarn analyze command with default configuration', () => {
 
   it('should execute with group parameter', async () => {
     const { stdout } = await execa('yarn', ['analyze', './src/rules/vue-caution', '--group=file'])
-    expect(stdout).toContain(`No code smells detected!`)
+    expect(stdout).toContain(`Functions must be shorter than`)
   })
 
   it('should execute with sort parameter', async () => {

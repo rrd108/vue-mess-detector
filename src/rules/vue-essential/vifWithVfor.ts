@@ -13,8 +13,6 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
     return
   }
 
-  resetResults()
-
   const regex1 = createRegExp(
     '<',
     oneOrMore(charNotIn('>')),
@@ -58,7 +56,9 @@ const reportVifWithVfor = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkVifWithVfor, reportVifWithVfor }
+export { checkVifWithVfor, reportVifWithVfor, resetResults }

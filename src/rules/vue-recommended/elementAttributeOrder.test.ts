@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkElementAttributeOrder, reportElementAttributeOrder } from './elementAttributeOrder'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkElementAttributeOrder, reportElementAttributeOrder, resetResults } from './elementAttributeOrder'
 
 describe('checkElementAttributeOrder', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where elements attribute order is correct', () => {
     const template = {
       content: `
@@ -13,8 +17,9 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder().length).toBe(0)
-    expect(reportElementAttributeOrder()).toStrictEqual([])
+    const result = reportElementAttributeOrder()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files where elements attribute order are incorrect', () => {
@@ -27,8 +32,9 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order-incorrect.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder().length).toBe(1)
-    expect(reportElementAttributeOrder()).toStrictEqual([{
+    const result = reportElementAttributeOrder()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
       description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
@@ -46,8 +52,9 @@ describe('checkElementAttributeOrder', () => {
     } as SFCTemplateBlock
     const filename = 'element-attribute-order-incorrect-2.vue'
     checkElementAttributeOrder(template, filename)
-    expect(reportElementAttributeOrder().length).toBe(1)
-    expect(reportElementAttributeOrder()).toStrictEqual([{
+    const result = reportElementAttributeOrder()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
       description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,

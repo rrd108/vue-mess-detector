@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkNestedTernary, reportNestedTernary } from './nestedTernary'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkNestedTernary, reportNestedTernary, resetResults } from './nestedTernary'
 
 describe('checkNestedTernary', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with simle ternary', () => {
     const script = {
       content: `const today = new Date()
@@ -10,8 +14,9 @@ describe('checkNestedTernary', () => {
     } as SFCScriptBlock
     const fileName = 'nestedTernary.vue'
     checkNestedTernary(script, fileName)
-    expect(reportNestedTernary().length).toBe(0)
-    expect(reportNestedTernary()).toStrictEqual([])
+    const result = reportNestedTernary()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with nested ternary', () => {
@@ -21,8 +26,9 @@ describe('checkNestedTernary', () => {
     } as SFCScriptBlock
     const fileName = 'nestedTernary-problem.vue'
     checkNestedTernary(script, fileName)
-    expect(reportNestedTernary().length).toBe(1)
-    expect(reportNestedTernary()).toStrictEqual([{
+    const result = reportNestedTernary()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ nested Ternary</text_info>`,
       description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
@@ -36,7 +42,8 @@ describe('checkNestedTernary', () => {
     } as SFCScriptBlock
     const fileName = 'nestedTernary-problem.vue'
     checkNestedTernary(script, fileName)
-    expect(reportNestedTernary().length).toBe(0)
-    expect(reportNestedTernary()).toStrictEqual([])
+    const result = reportNestedTernary()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 })

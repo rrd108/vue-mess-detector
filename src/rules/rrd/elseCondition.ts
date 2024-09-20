@@ -12,8 +12,6 @@ const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => 
     return
   }
 
-  resetResults()
-
   const regex = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -36,7 +34,9 @@ const reportElseCondition = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkElseCondition, reportElseCondition }
+export { checkElseCondition, reportElseCondition, resetResults }

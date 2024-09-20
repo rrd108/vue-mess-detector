@@ -13,8 +13,6 @@ const checkZeroLengthComparison = (script: SFCScriptBlock | null, filePath: stri
     return
   }
 
-  resetResults()
-
   const regex = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g
 
   let match
@@ -45,7 +43,9 @@ const reportZeroLengthComparison = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkZeroLengthComparison, reportZeroLengthComparison }
+export { checkZeroLengthComparison, reportZeroLengthComparison, resetResults }

@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkNoInlineStyles, reportNoInlineStyles } from './noInlineStyles'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkNoInlineStyles, reportNoInlineStyles, resetResults } from './noInlineStyles'
 
 describe('checkNoInlineStyles', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files with inline styles', () => {
     const template = {
       content: `
@@ -16,8 +20,9 @@ describe('checkNoInlineStyles', () => {
     } as SFCTemplateBlock
     const fileName = 'noInlineStyles.vue'
     checkNoInlineStyles(template, fileName)
-    expect(reportNoInlineStyles().length).toBe(0)
-    expect(reportNoInlineStyles()).toStrictEqual([])
+    const result = reportNoInlineStyles()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with inline styles', () => {
@@ -33,8 +38,9 @@ describe('checkNoInlineStyles', () => {
     } as SFCTemplateBlock
     const fileName = 'noInlineStyles-problem.vue'
     checkNoInlineStyles(template, fileName)
-    expect(reportNoInlineStyles().length).toBe(2)
-    expect(reportNoInlineStyles()).toStrictEqual([
+    const result = reportNoInlineStyles()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Inline Styles</text_info>`,

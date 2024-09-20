@@ -14,8 +14,6 @@ const checkPropsDrilling = (script: SFCScriptBlock | null, filePath: string) => 
     return
   }
 
-  resetResults()
-
   // Matches `defineProps(['prop1', 'prop2', ...])` and extracts the prop names
   const regexDefineProps = createRegExp(
     'defineProps(',
@@ -88,7 +86,9 @@ const reportPropsDrilling = () => {
       })
     })
   }
+  resetResults()
+
   return offenses
 }
 
-export { checkPropsDrilling, reportPropsDrilling }
+export { checkPropsDrilling, reportPropsDrilling, resetResults }

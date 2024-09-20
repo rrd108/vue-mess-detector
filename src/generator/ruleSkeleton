@@ -18,8 +18,6 @@ const check_RULENAME_ = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  resetResults()
-
   const regex = createRegExp(/* TODO create your regex here with magic regexp or plain regex */)
   const matches = script.content.match(regex)
 
@@ -47,6 +45,9 @@ const report_RULENAME_ = () => {
       })
     })
   }
+  
+  resetResults()  
+
   return offenses
 }
 

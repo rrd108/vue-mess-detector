@@ -1,8 +1,12 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkHtmlImageElements, reportHtmlImageElements } from './htmlImageElements'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkHtmlImageElements, reportHtmlImageElements, resetResults } from './htmlImageElements'
 
 describe('checkHtmlImageElements', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files without HTML image elements', () => {
     const template = {
       content: `<template>
@@ -14,8 +18,9 @@ describe('checkHtmlImageElements', () => {
     } as SFCTemplateBlock
     const fileName = 'no-html-image-elements.vue'
     checkHtmlImageElements(template, fileName)
-    expect(reportHtmlImageElements().length).toBe(0)
-    expect(reportHtmlImageElements()).toStrictEqual([])
+    const result = reportHtmlImageElements()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files with HTML image elements', () => {
@@ -32,8 +37,9 @@ describe('checkHtmlImageElements', () => {
     } as SFCTemplateBlock
     const fileName = 'with-html-image-elements.vue'
     checkHtmlImageElements(template, fileName)
-    expect(reportHtmlImageElements().length).toBe(3)
-    expect(reportHtmlImageElements()).toStrictEqual([
+    const result = reportHtmlImageElements()
+    expect(result.length).toBe(3)
+    expect(result).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ html image elements</text_info>`,

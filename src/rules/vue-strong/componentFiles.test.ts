@@ -1,8 +1,12 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { describe, expect, it } from 'vitest'
-import { checkComponentFiles, reportComponentFiles } from './componentFiles'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { checkComponentFiles, reportComponentFiles, resetResults } from './componentFiles'
 
 describe('checkComponentFiles', () => {
+  beforeEach(() => {
+    resetResults()
+  })
+
   it('should not report files where each component is its own file', () => {
     const script = {
       content: `
@@ -13,8 +17,9 @@ describe('checkComponentFiles', () => {
     } as SFCScriptBlock
     const filename = 'component.vue'
     checkComponentFiles(script, filename)
-    expect(reportComponentFiles().length).toBe(0)
-    expect(reportComponentFiles()).toStrictEqual([])
+    const result = reportComponentFiles()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
   })
 
   it('should report files each component is not its own file', () => {
@@ -33,8 +38,9 @@ describe('checkComponentFiles', () => {
     } as SFCScriptBlock
     const filename = 'component.vue'
     checkComponentFiles(script, filename)
-    expect(reportComponentFiles().length).toBe(2)
-    expect(reportComponentFiles()).toStrictEqual([{
+    const result = reportComponentFiles()
+    expect(result.length).toBe(2)
+    expect(result).toStrictEqual([{
       file: filename,
       rule: `<text_info>vue-strong ~ component files</text_info>`,
       description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
