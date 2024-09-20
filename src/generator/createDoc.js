@@ -80,7 +80,8 @@ const main = async () => {
       await fs.writeFile(inProgressPath, updatedContent, 'utf8')
     }
     await createFile(answers)
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
   }
 }
