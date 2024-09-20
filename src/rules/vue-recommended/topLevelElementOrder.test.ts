@@ -1,14 +1,8 @@
 import type { SFCBlock } from '@vue/compiler-sfc'
-
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkTopLevelElementOrder, reportTopLevelElementOrder, resetTopLevelElementOrder } from './topLevelElementOrder'
+import { describe, expect, it } from 'vitest'
+import { checkTopLevelElementOrder, reportTopLevelElementOrder } from './topLevelElementOrder'
 
 describe('checkTopLevelElementOrder', () => {
-  beforeEach(() => {
-    resetTopLevelElementOrder()
-  })
-
   it('should not report files where top-level element order is correct', () => {
     const script = {
       content: `

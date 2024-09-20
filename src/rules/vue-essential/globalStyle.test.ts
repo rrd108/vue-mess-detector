@@ -1,13 +1,8 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkGlobalStyle, reportGlobalStyle, resetGlobalStyle } from './globalStyle'
+import { describe, expect, it } from 'vitest'
+import { checkGlobalStyle, reportGlobalStyle } from './globalStyle'
 
 describe('checkGlobalStyle', () => {
-  beforeEach(() => {
-    resetGlobalStyle()
-  })
-
   it('should not report scoped styles', () => {
     const styles = [{ content: '<style scoped>h3{background:pink}</style>', scoped: true }] as SFCStyleBlock[]
     const filePath = 'scoped-style.vue'

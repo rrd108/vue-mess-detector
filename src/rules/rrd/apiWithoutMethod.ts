@@ -6,10 +6,14 @@ const results: FileCheckResult[] = []
 
 const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'options', 'head']
 
+const resetResults = () => (results.length = 0)
+
 const checkApiWithoutMethod = (descriptor: SFCDescriptor, filePath: string) => {
   if (!filePath.includes('/server/api/')) {
     return
   }
+
+  resetResults()
 
   const fileNameWithoutExt = filePath.replace(/\.[^/.]+$/, '')
 
@@ -56,6 +60,4 @@ const reportApiWithoutMethod = () => {
   return offenses
 }
 
-const resetApiWithoutMethod = () => (results.length = 0)
-
-export { checkApiWithoutMethod, reportApiWithoutMethod, resetApiWithoutMethod }
+export { checkApiWithoutMethod, reportApiWithoutMethod }

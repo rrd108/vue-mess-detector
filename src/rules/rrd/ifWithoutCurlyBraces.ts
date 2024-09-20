@@ -5,10 +5,14 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkIfWithoutCurlyBraces = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   const content = skipComments(script.content)
   const lines = content.split('\n')
@@ -46,6 +50,4 @@ const reportIfWithoutCurlyBraces = () => {
   return offenses
 }
 
-const resetIfWithoutCurlyBraces = () => (results.length = 0)
-
-export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetIfWithoutCurlyBraces }
+export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces }

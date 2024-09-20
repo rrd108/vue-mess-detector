@@ -126,10 +126,14 @@ function cleanFunctionName(funcName: string): string {
   return funcName.replace(/^const\s*/, '')
 }
 
+const resetResults = () => (results.length = 0)
+
 const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string, max: number) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   const content = script.content
   const length = content.length
@@ -186,6 +190,4 @@ const reportFunctionSize = (max: number) => {
   return offenses
 }
 
-const resetFunctionSize = () => (results.length = 0)
-
-export { checkFunctionSize, reportFunctionSize, resetFunctionSize }
+export { checkFunctionSize, reportFunctionSize }

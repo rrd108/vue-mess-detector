@@ -6,10 +6,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
     return
   }
+
+  resetResults()
+
   const template = descriptor.template
 
   const regexTempltaTag = createRegExp(
@@ -61,6 +66,4 @@ const reportQuotedAttributeValues = () => {
   return offenses
 }
 
-const resetQuotedAttributeValues = () => (results.length = 0)
-
-export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetQuotedAttributeValues }
+export { checkQuotedAttributeValues, reportQuotedAttributeValues }

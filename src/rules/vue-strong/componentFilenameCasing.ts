@@ -4,10 +4,14 @@ import path from 'node:path'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkComponentFilenameCasing = (filePath: string) => {
   if (filePath.includes('pages') || filePath.includes('layouts')) {
     return
   }
+
+  resetResults()
 
   const fileName = path.basename(filePath)
 
@@ -39,6 +43,4 @@ const reportComponentFilenameCasing = () => {
   return offenses
 }
 
-const resetComponentFilenameCasing = () => (results.length = 0)
-
-export { checkComponentFilenameCasing, reportComponentFilenameCasing, resetComponentFilenameCasing }
+export { checkComponentFilenameCasing, reportComponentFilenameCasing }

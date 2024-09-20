@@ -5,10 +5,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   // regular expression to match `.component('anyString', { ... })` pattern
   const regex = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g
 
@@ -37,6 +42,4 @@ const reportComponentFiles = () => {
   return offenses
 }
 
-const resetComponentFiles = () => (results.length = 0)
-
-export { checkComponentFiles, reportComponentFiles, resetComponentFiles }
+export { checkComponentFiles, reportComponentFiles }

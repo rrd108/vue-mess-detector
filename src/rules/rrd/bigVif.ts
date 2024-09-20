@@ -4,12 +4,16 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkBigVif = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
 
   const MAX_VIF_LINES = 10
+
+  resetResults()
 
   // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/optimal-quantifier-concatenation
   const vifRegex = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi
@@ -51,6 +55,4 @@ const reportBigVif = () => {
   return offenses
 }
 
-const resetBigVif = () => (results.length = 0)
-
-export { checkBigVif, reportBigVif, resetBigVif }
+export { checkBigVif, reportBigVif }

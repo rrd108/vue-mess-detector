@@ -6,10 +6,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkZeroLengthComparison = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   const regex = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g
 
@@ -44,6 +48,4 @@ const reportZeroLengthComparison = () => {
   return offenses
 }
 
-const resetZeroLengthComparison = () => (results.length = 0)
-
-export { checkZeroLengthComparison, reportZeroLengthComparison, resetZeroLengthComparison }
+export { checkZeroLengthComparison, reportZeroLengthComparison }

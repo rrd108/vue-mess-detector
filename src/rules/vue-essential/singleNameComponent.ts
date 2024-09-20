@@ -5,11 +5,15 @@ import { createRegExp, letter } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkSingleNameComponent = (filePath: string) => {
   // in the pages directory this rule does not apply
   if (filePath.includes('pages')) {
     return
   }
+
+  resetResults()
 
   const fileName = path.basename(filePath)
   if (fileName === 'App.vue') {
@@ -40,6 +44,4 @@ const reportSingleNameComponent = () => {
   return offenses
 }
 
-const resetSingleNameComponent = () => (results.length = 0)
-
-export { checkSingleNameComponent, reportSingleNameComponent, resetSingleNameComponent }
+export { checkSingleNameComponent, reportSingleNameComponent }

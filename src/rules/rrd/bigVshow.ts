@@ -4,12 +4,16 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkBigVshow = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
 
   const MAX_VSHOW_LINES = 10
+
+  resetResults()
 
   // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/optimal-quantifier-concatenation
   const vifRegex = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi
@@ -51,6 +55,4 @@ const reportBigVshow = () => {
   return offenses
 }
 
-const resetBigVshow = () => (results.length = 0)
-
-export { checkBigVshow, reportBigVshow, resetBigVshow }
+export { checkBigVshow, reportBigVshow }

@@ -5,6 +5,8 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 /* TODO use the correct parameter from the following list:
   - "script: SFCScriptBlock" ~ this rule will apply to ts, js and vue files
   - "styles: SFCStyleBlock[]" ~ applied only for vue files
@@ -15,6 +17,9 @@ const check_RULENAME_ = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp(/* TODO create your regex here with magic regexp or plain regex */)
   const matches = script.content.match(regex)
 
@@ -45,6 +50,4 @@ const report_RULENAME_ = () => {
   return offenses
 }
 
-const reset_RULENAME_ = () => (results.length = 0)
-
-export { check_RULENAME_, report_RULENAME_, reset_RULENAME_ }
+export { check_RULENAME_, report_RULENAME_}

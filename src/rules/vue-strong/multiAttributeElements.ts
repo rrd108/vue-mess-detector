@@ -4,10 +4,14 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
 
   // Regex to match elements with attributes
   // eslint-disable-next-line regexp/no-super-linear-backtracking
@@ -49,6 +53,4 @@ const reportMultiAttributeElements = () => {
   return offenses
 }
 
-const resetMultiAttributeElements = () => (results.length = 0)
-
-export { checkMultiAttributeElements, reportMultiAttributeElements, resetMultiAttributeElements }
+export { checkMultiAttributeElements, reportMultiAttributeElements }

@@ -7,10 +7,15 @@ const results: FileCheckResult[] = []
 // eslint-disable-next-line regexp/no-unused-capturing-group
 const camelCasePattern = /^[a-z]+([A-Z][a-z]*)*$/
 
+const resetResults = () => (results.length = 0)
+
 const checkPropNameCasing = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   // eslint-disable-next-line regexp/strict
   const regex = /defineProps\({([^}]+)/g
   let match
@@ -46,6 +51,4 @@ const reportPropNameCasing = () => {
   return offenses
 }
 
-const resetPropNameCasing = () => (results.length = 0)
-
-export { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing }
+export { checkPropNameCasing, reportPropNameCasing }

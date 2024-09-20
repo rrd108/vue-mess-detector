@@ -4,6 +4,8 @@ import type { FileCheckResult, Offense } from '../../types'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 // Function used in both scenarios (regular and arrow function) to count parameters
 const checkParameters = (funcName: string, params: string, filePath: string, maxParameterCount: number) => {
   const paramsArray = params
@@ -19,6 +21,9 @@ const checkParameterCount = (script: SFCScriptBlock | null, filePath: string, ma
   if (!script) {
     return
   }
+
+  resetResults()
+
   // regular expression to match both regular and arrow functions and capture their params
   const regex = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g
   let match
@@ -53,6 +58,4 @@ const reportParameterCount = (maxParameterCount: number) => {
   return offenses
 }
 
-const resetParameterCount = () => (results.length = 0)
-
-export { checkParameterCount, reportParameterCount, resetParameterCount }
+export { checkParameterCount, reportParameterCount }

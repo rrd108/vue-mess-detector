@@ -5,10 +5,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkHtmlImageElements = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp('<', exactly('img').or('picture'), [global])
   const matches = template.content.match(regex)
 
@@ -42,6 +47,4 @@ const reportHtmlImageElements = () => {
   return offenses
 }
 
-const resetHtmlImageElements = () => (results.length = 0)
-
-export { checkHtmlImageElements, reportHtmlImageElements, resetHtmlImageElements }
+export { checkHtmlImageElements, reportHtmlImageElements }

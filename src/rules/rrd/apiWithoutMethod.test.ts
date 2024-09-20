@@ -1,12 +1,8 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkApiWithoutMethod, reportApiWithoutMethod, resetApiWithoutMethod } from './apiWithoutMethod'
+import { describe, expect, it } from 'vitest'
+import { checkApiWithoutMethod, reportApiWithoutMethod } from './apiWithoutMethod'
 
 describe('checkApiWithoutMethod', () => {
-  beforeEach(() => {
-    resetApiWithoutMethod()
-  })
-
   it('should not report files with HTTP method in filename', () => {
     const descriptor = {
       filename: '/src/server/api/users.post.ts',

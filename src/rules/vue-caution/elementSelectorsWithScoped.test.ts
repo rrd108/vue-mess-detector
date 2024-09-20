@@ -1,13 +1,8 @@
 import type { SFCStyleBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetElementSelectorWithScoped } from './elementSelectorsWithScoped'
+import { describe, expect, it } from 'vitest'
+import { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped } from './elementSelectorsWithScoped'
 
 describe('checkElementSelectorsWithScoped', () => {
-  beforeEach(() => {
-    resetElementSelectorWithScoped()
-  })
-
   it('should not report non-element selectors', () => {
     const styles = [{ content: '.my-class { font-size: 14px; }', scoped: true }] as SFCStyleBlock[]
     const filePath = 'non-element-selectors.vue'

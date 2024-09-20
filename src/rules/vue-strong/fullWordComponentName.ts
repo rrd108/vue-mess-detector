@@ -4,7 +4,11 @@ import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'mag
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkFullWordComponentName = (filePath: string, minimumConsonantCount: number) => {
+  resetResults()
+
   // regular expression to match `filename.vue` pattern
   const regex = createRegExp(
     oneOrMore(charNotIn('/')).grouped(),
@@ -46,6 +50,4 @@ const reportFullWordComponentName = () => {
   return offenses
 }
 
-const resetFullWordComponentName = () => (results.length = 0)
-
-export { checkFullWordComponentName, reportFullWordComponentName, resetFullWordComponentName }
+export { checkFullWordComponentName, reportFullWordComponentName }

@@ -7,6 +7,8 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 /* TODO use the correct parameter from the following list:
   - "script: SFCScriptBlock" ~ this rule will apply to ts, js and vue files
   - "styles: SFCStyleBlock[]" ~ applied only for vue files
@@ -17,6 +19,9 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, oneOrMore(char), whitespace, ':', whitespace, oneOrMore(char))
 
   const content = skipComments(script.content)
@@ -49,6 +54,4 @@ const reportNestedTernary = () => {
   return offenses
 }
 
-const resetNestedTernary = () => (results.length = 0)
-
-export { checkNestedTernary, reportNestedTernary, resetNestedTernary }
+export { checkNestedTernary, reportNestedTernary }

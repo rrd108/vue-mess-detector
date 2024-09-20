@@ -4,10 +4,15 @@ import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regex
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkHtmlLink = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp('<a', wordBoundary, [global, caseInsensitive])
   // TODO - getLineNumber will not help us here as it will return the line number of the first match for all matches
   const matches = template.content.match(regex)
@@ -33,6 +38,4 @@ const reportHtmlLink = () => {
   return offenses
 }
 
-const resetHtmlLink = () => (results.length = 0)
-
-export { checkHtmlLink, reportHtmlLink, resetHtmlLink }
+export { checkHtmlLink, reportHtmlLink }

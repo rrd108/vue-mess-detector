@@ -6,10 +6,15 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxPropsCount: number) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp('defineProps', maybe('<'), maybe('('), '{', oneOrMore(charNotIn('}')), '}', ['g', 's'])
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -20,8 +25,6 @@ const checkTooManyProps = (script: SFCScriptBlock | null, filePath: string, maxP
     }
   }
 }
-
-const resetTooManyProps = () => (results.length = 0)
 
 const reportTooManyProps = () => {
   const offenses: Offense[] = []
@@ -39,4 +42,4 @@ const reportTooManyProps = () => {
   return offenses
 }
 
-export { checkTooManyProps, reportTooManyProps, resetTooManyProps }
+export { checkTooManyProps, reportTooManyProps }

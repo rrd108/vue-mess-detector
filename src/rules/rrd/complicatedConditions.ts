@@ -9,11 +9,15 @@ const results: FileCheckResult[] = []
 const WARNING_THRESHOLD = 4
 const ERROR_THRESHOLD = 2 * WARNING_THRESHOLD
 
+const resetResults = () => (results.length = 0)
+
 const checkComplicatedConditions = (descriptor: SFCDescriptor, filePath: string) => {
   const { script, template } = descriptor
   if (!script && !template) {
     return
   }
+
+  resetResults()
 
   const conditionalRegex = createRegExp(
     anyOf(
@@ -80,6 +84,4 @@ const reportComplicatedConditions = () => {
   return offenses
 }
 
-const resetComplicatedConditions = () => (results.length = 0)
-
-export { checkComplicatedConditions, reportComplicatedConditions, resetComplicatedConditions }
+export { checkComplicatedConditions, reportComplicatedConditions }

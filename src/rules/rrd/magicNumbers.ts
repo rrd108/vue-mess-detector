@@ -6,10 +6,15 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp(anyOf(wordBoundary), oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
 
   let match
@@ -45,6 +50,4 @@ const reportMagicNumbers = () => {
   return offenses
 }
 
-const resetMagicNumbers = () => (results.length = 0)
-
-export { checkMagicNumbers, reportMagicNumbers, resetMagicNumbers }
+export { checkMagicNumbers, reportMagicNumbers }

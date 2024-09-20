@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkFullWordComponentName, reportFullWordComponentName, resetFullWordComponentName } from './fullWordComponentName'
+import { checkFullWordComponentName, reportFullWordComponentName } from './fullWordComponentName'
 
-describe('checkFullWordComponentName', () => {
-  beforeEach(() => {
-    resetFullWordComponentName()
-  })
-
+describe('fullWordComponentName', () => {
   it('should not report files where filename has at least three consonants', () => {
     const filename = 'path/to/file/fullWordComponentNames.vue'
     const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount

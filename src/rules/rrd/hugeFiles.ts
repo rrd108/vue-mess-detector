@@ -6,8 +6,12 @@ const results: FileCheckResult[] = []
 const WARNING_THRESHOLD = 300
 const ERROR_THRESHOLD = 2 * WARNING_THRESHOLD
 
+const resetResults = () => (results.length = 0)
+
 const checkHugeFiles = (descriptor: SFCDescriptor, filePath: string, isVueFile: boolean) => {
   let totalLines = 0
+
+  resetResults()
 
   if (isVueFile) {
     totalLines = descriptor.scriptSetup?.content.trim().split('\n').length ?? 0
@@ -48,8 +52,4 @@ const reportHugeFiles = () => {
   return offenses
 }
 
-const resetHugeFiles = () => {
-  results.length = 0
-}
-
-export { checkHugeFiles, reportHugeFiles, resetHugeFiles }
+export { checkHugeFiles, reportHugeFiles }

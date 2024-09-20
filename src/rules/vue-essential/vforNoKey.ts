@@ -5,10 +5,15 @@ import { caseInsensitive, charNotIn, createRegExp, global, oneOrMore } from 'mag
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkVforNoKey = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp('<', oneOrMore(charNotIn('>')), ' v-for', oneOrMore(charNotIn('>')), '>', [
     global,
     caseInsensitive,
@@ -39,6 +44,4 @@ const reportVforNoKey = () => {
   return offenses
 }
 
-const resetReportVForNoKey = () => (results.length = 0)
-
-export { checkVforNoKey, reportVforNoKey, resetReportVForNoKey }
+export { checkVforNoKey, reportVforNoKey }

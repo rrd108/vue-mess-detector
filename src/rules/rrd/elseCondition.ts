@@ -5,10 +5,15 @@ import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkElseCondition = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
+
   const regex = createRegExp(wordBoundary, 'else', wordBoundary, [global, caseInsensitive])
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -34,6 +39,4 @@ const reportElseCondition = () => {
   return offenses
 }
 
-const resetElseCondition = () => (results.length = 0)
-
-export { checkElseCondition, reportElseCondition, resetElseCondition }
+export { checkElseCondition, reportElseCondition }

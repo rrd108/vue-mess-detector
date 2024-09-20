@@ -5,10 +5,14 @@ import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
+const resetResults = () => (results.length = 0)
+
 const checkComputedSideEffects = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   const computedRegex = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g
   // eslint-disable-next-line regexp/no-unused-capturing-group
@@ -46,6 +50,4 @@ const reportComputedSideEffects = () => {
   return offenses
 }
 
-const resetComputedSideEffects = () => (results.length = 0)
-
-export { checkComputedSideEffects, reportComputedSideEffects, resetComputedSideEffects }
+export { checkComputedSideEffects, reportComputedSideEffects }

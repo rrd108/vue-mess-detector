@@ -4,13 +4,16 @@ import type { FileCheckResult, Offense } from '../../types'
 import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
-
 const complicatedComputedFiles: { filePath: string }[] = []
+
+const resetResults = () => (results.length = 0)
 
 const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string, maxComputedLength: number) => {
   if (!script) {
     return
   }
+
+  resetResults()
 
   // eslint-disable-next-line regexp/prefer-w, regexp/strict, regexp/no-useless-flag
   const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
@@ -47,9 +50,4 @@ const reportSimpleComputed = () => {
   return offenses
 }
 
-const resetSimpleComputed = () => {
-  results.length = 0
-  complicatedComputedFiles.length = 0
-}
-
-export { checkSimpleComputed, reportSimpleComputed, resetSimpleComputed }
+export { checkSimpleComputed, reportSimpleComputed }

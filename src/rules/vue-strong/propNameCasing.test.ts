@@ -1,13 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-import { checkPropNameCasing, reportPropNameCasing, resetPropNameCasing } from './propNameCasing'
+import { describe, expect, it } from 'vitest'
+import { checkPropNameCasing, reportPropNameCasing } from './propNameCasing'
 
 describe('checkPropNameCasing', () => {
-  beforeEach(() => {
-    resetPropNameCasing()
-  })
-
   it('should not report files with camelCase props name', () => {
     const script = {
       content: `<script setup>

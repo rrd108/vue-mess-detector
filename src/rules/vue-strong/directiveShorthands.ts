@@ -9,10 +9,15 @@ const directiveShorthandsFiles: { filePath: string }[] = []
 
 const directivesToCheck = ['v-slot', 'v-bind', 'v-on']
 
+const resetResults = () => (results.length = 0)
+
 const checkDirectiveShorthands = (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor) {
     return
   }
+
+  resetResults()
+
   const template = descriptor.template
 
   directivesToCheck.forEach((directive) => {
@@ -43,9 +48,4 @@ const reportDirectiveShorthands = () => {
   return offenses
 }
 
-const resetDirectiveShorthands = () => {
-  directiveShorthandsFiles.length = 0
-  results.length = 0
-}
-
-export { checkDirectiveShorthands, reportDirectiveShorthands, resetDirectiveShorthands }
+export { checkDirectiveShorthands, reportDirectiveShorthands }
