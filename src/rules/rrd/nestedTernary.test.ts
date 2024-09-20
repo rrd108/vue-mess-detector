@@ -34,4 +34,14 @@ describe('checkNestedTernary', () => {
       message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
     }])
   })
+
+  it.todo('should not report files when optional chaning is used along with a ternary', () => {
+    const script = {
+      content: `const countDatasets = this.structure?.volume ? this.structure.volume.length : 0;`,
+    } as SFCScriptBlock
+    const fileName = 'nestedTernary-problem.vue'
+    checkNestedTernary(script, fileName)
+    expect(reportNestedTernary().length).toBe(0)
+    expect(reportNestedTernary()).toStrictEqual([])
+  })
 })
