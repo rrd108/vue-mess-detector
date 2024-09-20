@@ -14,7 +14,7 @@ export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...FLAT_RULES]
 export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {
   maxExpressionLength: 40,
   maxComputedLength: 5,
-  minimalConsonantCount: 3,
+  minimumConsonantCount: 3,
   maxPropsCount: 5,
   minVariableName: 4,
   maxParameterCount: 3,

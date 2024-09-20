@@ -4,9 +4,7 @@ import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'mag
 
 const results: FileCheckResult[] = []
 
-const MINIMAL_CONSONANTS = 3
-
-const checkFullWordComponentName = (filePath: string) => {
+const checkFullWordComponentName = (filePath: string, minimumConsonantCount: number) => {
   // regular expression to match `filename.vue` pattern
   const regex = createRegExp(
     oneOrMore(charNotIn('/')).grouped(),
@@ -26,7 +24,7 @@ const checkFullWordComponentName = (filePath: string) => {
 
     const consonantsMatch = filename.match(consonantsRegex)
 
-    if (!consonantsMatch || consonantsMatch.length < MINIMAL_CONSONANTS) {
+    if (!consonantsMatch || consonantsMatch.length < minimumConsonantCount) {
       results.push({ filePath, message: `${filename} is not a <bg_warn>full word.</bg_warn>` })
     }
   }

@@ -35,3 +35,16 @@ Refactor the component name to use a full word, ensuring it contains at least th
   </Navigation>
 </template>
 ```
+
+## 🛠 How to override?
+
+The default mininimum consonant count for this rule is **3**.
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "minimumConsonantCount": 8
+  }
+}
