@@ -60,8 +60,11 @@ async function createFile({ ruleset, name }) {
   console.log(`1️⃣  File ${filePath} generated!`)
 }
 
-inquirer.prompt(await getQuestions())
-  .then(async (answers) => {
+const main = async () => {
+  try {
+    const questions = await getQuestions()
+    const answers = await inquirer.prompt(questions)
+
     if (answers.choice === 'new') {
       const newAnswers = await inquirer.prompt(getNewDocQuestions())
       Object.assign(answers, newAnswers)
@@ -77,7 +80,9 @@ inquirer.prompt(await getQuestions())
       await fs.writeFile(inProgressPath, updatedContent, 'utf8')
     }
     await createFile(answers)
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error(error)
-  })
+  }
+}
+
+main()
