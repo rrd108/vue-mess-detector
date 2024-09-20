@@ -2,8 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { execa } from 'execa'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { DEFAULT_OVERRIDE_CONFIG } from './helpers/constants'
-import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET, TEXT_WARN } from './rules/asceeCodes'
+import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
@@ -124,7 +123,7 @@ describe('yarn analyze command with default configuration', () => {
   it('should execute with table output', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=table'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
-    //expect(stdout).toContain('┌─') // Table border character
+    // expect(stdout).toContain('┌─') // Table border character
   })
 
   it('should error out when invalid value is used for a flag', async () => {
