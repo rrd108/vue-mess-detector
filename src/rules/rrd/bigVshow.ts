@@ -52,4 +52,4 @@ const reportBigVshow = () => {
   return offenses
 }
 
-export { checkBigVshow, reportBigVshow, resetResults }
+export { checkBigVshow, reportBigVshow }

@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { check_RULENAME_, report_RULENAME_, resetResults } from './_RULENAME_CAMELCASE_'
+import { check_RULENAME_, report_RULENAME_ } from './_RULENAME_CAMELCASE_'
 
 describe('check_RULENAME_', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with /* TODO add test description */', () => {
     const script = {
       content: ` // TODO add code content to test`,

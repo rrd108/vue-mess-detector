@@ -48,4 +48,4 @@ const reportDeepIndentation = () => {
   return offenses
 }
 
-export { checkDeepIndentation, reportDeepIndentation, resetResults }
+export { checkDeepIndentation, reportDeepIndentation }

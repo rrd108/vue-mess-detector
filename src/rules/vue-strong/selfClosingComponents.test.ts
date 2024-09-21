@@ -1,12 +1,8 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkSelfClosingComponents, reportSelfClosingComponents, resetResults } from './selfClosingComponents'
+import { describe, expect, it } from 'vitest'
+import { checkSelfClosingComponents, reportSelfClosingComponents } from './selfClosingComponents'
 
 describe('checkSelfClosingComponents', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report simple html tags', () => {
     const template = `<template>
       <td></td>

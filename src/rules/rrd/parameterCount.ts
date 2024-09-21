@@ -58,4 +58,4 @@ const reportParameterCount = (maxParameterCount: number) => {
   return offenses
 }
 
-export { checkParameterCount, reportParameterCount, resetResults }
+export { checkParameterCount, reportParameterCount }

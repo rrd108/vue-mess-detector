@@ -82,4 +82,4 @@ const reportComplicatedConditions = () => {
   return offenses
 }
 
-export { checkComplicatedConditions, reportComplicatedConditions, resetResults }
+export { checkComplicatedConditions, reportComplicatedConditions }

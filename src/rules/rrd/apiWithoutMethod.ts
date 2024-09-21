@@ -60,4 +60,4 @@ const reportApiWithoutMethod = () => {
   return offenses
 }
 
-export { checkApiWithoutMethod, reportApiWithoutMethod, resetResults }
+export { checkApiWithoutMethod, reportApiWithoutMethod }

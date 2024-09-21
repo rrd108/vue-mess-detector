@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkVifWithVfor, reportVifWithVfor, resetResults } from './vifWithVfor'
+import { describe, expect, it } from 'vitest'
+import { checkVifWithVfor, reportVifWithVfor } from './vifWithVfor'
 
 describe('checkVifWithVfor', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where v-for and v-if is not used together', () => {
     const script = {
       content: `<template>

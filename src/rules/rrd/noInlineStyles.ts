@@ -44,4 +44,4 @@ const reportNoInlineStyles = () => {
   return offenses
 }
 
-export { checkNoInlineStyles, reportNoInlineStyles, resetResults }
+export { checkNoInlineStyles, reportNoInlineStyles }

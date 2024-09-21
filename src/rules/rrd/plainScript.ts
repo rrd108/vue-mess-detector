@@ -32,4 +32,4 @@ const reportPlainScript = () => {
   return offenses
 }
 
-export { checkPlainScript, reportPlainScript, resetResults }
+export { checkPlainScript, reportPlainScript }

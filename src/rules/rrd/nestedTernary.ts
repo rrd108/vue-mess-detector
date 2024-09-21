@@ -44,4 +44,4 @@ const reportNestedTernary = () => {
   return offenses
 }
 
-export { checkNestedTernary, reportNestedTernary, resetResults }
+export { checkNestedTernary, reportNestedTernary }

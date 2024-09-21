@@ -50,4 +50,4 @@ const reportComputedSideEffects = () => {
   return offenses
 }
 
-export { checkComputedSideEffects, reportComputedSideEffects, resetResults }
+export { checkComputedSideEffects, reportComputedSideEffects }

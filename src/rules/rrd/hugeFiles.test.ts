@@ -1,13 +1,9 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkHugeFiles, reportHugeFiles, resetResults } from './hugeFiles'
+import { checkHugeFiles, reportHugeFiles } from './hugeFiles'
 
 describe('checkHugeFiles', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report vue sfc files with small content', () => {
     const filePath = 'small-file.vue'
     const smallFile = {

@@ -51,4 +51,4 @@ const reportPropNameCasing = () => {
   return offenses
 }
 
-export { checkPropNameCasing, reportPropNameCasing, resetResults }
+export { checkPropNameCasing, reportPropNameCasing }

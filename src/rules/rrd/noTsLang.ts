@@ -38,4 +38,4 @@ const reportNoTsLang = () => {
   return offenses
 }
 
-export { checkNoTsLang, reportNoTsLang, resetResults }
+export { checkNoTsLang, reportNoTsLang }

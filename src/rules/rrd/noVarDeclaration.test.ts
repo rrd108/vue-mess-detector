@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkNoVarDeclaration, reportNoVarDeclaration, resetResults } from './noVarDeclaration'
+import { describe, expect, it } from 'vitest'
+import { checkNoVarDeclaration, reportNoVarDeclaration } from './noVarDeclaration'
 
 describe('checkNoVarDeclaration', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with no var declarations', () => {
     const script = {
       content: `

@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkNoTsLang, reportNoTsLang, resetResults } from './noTsLang'
+import { describe, expect, it } from 'vitest'
+import { checkNoTsLang, reportNoTsLang } from './noTsLang'
 
 describe('checkNoTsLang', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with ts lang', () => {
     const script = {
       content: `

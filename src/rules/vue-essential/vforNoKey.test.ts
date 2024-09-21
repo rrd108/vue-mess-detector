@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkVforNoKey, reportVforNoKey, resetResults } from './vforNoKey'
+import { describe, expect, it } from 'vitest'
+import { checkVforNoKey, reportVforNoKey } from './vforNoKey'
 
 describe('checkVforNoKey', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where v-for has key property', () => {
     const script = {
       content: `<template>

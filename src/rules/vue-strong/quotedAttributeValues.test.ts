@@ -1,12 +1,8 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkQuotedAttributeValues, reportQuotedAttributeValues, resetResults } from './quotedAttributeValues'
+import { describe, expect, it } from 'vitest'
+import { checkQuotedAttributeValues, reportQuotedAttributeValues } from './quotedAttributeValues'
 
 describe('checkQuotedAttributeValues', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where template attribute values are quoted', () => {
     const template = `<template>
       <AppSidebar :style="{ width: sidebarWidth + 'px' }">

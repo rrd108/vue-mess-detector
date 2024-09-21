@@ -56,4 +56,4 @@ const reportSelfClosingComponents = () => {
   return offenses
 }
 
-export { checkSelfClosingComponents, reportSelfClosingComponents, resetResults }
+export { checkSelfClosingComponents, reportSelfClosingComponents }

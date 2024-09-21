@@ -55,4 +55,4 @@ const reportVForWithIndexKey = () => {
   return offenses
 }
 
-export { checkVForWithIndexKey, reportVForWithIndexKey, resetResults }
+export { checkVForWithIndexKey, reportVForWithIndexKey }

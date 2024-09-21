@@ -39,4 +39,4 @@ const reportElseCondition = () => {
   return offenses
 }
 
-export { checkElseCondition, reportElseCondition, resetResults }
+export { checkElseCondition, reportElseCondition }

@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkElseCondition, reportElseCondition, resetResults } from './elseCondition'
+import { describe, expect, it } from 'vitest'
+import { checkElseCondition, reportElseCondition } from './elseCondition'
 
 describe('checkElseCondition', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files without else conditions', () => {
     const script = { content: '<script setup>\nconsole.log("Hello")\n</script>' } as SFCScriptBlock
     const fileName = 'no-else.vue'

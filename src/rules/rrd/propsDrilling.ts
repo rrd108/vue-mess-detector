@@ -91,4 +91,4 @@ const reportPropsDrilling = () => {
   return offenses
 }
 
-export { checkPropsDrilling, reportPropsDrilling, resetResults }
+export { checkPropsDrilling, reportPropsDrilling }

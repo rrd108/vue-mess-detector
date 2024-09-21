@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetResults } from './implicitParentChildCommunication'
+import { describe, expect, it } from 'vitest'
+import { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication } from './implicitParentChildCommunication'
 
 describe('checkImplicitParentChildCommunication', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where there is no implicit parent-child communication', () => {
     const script = {
       content: `

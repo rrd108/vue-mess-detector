@@ -1,11 +1,7 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkSingleNameComponent, reportSingleNameComponent, resetResults } from './singleNameComponent'
+import { describe, expect, it } from 'vitest'
+import { checkSingleNameComponent, reportSingleNameComponent } from './singleNameComponent'
 
 describe('checkSingleNameComponent', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('ignores pages directory', () => {
     checkSingleNameComponent('pages/SomeComponent.vue')
     const result = reportSingleNameComponent()

@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkPlainScript, reportPlainScript, resetResults } from './plainScript'
+import { describe, expect, it } from 'vitest'
+import { checkPlainScript, reportPlainScript } from './plainScript'
 
 describe('plainScript', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with <script setup>', () => {
     const script = {
       content: `

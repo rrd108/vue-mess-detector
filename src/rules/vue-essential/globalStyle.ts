@@ -36,4 +36,4 @@ const reportGlobalStyle = () => {
   return offenses
 }
 
-export { checkGlobalStyle, reportGlobalStyle, resetResults }
+export { checkGlobalStyle, reportGlobalStyle }

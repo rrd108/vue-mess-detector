@@ -44,4 +44,4 @@ const reportSingleNameComponent = () => {
   return offenses
 }
 
-export { checkSingleNameComponent, reportSingleNameComponent, resetResults }
+export { checkSingleNameComponent, reportSingleNameComponent }

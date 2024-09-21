@@ -1,13 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkScriptLength, reportScriptLength, resetResults } from './scriptLength'
+import { checkScriptLength, reportScriptLength } from './scriptLength'
 
 describe('checkScriptLength', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report "long scripts" for a short script', () => {
     const shortScript = { content: '<script setup>\nconsole.log("Hello")\n</script>' } as SFCScriptBlock
     const fileName = 'short.vue'

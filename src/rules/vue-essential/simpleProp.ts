@@ -37,4 +37,4 @@ const reportSimpleProp = () => {
   return offenses
 }
 
-export { checkSimpleProp, reportSimpleProp, resetResults }
+export { checkSimpleProp, reportSimpleProp }

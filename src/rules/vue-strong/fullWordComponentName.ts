@@ -50,4 +50,4 @@ const reportFullWordComponentName = () => {
   return offenses
 }
 
-export { checkFullWordComponentName, reportFullWordComponentName, resetResults }
+export { checkFullWordComponentName, reportFullWordComponentName }

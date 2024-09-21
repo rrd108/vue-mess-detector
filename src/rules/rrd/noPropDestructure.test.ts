@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkNoPropDestructure, reportNoPropDestructure, resetResults } from './noPropDestructure'
+import { describe, expect, it } from 'vitest'
+import { checkNoPropDestructure, reportNoPropDestructure } from './noPropDestructure'
 
 describe('checkNoPropDestructure', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files without props destructuring', () => {
     const script = {
       content: `

@@ -43,4 +43,4 @@ const reportComponentFilenameCasing = () => {
   return offenses
 }
 
-export { checkComponentFilenameCasing, reportComponentFilenameCasing, resetResults }
+export { checkComponentFilenameCasing, reportComponentFilenameCasing }

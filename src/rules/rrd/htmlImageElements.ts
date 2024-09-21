@@ -47,4 +47,4 @@ const reportHtmlImageElements = () => {
   return offenses
 }
 
-export { checkHtmlImageElements, reportHtmlImageElements, resetResults }
+export { checkHtmlImageElements, reportHtmlImageElements }

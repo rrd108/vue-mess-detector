@@ -53,4 +53,4 @@ const reportMultiAttributeElements = () => {
   return offenses
 }
 
-export { checkMultiAttributeElements, reportMultiAttributeElements, resetResults }
+export { checkMultiAttributeElements, reportMultiAttributeElements }

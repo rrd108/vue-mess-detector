@@ -66,4 +66,4 @@ const reportImplicitParentChildCommunication = () => {
   return offenses
 }
 
-export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication, resetResults }
+export { checkImplicitParentChildCommunication, reportImplicitParentChildCommunication }

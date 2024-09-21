@@ -51,4 +51,4 @@ const reportMagicNumbers = () => {
   return offenses
 }
 
-export { checkMagicNumbers, reportMagicNumbers, resetResults }
+export { checkMagicNumbers, reportMagicNumbers }

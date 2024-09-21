@@ -38,4 +38,4 @@ const reportHtmlLink = () => {
   return offenses
 }
 
-export { checkHtmlLink, reportHtmlLink, resetResults }
+export { checkHtmlLink, reportHtmlLink }

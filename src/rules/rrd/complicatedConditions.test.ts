@@ -1,13 +1,9 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkComplicatedConditions, reportComplicatedConditions, resetResults } from './complicatedConditions'
+import { checkComplicatedConditions, reportComplicatedConditions } from './complicatedConditions'
 
 describe('checkComplicatedConditions', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with simple conditions', () => {
     const descriptor = {
       script: {

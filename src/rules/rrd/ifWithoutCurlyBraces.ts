@@ -50,4 +50,4 @@ const reportIfWithoutCurlyBraces = () => {
   return offenses
 }
 
-export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces, resetResults }
+export { checkIfWithoutCurlyBraces, reportIfWithoutCurlyBraces }

@@ -1,13 +1,9 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetResults } from './templateSimpleExpression'
+import { checkTemplateSimpleExpression, reportTemplateSimpleExpression } from './templateSimpleExpression'
 
 describe('checkTemplateSimpleExpression', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where template expression is simple', () => {
     const template = {
       content: `<template>

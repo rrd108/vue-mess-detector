@@ -51,4 +51,4 @@ const reportHugeFiles = () => {
   return offenses
 }
 
-export { checkHugeFiles, reportHugeFiles, resetResults }
+export { checkHugeFiles, reportHugeFiles }

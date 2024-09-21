@@ -45,4 +45,4 @@ const reportShortVariableName = (minVariableName: number) => {
   return offenses
 }
 
-export { checkShortVariableName, reportShortVariableName, resetResults }
+export { checkShortVariableName, reportShortVariableName }

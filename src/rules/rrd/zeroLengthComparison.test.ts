@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkZeroLengthComparison, reportZeroLengthComparison, resetResults } from './zeroLengthComparison'
+import { describe, expect, it } from 'vitest'
+import { checkZeroLengthComparison, reportZeroLengthComparison } from './zeroLengthComparison'
 
 describe('checkZeroLengthComparison', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with none zero-length comparison', () => {
     const script = {
       content: `

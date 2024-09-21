@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkMagicNumbers, reportMagicNumbers, resetResults } from './magicNumbers'
+import { describe, expect, it } from 'vitest'
+import { checkMagicNumbers, reportMagicNumbers } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files without magic numbers', () => {
     const script = { content: '<script setup>\n\t\tconst vat = 27 \n</script>' } as SFCScriptBlock
     const fileName = 'no-magic-number.vue'

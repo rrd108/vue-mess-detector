@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkVForWithIndexKey, reportVForWithIndexKey, resetResults } from './vForWithIndexKey'
+import { describe, expect, it } from 'vitest'
+import { checkVForWithIndexKey, reportVForWithIndexKey } from './vForWithIndexKey'
 
 describe('checkVForWithIndexKey', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with a unique identifier as key', () => {
     const template = {
       content: `

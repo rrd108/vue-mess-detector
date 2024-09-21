@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkNoInlineStyles, reportNoInlineStyles, resetResults } from './noInlineStyles'
+import { describe, expect, it } from 'vitest'
+import { checkNoInlineStyles, reportNoInlineStyles } from './noInlineStyles'
 
 describe('checkNoInlineStyles', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with inline styles', () => {
     const template = {
       content: `

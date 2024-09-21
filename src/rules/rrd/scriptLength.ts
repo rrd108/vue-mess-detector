@@ -36,4 +36,4 @@ const reportScriptLength = (maxLength: number) => {
   return offenses
 }
 
-export { checkScriptLength, reportScriptLength, resetResults }
+export { checkScriptLength, reportScriptLength }

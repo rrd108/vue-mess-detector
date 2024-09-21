@@ -48,4 +48,4 @@ const reportZeroLengthComparison = () => {
   return offenses
 }
 
-export { checkZeroLengthComparison, reportZeroLengthComparison, resetResults }
+export { checkZeroLengthComparison, reportZeroLengthComparison }

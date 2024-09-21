@@ -47,4 +47,4 @@ const reportTemplateSimpleExpression = () => {
   return offenses
 }
 
-export { checkTemplateSimpleExpression, reportTemplateSimpleExpression, resetResults }
+export { checkTemplateSimpleExpression, reportTemplateSimpleExpression }

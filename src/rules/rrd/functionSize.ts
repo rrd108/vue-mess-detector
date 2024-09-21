@@ -190,4 +190,4 @@ const reportFunctionSize = (max: number) => {
   return offenses
 }
 
-export { checkFunctionSize, reportFunctionSize, resetResults }
+export { checkFunctionSize, reportFunctionSize }

@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkHtmlImageElements, reportHtmlImageElements, resetResults } from './htmlImageElements'
+import { describe, expect, it } from 'vitest'
+import { checkHtmlImageElements, reportHtmlImageElements } from './htmlImageElements'
 
 describe('checkHtmlImageElements', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files without HTML image elements', () => {
     const template = {
       content: `<template>

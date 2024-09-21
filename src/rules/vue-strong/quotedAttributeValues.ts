@@ -66,4 +66,4 @@ const reportQuotedAttributeValues = () => {
   return offenses
 }
 
-export { checkQuotedAttributeValues, reportQuotedAttributeValues, resetResults }
+export { checkQuotedAttributeValues, reportQuotedAttributeValues }

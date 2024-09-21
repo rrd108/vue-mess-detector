@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkNestedTernary, reportNestedTernary, resetResults } from './nestedTernary'
+import { describe, expect, it } from 'vitest'
+import { checkNestedTernary, reportNestedTernary } from './nestedTernary'
 
 describe('checkNestedTernary', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with simle ternary', () => {
     const script = {
       content: `const today = new Date()

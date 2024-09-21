@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkComputedSideEffects, reportComputedSideEffects, resetResults } from './computedSideEffects'
+import { describe, expect, it } from 'vitest'
+import { checkComputedSideEffects, reportComputedSideEffects } from './computedSideEffects'
 
 describe('checkComputedSideEffects', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files without side effects in computed properties', () => {
     const script = {
       content: `

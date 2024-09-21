@@ -1,13 +1,9 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkBigVif, reportBigVif, resetResults } from './bigVif'
+import { checkBigVif, reportBigVif } from './bigVif'
 
 describe('checkBigVif', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with small v-if', () => {
     const template = {
       content: `<button v-if="isReady"></button>

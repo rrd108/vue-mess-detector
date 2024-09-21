@@ -1,12 +1,8 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkSimpleProp, reportSimpleProp, resetResults } from './simpleProp'
+import { describe, expect, it } from 'vitest'
+import { checkSimpleProp, reportSimpleProp } from './simpleProp'
 
 describe('checkSimpleProp', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with detailed props definition', () => {
     const script = {
       content: `<script setup>

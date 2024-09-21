@@ -53,4 +53,4 @@ const reportBigVif = () => {
   return offenses
 }
 
-export { checkBigVif, reportBigVif, resetResults }
+export { checkBigVif, reportBigVif }

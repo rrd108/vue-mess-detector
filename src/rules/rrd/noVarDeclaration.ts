@@ -44,4 +44,4 @@ const reportNoVarDeclaration = () => {
   return offenses
 }
 
-export { checkNoVarDeclaration, reportNoVarDeclaration, resetResults }
+export { checkNoVarDeclaration, reportNoVarDeclaration }

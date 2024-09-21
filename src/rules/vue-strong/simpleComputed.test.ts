@@ -1,13 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
-import { checkSimpleComputed, reportSimpleComputed, resetResults } from './simpleComputed'
+import { checkSimpleComputed, reportSimpleComputed } from './simpleComputed'
 
 describe('checkSimpleComputed', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files with simple computed properties', () => {
     let script = {
       content: `const isWeekend = computed(() => today.getDay() === 0 || today.getDay() === 6)

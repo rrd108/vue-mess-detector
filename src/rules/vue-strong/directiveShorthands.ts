@@ -48,4 +48,4 @@ const reportDirectiveShorthands = () => {
   return offenses
 }
 
-export { checkDirectiveShorthands, reportDirectiveShorthands, resetResults }
+export { checkDirectiveShorthands, reportDirectiveShorthands }

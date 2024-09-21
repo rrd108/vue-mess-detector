@@ -46,4 +46,4 @@ const reportElementSelectorsWithScoped = () => {
   return offenses
 }
 
-export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped, resetResults }
+export { checkElementSelectorsWithScoped, reportElementSelectorsWithScoped }

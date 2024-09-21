@@ -50,4 +50,4 @@ const reportSimpleComputed = () => {
   return offenses
 }
 
-export { checkSimpleComputed, reportSimpleComputed, resetResults }
+export { checkSimpleComputed, reportSimpleComputed }

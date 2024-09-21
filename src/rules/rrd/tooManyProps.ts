@@ -42,4 +42,4 @@ const reportTooManyProps = () => {
   return offenses
 }
 
-export { checkTooManyProps, reportTooManyProps, resetResults }
+export { checkTooManyProps, reportTooManyProps }

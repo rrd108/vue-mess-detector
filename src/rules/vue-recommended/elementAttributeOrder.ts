@@ -83,4 +83,4 @@ const reportElementAttributeOrder = () => {
   return offenses
 }
 
-export { checkElementAttributeOrder, reportElementAttributeOrder, resetResults }
+export { checkElementAttributeOrder, reportElementAttributeOrder }

@@ -46,4 +46,4 @@ const reportNoPropDestructure = () => {
   return offenses
 }
 
-export { checkNoPropDestructure, reportNoPropDestructure, resetResults }
+export { checkNoPropDestructure, reportNoPropDestructure }

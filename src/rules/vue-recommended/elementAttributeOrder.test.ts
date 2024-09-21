@@ -1,12 +1,8 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { checkElementAttributeOrder, reportElementAttributeOrder, resetResults } from './elementAttributeOrder'
+import { describe, expect, it } from 'vitest'
+import { checkElementAttributeOrder, reportElementAttributeOrder } from './elementAttributeOrder'
 
 describe('checkElementAttributeOrder', () => {
-  beforeEach(() => {
-    resetResults()
-  })
-
   it('should not report files where elements attribute order is correct', () => {
     const template = {
       content: `

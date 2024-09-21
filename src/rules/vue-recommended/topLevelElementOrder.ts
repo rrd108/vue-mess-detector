@@ -52,4 +52,4 @@ const reportTopLevelElementOrder = () => {
   return offenses
 }
 
-export { checkTopLevelElementOrder, reportTopLevelElementOrder, resetResults }
+export { checkTopLevelElementOrder, reportTopLevelElementOrder }

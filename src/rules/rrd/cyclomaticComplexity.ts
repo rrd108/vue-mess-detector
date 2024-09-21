@@ -62,4 +62,4 @@ const reportCyclomaticComplexity = () => {
   return offenses
 }
 
-export { checkCyclomaticComplexity, reportCyclomaticComplexity, resetResults }
+export { checkCyclomaticComplexity, reportCyclomaticComplexity }
