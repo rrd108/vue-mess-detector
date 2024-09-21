@@ -120,6 +120,21 @@ describe('yarn analyze command with default configuration', () => {
     expect(stdout).toContain('Excluding helpers')
   })
 
+  it('should execute with exclude wildcard for test files', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--exclude=*.test.ts'])
+    expect(stdout).toContain('Excluding *.test.ts')
+  })
+
+  it('should execute with exclude wildcard for a subdirectory', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/rrd/*'])
+    expect(stdout).toContain('Excluding src/rules/rrd/*')
+  })
+
+  it('should execute with multiple exclude patterns', async () => {
+    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/*.test.ts,src/rules/rrd/*'])
+    expect(stdout).toContain('Excluding src/rules/*.test.ts,src/rules/rrd/*')
+  })
+
   it('should execute with table output', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=table'])
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
