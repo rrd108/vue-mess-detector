@@ -26,7 +26,7 @@ const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 
 const excludeFiles: string[] = []
 
 const checkFile = async (fileName: string, filePath: string) => {
-  if (excludeFiles.some(pattern => minimatch(fileName, pattern))) {
+  if (excludeFiles.some(pattern => minimatch(filePath, pattern, { matchBase: true }))) {
     return
   }
 
@@ -137,7 +137,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   _apply = apply.filter(rule => !ignore.includes(rule))
 
   if (exclude) {
-    excludeFiles.push(...exclude.split(','))
+    excludeFiles.push(...exclude.split(',').map(pattern => pattern.trim()))
   }
 
   const overview = await walkAsync(dir)

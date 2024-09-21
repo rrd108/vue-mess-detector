@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { execa } from 'execa'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { normalizePath } from './helpers/normalizePath'
 import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 
 describe('yarn analyze command with default configuration', () => {
@@ -121,20 +122,27 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with exclude wildcard for test files', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--exclude=*.test.ts'])
-    expect(stdout).toContain('Excluding *.test.ts')
-    // TODO expect(stdout).not.toContain('Analyzing src/helpers/skipComments.test.ts...')
+    const { stdout } = await execa('yarn', ['analyze', '--apply=rrd', '--level=error', '--exclude=*.test.ts'])
+    const normalizedStdout = normalizePath(stdout)
+    expect(normalizedStdout).toContain('Excluding *.test.ts')
+    expect(normalizedStdout).toContain('Analyzing src/rules/rrd/complicatedConditions.ts...')
+    expect(normalizedStdout).not.toContain('Analyzing src/rules/rrd/complicatedConditions.test.ts...')
+    expect(normalizedStdout).not.toContain('Analyzing src/helpers/skipComments.test.ts...')
   })
 
   it('should execute with exclude wildcard for a subdirectory', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/security/*'])
-    expect(stdout).toContain('Excluding src/rules/security/*')
-    expect(stdout).not.toContain('Analyzing src/rules/security/apiWithoutMethod.test.ts...')
+    const normalizedStdout = normalizePath(stdout)
+    expect(normalizedStdout).toContain('Excluding src/rules/security/*')
+    expect(normalizedStdout).not.toContain('Analyzing src/rules/security/apiWithoutMethod.test.ts...')
   })
 
   it('should execute with multiple exclude patterns', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/*.test.ts,src/rules/rrd/*'])
-    expect(stdout).toContain('Excluding src/rules/*.test.ts,src/rules/rrd/*')
+    const normalizedStdout = normalizePath(stdout)
+    expect(normalizedStdout).toContain('Excluding src/rules/*.test.ts,src/rules/rrd/*')
+    expect(normalizedStdout).not.toContain('Analyzing src/rules/getLineNumber.test.ts...')
+    expect(normalizedStdout).not.toContain('Analyzing src/rules/rrd/complicatedConditions.test.ts...')
   })
 
   it('should execute with table output', async () => {
