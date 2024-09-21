@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import { describe, expect, it } from 'vitest'
 import { check_RULENAME_, report_RULENAME_ } from './_RULENAME_CAMELCASE_'
 
 describe('check_RULENAME_', () => {
