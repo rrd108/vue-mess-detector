@@ -3123,7 +3123,6 @@ const Zo = (t) => {
     "templateSimpleExpression"
   ],
   rrd: [
-    "apiWithoutMethod",
     "bigVif",
     "bigVshow",
     "complicatedConditions",
@@ -3150,6 +3149,9 @@ const Zo = (t) => {
     "tooManyProps",
     "vForWithIndexKey",
     "zeroLengthComparison"
+  ],
+  security: [
+    "apiWithoutMethod"
   ]
 }, Cn = Object.keys(ge), Ko = 1.5, ns = 75, ss = 85, rs = 95, Jo = [...Object.values(ge).flat()], zs = [...Cn, ...Jo], Yo = {
   maxExpressionLength: 40,
@@ -3243,14 +3245,81 @@ const Vs = async (t) => {
 }, eu = async (t) => {
   const e = await wn(), n = ["vue.config.js", "vue.config.ts"];
   return !await qs(t) && (await Gs("vue", t) || n.some((r) => Dn.existsSync(Z.join(e, r))));
-}, tu = /^(\(.*\)|\\?.)$/;
+}, T = (t, e, n = 0) => {
+  if (!e.includes(`
+`))
+    return t.split(`
+`).findIndex((u, a) => a >= n && u.includes(e)) + 1;
+  const s = t.split(`
+`).slice(0, n).reduce((o, u) => o + u.length, 0), r = t.indexOf(e, s);
+  return t.slice(0, r).split(`
+`).length;
+}, Se = [], tu = () => Se.length = 0, nu = (t, e, n) => {
+  if (!t)
+    return;
+  const s = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi;
+  (t.content.match(s) || []).forEach((i) => {
+    const o = i.split(`
+`).length, u = T(t.content, i);
+    if (o > n * 2) {
+      Se.push({
+        filePath: e,
+        message: `line #${u} <bg_err>has a v-if with ${o} lines</bg_err>`
+      });
+      return;
+    }
+    o > n && Se.push({
+      filePath: e,
+      message: `line #${u} <bg_warn>has a v-if with ${o} lines</bg_warn>`
+    });
+  });
+}, su = () => {
+  const t = [];
+  return Se.length > 0 && Se.forEach((e) => {
+    t.push({
+      file: e.filePath,
+      rule: "<text_info>rrd ~ big v-if</text_info>",
+      description: "👉 <text_warn>Big v-if can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html",
+      message: `${e.message} 🚨`
+    });
+  }), tu(), t;
+}, Be = [], ru = () => Be.length = 0, iu = (t, e, n) => {
+  if (!t)
+    return;
+  const s = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi;
+  (t.content.match(s) || []).forEach((i) => {
+    const o = i.split(`
+`).length, u = T(t.content, i);
+    if (o > n * 2) {
+      Be.push({
+        filePath: e,
+        message: `line #${u} <bg_err>has a v-show with ${o} lines</bg_err>`
+      });
+      return;
+    }
+    o > n && Be.push({
+      filePath: e,
+      message: `line #${u} <bg_warn>has a v-show with ${o} lines</bg_warn>`
+    });
+  });
+}, ou = () => {
+  const t = [];
+  return Be.length > 0 && Be.forEach((e) => {
+    t.push({
+      file: e.filePath,
+      rule: "<text_info>rrd ~ big v-show</text_info>",
+      description: "👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html",
+      message: `${e.message} 🚨`
+    });
+  }), ru(), t;
+}, uu = /^(\(.*\)|\\?.)$/;
 function De(t) {
   const e = t.toString();
-  return tu.test(e) ? e : `(?:${e})`;
+  return uu.test(e) ? e : `(?:${e})`;
 }
-const nu = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/, su = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/;
+const au = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/, cu = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/;
 function A(t) {
-  const e = (n) => A(`(?<${n}>${`${t}`.replace(nu, "$1$2")})`);
+  const e = (n) => A(`(?<${n}>${`${t}`.replace(au, "$1$2")})`);
   return {
     toString: () => t.toString(),
     and: Object.assign((...n) => A(`${t}${k(...n)}`), {
@@ -3270,15 +3339,15 @@ function A(t) {
     optionally: () => A(`${De(t)}?`),
     as: e,
     groupedAs: e,
-    grouped: () => A(`${t}`.replace(su, "($1$3)$2")),
+    grouped: () => A(`${t}`.replace(cu, "($1$3)$2")),
     at: {
       lineStart: () => A(`^${t}`),
       lineEnd: () => A(`${t}$`)
     }
   };
 }
-const ru = /[.*+?^${}()|[\]\\/]/g;
-function Se(t) {
+const lu = /[.*+?^${}()|[\]\\/]/g;
+function Re(t) {
   return A(`[${t.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
 function P(t) {
@@ -3289,7 +3358,7 @@ function ve(...t) {
 }
 const ln = A(".");
 A("\\b\\w+\\b");
-const X = A("\\w"), U = A("\\b"), iu = A("\\d"), I = A("\\s"), Us = Object.assign(A("[a-zA-Z]"), {
+const X = A("\\w"), U = A("\\b"), hu = A("\\d"), I = A("\\s"), Us = Object.assign(A("[a-zA-Z]"), {
   lowercase: A("[a-z]"),
   uppercase: A("[A-Z]")
 }), Zs = A("\\t"), Ks = A("\\n");
@@ -3303,7 +3372,7 @@ function se(...t) {
 }
 function k(...t) {
   return A(
-    t.map((e) => typeof e == "string" ? e.replace(ru, "\\$&") : e).join("")
+    t.map((e) => typeof e == "string" ? e.replace(lu, "\\$&") : e).join("")
   );
 }
 function O(...t) {
@@ -3312,102 +3381,6 @@ function O(...t) {
 const re = "i", L = "g", N = (...t) => {
   const e = t.length > 1 && (Array.isArray(t[t.length - 1]) || t[t.length - 1] instanceof Set) ? t.pop() : void 0;
   return new RegExp(k(...t).toString(), [...e || ""].join(""));
-}, Ke = [], ou = ["get", "post", "put", "delete", "patch", "options", "head"], uu = () => Ke.length = 0, au = (t, e) => {
-  if (!e.includes("/server/api/"))
-    return;
-  const n = e.replace(/\.[^/.]+$/, "");
-  if (ou.some((o) => n.toLowerCase().endsWith(`.${o}`)))
-    return;
-  const r = t.source;
-  N(
-    k("if"),
-    O(" "),
-    "(",
-    k("event.node.req.method"),
-    O(" "),
-    "!="
-  ).test(r) || Ke.push({
-    filePath: e,
-    message: "API route <bg_warn>without HTTP method</bg_warn> specified in filename or content"
-  });
-}, cu = () => {
-  const t = [];
-  return Ke.length > 0 && Ke.forEach((e) => {
-    const n = e.filePath.split("/").pop()?.replace(/\.[^/.]+$/, "");
-    t.push({
-      file: e.filePath,
-      rule: "<text_info>rrd ~ API endpoint without HTTP method</text_info>",
-      description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., ${n}.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/api-without-method.html`,
-      message: `${e.message} 🚨`
-    });
-  }), uu(), t;
-}, T = (t, e, n = 0) => {
-  if (!e.includes(`
-`))
-    return t.split(`
-`).findIndex((u, a) => a >= n && u.includes(e)) + 1;
-  const s = t.split(`
-`).slice(0, n).reduce((o, u) => o + u.length, 0), r = t.indexOf(e, s);
-  return t.slice(0, r).split(`
-`).length;
-}, Be = [], lu = () => Be.length = 0, hu = (t, e, n) => {
-  if (!t)
-    return;
-  const s = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi;
-  (t.content.match(s) || []).forEach((i) => {
-    const o = i.split(`
-`).length, u = T(t.content, i);
-    if (o > n * 2) {
-      Be.push({
-        filePath: e,
-        message: `line #${u} <bg_err>has a v-if with ${o} lines</bg_err>`
-      });
-      return;
-    }
-    o > n && Be.push({
-      filePath: e,
-      message: `line #${u} <bg_warn>has a v-if with ${o} lines</bg_warn>`
-    });
-  });
-}, fu = () => {
-  const t = [];
-  return Be.length > 0 && Be.forEach((e) => {
-    t.push({
-      file: e.filePath,
-      rule: "<text_info>rrd ~ big v-if</text_info>",
-      description: "👉 <text_warn>Big v-if can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html",
-      message: `${e.message} 🚨`
-    });
-  }), lu(), t;
-}, Re = [], Du = () => Re.length = 0, pu = (t, e, n) => {
-  if (!t)
-    return;
-  const s = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi;
-  (t.content.match(s) || []).forEach((i) => {
-    const o = i.split(`
-`).length, u = T(t.content, i);
-    if (o > n * 2) {
-      Re.push({
-        filePath: e,
-        message: `line #${u} <bg_err>has a v-show with ${o} lines</bg_err>`
-      });
-      return;
-    }
-    o > n && Re.push({
-      filePath: e,
-      message: `line #${u} <bg_warn>has a v-show with ${o} lines</bg_warn>`
-    });
-  });
-}, gu = () => {
-  const t = [];
-  return Re.length > 0 && Re.forEach((e) => {
-    t.push({
-      file: e.filePath,
-      rule: "<text_info>rrd ~ big v-show</text_info>",
-      description: "👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html",
-      message: `${e.message} 🚨`
-    });
-  }), Du(), t;
 }, ie = (t) => {
   const e = N(
     k("/*").and(P("*").times.any(), se(`
@@ -3420,7 +3393,7 @@ const re = "i", L = "g", N = (...t) => {
     const s = n.match(/\n/g);
     return s ? s.join("") : "";
   });
-}, Je = [], du = () => Je.length = 0, mu = (t, e, n) => {
+}, Ke = [], fu = () => Ke.length = 0, Du = (t, e, n) => {
   const { script: s, template: r } = t;
   if (!s && !r)
     return;
@@ -3451,7 +3424,7 @@ const re = "i", L = "g", N = (...t) => {
       const g = (m.match(u) || []).length + 1;
       if (g > n) {
         const E = T(h, m);
-        Je.push({
+        Ke.push({
           filePath: e,
           message: `line #${E} ${g > i ? "<bg_err>" : "<bg_warn>"}${f} has a complicated condition with ${g} blocks${g > i ? "</bg_err>" : "</bg_warn>"}`
         });
@@ -3459,17 +3432,17 @@ const re = "i", L = "g", N = (...t) => {
     });
   };
   s && a(s.content, "script"), r && a(r.content, "template");
-}, bu = () => {
+}, pu = () => {
   const t = [];
-  return Je.length > 0 && Je.forEach((e) => {
+  return Ke.length > 0 && Ke.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ complicated conditions</text_info>",
       description: "👉 <text_warn>Simplify complex conditions by breaking them down into smaller, more manageable parts.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/complicated-conditions.html",
       message: `${e.message} 🚨`
     });
-  }), du(), t;
-}, Ye = [], Eu = () => Ye.length = 0, Cu = (t, e) => {
+  }), fu(), t;
+}, Je = [], gu = () => Je.length = 0, du = (t, e) => {
   if (!t)
     return;
   const n = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g, s = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/;
@@ -3477,85 +3450,85 @@ const re = "i", L = "g", N = (...t) => {
     const o = i[1];
     if (s.test(o)) {
       const u = T(t.content.trim(), i[0]), a = o.trim(), h = a.length > 20 ? a.slice(0, 20) : a;
-      Ye.push({
+      Je.push({
         filePath: e,
         message: `line #${u} side effect detected in computed property <bg_err>(${h})</bg_err>`
       });
     }
   });
-}, Fu = () => {
+}, mu = () => {
   const t = [];
-  return Ye.length > 0 && Ye.forEach((e) => {
+  return Je.length > 0 && Je.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ computed side effects</text_info>",
       description: "👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html",
       message: `${e.message} 🚨`
     });
-  }), Eu(), t;
-}, Qe = [], wu = () => Qe.length = 0, xu = (t, e, n) => {
+  }), gu(), t;
+}, Ye = [], bu = () => Ye.length = 0, Eu = (t, e, n) => {
   if (!t)
     return;
   const s = 2 * n, r = N(U, "if", U, [L, re]), i = N(U, "else", U, [L, re]), o = N(U, "for", U, [L, re]), u = N(U, "while", U, [L, re]), a = N(U, "case", U, [L, re]), h = ie(t.content), f = h.match(r), C = h.match(i), m = h.match(o), g = h.match(u), E = h.match(a), d = (f?.length || 0) + (C?.length || 0) + (m?.length || 0) + (g?.length || 0) + (E?.length || 0);
-  d > n && Qe.push({ filePath: e, message: `Cyclomatic complexity is ${d > s ? "<bg_err>very high" : "<bg_warn>high"} (${d})${d > s ? "</bg_err>" : "</bg_warn>"}` });
-}, yu = () => {
+  d > n && Ye.push({ filePath: e, message: `Cyclomatic complexity is ${d > s ? "<bg_err>very high" : "<bg_warn>high"} (${d})${d > s ? "</bg_err>" : "</bg_warn>"}` });
+}, Cu = () => {
   const t = [];
-  return Qe.length > 0 && Qe.forEach((e) => {
+  return Ye.length > 0 && Ye.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ cyclomatic complexity</text_info>",
       description: "👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html",
       message: `${e.message} 🚨`
     });
-  }), wu(), t;
-}, Xe = [], _u = 3, $u = () => Xe.length = 0, vu = (t, e, n) => {
+  }), bu(), t;
+}, Qe = [], Fu = 3, wu = () => Qe.length = 0, xu = (t, e, n) => {
   if (!t)
     return;
-  const s = N(Zs.times.atLeast(n).at.lineStart().or(I.times.atLeast(_u * n).at.lineStart()), [L]), i = ie(t.content).match(s);
+  const s = N(Zs.times.atLeast(n).at.lineStart().or(I.times.atLeast(Fu * n).at.lineStart()), [L]), i = ie(t.content).match(s);
   let o = 0;
   i?.forEach((u) => {
     const a = T(t.content, u, o);
-    Xe.push({
+    Qe.push({
       filePath: e,
       message: `line #${a} <bg_warn>indentation: ${u.length}</bg_warn>`
     }), o = a;
   });
-}, Au = () => {
+}, yu = () => {
   const t = [];
-  return Xe.length > 0 && Xe.forEach((e) => {
+  return Qe.length > 0 && Qe.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ deep indentation</text_info>",
       description: "👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html",
       message: `${e.message} 🚨`
     });
-  }), $u(), t;
-}, et = [], Su = () => et.length = 0, Bu = (t, e) => {
+  }), wu(), t;
+}, Xe = [], _u = () => Xe.length = 0, $u = (t, e) => {
   if (!t)
     return;
   const n = N(U, "else", U, [L, re]), r = ie(t.content).match(n);
-  r?.length && et.push({ filePath: e, message: `else clauses found <bg_err>(${r.length})</bg_err>` });
-}, Ru = () => {
+  r?.length && Xe.push({ filePath: e, message: `else clauses found <bg_err>(${r.length})</bg_err>` });
+}, vu = () => {
   const t = [];
-  return et.length > 0 && et.forEach((e) => {
+  return Xe.length > 0 && Xe.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ else conditions</text_info>",
       description: "👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html",
       message: `${e.message} 🚨`
     });
-  }), Su(), t;
-}, Oe = [], Ou = 5, Nu = 8;
-function ju({ funcName: t, funcBody: e, lineNumber: n, filePath: s, max: r }) {
+  }), _u(), t;
+}, Oe = [], Au = 5, Su = 8;
+function Bu({ funcName: t, funcBody: e, lineNumber: n, filePath: s, max: r }) {
   const i = e.split(`
-`).length, o = Wu(t);
+`).length, o = Nu(t);
   if (i > 2 * r) {
     Oe.push({ filePath: s, message: `function <bg_err>(${o}#${n})</bg_err> is too long: <bg_err>${i} lines</bg_err>` });
     return;
   }
   i >= r && Oe.push({ filePath: s, message: `function <bg_warn>(${o}#${n})</bg_warn> is too long: <bg_warn>${i} lines</bg_warn>` });
 }
-function Lu(t, e) {
+function Ru(t, e) {
   const n = /function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*\([^)]*\)\s*\{/g;
   n.lastIndex = e;
   const s = n.exec(t);
@@ -3574,7 +3547,7 @@ function Lu(t, e) {
   } else
     return null;
 }
-function Tu(t, e) {
+function Ou(t, e) {
   const n = /const\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*=\s*(async\s+)?\(([^)]*)\)\s*=>\s*/, s = t.slice(e), r = n.exec(s);
   if (r) {
     const [, i] = r, o = e + r.index + r[0].length;
@@ -3598,31 +3571,31 @@ function Tu(t, e) {
   } else
     return null;
 }
-function Wu(t) {
+function Nu(t) {
   return t.replace(/^const\s*/, "");
 }
-const Mu = () => Oe.length = 0, ku = (t, e, n) => {
+const ju = () => Oe.length = 0, Lu = (t, e, n) => {
   if (!t)
     return;
   const s = t.content, r = s.length;
   let i = 0;
   for (; i < r; ) {
     let o = "", u = "", a = !1;
-    if (s.slice(i, i + Nu) === "function") {
-      const h = Lu(s, i);
+    if (s.slice(i, i + Su) === "function") {
+      const h = Ru(s, i);
       h && (a = !0, o = h.name, u = h.body, i = h.end);
     }
-    if (s.slice(i, i + Ou) === "const") {
-      const h = Tu(s, i);
+    if (s.slice(i, i + Au) === "const") {
+      const h = Ou(s, i);
       h && (a = !0, o = h.name, u = h.body, i = h.end);
     }
     if (a) {
       const h = T(s.trim(), o);
-      ju({ funcName: o, funcBody: u, lineNumber: h, filePath: e, max: n });
+      Bu({ funcName: o, funcBody: u, lineNumber: h, filePath: e, max: n });
     } else
       i++;
   }
-}, Iu = (t) => {
+}, Tu = (t) => {
   const e = [];
   return Oe.length > 0 && Oe.forEach((n) => {
     e.push({
@@ -3631,8 +3604,8 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
       description: `👉 <text_warn>Functions must be shorter than ${t} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
       message: `${n.message} 🚨`
     });
-  }), Mu(), e;
-}, tt = [], Pu = () => tt.length = 0, zu = (t, e) => {
+  }), ju(), e;
+}, et = [], Wu = () => et.length = 0, Mu = (t, e) => {
   if (!t)
     return;
   const n = N("<", k("img").or("picture"), [L]), s = t.content.match(n);
@@ -3640,38 +3613,38 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
     let r = 0;
     s.forEach((i) => {
       const o = T(t.content, i, r), u = i.slice(1);
-      tt.push({
+      et.push({
         filePath: e,
         message: `line #${o} <bg_warn>${u} element found</bg_warn>`
       }), r = o;
     });
   }
-}, Hu = () => {
+}, ku = () => {
   const t = [];
-  return tt.length > 0 && tt.forEach((e) => {
+  return et.length > 0 && et.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ html image elements</text_info>",
       description: "👉 <text_warn>Use NuxtImg or NuxtPicture instead of HTML img or picture elements in Nuxt projects.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-image-elements.html",
       message: `${e.message} 🚨`
     });
-  }), Pu(), t;
-}, nt = [], Vu = () => nt.length = 0, Gu = (t, e) => {
+  }), Wu(), t;
+}, tt = [], Iu = () => tt.length = 0, Pu = (t, e) => {
   if (!t)
     return;
   const n = N("<a", U, [L, re]), s = t.content.match(n);
-  s?.length && nt.push({ filePath: e, message: `${s?.length} <bg_warn>html link found</bg_warn>` });
-}, qu = () => {
+  s?.length && tt.push({ filePath: e, message: `${s?.length} <bg_warn>html link found</bg_warn>` });
+}, zu = () => {
   const t = [];
-  return nt.length > 0 && nt.forEach((e) => {
+  return tt.length > 0 && tt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ html link</text_info>",
       description: "👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html",
       message: `${e.message} 🚨`
     });
-  }), Vu(), t;
-}, Ne = [], Uu = () => Ne.length = 0, Zu = (t, e, n, s) => {
+  }), Iu(), t;
+}, Ne = [], Hu = () => Ne.length = 0, Vu = (t, e, n, s) => {
   const r = 2 * s;
   let i = 0;
   n ? (i = t.scriptSetup?.content.trim().split(`
@@ -3685,7 +3658,7 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
     filePath: e,
     message: `<bg_warn>large file (${i} lines)</bg_warn>`
   });
-}, Ku = () => {
+}, Gu = () => {
   const t = [];
   return Ne.length > 0 && Ne.forEach((e) => {
     t.push({
@@ -3694,8 +3667,8 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
       description: "👉 <text_warn>Try to split this component into smaller components or extract logic into composables.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/huge-files.html",
       message: `${e.message} 🚨`
     });
-  }), Uu(), t;
-}, st = [], Ju = () => st.length = 0, Yu = (t, e) => {
+  }), Hu(), t;
+}, nt = [], qu = () => nt.length = 0, Uu = (t, e) => {
   if (!t)
     return;
   const s = ie(t.content).split(`
@@ -3704,179 +3677,179 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
     const o = r.trim();
     if (o.startsWith("if (") && !o.includes("{")) {
       const u = s[i + 1]?.trim();
-      (!u || !u.startsWith("{") && !o.endsWith("{")) && st.push({
+      (!u || !u.startsWith("{") && !o.endsWith("{")) && nt.push({
         filePath: e,
         message: `line #${i} if statement without curly braces: <bg_err>${o}</bg_err>`
       });
     }
   });
-}, Qu = () => {
+}, Zu = () => {
   const t = [];
-  return st.length > 0 && st.forEach((e) => {
+  return nt.length > 0 && nt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ if without curly braces</text_info>",
       description: "👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html",
       message: `${e.message} 🚨`
     });
-  }), Ju(), t;
-}, rt = [], Xu = () => rt.length = 0, ea = (t, e) => {
+  }), qu(), t;
+}, st = [], Ku = () => st.length = 0, Ju = (t, e) => {
   if (!t)
     return;
-  const n = N(ve(U), O(iu).as("magicNumber"), ve(")", Ks), [L]);
+  const n = N(ve(U), O(hu).as("magicNumber"), ve(")", Ks), [L]);
   let s, r = 0;
   for (; (s = n.exec(t.content)) !== null; ) {
     const i = s.groups?.magicNumber, o = Number.parseInt(i ?? "0");
     if (o > 1) {
       const u = T(t.content, String(o), r);
-      rt.push({
+      st.push({
         filePath: e,
         message: `line #${u} <bg_warn>magic number: ${o}</bg_warn>`
       }), r = u;
     }
   }
-}, ta = () => {
+}, Yu = () => {
   const t = [];
-  return rt.length && rt.forEach((e) => {
+  return st.length && st.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ magic numbers</text_info>",
       description: "👉 <text_warn>Extract magic numbers to a constant.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/magic-numbers.html",
       message: `magic numbers found (${e.message}) 🚨`
     });
-  }), Xu(), t;
-}, it = [], na = () => it.length = 0, sa = (t, e) => {
+  }), Ku(), t;
+}, rt = [], Qu = () => rt.length = 0, Xu = (t, e) => {
   if (!t)
     return;
   ie(t.content.trim()).split(`
 `).forEach((r, i) => {
-    (r.match(/\?(?!\.)/g) || []).length > 1 && it.push({
+    (r.match(/\?(?!\.)/g) || []).length > 1 && rt.push({
       filePath: e,
       message: `line #${i + 1} has <bg_warn>nested ternary</bg_warn>`
     });
   });
-}, ra = () => {
+}, ea = () => {
   const t = [];
-  return it.length > 0 && it.forEach((e) => {
+  return rt.length > 0 && rt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ nested Ternary</text_info>",
       description: "👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html",
       message: `${e.message} 🚨`
     });
-  }), na(), t;
-}, ot = [], ia = () => ot.length = 0, oa = (t, e) => {
+  }), Qu(), t;
+}, it = [], ta = () => it.length = 0, na = (t, e) => {
   if (!t)
     return;
   const n = /style\s*=\s*['"][^'"]*['"]/g, s = [...t.content.matchAll(n)];
   let r = 0;
   s?.forEach((i) => {
     const o = T(t.content.trim(), i[0], r);
-    ot.push({
+    it.push({
       filePath: e,
       message: `line #${o} <bg_warn>Found inline style: ${i[0]}</bg_warn>`
     }), r = o;
   });
-}, ua = () => {
+}, sa = () => {
   const t = [];
-  return ot.length > 0 && ot.forEach((e) => {
+  return it.length > 0 && it.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ no Inline Styles</text_info>",
       description: "👉 <text_warn>Avoid using inline styles. Consider moving the styles to a CSS or SCSS file, or use a Vue scoped style.</text_warn>",
       message: `${e.message} 🚨`
     });
-  }), ia(), t;
-}, ut = [], aa = () => ut.length = 0, ca = (t, e) => {
+  }), ta(), t;
+}, ot = [], ra = () => ot.length = 0, ia = (t, e) => {
   if (!t)
     return;
   const n = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g;
   ie(t.content).match(n)?.forEach((i) => {
     const o = T(t.content, i);
-    ut.push({
+    ot.push({
       filePath: e,
       message: `line #${o} <bg_warn>props destructuring found: ${i}</bg_warn>`
     });
   });
-}, la = () => {
+}, oa = () => {
   const t = [];
-  return ut.length > 0 && ut.forEach((e) => {
+  return ot.length > 0 && ot.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ no Prop Destructure</text_info>",
       description: "👉 <text_warn>Avoid destructuring props in the setup function. Use `props.propName` instead of `const { propName } = defineProps()`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html",
       message: `${e.message} 🚨`
     });
-  }), aa(), t;
-}, at = [], ha = () => at.length = 0, fa = (t, e) => {
-  t && t.lang !== "ts" && at.push({
+  }), ra(), t;
+}, ut = [], ua = () => ut.length = 0, aa = (t, e) => {
+  t && t.lang !== "ts" && ut.push({
     filePath: e,
     message: "<bg_warn>component uses js instead of ts</bg_warn>"
   });
-}, Da = () => {
+}, ca = () => {
   const t = [];
-  return at.length > 0 && at.forEach((e) => {
+  return ut.length > 0 && ut.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ no ts lang</text_info>",
       description: "👉 <text_warn>Use typescript instead of javascript.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-ts-lang.html",
       message: `${e.message} 🚨`
     });
-  }), ha(), t;
-}, ct = [], pa = () => ct.length = 0, ga = (t, e) => {
+  }), ua(), t;
+}, at = [], la = () => at.length = 0, ha = (t, e) => {
   if (!t)
     return;
   const n = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g;
   ie(t.content).match(n)?.forEach((i) => {
     const o = T(t.content, i);
-    ct.push({
+    at.push({
       filePath: e,
       message: `line #${o} <bg_warn>Avoid using 'var' for variable declarations: ${i}</bg_warn>`
     });
   });
-}, da = () => {
+}, fa = () => {
   const t = [];
-  return ct.length > 0 && ct.forEach((e) => {
+  return at.length > 0 && at.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ No Var Declaration</text_info>",
       description: "👉 <text_warn>Avoid var declaration, use const or let instead of that.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-var-declaration.html",
       message: `${e.message} 🚨`
     });
-  }), pa(), t;
-}, lt = [], ma = () => lt.length = 0, is = (t, e, n, s) => {
+  }), la(), t;
+}, ct = [], Da = () => ct.length = 0, is = (t, e, n, s) => {
   const r = e.split(",").map((i) => i.trim()).filter((i) => i.length > 0);
-  r.length > s && lt.push({ filePath: n, message: `function <bg_warn>${t}</bg_warn> has <bg_warn>${r.length}</bg_warn> parameters` });
-}, ba = (t, e, n) => {
+  r.length > s && ct.push({ filePath: n, message: `function <bg_warn>${t}</bg_warn> has <bg_warn>${r.length}</bg_warn> parameters` });
+}, pa = (t, e, n) => {
   if (!t)
     return;
   const s = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g;
   let r;
   for (; (r = s.exec(t.content)) !== null; )
     r[1] && is(r[1], r[2], e, n), r[3] && is(r[3], r[4], e, n);
-}, Ea = (t) => {
+}, ga = (t) => {
   const e = [];
-  return lt.length > 0 && lt.forEach((n) => {
+  return ct.length > 0 && ct.forEach((n) => {
     e.push({
       file: n.filePath,
       rule: "<text_info>rrd ~ parameter count</text_info>",
       description: `👉 <text_warn>Max number of function parameters should be ${t}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
       message: `${n.message} 🚨`
     });
-  }), ma(), e;
-}, ht = [], Ca = () => ht.length = 0, Fa = (t, e) => {
-  !t || t.setup || ht.push({ filePath: e, message: "<bg_warn>Plain <script> block</bg_warn> found" });
-}, wa = () => {
+  }), Da(), e;
+}, lt = [], da = () => lt.length = 0, ma = (t, e) => {
+  !t || t.setup || lt.push({ filePath: e, message: "<bg_warn>Plain <script> block</bg_warn> found" });
+}, ba = () => {
   const t = [];
-  return ht.length > 0 && ht.forEach((e) => {
+  return lt.length > 0 && lt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ Plain <script> blocks</text_info>",
       description: "👉 <text_warn> Consider using <script setup> to leverage the new SFC <script> syntax.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html",
       message: `${e.message} 🚨`
     });
-  }), Ca(), t;
-}, ft = [], xa = () => ft.length = 0, ya = (t, e) => {
+  }), da(), t;
+}, ht = [], Ea = () => ht.length = 0, Ca = (t, e) => {
   if (!t)
     return;
   const n = N(
@@ -3884,7 +3857,7 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
     I.times.any(),
     "[",
     I.times.any(),
-    O(Se(`'"`), O(X), Se(`'"`), I.times.any(), se(",", I.times.any())),
+    O(Re(`'"`), O(X), Re(`'"`), I.times.any(), se(",", I.times.any())),
     "]",
     I.times.any(),
     ")",
@@ -3911,75 +3884,75 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
   let u;
   for (; (u = s.exec(t.content)) !== null; ) {
     const a = u[1], h = u[2], f = u[3];
-    i.has(f) && h === f && ft.push({
+    i.has(f) && h === f && ht.push({
       filePath: e,
       message: `Prop <bg_warn>(${f})</bg_warn> is being drilled through <bg_warn>${a}</bg_warn> component unmodified.`
     });
   }
-}, _a = () => {
+}, Fa = () => {
   const t = [];
-  return ft.length > 0 && ft.forEach((e) => {
+  return ht.length > 0 && ht.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ props drilling</text_info>",
       description: "👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>",
       message: `${e.message} 🚨`
     });
-  }), xa(), t;
-}, Dt = [], $a = () => Dt.length = 0, va = (t, e, n) => {
+  }), Ea(), t;
+}, ft = [], wa = () => ft.length = 0, xa = (t, e, n) => {
   if (!t)
     return;
   const s = t.content.split(`
 `);
-  s.length > n && Dt.push({ filePath: e, message: `${s.length > n * 2 ? "<bg_err>" : "<bg_warn>"}(${s.length} lines)${s.length > n * 2 ? "</bg_err>" : "</bg_warn>"}` });
-}, Aa = (t) => {
+  s.length > n && ft.push({ filePath: e, message: `${s.length > n * 2 ? "<bg_err>" : "<bg_warn>"}(${s.length} lines)${s.length > n * 2 ? "</bg_err>" : "</bg_warn>"}` });
+}, ya = (t) => {
   const e = [];
-  return Dt.length > 0 && Dt.forEach((n) => {
+  return ft.length > 0 && ft.forEach((n) => {
     e.push({
       file: n.filePath,
       rule: "<text_info>rrd ~ Long <script> blocks</text_info>",
       description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${t} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
       message: `${n.message} 🚨`
     });
-  }), $a(), e;
-}, pt = [], Sa = () => pt.length = 0, Ba = ["i", "key"], Ra = (t, e, n) => {
+  }), wa(), e;
+}, Dt = [], _a = () => Dt.length = 0, $a = ["i", "key"], va = (t, e, n) => {
   if (!t)
     return;
   const s = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g;
   let r;
   for (; (r = s.exec(t.content)) !== null; ) {
     const i = r[1];
-    i.length < n && !Ba.includes(i) && pt.push({ filePath: e, message: `variable: <bg_warn>(${i})</bg_warn>` });
+    i.length < n && !$a.includes(i) && Dt.push({ filePath: e, message: `variable: <bg_warn>(${i})</bg_warn>` });
   }
-}, Oa = (t) => {
+}, Aa = (t) => {
   const e = [];
-  return pt.length > 0 && pt.forEach((n) => {
+  return Dt.length > 0 && Dt.forEach((n) => {
     e.push({
       file: n.filePath,
       rule: "<text_info>rrd ~ short variable names</text_info>",
       description: `👉 <text_warn>Variable names must have a minimum length of ${t}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
       message: `${n.message} 🚨`
     });
-  }), Sa(), e;
-}, gt = [], Na = () => gt.length = 0, ja = (t, e, n) => {
+  }), _a(), e;
+}, pt = [], Sa = () => pt.length = 0, Ba = (t, e, n) => {
   if (!t)
     return;
   const s = N("defineProps", se("<"), se("("), "{", O(P("}")), "}", ["g", "s"]), i = ie(t.content).match(s);
   if (i?.length) {
     const o = i[0].split(",").length;
-    o > n && gt.push({ filePath: e, message: `props found <bg_err>(${o})</bg_err>` });
+    o > n && pt.push({ filePath: e, message: `props found <bg_err>(${o})</bg_err>` });
   }
-}, La = () => {
+}, Ra = () => {
   const t = [];
-  return gt.length > 0 && gt.forEach((e) => {
+  return pt.length > 0 && pt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ too many props</text_info>",
       description: "👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html",
       message: `${e.message} 🚨`
     });
-  }), Na(), t;
-}, dt = [], Ta = () => dt.length = 0, Wa = (t, e) => {
+  }), Sa(), t;
+}, gt = [], Oa = () => gt.length = 0, Na = (t, e) => {
   if (!t)
     return;
   const n = N('v-for="(', I.times.any(), O(X).grouped(), I.times.any(), ",", I.times.any(), O(X).grouped(), I.times.any(), ")", O(I), "in", O(I), O(X).grouped(), [L]), s = N(':key="', I.times.any(), O(X).grouped(), I.times.any(), '"', [L]), r = [...t.content.matchAll(n)], i = [...t.content.matchAll(s)];
@@ -3989,24 +3962,24 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
       const m = C[1];
       if (m === h) {
         const g = T(t.content.trim(), m);
-        dt.push({
+        gt.push({
           filePath: e,
           message: `line #${g} <bg_warn>index is being used as :key in v-for</bg_warn>`
         });
       }
     });
   });
-}, Ma = () => {
+}, ja = () => {
   const t = [];
-  return dt.length > 0 && dt.forEach((e) => {
+  return gt.length > 0 && gt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ VFor With Index Key</text_info>",
       description: "👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html",
       message: `${e.message} 🚨`
     });
-  }), Ta(), t;
-}, mt = [], ka = () => mt.length = 0, Ia = (t, e) => {
+  }), Oa(), t;
+}, dt = [], La = () => dt.length = 0, Ta = (t, e) => {
   if (!t)
     return;
   const n = /(\w+(?:\.\w+)*)\.length\s*>\s*0/g;
@@ -4014,18 +3987,47 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
   const r = ie(t.content);
   for (; (s = n.exec(r)) !== null; ) {
     const i = s[0], o = s[1], u = T(r.trim(), i);
-    mt.push({
+    dt.push({
       filePath: e,
       message: `line #${u} zero length comparison found <bg_warn>(${o})</bg_warn>`
     });
   }
-}, Pa = () => {
+}, Wa = () => {
   const t = [];
-  return mt.length > 0 && mt.forEach((e) => {
+  return dt.length > 0 && dt.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ Zero Length Comparison</text_info>",
       description: "👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html",
+      message: `${e.message} 🚨`
+    });
+  }), La(), t;
+}, mt = [], Ma = ["get", "post", "put", "delete", "patch", "options", "head"], ka = () => mt.length = 0, Ia = (t, e) => {
+  if (!e.includes("/server/api/"))
+    return;
+  const n = e.replace(/\.[^/.]+$/, "");
+  if (Ma.some((o) => n.toLowerCase().endsWith(`.${o}`)))
+    return;
+  const r = t.source;
+  N(
+    k("if"),
+    O(" "),
+    "(",
+    k("event.node.req.method"),
+    O(" "),
+    "!="
+  ).test(r) || mt.push({
+    filePath: e,
+    message: "API route <bg_warn>without HTTP method</bg_warn> specified in filename or content"
+  });
+}, Pa = () => {
+  const t = [];
+  return mt.length > 0 && mt.forEach((e) => {
+    const n = e.filePath.split("/").pop()?.replace(/\.[^/.]+$/, "");
+    t.push({
+      file: e.filePath,
+      rule: "<text_info>rrd ~ API endpoint without HTTP method</text_info>",
+      description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., ${n}.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/api-without-method.html`,
       message: `${e.message} 🚨`
     });
   }), ka(), t;
@@ -4430,7 +4432,7 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
   ), s = t.match(n);
   if (s) {
     const r = s[0]?.split(".vue")[0], i = N(
-      Se("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
+      Re("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
       [L]
     ), o = r.match(i);
     (!o || o.length < e) && St.push({ filePath: t, message: `${r} is not a <bg_warn>full word.</bg_warn>` });
@@ -4488,10 +4490,10 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
   const n = t.template, s = N(
     "<",
     O(X),
-    se(O(Se(` 	
+    se(O(Re(` 	
 \r`))),
     O(P("/>")),
-    se(O(Se(` 	
+    se(O(Re(` 	
 \r`))),
     se("/"),
     ">",
@@ -4621,33 +4623,33 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
     implicitParentChildCommunication: () => i && Ua(r, e),
     elementSelectorsWithScoped: () => i && Va(t.styles, e),
     // rrd
-    apiWithoutMethod: () => ts() && au(t, e),
-    bigVif: () => hu(t.template, e, s.maxVifLines),
-    bigVShow: () => pu(t.template, e, s.maxVshowLines),
-    complicatedConditions: () => mu(t, e, s.warningThreshold),
-    cyclomaticComplexity: () => xu(r, e, s.complexityModerate),
-    computedSideEffects: () => Cu(r, e),
-    deepIndentation: () => vu(r, e, s.maxTabs),
-    elseCondition: () => Bu(r, e),
-    functionSize: () => ku(r, e, s.maxFunctionSize),
-    htmlImageElements: () => ts() && zu(t.template, e),
-    htmlLink: () => i && Gu(t.template, e),
-    hugeFiles: () => Zu(t, e, i, s.maxFileSize),
-    ifWithoutCurlyBraces: () => Yu(r, e),
-    magicNumbers: () => ea(r, e),
-    nestedTernary: () => sa(r, e),
-    noPropDestructure: () => ca(r, e),
-    noTsLang: () => i && fa(r, e),
-    noVarDeclaration: () => ga(r, e),
-    parameterCount: () => ba(r, e, s.maxParameterCount),
-    plainScript: () => i && Fa(t.script, e),
-    propsDrilling: () => ya(r, e),
-    scriptLength: () => va(r, e, s.maxScriptLength),
-    shortVariableName: () => Ra(r, e, s.minVariableName),
-    tooManyProps: () => ja(r, e, s.maxPropsCount),
-    vForWithIndexKey: () => i && Wa(t.template, e),
-    zeroLengthComparison: () => Ia(r, e),
-    noInlineStyles: () => oa(t.template, e)
+    apiWithoutMethod: () => ts() && Ia(t, e),
+    bigVif: () => nu(t.template, e, s.maxVifLines),
+    bigVShow: () => iu(t.template, e, s.maxVshowLines),
+    complicatedConditions: () => Du(t, e, s.warningThreshold),
+    cyclomaticComplexity: () => Eu(r, e, s.complexityModerate),
+    computedSideEffects: () => du(r, e),
+    deepIndentation: () => xu(r, e, s.maxTabs),
+    elseCondition: () => $u(r, e),
+    functionSize: () => Lu(r, e, s.maxFunctionSize),
+    htmlImageElements: () => ts() && Mu(t.template, e),
+    htmlLink: () => i && Pu(t.template, e),
+    hugeFiles: () => Vu(t, e, i, s.maxFileSize),
+    ifWithoutCurlyBraces: () => Uu(r, e),
+    magicNumbers: () => Ju(r, e),
+    nestedTernary: () => Xu(r, e),
+    noPropDestructure: () => ia(r, e),
+    noTsLang: () => i && aa(r, e),
+    noVarDeclaration: () => ha(r, e),
+    parameterCount: () => pa(r, e, s.maxParameterCount),
+    plainScript: () => i && ma(t.script, e),
+    propsDrilling: () => Ca(r, e),
+    scriptLength: () => xa(r, e, s.maxScriptLength),
+    shortVariableName: () => va(r, e, s.minVariableName),
+    tooManyProps: () => Ba(r, e, s.maxPropsCount),
+    vForWithIndexKey: () => i && Na(t.template, e),
+    zeroLengthComparison: () => Ta(r, e),
+    noInlineStyles: () => na(t.template, e)
   };
   n.forEach((u) => {
     u in ge && ge[u].forEach((a) => {
@@ -4663,7 +4665,7 @@ const Mu = () => Oe.length = 0, ku = (t, e, n) => {
       u(m);
     });
   };
-  return a(sc), a(ec), a(oc), a(cc), a(Ya), a(bc), a(Fc), a(_c), a(Ac), a(Rc), a(Lc), a(Mc), a(Pc), a(Vc), a(Uc), a(gc), a(fc), a(Za), a(Ga), a(cu), a(fu), a(gu), a(bu), a(yu), a(Fu), a(Au), a(Ru), a(() => Iu(s.maxFunctionSize)), a(Hu), a(qu), a(Ku), a(Qu), a(ta), a(ra), a(la), a(Da), a(da), a(() => Ea(s.maxParameterCount)), a(wa), a(_a), a(() => Aa(s.maxScriptLength)), a(() => Oa(s.minVariableName)), a(La), a(Ma), a(Pa), a(ua), Object.keys(r).sort((f, C) => {
+  return a(sc), a(ec), a(oc), a(cc), a(Ya), a(bc), a(Fc), a(_c), a(Ac), a(Rc), a(Lc), a(Mc), a(Pc), a(Vc), a(Uc), a(gc), a(fc), a(Za), a(Ga), a(Pa), a(su), a(ou), a(pu), a(Cu), a(mu), a(yu), a(vu), a(() => Tu(s.maxFunctionSize)), a(ku), a(zu), a(Gu), a(Zu), a(Yu), a(ea), a(oa), a(ca), a(fa), a(() => ga(s.maxParameterCount)), a(ba), a(Fa), a(() => ya(s.maxScriptLength)), a(() => Aa(s.minVariableName)), a(Ra), a(ja), a(Wa), a(sa), Object.keys(r).sort((f, C) => {
     const m = r[f].length, g = r[C].length;
     return e === "desc" ? g - m : m - g;
   }).forEach((f) => {
