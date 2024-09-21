@@ -125,7 +125,7 @@ describe('yarn analyze command with default configuration', () => {
     expect(stdout).toContain('Excluding *.test.ts')
     // TODO expect(stdout).not.toContain('Analyzing src/helpers/skipComments.test.ts...')
   })
-  
+
   it('should execute with exclude wildcard for a subdirectory', async () => {
     const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/rrd/*'])
     expect(stdout).toContain('Excluding src/rules/rrd/*')
