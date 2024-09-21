@@ -68,7 +68,6 @@ export default defineConfig({
                 { text: 'Element Selectors in Scoped CSS', link: '/rules/vue-caution/element-selectors-with-scoped' },
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
-                { text: 'API Without HTTP Method', link: '/rules/rrd/api-without-method' },
                 { text: 'Big v-if', link: '/rules/rrd/big-vif' },
                 { text: 'Big v-show', link: '/rules/rrd/big-vshow' },
                 { text: 'Complicated Conditions', link: '/rules/rrd/complicated-conditions' },
@@ -95,6 +94,9 @@ export default defineConfig({
                 { text: 'Too Many Props', link: '/rules/rrd/too-many-props' },
                 { text: 'VFor with Index Key', link: '/rules/rrd/v-for-with-index-key' },
                 { text: 'Zero Length Comparison', link: '/rules/rrd/zero-length-comparison' },
+              ] },
+              { text: 'Security', link: '/rules/security', collapsed: true, items: [
+                { text: 'API Without Method', link: '/rules/security/api-without-method' },
               ] },
             ],
           },

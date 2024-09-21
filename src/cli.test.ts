@@ -127,9 +127,9 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with exclude wildcard for a subdirectory', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/rrd/*'])
-    expect(stdout).toContain('Excluding src/rules/rrd/*')
-    expect(stdout).not.toContain('Analyzing src/rules/rrd/apiWithoutMethod.test.ts...')
+    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/security/*'])
+    expect(stdout).toContain('Excluding src/rules/security/*')
+    expect(stdout).not.toContain('Analyzing src/rules/security/apiWithoutMethod.test.ts...')
   })
 
   it('should execute with multiple exclude patterns', async () => {

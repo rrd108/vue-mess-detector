@@ -197,6 +197,10 @@ Some features of Vue exist to accommodate rare edge cases or smoother migrations
 
 A collection of rules that balances widely accepted best practices with more specific, opinionated guidelines, offering a comprehensive approach to code quality, allowing developers to choose the rules that best align with their project's style and goals.
 
+### 🔒 Security Ruleset ~ [security](/rules/security/index)
+
+A set of rules focused on ensuring the security and integrity of your project, covering aspects such as API endpoint security, data validation, and secure coding practices to protect against common vulnerabilities.
+
 ## 🚀 PKG:PREVIEW Continuous Releases
 
 We use [pkg.pr.new](https://github.com/stackblitz-labs/pkg.pr.new) for continuous releases. This allows contributors and users to test new features and bug fixes immediately, without waiting for official releases.
