@@ -19,6 +19,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [Nested Ternary](./nested-ternary.md)
 - [No Inline Styles](./no-inline-styles.md)
 - [No Prop Destructing](./no-prop-destructure.md)
+- [No Ts Lang](./no-ts-lang.md)
 - [No Var Declaration](./no-var-declaration.md)
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)

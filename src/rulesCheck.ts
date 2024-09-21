@@ -1,7 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getIsNuxt } from './context'
-import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkApiWithoutMethod, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
@@ -60,6 +60,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
     noPropDestructure: () => checkNoPropDestructure(script, filePath),
+    noTsLang: () => isVueFile && checkNoTsLang(script, filePath),
     noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
     parameterCount: () => checkParameterCount(script, filePath, override.maxParameterCount),
     plainScript: () => isVueFile && checkPlainScript(descriptor.script, filePath),
