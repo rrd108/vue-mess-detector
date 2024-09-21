@@ -1,36 +1,26 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-
-import { char, createRegExp, oneOrMore, whitespace } from 'magic-regexp'
 import { skipComments } from '../../helpers/skipComments'
-import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-/* TODO use the correct parameter from the following list:
-  - "script: SFCScriptBlock" ~ this rule will apply to ts, js and vue files
-  - "styles: SFCStyleBlock[]" ~ applied only for vue files
-  - "template: SFCTemplateBlock" ~ applied only for vue files
-  - "descriptor: SFCDescriptor" ~ applied only for vue files
-*/
 const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
 
-  const regex = createRegExp(oneOrMore(char), whitespace, '?', whitespace, oneOrMore(char), whitespace, ':', whitespace, oneOrMore(char))
+  const content = skipComments(script.content.trim())
+  const lines = content.split('\n')
 
-  const content = skipComments(script.content)
-  const matches = content.match(regex)
-
-  matches?.forEach((match) => {
-    if (match.split('?').length - 1 > 1) {
-      const lineNumber = getLineNumber(script.content, match)
+  // In here we use `index` as lineNumber becase we are splitting the content by new lines
+  lines.forEach((line, index) => {
+    const ternaryCount = (line.match(/\?(?!\.)/g) || []).length
+    if (ternaryCount > 1) {
       results.push({
         filePath,
-        message: `line #${lineNumber} has <bg_warn>nested ternary</bg_warn>`,
+        message: `line #${index + 1} has <bg_warn>nested ternary</bg_warn>`,
       })
     }
   })
