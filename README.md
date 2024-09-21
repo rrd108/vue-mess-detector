@@ -83,7 +83,7 @@ Options:
 | Option      | Description                                             | Default | Example                                                |
 | ----------- | ------------------------------------------------------- | ------- | ------------------------------------------------------ |
 | `[path]`    | Specify directory or file to analyze                    | `./src` | `./src/components/AppHeader.vue` |
-| `--exclude` | Exclude directories or files (comma-separated)          | None    | `--exclude=components,Gauranga.vue`                    |
+| `--exclude` | Exclude directories or files (comma-separated, supports wildcards) | None      | `--exclude=components,Gauranga.vue,*.test.ts`  |
 | `--apply`   | Apply **only** specific rulesets or rules (comma-separated) | All rules | `--apply=vue-essential,magicNumbers`        |
 | `--ignore`  | Ignore **only** specific rulesets or rules (comma-separated) | -    | `--ignore=vue-caution,functionSize`                    |
 | `--group`   | Group results by `file` or `rule`                       | `rule`  | `--group=file`                                         |

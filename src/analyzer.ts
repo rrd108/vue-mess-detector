@@ -6,6 +6,7 @@ import type { OverrideConfig } from './types/Override'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
+import { minimatch } from 'minimatch'
 import { setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 import { getConfig } from './helpers/getConfig'
@@ -25,7 +26,7 @@ const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 
 const excludeFiles: string[] = []
 
 const checkFile = async (fileName: string, filePath: string) => {
-  if (excludeFiles.some(file => fileName.endsWith(file))) {
+  if (excludeFiles.some(pattern => minimatch(fileName, pattern))) {
     return
   }
 
@@ -62,7 +63,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, fileName)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(dir => filePath.endsWith(dir))) {
+      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(pattern => minimatch(filePath, pattern))) {
         const subDirInfo = await walkAsync(filePath)
         if (subDirInfo) {
           overwievMessages.push(...subDirInfo)
