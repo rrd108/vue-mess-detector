@@ -1,7 +1,7 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
-import { reportApiWithoutMethod, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportApiWithoutMethod, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
@@ -74,6 +74,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
   processOffenses(reportNoPropDestructure)
+  processOffenses(reportNoTsLang)
   processOffenses(reportNoVarDeclaration)
   processOffenses(() => reportParameterCount(override.maxParameterCount))
   processOffenses(reportPlainScript)
