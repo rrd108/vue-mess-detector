@@ -147,11 +147,11 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   // Generate the report and calculate code health
   const { health, output: reportOutput } = reportRules(groupBy, sortBy, level, config.override)
-  const { errors, warnings, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
+  const { codeHealth, output: codeHealthOutput } = calculateCodeHealth(health, linesCount, filesCount)
 
-  if (!errors && !warnings) {
+  if (!codeHealth.errors && !codeHealth.warnings) {
     output.push({ info: `\n<bg_ok>No code smells detected!</bg_ok>` })
   }
 
-  return { output, codeHealthOutput, reportOutput }
+  return { output, codeHealthOutput, reportOutput, codeHealth }
 }

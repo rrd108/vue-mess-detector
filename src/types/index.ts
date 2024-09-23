@@ -55,4 +55,14 @@ export interface Health {
   output: { info: string }[]
 }
 
-export type CodeHealthResponse = Omit<Health, 'file'>
+export interface CodeHealth {
+  errors: number
+  warnings: number
+  linesCount: number
+  filesCount: number
+}
+
+export interface CodeHealthResponse {
+  codeHealth: CodeHealth
+  output: { info: string }[]
+}

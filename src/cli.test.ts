@@ -99,6 +99,7 @@ describe('yarn analyze command with default configuration', () => {
     const { stdout } = await execa('yarn', ['analyze', '--output=json'])
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
     expect(stdout).toContain(`codeHealthOutput`)
+    expect(stdout).toMatch(/"codeHealth":\s*\{\s*"errors":/)
   })
 
   it('should execute with group parameter', async () => {
