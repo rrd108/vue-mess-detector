@@ -3169,9 +3169,11 @@ const Zo = (t) => {
   maxScriptLength: 100,
   maxFileSize: 300
 }, Qo = (t, e, n) => {
-  const { errors: s, warnings: r } = t.reduce((g, { errors: E, warnings: d }) => ({ errors: g.errors + E, warnings: g.warnings + d }), { errors: 0, warnings: 0 }), i = [], o = { errors: s, warnings: r, linesCount: e, filesCount: n };
+  const { errors: s, warnings: r } = t.reduce((g, { errors: E, warnings: d }) => ({ errors: g.errors + E, warnings: g.warnings + d }), { errors: 0, warnings: 0 }), i = [], o = { errors: s, warnings: r, linesCount: e, filesCount: n, points: 0 };
   i.push({ info: `Found <bg_err>${Intl.NumberFormat("en-US").format(s)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat("en-US").format(r)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat("en-US").format(e)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat("en-US").format(n)} files</bg_info>` });
-  const u = Math.ceil((1 - (s * Ko + r) / e) * 100), a = 60, h = r ? Math.max(1, Math.ceil(r / e * a)) : 0, f = s ? Math.max(1, a - Math.ceil(u * a / 100) - h) : 0, C = a - f - h, m = `<bg_ok>${"_".repeat(C)}</bg_ok><bg_warn>${"_".repeat(h)}</bg_warn><bg_err>${"_".repeat(f)}</bg_err>`;
+  const u = Math.ceil((1 - (s * Ko + r) / e) * 100);
+  o.points = u;
+  const a = 60, h = r ? Math.max(1, Math.ceil(r / e * a)) : 0, f = s ? Math.max(1, a - Math.ceil(u * a / 100) - h) : 0, C = a - f - h, m = `<bg_ok>${"_".repeat(C)}</bg_ok><bg_warn>${"_".repeat(h)}</bg_warn><bg_err>${"_".repeat(f)}</bg_err>`;
   return i.push({ info: `Code Health: [${m}] ${u}%
 ` }), u < ns && i.push({ info: `<bg_err>Code health is LOW: ${u}%</bg_err>
 ` }), u >= ns && u < ss && i.push({ info: `<bg_warn>Code health is MEDIUM ${u}%$</bg_warn>

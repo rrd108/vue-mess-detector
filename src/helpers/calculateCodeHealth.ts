@@ -5,11 +5,12 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   const { errors, warnings } = health.reduce((acc, { errors, warnings }) => ({ errors: acc.errors + errors, warnings: acc.warnings + warnings }), { errors: 0, warnings: 0 })
 
   const output: { info: string }[] = []
-  const codeHealth = { errors, warnings, linesCount, filesCount }
+  const codeHealth = { errors, warnings, linesCount, filesCount, points: 0 }
 
   output.push({ info: `Found <bg_err>${Intl.NumberFormat('en-US').format(errors)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat('en-US').format(warnings)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat('en-US').format(linesCount)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat('en-US').format(filesCount)} files</bg_info>` })
 
   const codeHealthPoints = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
+  codeHealth.points = codeHealthPoints
 
   const BAR_WIDTH = 60
   const yellowLength = !warnings ? 0 : Math.max(1, Math.ceil(warnings / linesCount * BAR_WIDTH))

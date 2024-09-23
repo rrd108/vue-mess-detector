@@ -60,6 +60,7 @@ export interface CodeHealth {
   warnings: number
   linesCount: number
   filesCount: number
+  points: number
 }
 
 export interface CodeHealthResponse {
