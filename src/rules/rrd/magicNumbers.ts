@@ -1,7 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 
-import { anyOf, createRegExp, digit, global, linefeed, oneOrMore, wordBoundary } from 'magic-regexp'
+import { anyOf, char, createRegExp, digit, global, linefeed, maybe, oneOrMore, wordBoundary } from 'magic-regexp'
 import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
@@ -13,15 +13,25 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  const regex = createRegExp(anyOf(wordBoundary), oneOrMore(digit).as('magicNumber'), anyOf(')', linefeed), [global])
+  const regex = createRegExp(
+    maybe(oneOrMore(char)),
+    anyOf(wordBoundary),
+    oneOrMore(digit).as('magicNumber'),
+    anyOf(')', linefeed),
+    [global],
+  )
 
   let match
   let lastLine = 0
   // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(script.content)) !== null) {
+    if (match[0].trim().startsWith('const') || match[0].trim().startsWith('let')) {
+      return
+    }
+    
     const _magicNumber = match.groups?.magicNumber
     const magicNumber = Number.parseInt(_magicNumber ?? '0')
-    if (magicNumber > 1) {
+    if (magicNumber > 1) { // 0 and 1 are not considered as magic number
       const lineNumber = getLineNumber(script.content, String(magicNumber), lastLine)
       results.push({
         filePath,

@@ -4,7 +4,7 @@ import { checkMagicNumbers, reportMagicNumbers } from './magicNumbers'
 
 describe('checkMagicNumbers', () => {
   it('should not report files without magic numbers', () => {
-    const script = { content: '<script setup>\n\t\tconst vat = 27 \n</script>' } as SFCScriptBlock
+    const script = { content: '<script setup>\n\t\tconst vat = 27\n</script>' } as SFCScriptBlock
     const fileName = 'no-magic-number.vue'
     checkMagicNumbers(script, fileName)
     const result = reportMagicNumbers()
