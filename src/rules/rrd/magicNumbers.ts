@@ -28,7 +28,7 @@ const checkMagicNumbers = (script: SFCScriptBlock | null, filePath: string) => {
     if (match[0].trim().startsWith('const') || match[0].trim().startsWith('let')) {
       return
     }
-    
+
     const _magicNumber = match.groups?.magicNumber
     const magicNumber = Number.parseInt(_magicNumber ?? '0')
     if (magicNumber > 1) { // 0 and 1 are not considered as magic number
