@@ -16,7 +16,14 @@ const checkFullWordComponentName = (filePath: string, minimumConsonantCount: num
   const match = filePath.match(regex)
 
   if (match) {
-    const filename = match[0]?.split('.vue')[0] as string
+    const matchedFilename = match[0]
+
+    // ignores default Vue/Nuxt app file
+    if (matchedFilename?.toLowerCase() === 'app.vue') {
+      return
+    }
+
+    const filename = matchedFilename?.split('.vue')[0] as string
 
     // regular expression to match and count consonants
     const consonantsRegex = createRegExp(
