@@ -41,6 +41,7 @@ export const RULES = {
     'ifWithoutCurlyBraces',
     'magicNumbers',
     'nestedTernary',
+    'noDirectDomAccess',
     'noInlineStyles',
     'noPropDestructure',
     'noTsLang',

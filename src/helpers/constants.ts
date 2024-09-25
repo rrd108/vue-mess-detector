@@ -10,6 +10,15 @@ export const OK_HEALTH_THRESHOLD = 95
 export const FLAT_RULES: string[] = [...Object.values(RULES).flat()]
 export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...FLAT_RULES]
 
+// Direct DOM access methods
+export const DOM_METHODS = [
+  'getElementById',
+  'getElementsByClassName',
+  'getElementsByTagName',
+  'querySelector',
+  'querySelectorAll',
+]
+
 // Override Config ~ Default
 export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {
   maxExpressionLength: 40,

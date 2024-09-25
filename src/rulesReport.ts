@@ -1,7 +1,7 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
-import { reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoInlineStyles, reportNoPropDestructure, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoDirectDomAccess, reportNoInlineStyles, reportNoPropDestructure, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportApiWithoutMethod } from './rules/security'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
@@ -74,6 +74,8 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportIfWithoutCurlyBraces)
   processOffenses(reportMagicNumbers)
   processOffenses(reportNestedTernary)
+  processOffenses(reportNoDirectDomAccess)
+  processOffenses(reportNoInlineStyles)
   processOffenses(reportNoPropDestructure)
   processOffenses(reportNoTsLang)
   processOffenses(reportNoVarDeclaration)
@@ -85,7 +87,6 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
-  processOffenses(reportNoInlineStyles)
 
   // Sort offenses grouped by key based on the `sortBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
