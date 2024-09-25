@@ -25,16 +25,6 @@ A comprehensive code analysis and quality assessment tool that provides actionab
 
 ## ⬇️ Installation
 
-### As a vscode extension
-
-Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
-
-```
-ext install WebMania.vue-mess-detector
-```
-
-More info: https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector
-
 ### From npm registry
 
 ```bash
@@ -69,6 +59,13 @@ npx jsr add @rrd/vue-mess-detector --save-dev
 # using bun
 bunx jsr add @rrd/vue-mess-detector --dev
 ```
+
+## 📦 Integrations
+
+- [Vscode extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
+- [Nuxt devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
+- Vue devtools (in progress)
+- Github Action (in progress)
 
 ## ⚙️ Usage
 

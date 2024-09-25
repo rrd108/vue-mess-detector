@@ -24,16 +24,6 @@ By incorporating static code analysis into your development workflow, you can:
 
 ## ⬇️ Installation
 
-### As a vscode extension
-
-Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
-
-```bash
-ext install WebMania.vue-mess-detector
-```
-
-👉 https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector
-
 ### From npm registry
 
 ::: code-group
@@ -85,6 +75,13 @@ bunx jsr add @rrd/vue-mess-detector --dev
 ::: tip
 ✨ Well done! A browser window should automatically open for `http://localhost:3000`
 :::
+
+## 📦 Integrations
+
+- [Vscode extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
+- [Nuxt devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
+- Vue devtools (in progress)
+- Github Action (in progress)
 
 ## ⚙️ Usage
 
