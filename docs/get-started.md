@@ -114,14 +114,26 @@ If you want to store your flags in a configuration file, you can create a `vue-m
 }
 ```
 
-You can override the limits set for `functionSize` and `scriptLength` rules using our new `override` field in the json file:
+You can override the limits for multiple rules using our new `override` field in the config file:
 
 ```json
 {
   // other flags
   "override": {
-    "maxFunctionSize": 20, // default value
-    "maxScriptLength": 100 // default value
+    "maxExpressionLength": 40,  // rule: templateSimpleExpression
+    "maxComputedLength": 5,     // rule: simpleComputed
+    "minimumConsonantCount": 3, // rule: fullwordComponentName
+    "maxPropsCount": 5,         // rule: tooManyProps
+    "minVariableName": 4,       // rule: shortVariableName
+    "maxParameterCount": 3,     // rule: parameterCount
+    "maxTabs": 5,               // rule: deepIndentation
+    "maxVshowLines": 10,        // rule: bigVshow
+    "maxVifLines": 10,          // rule: bigVif
+    "complexityModerate": 5,    // rule: cyclomaticComplexity
+    "warningThreshold": 4,      // rule: complicatedConditions
+    "maxFunctionSize": 20,      // rule: functionSize
+    "maxScriptLength": 100,     // rule: scriptLength
+    "maxFileSize": 300          // rule: hugeFiles
   }
 }
 ```
