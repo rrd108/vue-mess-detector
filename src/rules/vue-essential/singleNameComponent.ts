@@ -14,7 +14,7 @@ const checkSingleNameComponent = (filePath: string) => {
   }
 
   const fileName = path.basename(filePath)
-  if (fileName === 'App.vue') {
+  if (fileName.toLowerCase() === 'app.vue') {
     return
   }
 
