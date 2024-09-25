@@ -1,18 +1,18 @@
 export const RULES = {
   'vue-caution': [
     'elementSelectorsWithScoped',
-    'implicitParentChildCommunication',
+    'implicitParentChildCommunication'
   ],
   'vue-essential': [
     'globalStyle',
     'simpleProp',
     'singleNameComponent',
     'vforNoKey',
-    'vifWithVfor',
+    'vifWithVfor'
   ],
   'vue-recommended': [
     'elementAttributeOrder',
-    'topLevelElementOrder',
+    'topLevelElementOrder'
   ],
   'vue-strong': [
     'componentFilenameCasing',
@@ -24,7 +24,7 @@ export const RULES = {
     'quotedAttributeValues',
     'selfClosingComponents',
     'simpleComputed',
-    'templateSimpleExpression',
+    'templateSimpleExpression'
   ],
   'rrd': [
     'bigVif',
@@ -41,6 +41,7 @@ export const RULES = {
     'ifWithoutCurlyBraces',
     'magicNumbers',
     'nestedTernary',
+    'noDirectDomAccess',
     'noInlineStyles',
     'noPropDestructure',
     'noTsLang',
@@ -52,11 +53,11 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
-    'zeroLengthComparison',
+    'zeroLengthComparison'
   ],
   'security': [
-    'apiWithoutMethod',
-  ],
+    'apiWithoutMethod'
+  ]
 }
 
 export type RuleType = typeof RULES

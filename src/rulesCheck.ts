@@ -1,7 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getIsNuxt } from './context'
-import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoInlineStyles, checkNoPropDestructure, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
 import { checkApiWithoutMethod } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
@@ -60,6 +60,8 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     ifWithoutCurlyBraces: () => checkIfWithoutCurlyBraces(script, filePath),
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
+    noDirectDomAccess: () => checkNoDirectDomAccess(script, filePath),
+    noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
     noPropDestructure: () => checkNoPropDestructure(script, filePath),
     noTsLang: () => isVueFile && checkNoTsLang(script, filePath),
     noVarDeclaration: () => checkNoVarDeclaration(script, filePath),
@@ -71,7 +73,6 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     tooManyProps: () => checkTooManyProps(script, filePath, override.maxPropsCount),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
-    noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
   }
 
   // Run the checks for each applied rule or ruleset
