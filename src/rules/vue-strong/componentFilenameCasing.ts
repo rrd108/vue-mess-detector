@@ -13,6 +13,10 @@ const checkComponentFilenameCasing = (filePath: string) => {
 
   const fileName = path.basename(filePath)
 
+  if (fileName.toLowerCase() === 'app.vue') {
+    return
+  }
+
   // eslint-disable-next-line regexp/optimal-quantifier-concatenation, regexp/no-useless-assertions, regexp/no-optional-assertion
   const regexPascalCase = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/
   const matchesPascalCase = fileName.match(regexPascalCase)
