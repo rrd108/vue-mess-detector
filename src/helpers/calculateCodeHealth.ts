@@ -9,6 +9,13 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
 
   output.push({ info: `Found <bg_err>${Intl.NumberFormat('en-US').format(errors)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat('en-US').format(warnings)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat('en-US').format(linesCount)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat('en-US').format(filesCount)} files</bg_info>` })
 
+
+  if (!linesCount) {
+    codeHealth.points = 0
+    output.push({ info: `Code Health can not be calculated, because there is no code in the given files\n` })
+    return { codeHealth, output }
+  }
+
   const codeHealthPoints = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
   codeHealth.points = codeHealthPoints
 
