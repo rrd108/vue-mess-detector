@@ -23,6 +23,13 @@ describe('checkSingleNameComponent', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('ignores index.vue', () => {
+    checkSingleNameComponent('components/users/index.vue')
+    const result = reportSingleNameComponent()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('ignores multi-word component', () => {
     checkSingleNameComponent('components/AppHeader.vue')
     const result = reportSingleNameComponent()

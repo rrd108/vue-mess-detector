@@ -18,6 +18,7 @@ describe('checkComponentFilenameCasing', () => {
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])
   })
+
   it('ignores components in pages folder - Windows', () => {
     checkComponentFilenameCasing(`pages\gauranga.vue`)
     const result = reportComponentFilenameCasing()
@@ -34,6 +35,13 @@ describe('checkComponentFilenameCasing', () => {
 
   it('ignores default Vue/Nuxt app file', () => {
     checkComponentFilenameCasing('src/app.vue')
+    const result = reportComponentFilenameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it.todo('ignores index.vue files', () => {
+    checkComponentFilenameCasing('src/index.vue')
     const result = reportComponentFilenameCasing()
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])
