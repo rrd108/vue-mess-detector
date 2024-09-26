@@ -47,6 +47,13 @@ describe('checkComponentFilenameCasing', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('ignores [string].vue files', () => {
+    checkComponentFilenameCasing('src/users/[id].vue')
+    const result = reportComponentFilenameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('ignores kebab-case component file names', () => {
     checkComponentFilenameCasing('components/app-header.vue')
     const result = reportComponentFilenameCasing()
