@@ -122,7 +122,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
         return
       }
 
-      output[key][i] = { id: '', description: '', message: '' }
+      output[key][i] = { id: '', description: '', message: '', level: isError ? 'error' : 'warning' }
 
       if (groupBy === 'file') {
         output[key][i].id = offense.rule

@@ -1,3 +1,3 @@
 export interface ReportOutput {
-  [key: string]: { id: string, description: string, message: string }[]
+  [key: string]: { id: string, description: string, message: string, level: string }[]
 }
