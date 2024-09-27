@@ -50,10 +50,27 @@ describe('checkPropNameCasing', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files with lowercased single-words + camelCase props name + commented camelCase prop', () => {
+  it('should not report files with lowercased single-words + camelCase props name + complex type', () => {
     const script = {
       content: `<script setup>
         const props = defineProps({
+          items: { required: true, type: Array as PropType<{ data: Record<string, boolean | string | number | Date>; height?: number }[]> },
+          rowHeight: { default: 35, required: false, type: Number }
+        });
+      </script>`,
+    } as SFCScriptBlock
+    const fileName = 'complex-prop-type.vue'
+    checkPropNameCasing(script, fileName)
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it('should not report files with lowercased single-words + camelCase props name + commented camelCase prop', () => {
+    const script = {
+      content: `<script setup>
+        const props = defineProps({
+          // isDynamic: { default: false, required: false, type: Boolean },
           items: { required: true, type: Array as PropType<{ data: Record<string, boolean | string | number | Date>; height?: number }[]> },
           rowHeight: { default: 35, required: false, type: Number }
         });
