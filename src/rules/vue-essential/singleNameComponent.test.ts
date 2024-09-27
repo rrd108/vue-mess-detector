@@ -30,8 +30,15 @@ describe('checkSingleNameComponent', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('ignores [string].vue', () => {
+  it('ignores fileName inside square brackets like [id].vue', () => {
     checkSingleNameComponent('components/[id].vue')
+    const result = reportSingleNameComponent()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it('ignores fileName inside square brackets like [slug].vue', () => {
+    checkSingleNameComponent('components/[slug].vue')
     const result = reportSingleNameComponent()
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])

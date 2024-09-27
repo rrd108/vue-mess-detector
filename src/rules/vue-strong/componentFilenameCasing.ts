@@ -17,6 +17,11 @@ const checkComponentFilenameCasing = (filePath: string) => {
     return
   }
 
+  // Check for filenames inside square brackets (e.g. [id].vue)
+  if (fileName.startsWith('[') && fileName.endsWith('].vue')) {
+    return
+  }
+
   // eslint-disable-next-line regexp/optimal-quantifier-concatenation, regexp/no-useless-assertions, regexp/no-optional-assertion
   const regexPascalCase = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/
   const matchesPascalCase = fileName.match(regexPascalCase)

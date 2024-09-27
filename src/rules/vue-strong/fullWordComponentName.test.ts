@@ -30,9 +30,9 @@ describe('fullWordComponentName', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files where filename is [string].vue', () => {
+  it('should not report files where filename is inside square brackets like [id].vue', () => {
     const filename = 'src/[id].vue'
-    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount // It only passes because the default minimumConsonantCount is 3
+    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
     checkFullWordComponentName(filename, minimumConsonantCount)
     const result = reportFullWordComponentName()
     expect(result.length).toBe(0)

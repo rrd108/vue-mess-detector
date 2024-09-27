@@ -47,7 +47,7 @@ describe('checkComponentFilenameCasing', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('ignores [string].vue files', () => {
+  it('ignores fileName inside square brackets like [id].vue', () => {
     checkComponentFilenameCasing('src/users/[id].vue')
     const result = reportComponentFilenameCasing()
     expect(result.length).toBe(0)

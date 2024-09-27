@@ -16,6 +16,11 @@ const checkFullWordComponentName = (filePath: string, minimumConsonantCount: num
 
   const splittedFileName = fileName?.split('.vue')[0] as string
 
+  // Check for filenames inside square brackets (e.g. [id].vue)
+  if (fileName.startsWith('[') && fileName.endsWith('].vue')) {
+    return
+  }
+
   // regular expression to match and count consonants
   const consonantsRegex = createRegExp(
     charIn('bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ'),

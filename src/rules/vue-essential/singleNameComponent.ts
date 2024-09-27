@@ -18,6 +18,11 @@ const checkSingleNameComponent = (filePath: string) => {
     return
   }
 
+  // Check for filenames inside square brackets (e.g. [id].vue)
+  if (fileName.startsWith('[') && fileName.endsWith('].vue')) {
+    return
+  }
+
   const regex = createRegExp(letter.uppercase)
   const matches = fileName.slice(1).match(regex) // ignore the first character
 
