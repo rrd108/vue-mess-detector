@@ -30,7 +30,7 @@ const checkFile = async (fileName: string, filePath: string) => {
     return
   }
 
-  if (fileName.endsWith('.vue') || fileName.endsWith('.ts') || fileName.endsWith('.js')) {
+  if (fileName.endsWith('.vue') || fileName.endsWith('.ts') || fileName.endsWith('.js') || fileName.endsWith('package.json')) {
     filesCount++
     const content = await fs.readFile(filePath, 'utf-8')
     linesCount += content.split(/\r\n|\r|\n/).length
