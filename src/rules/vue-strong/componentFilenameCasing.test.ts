@@ -40,7 +40,7 @@ describe('checkComponentFilenameCasing', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('ignores index.vue files', () => {
+  it('ignores index.vue files', () => {
     checkComponentFilenameCasing('src/index.vue')
     const result = reportComponentFilenameCasing()
     expect(result.length).toBe(0)

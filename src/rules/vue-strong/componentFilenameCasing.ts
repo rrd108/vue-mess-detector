@@ -1,6 +1,6 @@
 import type { FileCheckResult, Offense } from '../../types'
-
 import path from 'node:path'
+import { IGNORE_NAME_RULES } from '../../helpers/constants'
 
 const results: FileCheckResult[] = []
 
@@ -13,7 +13,7 @@ const checkComponentFilenameCasing = (filePath: string) => {
 
   const fileName = path.basename(filePath)
 
-  if (fileName.toLowerCase() === 'app.vue') {
+  if (IGNORE_NAME_RULES.includes(fileName.toLowerCase())) {
     return
   }
 
