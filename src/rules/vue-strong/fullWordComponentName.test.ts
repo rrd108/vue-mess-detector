@@ -21,9 +21,9 @@ describe('fullWordComponentName', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files where filename is index.vue', () => {
+  it('should not report files where filename is index.vue', () => {
     const filename = 'src/index.vue'
-    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount // It only passes because the default minimumConsonantCount is 3
+    const minimumConsonantCount = DEFAULT_OVERRIDE_CONFIG.minimumConsonantCount
     checkFullWordComponentName(filename, minimumConsonantCount)
     const result = reportFullWordComponentName()
     expect(result.length).toBe(0)
