@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install
-      - run: npx jsr publish
+      - run: npx jsr publish --allow-dirty
