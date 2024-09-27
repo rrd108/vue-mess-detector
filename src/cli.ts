@@ -1,6 +1,5 @@
 /* eslint-disable node/prefer-global/process */
 import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
-import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import fs from 'node:fs/promises'
 import Table from 'cli-table3'
 import yargs from 'yargs'
@@ -9,11 +8,12 @@ import { analyze } from './analyzer'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULES, FLAT_RULESETS_RULES } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
+import { getEscapedLink } from './helpers/getEscapedLink'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
 import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
-import path from 'node:path'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 
@@ -109,13 +109,13 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
             for (const group in result.reportOutput) {
               let groupOutput = group
               if (argv.group === 'file') {
-                groupOutput = `\u001B]8;;file://${path.resolve(group)}\u001B\\${group}\u001B]8;;\u001B\\`
+                groupOutput = getEscapedLink(group)
               }
               log(`\n- <text_info> ${groupOutput}</text_info>`)
               result.reportOutput[group].forEach((line) => {
                 let idOutput = line.id
                 if (argv.group === 'rule') {
-                  idOutput = `\u001B]8;;file://${path.resolve(line.id)}\u001B\\${line.id}\u001B]8;;\u001B\\`
+                  idOutput = getEscapedLink(line.id)
                 }
                 log(`   ${idOutput}`)
                 log(`   ${line.description}`)
