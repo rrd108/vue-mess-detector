@@ -43,4 +43,19 @@ describe('checkElseCondition', () => {
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])
   })
+
+  it.todo('should not report files with the word else in a static text', () => {
+    const script = {
+      content: `
+      <script setup>
+        const text = 'else'
+      </script>
+    `,
+    } as SFCScriptBlock
+    const fileName = 'static-text-else.vue'
+    checkElseCondition(script, fileName)
+    const result = reportElseCondition()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
 })
