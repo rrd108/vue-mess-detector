@@ -36,6 +36,28 @@ describe('ifWithoutCurlyBraces', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files where complex if statements are using curly braces', () => {
+    const script = {
+      content: `
+        <script setup>
+        const performanceObserver = (list: PerformanceObserverEntryList) => {
+        for (const entry of list.getEntries()) {
+            if (entry.entryType === 'resource' && (entry.name.startsWith('https://api.honeybadger.io/v1/events') || entry.name.startsWith('https://eu-api.honeybadger.io/v1/events'))) {
+                continue;
+            }
+            // TODO: Log to D1.
+            }
+        };
+        </script>
+      `,
+    } as SFCScriptBlock
+    const filename = 'complex-if-with-curly-braces.vue'
+    checkIfWithoutCurlyBraces(script, filename)
+    const result = reportIfWithoutCurlyBraces()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files where an if statement does not use curly braces', () => {
     const script = {
       content: `
