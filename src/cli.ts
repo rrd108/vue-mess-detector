@@ -1,6 +1,7 @@
 /* eslint-disable node/prefer-global/process */
 import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
 import fs from 'node:fs/promises'
+import path from 'node:path'
 import Table from 'cli-table3'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
