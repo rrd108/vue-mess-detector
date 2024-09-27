@@ -23,6 +23,25 @@ describe('checkVforNoKey', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files where v-for has key property with complex expression', () => {
+    const script = {
+      content: `<template>
+        <Button
+          v-for="panelConfig in PANEL_CONFIGS.filter((config) => config.level === 2)"
+          :key="panelConfig"
+          @click="selectPanelUsingConfig(panelConfig)"
+        >
+        Gauranga
+        </Button>
+    </template>`,
+    } as SFCTemplateBlock
+    const fileName = 'vfor-with-key-and-complex-expression.vue'
+    checkVforNoKey(script, fileName)
+    const result = reportVforNoKey()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files where v-for has no key property', () => {
     const script = {
       content: `<template>
