@@ -1,5 +1,6 @@
 /* eslint-disable node/prefer-global/process */
 import type { GroupBy, OutputFormat, OutputLevel, SortBy } from './types'
+import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
 import fs from 'node:fs/promises'
 import Table from 'cli-table3'
 import yargs from 'yargs'
@@ -12,7 +13,7 @@ import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
 import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
-import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
+import path from 'node:path'
 
 const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 
@@ -106,9 +107,17 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
             })
 
             for (const group in result.reportOutput) {
-              log(`\n- <text_info> ${group}</text_info>`)
+              let groupOutput = group
+              if (argv.group === 'file') {
+                groupOutput = `\u001B]8;;file://${path.resolve(group)}\u001B\\${group}\u001B]8;;\u001B\\`
+              }
+              log(`\n- <text_info> ${groupOutput}</text_info>`)
               result.reportOutput[group].forEach((line) => {
-                log(`   ${line.id}`)
+                let idOutput = line.id
+                if (argv.group === 'rule') {
+                  idOutput = `\u001B]8;;file://${path.resolve(line.id)}\u001B\\${line.id}\u001B]8;;\u001B\\`
+                }
+                log(`   ${idOutput}`)
                 log(`   ${line.description}`)
                 log(`   ${line.message}\n`)
               })
