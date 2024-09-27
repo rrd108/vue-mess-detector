@@ -2,13 +2,15 @@
 
 Thank you for your interest in contributing to `vue-mess-detector`! 
 
-We welcome contributions of all kinds, here are some ways you can contribute:
+We welcome contributions of all kinds, here are some ways you can contribute, from the easiest to the more complex ones:
 
-- **Create new rules**: Implement new rules to improve code quality.
-- **Improve existing rules**: Enhance or fix bugs in existing rules.
+- **Bug reports**: Report bugs you encounter.
+- **Feature requests**: Suggest new features or improvements, share your ideas and suggestions.
 - **Documentation**: Help make our docs clearer, more comprehensive, or fix typos.
-- **Bug fixes**: Address open issues or report new bugs you encounter.
-- **Feature requests**: Suggest new features or improvements.
+- **Add failing tests**: Add failing tests for open issues.
+- **Bug fixes**: Choose an open issue to fix. Please comment on the issue to let others know you're working on it and we can assign the issue to you.
+- **Create new rules**: Implement new rules to improve code quality. Read the details below for the steps to create a new rule.
+- **Improve existing rules**: Enhance existing rules.
 - **Code refactoring**: Help improve the project's codebase structure and efficiency.
 
 Whether you're new to open source or an experienced contributor, there's a way for you to help. Don't hesitate to ask questions if you need guidance.
@@ -16,7 +18,7 @@ Whether you're new to open source or an experienced contributor, there's a way f
 > [!IMPORTANT] IMPORTANT👨‍💻
 > Issues labeled as `good first issue` are marked for new contributors to jump in.
 
-## 🛠️ Steps to Contribute
+## 🛠️ Steps to Contribute with a New Rule
 
 In this guide we use `yarn` but if you prefer `npm`, `pnpm` or `bun`, you can use it instead.
 
