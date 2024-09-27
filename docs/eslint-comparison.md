@@ -1,5 +1,7 @@
 # eslint-plugin-vue vs Vue Mess Detector
 
+Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are the de facto standard for linting Vue.js code. We highly encourage you to use them. Vue Mess Detector is not ment to replace them, but to complement them.
+
 ## Comparison table
 
 | Aspect | eslint-plugin-vue | Vue Mess Detector |
@@ -22,6 +24,10 @@
 | Parsing | Uses vue-eslint-parser | Mainly regular expressions |
 | Rule Configurations | Multiple predefined configs (e.g., essential, recommended) | Rulesets can be applied or ignored |
 | Community | Large, established ESLint community | Newer, growing community |
+
+## Vue Mess Detector Extra Rules
+
+Almost all of the [rrd](./rules/rrd/index.md) and [security](./rules/security/index.md) rules are not present in `eslint-plugin-vue`. Many of them are opinionated and based on the experiences of the several vue developers.
 
 ## Target audience
 

@@ -102,6 +102,7 @@ export default defineConfig({
             ],
           },
           { text: 'Contribute', link: '/contribute' },
+          { text: 'eslint-plugin-vue Comparison', link: '/eslint-comparison' },
         ],
       },
       {
