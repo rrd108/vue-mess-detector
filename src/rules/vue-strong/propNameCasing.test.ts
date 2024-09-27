@@ -50,6 +50,22 @@ describe('checkPropNameCasing', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files with lowercased single-words + camelCase props name + commented camelCase prop', () => {
+    const script = {
+      content: `<script setup>
+        const props = defineProps({
+          items: { required: true, type: Array as PropType<{ data: Record<string, boolean | string | number | Date>; height?: number }[]> },
+          rowHeight: { default: 35, required: false, type: Number }
+        });
+      </script>`,
+    } as SFCScriptBlock
+    const fileName = 'commented-camelCase-prop-name.vue'
+    checkPropNameCasing(script, fileName)
+    const result = reportPropNameCasing()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files with kebab-case props name', () => {
     const script = {
       content: `<script setup>
