@@ -2,6 +2,7 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 import { createRegExp } from 'magic-regexp'
 import getLineNumber from '../getLineNumber'
+import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
@@ -19,12 +20,14 @@ const check_RULENAME_ = (script: SFCScriptBlock | null, filePath: string) => {
   }
 
   const regex = createRegExp(/* TODO create your regex here with magic regexp or plain regex */)
-  const matches = script.content.match(regex)
+
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
 
   // TODO add your rule logic, constants, etc here
 
   matches?.forEach((match) => {
-    const lineNumber = getLineNumber(script.content, match)
+    const lineNumber = getLineNumber(content, match)
     results.push({
       filePath,
       message: `line #${lineNumber} <bg_warn>/* TODO add your message here*/ </bg_warn>`,
