@@ -6,6 +6,11 @@ export const LOW_HEALTH_THRESHOLD = 75
 export const MEDIUM_HEALTH_THRESHOLD = 85
 export const OK_HEALTH_THRESHOLD = 95
 
+// Console link escape codes
+export const ESCAPE_START: string = '\u001B]8;;'
+export const ESCAPE_MIDDLE: string = '\u001B\\'
+export const ESCAPE_END: string = '\u001B]8;;\u001B\\'
+
 // In case you need to display all allowed rules/rulesets ⬇️
 export const FLAT_RULES: string[] = [...Object.values(RULES).flat()]
 export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...FLAT_RULES]

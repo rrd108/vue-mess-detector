@@ -8,6 +8,7 @@ import { analyze } from './analyzer'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULES, FLAT_RULESETS_RULES } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
+import { getEscapedLink } from './helpers/getEscapedLink'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
 import { validateOption } from './helpers/validateOption'
@@ -106,9 +107,17 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
             })
 
             for (const group in result.reportOutput) {
-              log(`\n- <text_info> ${group}</text_info>`)
+              let groupOutput = group
+              if (argv.group === 'file') {
+                groupOutput = getEscapedLink(group)
+              }
+              log(`\n- <text_info> ${groupOutput}</text_info>`)
               result.reportOutput[group].forEach((line) => {
-                log(`   ${line.id}`)
+                let idOutput = line.id
+                if (argv.group === 'rule') {
+                  idOutput = getEscapedLink(line.id)
+                }
+                log(`   ${idOutput}`)
                 log(`   ${line.description}`)
                 log(`   ${line.message}\n`)
               })
