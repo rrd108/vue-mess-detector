@@ -19,6 +19,9 @@ export const DOM_METHODS = [
   'querySelectorAll',
 ]
 
+// Name rules
+export const IGNORE_NAME_RULES = ['index.vue', 'app.vue']
+
 // Override Config ~ Default
 export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {
   maxExpressionLength: 40,
