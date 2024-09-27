@@ -18,7 +18,7 @@ describe('checkHtmlLink', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files with commented HTML links', () => {
+  it('should not report files with commented HTML links', () => {
     const template = {
       content: `<template>
           <SectionText>

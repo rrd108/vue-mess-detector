@@ -45,4 +45,14 @@ describe('skipComments', () => {
         const y = 10 `
     expect(normalizeWhitespace(skipComments(input))).toBe(normalizeWhitespace(expected))
   })
+
+  it('should remove HTML comments', () => {
+    const input = `const x = 5
+        <!-- This is an HTML comment -->
+        const y = 10`
+    const expected = `const x = 5
+        
+        const y = 10`
+    expect(normalizeWhitespace(skipComments(input))).toBe(normalizeWhitespace(expected))
+  })
 })

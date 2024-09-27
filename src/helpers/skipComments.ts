@@ -8,6 +8,8 @@ export const skipComments = (content: string) => {
     )
       .or(
         exactly('//').and(oneOrMore(char)),
+      ).or(
+        exactly('<!--').and(oneOrMore(char)),
       ),
     [global],
   )

@@ -1,6 +1,7 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 import { caseInsensitive, createRegExp, global, wordBoundary } from 'magic-regexp'
+import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
@@ -11,9 +12,11 @@ const checkHtmlLink = (template: SFCTemplateBlock | null, filePath: string) => {
     return
   }
 
+  const content = skipComments(template.content)
+
   const regex = createRegExp('<a', wordBoundary, [global, caseInsensitive])
   // TODO - getLineNumber will not help us here as it will return the line number of the first match for all matches
-  const matches = template.content.match(regex)
+  const matches = content.match(regex)
 
   if (matches?.length) {
     results.push({ filePath, message: `${matches?.length} <bg_warn>html link found</bg_warn>` })
