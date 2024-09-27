@@ -1,41 +1,36 @@
 import type { FileCheckResult, Offense } from '../../types'
-
-import { charIn, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
+import path from 'node:path'
+import { charIn, createRegExp, global } from 'magic-regexp'
+import { IGNORE_NAME_RULES } from '../../helpers/constants'
 
 const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
 const checkFullWordComponentName = (filePath: string, minimumConsonantCount: number) => {
-  // regular expression to match `filename.vue` pattern
-  const regex = createRegExp(
-    oneOrMore(charNotIn('/')).grouped(),
-    exactly('.vue').at.lineEnd(),
+  const fileName = path.basename(filePath)
+
+  if (IGNORE_NAME_RULES.includes(fileName.toLowerCase())) {
+    return
+  }
+
+  const splittedFileName = fileName?.split('.vue')[0] as string
+
+  // Check for filenames inside square brackets (e.g. [id].vue)
+  if (fileName.startsWith('[') && fileName.endsWith('].vue')) {
+    return
+  }
+
+  // regular expression to match and count consonants
+  const consonantsRegex = createRegExp(
+    charIn('bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ'),
+    [global],
   )
 
-  const match = filePath.match(regex)
+  const consonantsMatch = splittedFileName.match(consonantsRegex)
 
-  if (match) {
-    const matchedFilename = match[0]
-
-    // ignores default Vue/Nuxt app file
-    if (matchedFilename?.toLowerCase() === 'app.vue') {
-      return
-    }
-
-    const filename = matchedFilename?.split('.vue')[0] as string
-
-    // regular expression to match and count consonants
-    const consonantsRegex = createRegExp(
-      charIn('bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ'),
-      [global],
-    )
-
-    const consonantsMatch = filename.match(consonantsRegex)
-
-    if (!consonantsMatch || consonantsMatch.length < minimumConsonantCount) {
-      results.push({ filePath, message: `${filename} is not a <bg_warn>full word.</bg_warn>` })
-    }
+  if (!consonantsMatch || consonantsMatch.length < minimumConsonantCount) {
+    results.push({ filePath, message: `${splittedFileName} is not a <bg_warn>full word.</bg_warn>` })
   }
 }
 

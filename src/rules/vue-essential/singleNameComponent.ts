@@ -1,7 +1,7 @@
 import type { FileCheckResult, Offense } from '../../types'
 import path from 'node:path'
-
 import { createRegExp, letter } from 'magic-regexp'
+import { IGNORE_NAME_RULES } from '../../helpers/constants'
 
 const results: FileCheckResult[] = []
 
@@ -14,7 +14,12 @@ const checkSingleNameComponent = (filePath: string) => {
   }
 
   const fileName = path.basename(filePath)
-  if (fileName.toLowerCase() === 'app.vue') {
+  if (IGNORE_NAME_RULES.includes(fileName.toLowerCase())) {
+    return
+  }
+
+  // Check for filenames inside square brackets (e.g. [id].vue)
+  if (fileName.startsWith('[') && fileName.endsWith('].vue')) {
     return
   }
 
