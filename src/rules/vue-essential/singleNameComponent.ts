@@ -1,6 +1,6 @@
+import type { FileCheckResult, Offense } from '../../types'
 import path from 'node:path'
 import { createRegExp, letter } from 'magic-regexp'
-import type { FileCheckResult, Offense } from '../../types'
 import { IGNORE_NAME_RULES } from '../../helpers/constants'
 
 const results: FileCheckResult[] = []
