@@ -9,6 +9,13 @@ describe('checkSingleNameComponent', () => {
     expect(result).toStrictEqual([])
   })
 
+  it('ignores layouts directory', () => {
+    checkSingleNameComponent('layouts/default.vue')
+    const result = reportSingleNameComponent()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('ignores App.vue', () => {
     checkSingleNameComponent('components/App.vue')
     const result = reportSingleNameComponent()

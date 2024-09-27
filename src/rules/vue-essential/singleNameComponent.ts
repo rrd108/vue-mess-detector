@@ -8,8 +8,8 @@ const results: FileCheckResult[] = []
 const resetResults = () => (results.length = 0)
 
 const checkSingleNameComponent = (filePath: string) => {
-  // in the pages directory this rule does not apply
-  if (filePath.includes('pages')) {
+  // in the pages and layouts directory this rule does not apply
+  if (filePath.includes('pages') || filePath.includes('layouts')) {
     return
   }
 
