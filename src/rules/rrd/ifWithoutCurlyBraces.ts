@@ -15,19 +15,33 @@ const checkIfWithoutCurlyBraces = (script: SFCScriptBlock | null, filePath: stri
   const content = skipComments(script.content)
   const lines = content.split('\n')
 
+  let openParentheses = 0
+  let ifStartIndex: number | null = null
+
   lines.forEach((line, index) => {
     const trimmedLine = line.trim()
 
-    // Check if the line contains an `if` statement and is not followed by curly braces
-    if (trimmedLine.startsWith('if (') && !trimmedLine.includes('{')) {
-      // Check if the next line is not a continuation of the if statement with curly braces
-      const nextLine = lines[index + 1]?.trim()
-      if (!nextLine || (!nextLine.startsWith('{') && !trimmedLine.endsWith('{'))) {
-        results.push({
-          filePath,
-          message: `line #${index} if statement without curly braces: <bg_err>${trimmedLine}</bg_err>`,
-        })
+    // Count open and closed parentheses
+    openParentheses += (trimmedLine.match(/\(/g) || []).length
+    openParentheses -= (trimmedLine.match(/\)/g) || []).length
+
+    if (trimmedLine.startsWith('if (') && ifStartIndex === null) {
+      ifStartIndex = index
+    }
+
+    // Check if the if statement is complete
+    if (ifStartIndex !== null && openParentheses === 0) {
+      const ifStatement = lines.slice(ifStartIndex, index + 1).join(' ')
+      if (!ifStatement.includes('{')) {
+        const nextLine = lines[index + 1]?.trim()
+        if (!nextLine || (!nextLine.startsWith('{') && !trimmedLine.endsWith('{'))) {
+          results.push({
+            filePath,
+            message: `line #${ifStartIndex} if statement without curly braces: <bg_err>${ifStatement.trim()}</bg_err>`,
+          })
+        }
       }
+      ifStartIndex = null
     }
   })
 }

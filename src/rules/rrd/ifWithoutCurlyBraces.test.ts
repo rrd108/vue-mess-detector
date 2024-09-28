@@ -36,7 +36,7 @@ describe('ifWithoutCurlyBraces', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files where complex if statements are using curly braces', () => {
+  it('should not report files where complex if statements are using curly braces', () => {
     const script = {
       content: `
         <script setup>
