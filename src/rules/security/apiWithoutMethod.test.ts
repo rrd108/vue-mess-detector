@@ -50,7 +50,7 @@ describe('checkApiWithoutMethod', () => {
     expect(result).toStrictEqual([{
       file: '/src/server/api/users.ts',
       rule: `<text_info>rrd ~ API endpoint without HTTP method</text_info>`,
-      description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., users.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/api-without-method.html`,
+      description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., users.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/security/api-without-method.html`,
       message: `API route <bg_warn>without HTTP method</bg_warn> specified in filename or content 🚨`,
     }])
   })
