@@ -1,0 +1,32 @@
+name: VMD Analysis
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  detect-mess:
+    runs-on: ubuntu-latest
+    name: Detect Vue Mess
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Vue Mess Detector Analysis
+        uses: brenoepics/vmd-action@v0.0.2
+        with:
+          github-token: ${{ secrets.VMD_ACTION }}
