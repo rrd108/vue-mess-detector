@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
 import type { FileCheckResult, Offense } from '../../types'
+import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
@@ -16,7 +16,8 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string, ma
   // eslint-disable-next-line regexp/prefer-w, regexp/strict, regexp/no-useless-flag
   const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
 
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
   if (matches?.length) {
     matches.forEach((match) => {
       if (match.split('\n').length > maxComputedLength) {
