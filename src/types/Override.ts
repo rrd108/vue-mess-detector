@@ -1,4 +1,5 @@
 type RuleConfig = number
+type TopLevelElementOrder = 'script-template-style' | 'template-script-style'
 
 export interface OverrideConfig {
   readonly maxFunctionSize: RuleConfig // rule: functionSize
@@ -15,4 +16,5 @@ export interface OverrideConfig {
   readonly complexityModerate: RuleConfig // rule: cyclomaticComplexity
   readonly warningThreshold: RuleConfig // rule: complicatedConditions
   readonly maxFileSize: RuleConfig // rule: hugeFiles
+  readonly topLevelElementOrder: TopLevelElementOrder // rule: topLevelElementOrder
 }

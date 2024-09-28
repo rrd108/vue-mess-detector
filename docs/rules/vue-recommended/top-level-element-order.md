@@ -1,11 +1,11 @@
 # Single-file Component Top-level Element Order
 
-Checks if the component always uses `script`, `template`, and `style` tags' order consistently. &nbsp;&nbsp;<br />
+Checks if the component always uses `script setup`, `template`, and `style scoped` tags' order consistently. &nbsp;&nbsp;<br /><br />
 👉 https://vuejs.org/style-guide/rules-recommended.html#single-file-component-top-level-element-order
 
 ## ❓ Why it's good to follow this rule?
 
-- **Consistency:** The rule encourages consistent ordering of `script`, `template`, and `style` tags within Vue single-file components. Consistency in code structure makes it easier for developers to navigate and understand the codebase quickly.
+- **Consistency:** The rule encourages consistent ordering of `script setup`, `template`, and `style scoped` tags within Vue single-file components. Consistency in code structure makes it easier for developers to navigate and understand the codebase quickly.
 - **Readability:** A consistent order of elements improves readability. Developers can quickly locate specific sections of the component without having to search through the entire file.
 - **Maintainability:** When all components follow the same structure, it becomes easier to maintain and update the codebase. Developers can expect to find certain elements in specific locations, reducing cognitive load.
 - **Collaboration:** A standardized component structure facilitates better collaboration among team members. Everyone knows where to expect certain elements, leading to smoother code reviews and easier pair programming.
@@ -103,3 +103,21 @@ const age = ref(22)
 ```
 
 By maintaining the correct order of top-level elements in your SFC, you ensure clarity and consistency, making it easier for others (and yourself) to navigate the code.
+
+## 🛠 How to override?
+
+The default correct order is `script setup`, `template`, and `style scoped`.
+
+There are two possible values for this rule:
+- `script-template-style`
+- `template-script-style`
+
+You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+
+```json
+{
+  "override": {
+    "topLevelElementOrder": "template-script-style"
+  }
+}
+```

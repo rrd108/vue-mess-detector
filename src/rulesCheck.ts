@@ -37,7 +37,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     multiAttributeElements: () => isVueFile && checkMultiAttributeElements(descriptor.template, filePath),
 
     // vue-recommended
-    topLevelElementOrder: () => isVueFile && checkTopLevelElementOrder(descriptor.source, filePath),
+    topLevelElementOrder: () => isVueFile && checkTopLevelElementOrder(descriptor.source, filePath, override.topLevelElementOrder),
     elementAttributeOrder: () => isVueFile && checkElementAttributeOrder(descriptor.template, filePath),
 
     // vue-caution

@@ -43,4 +43,5 @@ export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {
   maxFunctionSize: 20,
   maxScriptLength: 100,
   maxFileSize: 300,
+  topLevelElementOrder: 'script-template-style',
 }
