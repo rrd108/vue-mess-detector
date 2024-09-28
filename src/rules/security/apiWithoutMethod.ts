@@ -50,7 +50,7 @@ const reportApiWithoutMethod = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ API endpoint without HTTP method</text_info>`,
-        description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., ${filename}.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/api-without-method.html`,
+        description: `👉 <text_warn>Specify the HTTP method in the filename (e.g., ${filename}.post.ts) or include a method check in the file content.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/security/api-without-method.html`,
         message: `${result.message} 🚨`,
       })
     })
