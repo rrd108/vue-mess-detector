@@ -1,6 +1,7 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import { caseInsensitive, createRegExp, global } from 'magic-regexp'
+import { createRegExp, global, whitespace } from 'magic-regexp'
+import { skipComments } from '../../helpers/skipComments'
 
 const results: FileCheckResult[] = []
 
@@ -11,8 +12,9 @@ const checkSimpleProp = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  const regex = createRegExp('defineProps([', [global, caseInsensitive])
-  const matches = script.content.match(regex)
+  const content = skipComments(script.content)
+  const regex = createRegExp('defineProps', whitespace.times.any(), '(', whitespace.times.any(), '[', [global])
+  const matches = content.match(regex)
 
   if (matches?.length) {
     results.push({ filePath, message: `<bg_err>Props type</bg_err> not defined` })
