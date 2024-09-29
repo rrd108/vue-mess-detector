@@ -8,9 +8,9 @@ describe('checkRateLimiter', () => {
       source: JSON.stringify({
         dependencies: {
           'nuxt-api-shield': '^1.0.0',
-        },  
-      }),  
-    } as unknown as SFCDescriptor  
+        },
+      }),
+    } as unknown as SFCDescriptor
     const filePath = 'package.json'
 
     await checkRateLimiter(descriptor, filePath)
