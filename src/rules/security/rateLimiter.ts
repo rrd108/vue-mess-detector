@@ -1,26 +1,37 @@
-import type { SFCDescriptor, SFCScriptBlock } from '@vue/compiler-sfc'
+import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import { createRegExp } from 'magic-regexp'
-import { skipComments } from '../../helpers/skipComments'
-import getLineNumber from '../getLineNumber'
+import fs from 'node:fs'
+import path from 'node:path'
+import getProjectRoot from '../../helpers/getProjectRoot'
 
 const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-const checkRateLimiter = (descriptor: SFCDescriptor | null, filePath: string) => {
-  // TODO check if the project has a server directory
+const getServerDir = async (filePath: string) => {
+  const root = await getProjectRoot(filePath)
+  const serverDir = path.join(root, 'server')
+  return fs.existsSync(serverDir) ? serverDir : false
+}
 
+const checkRateLimiter = async (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor || filePath != 'package.json') {
     return
   }
 
-  if (!descriptor.source.includes('nuxt-api-shield') && !descriptor.source.includes('nuxt-security')) {
-    results.push({
-      filePath,
-      message: `<bg_warn>No rate limiter detected</bg_warn>`,
-    })
+  const serverDir = await getServerDir(filePath)
+  if (!serverDir) {
+    return
   }
+
+  if (descriptor.source.includes('nuxt-api-shield')) {
+    return
+  }
+
+  results.push({
+    filePath,
+    message: `<bg_warn>No rate limiter detected</bg_warn>`,
+  })
 }
 
 const reportRateLimiter = () => {
