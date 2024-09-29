@@ -68,10 +68,11 @@ if [ $PREV_STEP -eq 1 ];then
 
     echo "👉 jsr.json updated with the new version: $new_version"
     # Commit the changes to Git
-    git add jsr.json
+    git add jsr.json package.json
     git commit -m "Bump version to $new_version"
 
     echo "👉 Pushing new version to git: $new_version"
+    git push origin master
     git push vue-mess-detector "v$new_version"
 
     echo "👉 Creating a new release on GitHub"
