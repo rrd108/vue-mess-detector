@@ -7,11 +7,12 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { parse } from '@vue/compiler-sfc'
 import { minimatch } from 'minimatch'
-import { setIsNuxt } from './context'
+import { setHasServer, setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
 import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
+import hasServerDir from './helpers/hasServerDir'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
@@ -115,6 +116,9 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
   setIsNuxt(isNuxt)
+
+  const hasServer = hasServerDir(projectRoot)
+  setHasServer(hasServer)
 
   const output: { info: string }[] = []
 

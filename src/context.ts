@@ -5,3 +5,11 @@ export const setIsNuxt = (value: boolean) => {
 }
 
 export const getIsNuxt = () => isNuxt
+
+let hasServer = false
+
+export const setHasServer = (value: boolean) => {
+  hasServer = value
+}
+
+export const getHasServer = () => hasServer

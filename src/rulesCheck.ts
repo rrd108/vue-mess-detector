@@ -1,6 +1,6 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
-import { getIsNuxt } from './context'
+import { getHasServer, getIsNuxt } from './context'
 import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
 import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
@@ -75,7 +75,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
 
     // security
     apiWithoutMethod: () => getIsNuxt() && checkApiWithoutMethod(descriptor, filePath),
-    rateLimiter: () => /* TODOgetIsNuxt() && */checkRateLimiter(descriptor, filePath),
+    rateLimiter: () => getHasServer() && getIsNuxt() && checkRateLimiter(descriptor, filePath),
   }
 
   // Run the checks for each applied rule or ruleset

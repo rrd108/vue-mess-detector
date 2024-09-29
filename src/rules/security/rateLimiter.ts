@@ -1,30 +1,18 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import fs from 'node:fs'
-import path from 'node:path'
-import getProjectRoot from '../../helpers/getProjectRoot'
 
 const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-const getServerDir = async (filePath: string) => {
-  const root = await getProjectRoot(filePath)
-  const serverDir = path.join(root, 'server')
-  return fs.existsSync(serverDir) ? serverDir : false
-}
+const recognizedRateLimiters = ['nuxt-api-shield', 'nuxt-security']
 
 const checkRateLimiter = async (descriptor: SFCDescriptor | null, filePath: string) => {
   if (!descriptor || filePath != 'package.json') {
     return
   }
 
-  const serverDir = await getServerDir(filePath)
-  if (!serverDir) {
-    return
-  }
-
-  if (descriptor.source.includes('nuxt-api-shield')) {
+  if (recognizedRateLimiters.some(limiter => descriptor.source.includes(limiter))) {
     return
   }
 
