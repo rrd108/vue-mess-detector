@@ -2,7 +2,7 @@ import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunc
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
 import { reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoDirectDomAccess, reportNoInlineStyles, reportNoPropDestructure, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
-import { reportApiWithoutMethod } from './rules/security'
+import { reportApiWithoutMethod, reportRateLimiter } from './rules/security'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
@@ -59,7 +59,6 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportElementSelectorsWithScoped)
 
   // rrd rules
-  processOffenses(reportApiWithoutMethod)
   processOffenses(reportBigVif)
   processOffenses(reportBigVshow)
   processOffenses(reportComplicatedConditions)
@@ -87,6 +86,10 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportTooManyProps)
   processOffenses(reportVForWithIndexKey)
   processOffenses(reportZeroLengthComparison)
+
+  // security rules
+  processOffenses(reportApiWithoutMethod)
+  processOffenses(reportRateLimiter)
 
   // Sort offenses grouped by key based on the `sortBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {

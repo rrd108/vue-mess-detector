@@ -1,9 +1,9 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
-import { getIsNuxt } from './context'
+import { getHasServer, getIsNuxt } from './context'
 import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
-import { checkApiWithoutMethod } from './rules/security'
+import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
@@ -45,7 +45,6 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     elementSelectorsWithScoped: () => isVueFile && checkElementSelectorsWithScoped(descriptor.styles, filePath),
 
     // rrd
-    apiWithoutMethod: () => getIsNuxt() && checkApiWithoutMethod(descriptor, filePath),
     bigVif: () => checkBigVif(descriptor.template, filePath, override.maxVifLines),
     bigVShow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
     complicatedConditions: () => checkComplicatedConditions(descriptor, filePath, override.warningThreshold),
@@ -73,6 +72,10 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     tooManyProps: () => checkTooManyProps(script, filePath, override.maxPropsCount),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
+
+    // security
+    apiWithoutMethod: () => getIsNuxt() && checkApiWithoutMethod(descriptor, filePath),
+    rateLimiter: () => getHasServer() && getIsNuxt() && checkRateLimiter(descriptor, filePath),
   }
 
   // Run the checks for each applied rule or ruleset
