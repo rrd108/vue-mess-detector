@@ -41,7 +41,7 @@ npm install vue-mess-detector --save-dev
 ```
 
 ```bash [bun]
-bun add @rrd/vue-mess-detector --dev
+bun add vue-mess-detector --dev
 ```
 
 :::
