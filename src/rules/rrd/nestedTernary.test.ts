@@ -15,6 +15,17 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files with nullish coalescing operator', () => {
+    const script = {
+      content: `const testFunc = (arr: string[]) => arr ?? []`,
+    } as SFCScriptBlock
+    const fileName = 'nestedTernary.vue'
+    checkNestedTernary(script, fileName)
+    const result = reportNestedTernary()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files with nested ternary', () => {
     const script = {
       content: `const pass = 'Gauranga%)'
