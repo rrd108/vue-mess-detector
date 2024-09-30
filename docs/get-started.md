@@ -106,6 +106,7 @@ Options:
 | `--level`   | Show only specific level `error` or all         | all    | `--level=error`                                      |
 | `--output`  | Output format `text` or `table` or `json`                    | `text`    | `--output=table`                     |
 | `--file-output`  | The name of the file to save output to               | None  | `--file-output=analysis.txt`                |
+| `--health-error`  | The health error threshold to exit with an error (0-100)               | 0  | `--health-error=90`                |
 
 If you want to store your flags in a configuration file, you can create a `vue-mess-detector.json` file in the root of your project with the following content:
 

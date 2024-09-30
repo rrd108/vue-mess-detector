@@ -78,6 +78,10 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
         describe: 'Output file',
         default: '',
         group: 'Output:',
+      }).option('healthError', {
+        describe: 'Health error threshold',
+        default: 0,
+        group: 'Health:',
       }),
 
       (argv) => {
@@ -169,6 +173,11 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
 
           if (argv.output == 'json') {
             log(JSON.stringify(result, null, 2))
+          }
+
+          if (result.codeHealth.points < argv.healthError) {
+            console.error(`${BG_ERR}Health error threshold (${argv.healthError}) exceeded: ${result.codeHealth.points}${BG_RESET}`)
+              process.exit(1)
           }
         }).catch((error) => {
           console.error(`${BG_ERR}${error}${BG_RESET}`)
