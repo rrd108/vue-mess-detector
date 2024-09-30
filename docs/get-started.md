@@ -67,7 +67,7 @@ npx jsr add @rrd/vue-mess-detector --save-dev
 ```
 
 ```bash [bun]
-bunx jsr add @rrd/vue-mess-detector --dev
+bunx jsr add @rrd/vue-mess-detector -D
 ```
 
 :::
