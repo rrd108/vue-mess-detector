@@ -78,10 +78,12 @@ bunx jsr add @rrd/vue-mess-detector --dev
 
 ## 📦 Integrations
 
-- [Vscode extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
+- [Github Action](https://github.com/brenoepics/vmd-action)
 - [Nuxt devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
-- Vue devtools (in progress)
-- Github Action (in progress)
+- [Vscode extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
+- Vue Devtools (in progress)
+- [Webstorm](https://github.com/rrd108/vue-mess-detector/issues/110) (confirmed)
+- ESLint plugin (planned) [Share your thoughts](https://github.com/rrd108/vue-mess-detector/issues/331)
 
 ## ⚙️ Usage
 

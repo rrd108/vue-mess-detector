@@ -32,10 +32,10 @@ npm install vue-mess-detector --save-dev
 
 ## 📦 Integrations
 
-- [Vscode Extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
-- [Nuxt Devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
 - [Github Action](https://github.com/brenoepics/vmd-action) 
-- [Vue Devtools](https://github.com/rrd108/vue-mess-detector/issues/212) (in progress)
+- [Nuxt Devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
+- [Vscode Extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
+- Vue Devtools (in progress)
 - [Webstorm](https://github.com/rrd108/vue-mess-detector/issues/110) (confirmed)
 - ESLint plugin (planned) [Share your thoughts](https://github.com/rrd108/vue-mess-detector/issues/331)
 
