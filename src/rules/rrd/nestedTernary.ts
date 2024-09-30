@@ -16,7 +16,7 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
 
   // In here we use `index` as lineNumber becase we are splitting the content by new lines
   lines.forEach((line, index) => {
-    const ternaryCount = (line.match(/\?(?!\.)/g) || []).length
+    const ternaryCount = (line.match(/\?(?![.?])/g) || []).length
     if (ternaryCount > 1) {
       results.push({
         filePath,

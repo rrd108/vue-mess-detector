@@ -15,7 +15,7 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files with nullish coalescing operator', () => {
+  it('should not report files with nullish coalescing operator', () => {
     const script = {
       content: `const testFunc = (arr: string[]) => arr ?? []`,
     } as SFCScriptBlock
@@ -24,23 +24,6 @@ describe('checkNestedTernary', () => {
     const result = reportNestedTernary()
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])
-  })
-
-  it('should report files with nested ternary', () => {
-    const script = {
-      content: `const pass = 'Gauranga%)'
-        const isStrong = pass.length > 12 ? pass.includes('%') ? pass.includes('$') : false : false`,
-    } as SFCScriptBlock
-    const fileName = 'nestedTernary-problem.vue'
-    checkNestedTernary(script, fileName)
-    const result = reportNestedTernary()
-    expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
-      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
-      message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
-    }])
   })
 
   it('should not report files when optional chaning is used along with a ternary', () => {
@@ -68,6 +51,23 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
+  it('should report files with nested ternary', () => {
+    const script = {
+      content: `const pass = 'Gauranga%)'
+        const isStrong = pass.length > 12 ? pass.includes('%') ? pass.includes('$') : false : false`,
+    } as SFCScriptBlock
+    const fileName = 'nestedTernary-problem.vue'
+    checkNestedTernary(script, fileName)
+    const result = reportNestedTernary()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
+      file: fileName,
+      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+      message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
+    }])
+  })
+
   it('should report files with nested ternary, even when optional chaining is present', () => {
     const script = {
       content: `
@@ -75,6 +75,24 @@ describe('checkNestedTernary', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'nested-ternary-with-optional-chaining.vue'
+    checkNestedTernary(script, fileName)
+    const result = reportNestedTernary()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
+      file: fileName,
+      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+      message: `line #1 has <bg_warn>nested ternary</bg_warn> 🚨`,
+    }])
+  })
+
+  it('should report files with nested ternary, even when nullish coalescing is present', () => {
+    const script = {
+      content: `
+        const result = (obj ?? defaultObj).property ? (condition ? value1 : value2) : value3;
+      `,
+    } as SFCScriptBlock
+    const fileName = 'nested-ternary-with-nullish-coalescing.vue'
     checkNestedTernary(script, fileName)
     const result = reportNestedTernary()
     expect(result.length).toBe(1)
