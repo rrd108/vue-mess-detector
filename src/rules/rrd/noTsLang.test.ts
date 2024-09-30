@@ -24,6 +24,22 @@ describe('checkNoTsLang', () => {
     expect(result).toStrictEqual([])
   })
 
+  it('should not report files with tsx lang', () => {
+    const script = {
+      content: `
+        <script setup lang="tsx">
+        // some magic content here...
+        </script>
+      `,
+      lang: 'tsx',
+    } as SFCScriptBlock
+    const fileName = 'tsx-lang.vue'
+    checkNoTsLang(script, fileName)
+    const result = reportNoTsLang()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files where lang ts is not used', () => {
     const script = {
       content: `

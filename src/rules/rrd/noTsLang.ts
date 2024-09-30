@@ -10,7 +10,7 @@ const checkNoTsLang = (script: SFCScriptBlock | null, filePath: string) => {
     return
   }
 
-  if (script.lang !== 'ts') {
+  if (!['ts', 'tsx'].includes(script.lang!)) {
     results.push({
       filePath,
       message: `<bg_warn>component uses js instead of ts</bg_warn>`,
