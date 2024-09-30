@@ -19,6 +19,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [No Direct Dom Access](./no-direct-dom-access.md)
 - [No Inline Styles](./no-inline-styles.md)
 - [No Prop Destructing](./no-prop-destructure.md)
+- [No Skipped Tests](./no-skipped-tests.md)
 - [No Ts Lang](./no-ts-lang.md)
 - [No Var Declaration](./no-var-declaration.md)
 - [Parameter Count](./parameter-count.md)

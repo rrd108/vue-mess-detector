@@ -44,6 +44,7 @@ export const RULES = {
     'noDirectDomAccess',
     'noInlineStyles',
     'noPropDestructure',
+    'noSkippedTests',
     'noTsLang',
     'noVarDeclaration',
     'parameterCount',
