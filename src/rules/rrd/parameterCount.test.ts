@@ -22,6 +22,28 @@ describe('checkParameterCount', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files where functions do not exceed the recommended limit with destructuring', () => {
+    const script = {
+      content: `
+        <script setup>
+          function dummyFuncOne({ param1, param2, param3, param4, param5 }) {
+            return 'One'
+          }
+
+          const dummyFuncTwo = ({ param1, param2, param3, param4 }) => {
+            return 'Two'
+          }
+        </script>
+      `,
+    } as SFCScriptBlock
+    const filename = 'destructuring-parameters.vue'
+    const maxParameterCount = DEFAULT_OVERRIDE_CONFIG.maxParameterCount
+    checkParameterCount(script, filename, maxParameterCount)
+    const result = reportParameterCount(maxParameterCount)
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files where one function exceeds the recommended limit', () => {
     const script = {
       content: `
