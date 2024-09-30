@@ -4,7 +4,7 @@ import { DEFAULT_OVERRIDE_CONFIG } from '../../helpers/constants'
 import { checkFunctionSize, reportFunctionSize } from './functionSize'
 
 describe('checkFunctionSize', () => {
-  it('should not report files where functions do not exceed the recommended limit', () => {
+  it('should not report files where functions do not exceed the limit', () => {
     const script = {
       content: `
         <script setup>
@@ -28,7 +28,7 @@ describe('checkFunctionSize', () => {
     expect(result).toStrictEqual([])
   })
 
-  it('should not report files where arrow functions without curly braces do not exceed the recommended limit', () => {
+  it('should not report files where arrow functions without curly braces do not exceed the limit', () => {
     const script = {
       content: `
         <script setup>
@@ -46,6 +46,45 @@ describe('checkFunctionSize', () => {
       `,
     } as SFCScriptBlock
     const fileName = 'arrow-function-size.vue'
+    const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
+    checkFunctionSize(script, fileName, maxSize)
+    const result = reportFunctionSize(maxSize)
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it.todo('should not report files where no function exceeds the limit', () => {
+    const script = {
+      content: `
+        <script setup>
+          const sum = (a, b) => a + b
+
+          const someVal = 100
+
+          function func() {
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+            // ...
+          }
+        </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'no-function-exceeds-limit.vue'
     const maxSize = DEFAULT_OVERRIDE_CONFIG.maxFunctionSize
     checkFunctionSize(script, fileName, maxSize)
     const result = reportFunctionSize(maxSize)
