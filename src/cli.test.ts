@@ -20,6 +20,8 @@ describe('yarn analyze command with default configuration', () => {
   it('should error out when both apply and ignore are used', async () => {
     try {
       await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
+      // If no error is thrown, fail the test
+      expect(true).toBe(false)
     }
     catch (error: any) {
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
@@ -199,7 +201,7 @@ describe('yarn analyze command with configuration file', () => {
 
   it('should error out when both apply and ignore are used', async () => {
     try {
-      await execa('yarn', ['analyze', '--ignore=vue-strong'])
+      await execa('yarn', ['analyze', '--ignore=vue-strong']) // apply in config
     }
     catch (error: any) {
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
@@ -229,7 +231,7 @@ describe('yarn analyze command with conflicting flags in configuration file', ()
       await execa('yarn', ['analyze'])
     }
     catch (error: any) {
-      expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
+      expect(error.stderr).toContain('Cannot use both --ignore and --apply options together in the vue-mess-detector.json config file.')
       expect(error.exitCode).toBe(1)
     }
   })
