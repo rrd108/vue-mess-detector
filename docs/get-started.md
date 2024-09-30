@@ -120,20 +120,21 @@ You can override the limits for multiple rules using our new `override` field in
 {
   // other flags
   "override": {
-    "maxExpressionLength": 40,  // rule: templateSimpleExpression
-    "maxComputedLength": 5,     // rule: simpleComputed
-    "minimumConsonantCount": 3, // rule: fullwordComponentName
-    "maxPropsCount": 5,         // rule: tooManyProps
-    "minVariableName": 4,       // rule: shortVariableName
-    "maxParameterCount": 3,     // rule: parameterCount
-    "maxTabs": 5,               // rule: deepIndentation
-    "maxVshowLines": 10,        // rule: bigVshow
-    "maxVifLines": 10,          // rule: bigVif
-    "complexityModerate": 5,    // rule: cyclomaticComplexity
-    "warningThreshold": 4,      // rule: complicatedConditions
-    "maxFunctionSize": 20,      // rule: functionSize
-    "maxScriptLength": 100,     // rule: scriptLength
-    "maxFileSize": 300          // rule: hugeFiles
+    "maxExpressionLength": 40,                         // rule: templateSimpleExpression
+    "maxComputedLength": 5,                            // rule: simpleComputed
+    "minimumConsonantCount": 3,                        // rule: fullwordComponentName
+    "maxPropsCount": 5,                                // rule: tooManyProps
+    "minVariableName": 4,                              // rule: shortVariableName
+    "maxParameterCount": 3,                            // rule: parameterCount
+    "maxTabs": 5,                                      // rule: deepIndentation
+    "maxVshowLines": 10,                               // rule: bigVshow
+    "maxVifLines": 10,                                 // rule: bigVif
+    "complexityModerate": 5,                           // rule: cyclomaticComplexity
+    "warningThreshold": 4,                             // rule: complicatedConditions
+    "maxFunctionSize": 20,                             // rule: functionSize
+    "maxScriptLength": 100,                            // rule: scriptLength
+    "maxFileSize": 300,                                // rule: hugeFiles
+    "topLevelElementOrder": "template-script-style"    // rule: topLevelElementOrder
   }
 }
 ```
