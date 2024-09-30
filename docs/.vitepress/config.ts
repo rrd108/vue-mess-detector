@@ -85,6 +85,7 @@ export default defineConfig({
                 { text: 'No Direct Dom Access', link: '/rules/rrd/no-direct-dom-access' },
                 { text: 'No Inline Styles', link: '/rules/rrd/no-inline-styles' },
                 { text: 'No Props Destructure', link: '/rules/rrd/no-prop-destructure' },
+                { text: 'No Skipped Tests', link: '/rules/rrd/no-skipped-tests' },
                 { text: 'No Ts Lang', link: '/rules/rrd/no-ts-lang' },
                 { text: 'No Var Declaration', link: '/rules/rrd/no-var-declaration' },
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
