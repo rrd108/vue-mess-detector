@@ -162,6 +162,16 @@ describe('yarn analyze command with default configuration', () => {
       expect((error as any).stderr).toContain(`Invalid option ${BG_ERR}gauranga${BG_RESET} provided for flag ${TEXT_INFO}outputFormat${TEXT_RESET}. Valid options are: ${BG_INFO}text, json, table${BG_RESET}.`)
     }
   })
+
+  it('should error out when invalid value is used for healthError', async () => {
+    const healthError = 101
+    try {
+      await execa('yarn', ['analyze', `--health-error=${healthError}`])
+    }
+    catch (error) {
+      expect((error as any).stderr).toContain(`${BG_ERR}Health error threshold (${healthError}) exceeded:`)
+    }
+  })
 })
 
 describe('yarn analyze command with configuration file', () => {
