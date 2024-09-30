@@ -177,7 +177,7 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
 
           if (result.codeHealth.points < argv.healthError) {
             console.error(`${BG_ERR}Health error threshold (${argv.healthError}) exceeded: ${result.codeHealth.points}${BG_RESET}`)
-              process.exit(1)
+            process.exit(1)
           }
         }).catch((error) => {
           console.error(`${BG_ERR}${error}${BG_RESET}`)
