@@ -12,6 +12,25 @@ describe('checkMagicNumbers', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should ignore numbers in comments', () => {
+    const script = {
+      content: `
+        export default defineAppConfig({
+          ui: {
+            primary: 'blue',
+            gray: 'cool',
+          },
+          nuxtIcon: {}, // see https://github.com/nuxt/ui/issues/1289 and https://github.com/nuxt/ui/pull/1789
+        })
+      `,
+    } as SFCScriptBlock
+    const fileName = 'no-magic-number.vue'
+    checkMagicNumbers(script, fileName)
+    const result = reportMagicNumbers()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files with magic number before a closing bracet', () => {
     const script = { content: 'if (ms < 100) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-magic-number-before-bracket.vue'
