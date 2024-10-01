@@ -12,14 +12,10 @@ describe('checkMagicNumbers', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should ignore numbers in comments', () => {
+  it('should ignore numbers in comments', () => {
     const script = {
       content: `
         export default defineAppConfig({
-          ui: {
-            primary: 'blue',
-            gray: 'cool',
-          },
           nuxtIcon: {}, // see https://github.com/nuxt/ui/issues/1289 and https://github.com/nuxt/ui/pull/1789
         })
       `,
