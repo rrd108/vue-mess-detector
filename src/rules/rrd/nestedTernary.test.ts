@@ -51,6 +51,20 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
+  it.todo('should not report files with ts optional symbol', () => {
+    const script = {
+      content: `
+      type TestType = { value?: number; name?: string }
+      const temp: Array<TestType> = []
+      `,
+    } as SFCScriptBlock
+    const fileName = 'nestedTernary.vue'
+    checkNestedTernary(script, fileName)
+    const result = reportNestedTernary()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files with nested ternary', () => {
     const script = {
       content: `const pass = 'Gauranga%)'
