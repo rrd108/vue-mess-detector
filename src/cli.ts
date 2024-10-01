@@ -5,6 +5,7 @@ import Table from 'cli-table3'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { analyze } from './analyzer'
+import checkArgs from './helpers/checkArgs'
 import coerceRules from './helpers/coerceRules'
 import { FLAT_RULES, FLAT_RULESETS_RULES } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
@@ -19,6 +20,8 @@ const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
 
 getProjectRoot(pathArg || './src').then(async (projectRoot) => {
   const config = await getConfig(projectRoot)
+
+  checkArgs(process.argv, config)
 
   getPackageJson().then(vmdPackageJson => yargs(hideBin(process.argv))
     .config(config)

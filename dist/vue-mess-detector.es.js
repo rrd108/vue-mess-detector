@@ -2,7 +2,7 @@ import pe from "node:fs/promises";
 import xr, { format as gs, inspect as yr } from "util";
 import _r from "os";
 import $r from "yargs";
-import { normalize as vr, resolve as Ee, dirname as fn, basename as Ar, extname as Sr, relative as Br } from "path";
+import { normalize as vr, resolve as Ce, dirname as fn, basename as Ar, extname as Sr, relative as Br } from "path";
 import { readFileSync as mn, statSync as ms, readdirSync as Rr, writeFile as Or } from "fs";
 import { notStrictEqual as Nr, strictEqual as Lr } from "assert";
 import { fileURLToPath as jr } from "url";
@@ -78,41 +78,41 @@ const Nn = Ur;
 function Ze(t) {
   return t ? /\u001b\[((?:\d*;){0,5}\d*)m/g : /\u001b\[(?:\d*;){0,5}\d*m/g;
 }
-function ue(t) {
+function ae(t) {
   let e = Ze();
   return ("" + t).replace(e, "").split(`
-`).reduce(function(r, i) {
-    return Nn(i) > r ? Nn(i) : r;
+`).reduce(function(r, o) {
+    return Nn(o) > r ? Nn(o) : r;
   }, 0);
 }
-function xe(t, e) {
+function ye(t, e) {
   return Array(e + 1).join(t);
 }
 function qr(t, e, n, s) {
-  let r = ue(t);
+  let r = ae(t);
   if (e + 1 >= r) {
-    let i = e - r;
+    let o = e - r;
     switch (s) {
       case "right": {
-        t = xe(n, i) + t;
+        t = ye(n, o) + t;
         break;
       }
       case "center": {
-        let o = Math.ceil(i / 2), u = i - o;
-        t = xe(n, u) + t + xe(n, o);
+        let i = Math.ceil(o / 2), u = o - i;
+        t = ye(n, u) + t + ye(n, i);
         break;
       }
       default: {
-        t = t + xe(n, i);
+        t = t + ye(n, o);
         break;
       }
     }
   }
   return t;
 }
-let me = {};
+let be = {};
 function We(t, e, n) {
-  e = "\x1B[" + e + "m", n = "\x1B[" + n + "m", me[e] = { set: t, to: !0 }, me[n] = { set: t, to: !1 }, me[t] = { on: e, off: n };
+  e = "\x1B[" + e + "m", n = "\x1B[" + n + "m", be[e] = { set: t, to: !0 }, be[n] = { set: t, to: !1 }, be[t] = { on: e, off: n };
 }
 We("bold", 1, 22);
 We("italics", 3, 23);
@@ -134,7 +134,7 @@ function ws(t, e) {
       Object.prototype.hasOwnProperty.call(t, r) && delete t[r];
     return;
   }
-  let s = me[e[0]];
+  let s = be[e[0]];
   s && (t[s.set] = s.to);
 }
 function Zr(t) {
@@ -146,43 +146,43 @@ function Zr(t) {
 function xs(t, e) {
   let n = t.lastBackgroundAdded, s = t.lastForegroundAdded;
   return delete t.lastBackgroundAdded, delete t.lastForegroundAdded, Object.keys(t).forEach(function(r) {
-    t[r] && (e += me[r].off);
+    t[r] && (e += be[r].off);
   }), n && n != "\x1B[49m" && (e += "\x1B[49m"), s && s != "\x1B[39m" && (e += "\x1B[39m"), e;
 }
 function Kr(t, e) {
   let n = t.lastBackgroundAdded, s = t.lastForegroundAdded;
   return delete t.lastBackgroundAdded, delete t.lastForegroundAdded, Object.keys(t).forEach(function(r) {
-    t[r] && (e = me[r].on + e);
+    t[r] && (e = be[r].on + e);
   }), n && n != "\x1B[49m" && (e = n + e), s && s != "\x1B[39m" && (e = s + e), e;
 }
 function Jr(t, e) {
-  if (t.length === ue(t))
+  if (t.length === ae(t))
     return t.substr(0, e);
-  for (; ue(t) > e; )
+  for (; ae(t) > e; )
     t = t.slice(0, -1);
   return t;
 }
 function Yr(t, e) {
-  let n = Ze(!0), s = t.split(Ze()), r = 0, i = 0, o = "", u, a = {};
-  for (; i < e; ) {
+  let n = Ze(!0), s = t.split(Ze()), r = 0, o = 0, i = "", u, a = {};
+  for (; o < e; ) {
     u = n.exec(t);
     let h = s[r];
-    if (r++, i + ue(h) > e && (h = Jr(h, e - i)), o += h, i += ue(h), i < e) {
+    if (r++, o + ae(h) > e && (h = Jr(h, e - o)), i += h, o += ae(h), o < e) {
       if (!u)
         break;
-      o += u[0], ws(a, u);
+      i += u[0], ws(a, u);
     }
   }
-  return xs(a, o);
+  return xs(a, i);
 }
 function Qr(t, e, n) {
-  if (n = n || "…", ue(t) <= e)
+  if (n = n || "…", ae(t) <= e)
     return t;
-  e -= ue(n);
+  e -= ae(n);
   let r = Yr(t, e);
   r += n;
-  const i = "\x1B]8;;\x07";
-  return t.includes(i) && !r.includes(i) && (r += i), r;
+  const o = "\x1B]8;;\x07";
+  return t.includes(o) && !r.includes(o) && (r += o), r;
 }
 function Xr() {
   return {
@@ -218,64 +218,64 @@ function Xr() {
     head: []
   };
 }
-function ei(t, e) {
+function eo(t, e) {
   t = t || {}, e = e || Xr();
   let n = Object.assign({}, e, t);
   return n.chars = Object.assign({}, e.chars, t.chars), n.style = Object.assign({}, e.style, t.style), n;
 }
-function ti(t, e) {
-  let n = [], s = e.split(/(\s+)/g), r = [], i = 0, o;
+function to(t, e) {
+  let n = [], s = e.split(/(\s+)/g), r = [], o = 0, i;
   for (let u = 0; u < s.length; u += 2) {
-    let a = s[u], h = i + ue(a);
-    i > 0 && o && (h += o.length), h > t ? (i !== 0 && n.push(r.join("")), r = [a], i = ue(a)) : (r.push(o || "", a), i = h), o = s[u + 1];
+    let a = s[u], h = o + ae(a);
+    o > 0 && i && (h += i.length), h > t ? (o !== 0 && n.push(r.join("")), r = [a], o = ae(a)) : (r.push(i || "", a), o = h), i = s[u + 1];
   }
-  return i && n.push(r.join("")), n;
+  return o && n.push(r.join("")), n;
 }
-function ni(t, e) {
+function no(t, e) {
   let n = [], s = "";
-  function r(o, u) {
-    for (s.length && u && (s += u), s += o; s.length > t; )
+  function r(i, u) {
+    for (s.length && u && (s += u), s += i; s.length > t; )
       n.push(s.slice(0, t)), s = s.slice(t);
   }
-  let i = e.split(/(\s+)/g);
-  for (let o = 0; o < i.length; o += 2)
-    r(i[o], o && i[o - 1]);
+  let o = e.split(/(\s+)/g);
+  for (let i = 0; i < o.length; i += 2)
+    r(o[i], i && o[i - 1]);
   return s.length && n.push(s), n;
 }
-function si(t, e, n = !0) {
+function so(t, e, n = !0) {
   let s = [];
   e = e.split(`
 `);
-  const r = n ? ti : ni;
-  for (let i = 0; i < e.length; i++)
-    s.push.apply(s, r(t, e[i]));
+  const r = n ? to : no;
+  for (let o = 0; o < e.length; o++)
+    s.push.apply(s, r(t, e[o]));
   return s;
 }
-function ri(t) {
+function ro(t) {
   let e = {}, n = [];
   for (let s = 0; s < t.length; s++) {
     let r = Kr(e, t[s]);
     e = Zr(r);
-    let i = Object.assign({}, e);
-    n.push(xs(i, r));
+    let o = Object.assign({}, e);
+    n.push(xs(o, r));
   }
   return n;
 }
-function ii(t, e) {
+function oo(t, e) {
   const n = "\x1B]", s = "\x07", r = ";";
   return [n, "8", r, r, t || e, s, e, n, "8", r, r, s].join("");
 }
 var ys = {
-  strlen: ue,
-  repeat: xe,
+  strlen: ae,
+  repeat: ye,
   pad: qr,
   truncate: Qr,
-  mergeOptions: ei,
-  wordWrap: si,
-  colorizeLines: ri,
-  hyperlink: ii
+  mergeOptions: eo,
+  wordWrap: so,
+  colorizeLines: ro,
+  hyperlink: oo
 }, _s = { exports: {} }, Pt = { exports: {} }, Gt = { exports: {} }, Ut = { exports: {} }, qt = { exports: {} }, Ln;
-function oi() {
+function io() {
   return Ln || (Ln = 1, function(t) {
     var e = {};
     t.exports = e;
@@ -333,13 +333,13 @@ function oi() {
       whiteBG: [47, 49]
     };
     Object.keys(n).forEach(function(s) {
-      var r = n[s], i = e[s] = [];
-      i.open = "\x1B[" + r[0] + "m", i.close = "\x1B[" + r[1] + "m";
+      var r = n[s], o = e[s] = [];
+      o.open = "\x1B[" + r[0] + "m", o.close = "\x1B[" + r[1] + "m";
     });
   }(qt)), qt.exports;
 }
 var Zt, jn;
-function ui() {
+function uo() {
   return jn || (jn = 1, Zt = function(t, e) {
     e = e || process.argv;
     var n = e.indexOf("--"), s = /^-{1,2}/.test(t) ? "" : "--", r = e.indexOf(s + t);
@@ -347,10 +347,10 @@ function ui() {
   }), Zt;
 }
 var Kt, Tn;
-function ai() {
+function ao() {
   if (Tn) return Kt;
   Tn = 1;
-  var t = _r, e = ui(), n = process.env, s = void 0;
+  var t = _r, e = uo(), n = process.env, s = void 0;
   e("no-color") || e("no-colors") || e("color=false") ? s = !1 : (e("color") || e("colors") || e("color=true") || e("color=always")) && (s = !0), "FORCE_COLOR" in n && (s = n.FORCE_COLOR.length === 0 || parseInt(n.FORCE_COLOR, 10) !== 0);
   function r(u) {
     return u === 0 ? !1 : {
@@ -360,7 +360,7 @@ function ai() {
       has16m: u >= 3
     };
   }
-  function i(u) {
+  function o(u) {
     if (s === !1)
       return 0;
     if (e("color=16m") || e("color=full") || e("color=truecolor"))
@@ -393,23 +393,23 @@ function ai() {
     }
     return /-256(color)?$/i.test(n.TERM) ? 2 : /^screen|^xterm|^vt100|^rxvt|color|ansi|cygwin|linux/i.test(n.TERM) || "COLORTERM" in n ? 1 : (n.TERM === "dumb", a);
   }
-  function o(u) {
-    var a = i(u);
+  function i(u) {
+    var a = o(u);
     return r(a);
   }
   return Kt = {
-    supportsColor: o,
-    stdout: o(process.stdout),
-    stderr: o(process.stderr)
+    supportsColor: i,
+    stdout: i(process.stdout),
+    stderr: i(process.stderr)
   }, Kt;
 }
 var Jt = { exports: {} }, Wn;
-function ci() {
+function co() {
   return Wn || (Wn = 1, function(t) {
     t.exports = function(n, s) {
       var r = "";
       n = n || "Run the trap, drop the bass", n = n.split("");
-      var i = {
+      var o = {
         a: ["@", "Ą", "Ⱥ", "Ʌ", "Δ", "Λ", "Д"],
         b: ["ß", "Ɓ", "Ƀ", "ɮ", "β", "฿"],
         c: ["©", "Ȼ", "Ͼ"],
@@ -456,16 +456,16 @@ function ci() {
         y: ["¥", "Ұ", "Ӌ"],
         z: ["Ƶ", "ɀ"]
       };
-      return n.forEach(function(o) {
-        o = o.toLowerCase();
-        var u = i[o] || [" "], a = Math.floor(Math.random() * u.length);
-        typeof i[o] < "u" ? r += i[o][a] : r += o;
+      return n.forEach(function(i) {
+        i = i.toLowerCase();
+        var u = o[i] || [" "], a = Math.floor(Math.random() * u.length);
+        typeof o[i] < "u" ? r += o[i][a] : r += i;
       }), r;
     };
   }(Jt)), Jt.exports;
 }
 var Yt = { exports: {} }, Mn;
-function li() {
+function lo() {
   return Mn || (Mn = 1, function(t) {
     t.exports = function(n, s) {
       n = n || "   he is here   ";
@@ -588,14 +588,14 @@ function li() {
           "͡",
           " ҉"
         ]
-      }, i = [].concat(r.up, r.down, r.mid);
-      function o(h) {
+      }, o = [].concat(r.up, r.down, r.mid);
+      function i(h) {
         var f = Math.floor(Math.random() * h);
         return f;
       }
       function u(h) {
         var f = !1;
-        return i.filter(function(C) {
+        return o.filter(function(C) {
           f = C === h;
         }), f;
       }
@@ -606,19 +606,19 @@ function li() {
           if (!u(d)) {
             switch (C = C + h[d], m = { up: 0, down: 0, mid: 0 }, f.size) {
               case "mini":
-                m.up = o(8), m.mid = o(2), m.down = o(8);
+                m.up = i(8), m.mid = i(2), m.down = i(8);
                 break;
               case "maxi":
-                m.up = o(16) + 3, m.mid = o(4) + 1, m.down = o(64) + 3;
+                m.up = i(16) + 3, m.mid = i(4) + 1, m.down = i(64) + 3;
                 break;
               default:
-                m.up = o(8) + 1, m.mid = o(6) / 2, m.down = o(8) + 1;
+                m.up = i(8) + 1, m.mid = i(6) / 2, m.down = i(8) + 1;
                 break;
             }
             var E = ["up", "mid", "down"];
             for (var g in E)
               for (var l = E[g], w = 0; w <= m[l]; w++)
-                f[l] && (C = C + r[l][o(r[l].length)]);
+                f[l] && (C = C + r[l][i(r[l].length)]);
           }
         return C;
       }
@@ -627,7 +627,7 @@ function li() {
   }(Yt)), Yt.exports;
 }
 var Qt = { exports: {} }, kn;
-function hi() {
+function ho() {
   return kn || (kn = 1, function(t) {
     t.exports = function(e) {
       return function(n, s, r) {
@@ -645,7 +645,7 @@ function hi() {
   }(Qt)), Qt.exports;
 }
 var Xt = { exports: {} }, In;
-function fi() {
+function fo() {
   return In || (In = 1, function(t) {
     t.exports = function(e) {
       return function(n, s, r) {
@@ -655,18 +655,18 @@ function fi() {
   }(Xt)), Xt.exports;
 }
 var en = { exports: {} }, Pn;
-function Di() {
+function Do() {
   return Pn || (Pn = 1, function(t) {
     t.exports = function(e) {
       var n = ["red", "yellow", "green", "blue", "magenta"];
-      return function(s, r, i) {
+      return function(s, r, o) {
         return s === " " ? s : e[n[r++ % n.length]](s);
       };
     };
   }(en)), en.exports;
 }
 var tn = { exports: {} }, zn;
-function pi() {
+function po() {
   return zn || (zn = 1, function(t) {
     t.exports = function(e) {
       var n = [
@@ -688,19 +688,19 @@ function pi() {
         "brightCyan",
         "brightMagenta"
       ];
-      return function(s, r, i) {
+      return function(s, r, o) {
         return s === " " ? s : e[n[Math.round(Math.random() * (n.length - 2))]](s);
       };
     };
   }(tn)), tn.exports;
 }
 var Hn;
-function di() {
+function go() {
   return Hn || (Hn = 1, function(t) {
     var e = {};
     t.exports = e, e.themes = {};
-    var n = xr, s = e.styles = oi(), r = Object.defineProperties, i = new RegExp(/[\r\n]+/g);
-    e.supportsColor = ai().supportsColor, typeof e.enabled > "u" && (e.enabled = e.supportsColor() !== !1), e.enable = function() {
+    var n = xr, s = e.styles = io(), r = Object.defineProperties, o = new RegExp(/[\r\n]+/g);
+    e.supportsColor = ao().supportsColor, typeof e.enabled > "u" && (e.enabled = e.supportsColor() !== !1), e.enable = function() {
       e.enabled = !0;
     }, e.disable = function() {
       e.enabled = !1;
@@ -712,10 +712,10 @@ function di() {
       var y = s[w];
       return !y && w in e ? e[w](l) : y.open + l + y.close;
     };
-    var o = /[|\\{}()[\]^$+*?.]/g, u = function(g) {
+    var i = /[|\\{}()[\]^$+*?.]/g, u = function(g) {
       if (typeof g != "string")
         throw new TypeError("Expected a string");
-      return g.replace(o, "\\$&");
+      return g.replace(i, "\\$&");
     };
     function a(g) {
       var l = function w() {
@@ -743,7 +743,7 @@ function di() {
       for (var w = l.indexOf(`
 `) != -1, y = this._styles, v = y.length; v--; ) {
         var A = s[y[v]];
-        l = A.open + l.replace(A.closeRe, A.open) + A.close, w && (l = l.replace(i, function(R) {
+        l = A.open + l.replace(A.closeRe, A.open) + A.close, w && (l = l.replace(o, function(R) {
           return A.close + R + A.open;
         }));
       }
@@ -781,7 +781,7 @@ function di() {
       var y = w.split("");
       return y = y.map(l), y.join("");
     };
-    e.trap = ci(), e.zalgo = li(), e.maps = {}, e.maps.america = hi()(e), e.maps.zebra = fi()(e), e.maps.rainbow = Di()(e), e.maps.random = pi()(e);
+    e.trap = co(), e.zalgo = lo(), e.maps = {}, e.maps.america = ho()(e), e.maps.zebra = fo()(e), e.maps.rainbow = Do()(e), e.maps.random = po()(e);
     for (var E in e.maps)
       (function(g) {
         e[g] = function(l) {
@@ -792,14 +792,14 @@ function di() {
   }(Ut)), Ut.exports;
 }
 var Vn;
-function gi() {
+function mo() {
   return Vn || (Vn = 1, function(t) {
-    var e = di();
+    var e = go();
     t.exports = e;
   }(Gt)), Gt.exports;
 }
-const { info: mi, debug: $s } = En, J = ys;
-let bi = class He {
+const { info: bo, debug: $s } = En, J = ys;
+let Eo = class He {
   /**
    * A representation of a cell within the table.
    * Implementations must have `init` and `draw` methods,
@@ -827,23 +827,23 @@ let bi = class He {
   }
   mergeTableOptions(e, n) {
     this.cells = n;
-    let s = this.options.chars || {}, r = e.chars, i = this.chars = {};
-    Ci.forEach(function(a) {
-      nn(s, r, a, i);
+    let s = this.options.chars || {}, r = e.chars, o = this.chars = {};
+    Fo.forEach(function(a) {
+      nn(s, r, a, o);
     }), this.truncate = this.options.truncate || e.truncate;
-    let o = this.options.style = this.options.style || {}, u = e.style;
-    nn(o, u, "padding-left", this), nn(o, u, "padding-right", this), this.head = o.head || u.head, this.border = o.border || u.border, this.fixedWidth = e.colWidths[this.x], this.lines = this.computeLines(e), this.desiredWidth = J.strlen(this.content) + this.paddingLeft + this.paddingRight, this.desiredHeight = this.lines.length;
+    let i = this.options.style = this.options.style || {}, u = e.style;
+    nn(i, u, "padding-left", this), nn(i, u, "padding-right", this), this.head = i.head || u.head, this.border = i.border || u.border, this.fixedWidth = e.colWidths[this.x], this.lines = this.computeLines(e), this.desiredWidth = J.strlen(this.content) + this.paddingLeft + this.paddingRight, this.desiredHeight = this.lines.length;
   }
   computeLines(e) {
     const n = e.wordWrap || e.textWrap, { wordWrap: s = n } = this.options;
     if (this.fixedWidth && s) {
       if (this.fixedWidth -= this.paddingLeft + this.paddingRight, this.colSpan) {
-        let o = 1;
-        for (; o < this.colSpan; )
-          this.fixedWidth += e.colWidths[this.x + o], o++;
+        let i = 1;
+        for (; i < this.colSpan; )
+          this.fixedWidth += e.colWidths[this.x + i], i++;
       }
-      const { wrapOnWordBoundary: r = !0 } = e, { wrapOnWordBoundary: i = r } = this.options;
-      return this.wrapLines(J.wordWrap(this.fixedWidth, this.content, i));
+      const { wrapOnWordBoundary: r = !0 } = e, { wrapOnWordBoundary: o = r } = this.options;
+      return this.wrapLines(J.wordWrap(this.fixedWidth, this.content, o));
     }
     return this.wrapLines(this.content.split(`
 `));
@@ -877,22 +877,22 @@ let bi = class He {
     if (e == "top") return this.drawTop(this.drawRight);
     if (e == "bottom") return this.drawBottom(this.drawRight);
     let s = J.truncate(this.content, 10, this.truncate);
-    e || mi(`${this.y}-${this.x}: ${this.rowSpan - e}x${this.colSpan} Cell ${s}`);
-    let r = Math.max(this.height - this.lines.length, 0), i;
+    e || bo(`${this.y}-${this.x}: ${this.rowSpan - e}x${this.colSpan} Cell ${s}`);
+    let r = Math.max(this.height - this.lines.length, 0), o;
     switch (this.vAlign) {
       case "center":
-        i = Math.ceil(r / 2);
+        o = Math.ceil(r / 2);
         break;
       case "bottom":
-        i = r;
+        o = r;
         break;
       default:
-        i = 0;
+        o = 0;
     }
-    if (e < i || e >= i + this.lines.length)
+    if (e < o || e >= o + this.lines.length)
       return this.drawEmpty(this.drawRight, n);
-    let o = this.lines.length > this.height && e + 1 >= this.height;
-    return this.drawLine(e - i, this.drawRight, o, n);
+    let i = this.lines.length > this.height && e + 1 >= this.height;
+    return this.drawLine(e - o, this.drawRight, i, n);
   }
   /**
    * Renders the top line of the cell.
@@ -912,17 +912,17 @@ let bi = class He {
     else if (n == 0)
       s = "leftMid";
     else if (s = e == 0 ? "midMid" : "bottomMid", this.cells && (this.cells[this.y - 1][n] instanceof He.ColSpanCell && (s = e == 0 ? "topMid" : "mid"), e == 0)) {
-      let i = 1;
-      for (; this.cells[this.y][n - i] instanceof He.ColSpanCell; )
-        i++;
-      this.cells[this.y][n - i] instanceof He.RowSpanCell && (s = "leftMid");
+      let o = 1;
+      for (; this.cells[this.y][n - o] instanceof He.ColSpanCell; )
+        o++;
+      this.cells[this.y][n - o] instanceof He.RowSpanCell && (s = "leftMid");
     }
     return this.chars[s];
   }
   wrapWithStyleColors(e, n) {
     if (this[e] && this[e].length)
       try {
-        let s = gi();
+        let s = mo();
         for (let r = this[e].length - 1; r >= 0; r--)
           s = s[this[e][r]];
         return s(n);
@@ -944,17 +944,17 @@ let bi = class He {
    * @returns {String}
    */
   drawLine(e, n, s, r) {
-    let i = this.chars[this.x == 0 ? "left" : "middle"];
+    let o = this.chars[this.x == 0 ? "left" : "middle"];
     if (this.x && r && this.cells) {
       let m = this.cells[this.y + r][this.x - 1];
       for (; m instanceof Dn; )
         m = this.cells[m.y][m.x - 1];
-      m instanceof pn || (i = this.chars.rightMid);
+      m instanceof pn || (o = this.chars.rightMid);
     }
-    let o = J.repeat(" ", this.paddingLeft), u = n ? this.chars.right : "", a = J.repeat(" ", this.paddingRight), h = this.lines[e], f = this.width - (this.paddingLeft + this.paddingRight);
+    let i = J.repeat(" ", this.paddingLeft), u = n ? this.chars.right : "", a = J.repeat(" ", this.paddingRight), h = this.lines[e], f = this.width - (this.paddingLeft + this.paddingRight);
     s && (h += this.truncate || "…");
     let C = J.truncate(h, f, this.truncate);
-    return C = J.pad(C, f, " ", this.hAlign), C = o + C + a, this.stylizeLine(i, C, u);
+    return C = J.pad(C, f, " ", this.hAlign), C = i + C + a, this.stylizeLine(o, C, u);
   }
   stylizeLine(e, n, s) {
     return e = this.wrapWithStyleColors("border", e), s = this.wrapWithStyleColors("border", s), this.y === 0 && (n = this.wrapWithStyleColors("head", n)), e + n + s;
@@ -977,13 +977,13 @@ let bi = class He {
   drawEmpty(e, n) {
     let s = this.chars[this.x == 0 ? "left" : "middle"];
     if (this.x && n && this.cells) {
-      let o = this.cells[this.y + n][this.x - 1];
-      for (; o instanceof Dn; )
-        o = this.cells[o.y][o.x - 1];
-      o instanceof pn || (s = this.chars.rightMid);
+      let i = this.cells[this.y + n][this.x - 1];
+      for (; i instanceof Dn; )
+        i = this.cells[i.y][i.x - 1];
+      i instanceof pn || (s = this.chars.rightMid);
     }
-    let r = e ? this.chars.right : "", i = J.repeat(" ", this.width);
-    return this.stylizeLine(s, i, r);
+    let r = e ? this.chars.right : "", o = J.repeat(" ", this.width);
+    return this.stylizeLine(s, o, r);
   }
 }, Dn = class {
   /**
@@ -1012,7 +1012,7 @@ let bi = class He {
   }
   init(e) {
     let n = this.y, s = this.originalCell.y;
-    this.cellOffset = n - s, this.offset = Ei(e.rowHeights, s, this.cellOffset);
+    this.cellOffset = n - s, this.offset = Co(e.rowHeights, s, this.cellOffset);
   }
   draw(e) {
     return e == "top" ? this.originalCell.draw(this.offset, this.cellOffset) : e == "bottom" ? this.originalCell.draw("bottom") : ($s(`${this.y}-${this.x}: 1x${this.colSpan} RowSpanCell for ${this.originalCell.content}`), this.originalCell.draw(this.offset + 1 + e));
@@ -1027,7 +1027,7 @@ function nn(t, e, n, s) {
   let r = n.split("-");
   r.length > 1 ? (r[1] = r[1].charAt(0).toUpperCase() + r[1].substr(1), r = r.join(""), s[r] = Gn(t[r], t[n], e[r], e[n])) : s[n] = Gn(t[n], e[n]);
 }
-function Ei(t, e, n) {
+function Co(t, e, n) {
   let s = t[e];
   for (let r = 1; r < n; r++)
     s += 1 + t[e + r];
@@ -1036,7 +1036,7 @@ function Ei(t, e, n) {
 function Un(t, e) {
   return t + e + 1;
 }
-let Ci = [
+let Fo = [
   "top",
   "top-mid",
   "top-left",
@@ -1053,11 +1053,11 @@ let Ci = [
   "right-mid",
   "middle"
 ];
-Pt.exports = bi;
+Pt.exports = Eo;
 Pt.exports.ColSpanCell = Dn;
 Pt.exports.RowSpanCell = pn;
-var Fi = Pt.exports;
-const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i } = dn;
+var wo = Pt.exports;
+const { warn: xo, debug: yo } = En, dn = wo, { ColSpanCell: _o, RowSpanCell: $o } = dn;
 (function() {
   function t(d, E) {
     return d[E] > 0 ? t(d, E + 1) : E;
@@ -1090,10 +1090,10 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
     return d.length;
   }
   function r(d, E) {
-    let g = d.y, l = d.y - 1 + (d.rowSpan || 1), w = E.y, y = E.y - 1 + (E.rowSpan || 1), v = !(g > y || w > l), A = d.x, R = d.x - 1 + (d.colSpan || 1), M = E.x, oe = E.x - 1 + (E.colSpan || 1), se = !(A > oe || M > R);
-    return v && se;
+    let g = d.y, l = d.y - 1 + (d.rowSpan || 1), w = E.y, y = E.y - 1 + (E.rowSpan || 1), v = !(g > y || w > l), A = d.x, R = d.x - 1 + (d.colSpan || 1), M = E.x, ue = E.x - 1 + (E.colSpan || 1), re = !(A > ue || M > R);
+    return v && re;
   }
-  function i(d, E, g) {
+  function o(d, E, g) {
     let l = Math.min(d.length - 1, g), w = { x: E, y: g };
     for (let y = 0; y <= l; y++) {
       let v = d[y];
@@ -1103,9 +1103,9 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
     }
     return !1;
   }
-  function o(d, E, g, l) {
+  function i(d, E, g, l) {
     for (let w = g; w < l; w++)
-      if (i(d, w, E))
+      if (o(d, w, E))
         return !1;
     return !0;
   }
@@ -1113,7 +1113,7 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
     d.forEach(function(E, g) {
       E.forEach(function(l) {
         for (let w = 1; w < l.rowSpan; w++) {
-          let y = new _i(l);
+          let y = new $o(l);
           y.x = l.x, y.y = l.y + w, y.colSpan = l.colSpan, h(y, d[g + w]);
         }
       });
@@ -1125,7 +1125,7 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
       for (let l = 0; l < g.length; l++) {
         let w = g[l];
         for (let y = 1; y < w.colSpan; y++) {
-          let v = new yi();
+          let v = new _o();
           v.x = w.x + y, v.y = w.y, g.splice(l + 1, 0, v);
         }
       }
@@ -1139,18 +1139,18 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
   }
   function f(d) {
     let E = s(d), g = n(d);
-    xi(`Max rows: ${E}; Max cols: ${g}`);
+    yo(`Max rows: ${E}; Max cols: ${g}`);
     for (let l = 0; l < E; l++)
       for (let w = 0; w < g; w++)
-        if (!i(d, w, l)) {
+        if (!o(d, w, l)) {
           let y = { x: w, y: l, colSpan: 1, rowSpan: 1 };
-          for (w++; w < g && !i(d, w, l); )
+          for (w++; w < g && !o(d, w, l); )
             y.colSpan++, w++;
           let v = l + 1;
-          for (; v < E && o(d, v, y.x, y.x + y.colSpan); )
+          for (; v < E && i(d, v, y.x, y.x + y.colSpan); )
             y.rowSpan++, v++;
           let A = new dn(y);
-          A.x = y.x, A.y = y.y, wi(`Missing cell at ${A.y}-${A.x}.`), h(A, d[l]);
+          A.x = y.x, A.y = y.y, xo(`Missing cell at ${A.y}-${A.x}.`), h(A, d[l]);
         }
   }
   function C(d) {
@@ -1179,20 +1179,20 @@ const { warn: wi, debug: xi } = En, dn = Fi, { ColSpanCell: yi, RowSpanCell: _i 
   };
 })();
 function qn(t, e, n, s) {
-  return function(r, i) {
-    let o = [], u = [], a = {};
-    i.forEach(function(h) {
+  return function(r, o) {
+    let i = [], u = [], a = {};
+    o.forEach(function(h) {
       h.forEach(function(f) {
-        (f[t] || 1) > 1 ? u.push(f) : o[f[n]] = Math.max(o[f[n]] || 0, f[e] || 0, s);
+        (f[t] || 1) > 1 ? u.push(f) : i[f[n]] = Math.max(i[f[n]] || 0, f[e] || 0, s);
       });
     }), r.forEach(function(h, f) {
-      typeof h == "number" && (o[f] = h);
+      typeof h == "number" && (i[f] = h);
     });
     for (let h = u.length - 1; h >= 0; h--) {
-      let f = u[h], C = f[t], m = f[n], d = o[m], E = typeof r[m] == "number" ? 0 : 1;
+      let f = u[h], C = f[t], m = f[n], d = i[m], E = typeof r[m] == "number" ? 0 : 1;
       if (typeof d == "number")
         for (let g = 1; g < C; g++)
-          d += 1 + o[m + g], typeof r[m + g] != "number" && E++;
+          d += 1 + i[m + g], typeof r[m + g] != "number" && E++;
       else
         d = e === "desiredWidth" ? f.desiredWidth - 1 : 1, (!a[m] || a[m] < d) && (a[m] = d);
       if (f[e] > d) {
@@ -1200,43 +1200,43 @@ function qn(t, e, n, s) {
         for (; E > 0 && f[e] > d; ) {
           if (typeof r[m + g] != "number") {
             let l = Math.round((f[e] - d) / E);
-            d += l, o[m + g] += l, E--;
+            d += l, i[m + g] += l, E--;
           }
           g++;
         }
       }
     }
-    Object.assign(r, o, a);
+    Object.assign(r, i, a);
     for (let h = 0; h < r.length; h++)
       r[h] = Math.max(s, r[h] || 0);
   };
 }
-var $i = _s.exports;
-const le = En, vi = ys, sn = $i;
+var vo = _s.exports;
+const he = En, Ao = ys, sn = vo;
 let vs = class extends Array {
   constructor(e) {
     super();
-    const n = vi.mergeOptions(e);
+    const n = Ao.mergeOptions(e);
     if (Object.defineProperty(this, "options", {
       value: n,
       enumerable: n.debug
     }), n.debug) {
       switch (typeof n.debug) {
         case "boolean":
-          le.setDebugLevel(le.WARN);
+          he.setDebugLevel(he.WARN);
           break;
         case "number":
-          le.setDebugLevel(n.debug);
+          he.setDebugLevel(n.debug);
           break;
         case "string":
-          le.setDebugLevel(parseInt(n.debug, 10));
+          he.setDebugLevel(parseInt(n.debug, 10));
           break;
         default:
-          le.setDebugLevel(le.WARN), le.warn(`Debug option is expected to be boolean, number, or string. Received a ${typeof n.debug}`);
+          he.setDebugLevel(he.WARN), he.warn(`Debug option is expected to be boolean, number, or string. Received a ${typeof n.debug}`);
       }
       Object.defineProperty(this, "messages", {
         get() {
-          return le.debugMessages();
+          return he.debugMessages();
         }
       });
     }
@@ -1245,22 +1245,22 @@ let vs = class extends Array {
     let e = this, n = this.options.head && this.options.head.length;
     n ? (e = [this.options.head], this.length && e.push.apply(e, this)) : this.options.style.head = [];
     let s = sn.makeTableLayout(e);
-    s.forEach(function(i) {
-      i.forEach(function(o) {
-        o.mergeTableOptions(this.options, s);
+    s.forEach(function(o) {
+      o.forEach(function(i) {
+        i.mergeTableOptions(this.options, s);
       }, this);
-    }, this), sn.computeWidths(this.options.colWidths, s), sn.computeHeights(this.options.rowHeights, s), s.forEach(function(i) {
-      i.forEach(function(o) {
-        o.init(this.options);
+    }, this), sn.computeWidths(this.options.colWidths, s), sn.computeHeights(this.options.rowHeights, s), s.forEach(function(o) {
+      o.forEach(function(i) {
+        i.init(this.options);
       }, this);
     }, this);
     let r = [];
-    for (let i = 0; i < s.length; i++) {
-      let o = s[i], u = this.options.rowHeights[i];
-      (i === 0 || !this.options.style.compact || i == 1 && n) && rn(o, "top", r);
+    for (let o = 0; o < s.length; o++) {
+      let i = s[o], u = this.options.rowHeights[o];
+      (o === 0 || !this.options.style.compact || o == 1 && n) && rn(i, "top", r);
       for (let a = 0; a < u; a++)
-        rn(o, a, r);
-      i + 1 == s.length && rn(o, "bottom", r);
+        rn(i, a, r);
+      o + 1 == s.length && rn(i, "bottom", r);
     }
     return r.join(`
 `);
@@ -1270,35 +1270,35 @@ let vs = class extends Array {
 `)[0].length;
   }
 };
-vs.reset = () => le.reset();
+vs.reset = () => he.reset();
 function rn(t, e, n) {
   let s = [];
-  t.forEach(function(i) {
-    s.push(i.draw(e));
+  t.forEach(function(o) {
+    s.push(o.draw(e));
   });
   let r = s.join("");
   r.length && n.push(r);
 }
-var Ai = vs, Si = Ai;
-const Bi = /* @__PURE__ */ bs(Si);
-class ve extends Error {
+var So = vs, Bo = So;
+const Ro = /* @__PURE__ */ bs(Bo);
+class Ae extends Error {
   constructor(e) {
-    super(e || "yargs error"), this.name = "YError", Error.captureStackTrace && Error.captureStackTrace(this, ve);
+    super(e || "yargs error"), this.name = "YError", Error.captureStackTrace && Error.captureStackTrace(this, Ae);
   }
 }
 function As() {
-  return Ri() ? 0 : 1;
+  return Oo() ? 0 : 1;
 }
-function Ri() {
-  return Oi() && !process.defaultApp;
+function Oo() {
+  return No() && !process.defaultApp;
 }
-function Oi() {
+function No() {
   return !!process.versions.electron;
 }
-function Ni(t) {
+function Lo(t) {
   return t.slice(As() + 1);
 }
-function Li() {
+function jo() {
   return process.argv[As()];
 }
 /**
@@ -1306,15 +1306,15 @@ function Li() {
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-function ye(t) {
+function _e(t) {
   if (t !== t.toLowerCase() && t !== t.toUpperCase() || (t = t.toLowerCase()), t.indexOf("-") === -1 && t.indexOf("_") === -1)
     return t;
   {
     let n = "", s = !1;
     const r = t.match(/^-+/);
-    for (let i = r ? r[0].length : 0; i < t.length; i++) {
-      let o = t.charAt(i);
-      s && (s = !1, o = o.toUpperCase()), i !== 0 && (o === "-" || o === "_") ? s = !0 : o !== "-" && o !== "_" && (n += o);
+    for (let o = r ? r[0].length : 0; o < t.length; o++) {
+      let i = t.charAt(o);
+      s && (s = !1, i = i.toUpperCase()), o !== 0 && (i === "-" || i === "_") ? s = !0 : i !== "-" && i !== "_" && (n += i);
     }
     return n;
   }
@@ -1324,8 +1324,8 @@ function Ss(t, e) {
   e = e || "-";
   let s = "";
   for (let r = 0; r < t.length; r++) {
-    const i = n.charAt(r), o = t.charAt(r);
-    i !== o && r > 0 ? s += `${e}${n.charAt(r)}` : s += o;
+    const o = n.charAt(r), i = t.charAt(r);
+    o !== i && r > 0 ? s += `${e}${n.charAt(r)}` : s += i;
   }
   return s;
 }
@@ -1337,20 +1337,20 @@ function Bs(t) {
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-function ji(t) {
+function To(t) {
   if (Array.isArray(t))
-    return t.map((o) => typeof o != "string" ? o + "" : o);
+    return t.map((i) => typeof i != "string" ? i + "" : i);
   t = t.trim();
   let e = 0, n = null, s = null, r = null;
-  const i = [];
-  for (let o = 0; o < t.length; o++) {
-    if (n = s, s = t.charAt(o), s === " " && !r) {
+  const o = [];
+  for (let i = 0; i < t.length; i++) {
+    if (n = s, s = t.charAt(i), s === " " && !r) {
       n !== " " && e++;
       continue;
     }
-    s === r ? r = null : (s === "'" || s === '"') && !r && (r = s), i[e] || (i[e] = ""), i[e] += s;
+    s === r ? r = null : (s === "'" || s === '"') && !r && (r = s), o[e] || (o[e] = ""), o[e] += s;
   }
-  return i;
+  return o;
 }
 /**
  * @license
@@ -1366,10 +1366,10 @@ var ie;
  * Copyright (c) 2016, Contributors
  * SPDX-License-Identifier: ISC
  */
-let ce;
-class Ti {
+let le;
+class Wo {
   constructor(e) {
-    ce = e;
+    le = e;
   }
   parse(e, n) {
     const s = Object.assign({
@@ -1389,7 +1389,7 @@ class Ti {
       number: void 0,
       __: void 0,
       key: void 0
-    }, n), r = ji(e), i = typeof e == "string", o = Wi(Object.assign(/* @__PURE__ */ Object.create(null), s.alias)), u = Object.assign({
+    }, n), r = To(e), o = typeof e == "string", i = Mo(Object.assign(/* @__PURE__ */ Object.create(null), s.alias)), u = Object.assign({
       "boolean-negation": !0,
       "camel-case-expansion": !0,
       "combine-arrays": !1,
@@ -1408,7 +1408,7 @@ class Ti {
       "strip-aliased": !1,
       "strip-dashed": !1,
       "unknown-options-as-args": !1
-    }, s.configuration), a = Object.assign(/* @__PURE__ */ Object.create(null), s.default), h = s.configObjects || [], f = s.envPrefix, C = u["populate--"], m = C ? "--" : "_", d = /* @__PURE__ */ Object.create(null), E = /* @__PURE__ */ Object.create(null), g = s.__ || ce.format, l = {
+    }, s.configuration), a = Object.assign(/* @__PURE__ */ Object.create(null), s.default), h = s.configObjects || [], f = s.envPrefix, C = u["populate--"], m = C ? "--" : "_", d = /* @__PURE__ */ Object.create(null), E = /* @__PURE__ */ Object.create(null), g = s.__ || le.format, l = {
       aliases: /* @__PURE__ */ Object.create(null),
       arrays: /* @__PURE__ */ Object.create(null),
       bools: /* @__PURE__ */ Object.create(null),
@@ -1448,7 +1448,7 @@ class Ti {
       l.configs[c] = !0;
     }) : typeof s.config == "object" && Object.entries(s.config).forEach(([c, p]) => {
       (typeof p == "boolean" || typeof p == "function") && (l.configs[c] = p);
-    })), gr(s.key, o, s.default, l.arrays), Object.keys(a).forEach(function(c) {
+    })), gr(s.key, i, s.default, l.arrays), Object.keys(a).forEach(function(c) {
       (l.aliases[c] || []).forEach(function(p) {
         a[p] = a[c];
       });
@@ -1461,25 +1461,25 @@ class Ti {
       const p = r[c], F = p.replace(/^-{3,}/, "---");
       let b, D, _, x, $, I;
       if (p !== "--" && /^-/.test(p) && Ie(p))
-        oe(p);
+        ue(p);
       else if (F.match(/^---+(=|$)/)) {
-        oe(p);
+        ue(p);
         continue;
       } else if (p.match(/^--.+=/) || !u["short-option-groups"] && p.match(/^-.+=/))
-        x = p.match(/^--?([^=]+)=([\s\S]*)$/), x !== null && Array.isArray(x) && x.length >= 3 && (B(x[1], l.arrays) ? c = H(c, x[1], r, x[2]) : B(x[1], l.nargs) !== !1 ? c = se(c, x[1], r, x[2]) : L(x[1], x[2], !0));
+        x = p.match(/^--?([^=]+)=([\s\S]*)$/), x !== null && Array.isArray(x) && x.length >= 3 && (B(x[1], l.arrays) ? c = H(c, x[1], r, x[2]) : B(x[1], l.nargs) !== !1 ? c = re(c, x[1], r, x[2]) : L(x[1], x[2], !0));
       else if (p.match(y) && u["boolean-negation"])
         x = p.match(y), x !== null && Array.isArray(x) && x.length >= 2 && (D = x[1], L(D, B(D, l.arrays) ? [!1] : !1));
       else if (p.match(/^--.+/) || !u["short-option-groups"] && p.match(/^-[^-]+/))
-        x = p.match(/^--?(.+)/), x !== null && Array.isArray(x) && x.length >= 2 && (D = x[1], B(D, l.arrays) ? c = H(c, D, r) : B(D, l.nargs) !== !1 ? c = se(c, D, r) : ($ = r[c + 1], $ !== void 0 && (!$.match(/^-/) || $.match(w)) && !B(D, l.bools) && !B(D, l.counts) || /^(true|false)$/.test($) ? (L(D, $), c++) : L(D, ge(D))));
+        x = p.match(/^--?(.+)/), x !== null && Array.isArray(x) && x.length >= 2 && (D = x[1], B(D, l.arrays) ? c = H(c, D, r) : B(D, l.nargs) !== !1 ? c = re(c, D, r) : ($ = r[c + 1], $ !== void 0 && (!$.match(/^-/) || $.match(w)) && !B(D, l.bools) && !B(D, l.counts) || /^(true|false)$/.test($) ? (L(D, $), c++) : L(D, me(D))));
       else if (p.match(/^-.\..+=/))
         x = p.match(/^-([^=]+)=([\s\S]*)$/), x !== null && Array.isArray(x) && x.length >= 3 && L(x[1], x[2]);
       else if (p.match(/^-.\..+/) && !p.match(w))
-        $ = r[c + 1], x = p.match(/^-(.\..+)/), x !== null && Array.isArray(x) && x.length >= 2 && (D = x[1], $ !== void 0 && !$.match(/^-/) && !B(D, l.bools) && !B(D, l.counts) ? (L(D, $), c++) : L(D, ge(D)));
+        $ = r[c + 1], x = p.match(/^-(.\..+)/), x !== null && Array.isArray(x) && x.length >= 2 && (D = x[1], $ !== void 0 && !$.match(/^-/) && !B(D, l.bools) && !B(D, l.counts) ? (L(D, $), c++) : L(D, me(D)));
       else if (p.match(/^-[^-]+/) && !p.match(w)) {
         _ = p.slice(1, -1).split(""), b = !1;
         for (let G = 0; G < _.length; G++) {
           if ($ = p.slice(G + 2), _[G + 1] && _[G + 1] === "=") {
-            I = p.slice(G + 3), D = _[G], B(D, l.arrays) ? c = H(c, D, r, I) : B(D, l.nargs) !== !1 ? c = se(c, D, r, I) : L(D, I), b = !0;
+            I = p.slice(G + 3), D = _[G], B(D, l.arrays) ? c = H(c, D, r, I) : B(D, l.nargs) !== !1 ? c = re(c, D, r, I) : L(D, I), b = !0;
             break;
           }
           if ($ === "-") {
@@ -1494,11 +1494,11 @@ class Ti {
             L(_[G], $), b = !0;
             break;
           } else
-            L(_[G], ge(_[G]));
+            L(_[G], me(_[G]));
         }
-        D = p.slice(-1)[0], !b && D !== "-" && (B(D, l.arrays) ? c = H(c, D, r) : B(D, l.nargs) !== !1 ? c = se(c, D, r) : ($ = r[c + 1], $ !== void 0 && (!/^(-|--)[^-]/.test($) || $.match(w)) && !B(D, l.bools) && !B(D, l.counts) || /^(true|false)$/.test($) ? (L(D, $), c++) : L(D, ge(D))));
+        D = p.slice(-1)[0], !b && D !== "-" && (B(D, l.arrays) ? c = H(c, D, r) : B(D, l.nargs) !== !1 ? c = re(c, D, r) : ($ = r[c + 1], $ !== void 0 && (!/^(-|--)[^-]/.test($) || $.match(w)) && !B(D, l.bools) && !B(D, l.counts) || /^(true|false)$/.test($) ? (L(D, $), c++) : L(D, me(D))));
       } else if (p.match(/^-[0-9]$/) && p.match(w) && B(p.slice(1), l.bools))
-        D = p.slice(1), L(D, ge(D));
+        D = p.slice(1), L(D, me(D));
       else if (p === "--") {
         A = r.slice(c + 1);
         break;
@@ -1506,26 +1506,26 @@ class Ti {
         A = r.slice(c);
         break;
       } else
-        oe(p);
+        ue(p);
     }
     Bn(R, !0), Bn(R, !1), fr(R), Dr(), Rn(R, l.aliases, a, !0), pr(R), u["set-placeholder-key"] && dr(R), Object.keys(l.counts).forEach(function(c) {
-      Ce(R, c.split(".")) || L(c, 0);
+      Fe(R, c.split(".")) || L(c, 0);
     }), C && A.length && (R[m] = []), A.forEach(function(c) {
       R[m].push(c);
     }), u["camel-case-expansion"] && u["strip-dashed"] && Object.keys(R).filter((c) => c !== "--" && c.includes("-")).forEach((c) => {
       delete R[c];
-    }), u["strip-aliased"] && [].concat(...Object.keys(o).map((c) => o[c])).forEach((c) => {
-      u["camel-case-expansion"] && c.includes("-") && delete R[c.split(".").map((p) => ye(p)).join(".")], delete R[c];
+    }), u["strip-aliased"] && [].concat(...Object.keys(i).map((c) => i[c])).forEach((c) => {
+      u["camel-case-expansion"] && c.includes("-") && delete R[c.split(".").map((p) => _e(p)).join(".")], delete R[c];
     });
-    function oe(c) {
+    function ue(c) {
       const p = ke("_", c);
       (typeof p == "string" || typeof p == "number") && R._.push(p);
     }
-    function se(c, p, F, b) {
+    function re(c, p, F, b) {
       let D, _ = B(p, l.nargs);
       if (_ = typeof _ != "number" || isNaN(_) ? 1 : _, _ === 0)
-        return ae(b) || (v = Error(g("Argument unexpected for: %s", p))), L(p, ge(p)), c;
-      let x = ae(b) ? 0 : 1;
+        return ce(b) || (v = Error(g("Argument unexpected for: %s", p))), L(p, me(p)), c;
+      let x = ce(b) ? 0 : 1;
       if (u["nargs-eats-options"])
         F.length - (c + 1) + x < _ && (v = Error(g("Not enough arguments following: %s", p))), x = _;
       else {
@@ -1534,7 +1534,7 @@ class Ti {
         x < _ && (v = Error(g("Not enough arguments following: %s", p)));
       }
       let $ = Math.min(x, _);
-      for (!ae(b) && $ > 0 && (L(p, b), $--), D = c + 1; D < $ + c + 1; D++)
+      for (!ce(b) && $ > 0 && (L(p, b), $--), D = c + 1; D < $ + c + 1; D++)
         L(p, F[D]);
       return c + $;
     }
@@ -1543,33 +1543,33 @@ class Ti {
       const x = B(p, l.nargs);
       if (B(p, l.bools) && !/^(true|false)$/.test(_))
         D.push(!0);
-      else if (ae(_) || ae(b) && /^-/.test(_) && !w.test(_) && !Ie(_)) {
+      else if (ce(_) || ce(b) && /^-/.test(_) && !w.test(_) && !Ie(_)) {
         if (a[p] !== void 0) {
           const $ = a[p];
           D = Array.isArray($) ? $ : [$];
         }
       } else {
-        ae(b) || D.push(Ht(p, b, !0));
+        ce(b) || D.push(Ht(p, b, !0));
         for (let $ = c + 1; $ < F.length && !(!u["greedy-arrays"] && D.length > 0 || x && typeof x == "number" && D.length >= x || (_ = F[$], /^-/.test(_) && !w.test(_) && !Ie(_))); $++)
-          c = $, D.push(Ht(p, _, i));
+          c = $, D.push(Ht(p, _, o));
       }
       return typeof x == "number" && (x && D.length < x || isNaN(x) && D.length === 0) && (v = Error(g("Not enough arguments following: %s", p))), L(p, D), c;
     }
-    function L(c, p, F = i) {
+    function L(c, p, F = o) {
       if (/-/.test(c) && u["camel-case-expansion"]) {
         const _ = c.split(".").map(function(x) {
-          return ye(x);
+          return _e(x);
         }).join(".");
         Q(c, _);
       }
       const b = Ht(c, p, F), D = c.split(".");
-      Fe(R, D, b), l.aliases[c] && l.aliases[c].forEach(function(_) {
+      we(R, D, b), l.aliases[c] && l.aliases[c].forEach(function(_) {
         const x = _.split(".");
-        Fe(R, x, b);
+        we(R, x, b);
       }), D.length > 1 && u["dot-notation"] && (l.aliases[D[0]] || []).forEach(function(_) {
         let x = _.split(".");
         const $ = [].concat(D);
-        $.shift(), x = x.concat($), (l.aliases[c] || []).includes(x.join(".")) || Fe(R, x, b);
+        $.shift(), x = x.concat($), (l.aliases[c] || []).includes(x.join(".")) || we(R, x, b);
       }), B(c, l.normalize) && !B(c, l.arrays) && [c].concat(l.aliases[c] || []).forEach(function(x) {
         Object.defineProperty(M, x, {
           enumerable: !0,
@@ -1577,7 +1577,7 @@ class Ti {
             return p;
           },
           set($) {
-            p = typeof $ == "string" ? ce.normalize($) : $;
+            p = typeof $ == "string" ? le.normalize($) : $;
           }
         });
       });
@@ -1586,14 +1586,14 @@ class Ti {
       l.aliases[c] && l.aliases[c].length || (l.aliases[c] = [p], d[p] = !0), l.aliases[p] && l.aliases[p].length || Q(p, c);
     }
     function Ht(c, p, F) {
-      F && (p = Mi(p)), (B(c, l.bools) || B(c, l.counts)) && typeof p == "string" && (p = p === "true");
+      F && (p = ko(p)), (B(c, l.bools) || B(c, l.counts)) && typeof p == "string" && (p = p === "true");
       let b = Array.isArray(p) ? p.map(function(D) {
         return ke(c, D);
       }) : ke(c, p);
-      return B(c, l.counts) && (ae(b) || typeof b == "boolean") && (b = on()), B(c, l.normalize) && B(c, l.arrays) && (Array.isArray(p) ? b = p.map((D) => ce.normalize(D)) : b = ce.normalize(p)), b;
+      return B(c, l.counts) && (ce(b) || typeof b == "boolean") && (b = on()), B(c, l.normalize) && B(c, l.arrays) && (Array.isArray(p) ? b = p.map((D) => le.normalize(D)) : b = le.normalize(p)), b;
     }
     function ke(c, p) {
-      return !u["parse-positional-numbers"] && c === "_" || !B(c, l.strings) && !B(c, l.bools) && !Array.isArray(p) && (Bs(p) && u["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${p}`))) || !ae(p) && B(c, l.numbers)) && (p = Number(p)), p;
+      return !u["parse-positional-numbers"] && c === "_" || !B(c, l.strings) && !B(c, l.bools) && !Array.isArray(p) && (Bs(p) && u["parse-numbers"] && Number.isSafeInteger(Math.floor(parseFloat(`${p}`))) || !ce(p) && B(c, l.numbers)) && (p = Number(p)), p;
     }
     function fr(c) {
       const p = /* @__PURE__ */ Object.create(null);
@@ -1602,7 +1602,7 @@ class Ti {
         if (b)
           try {
             let D = null;
-            const _ = ce.resolve(ce.cwd(), b), x = l.configs[F];
+            const _ = le.resolve(le.cwd(), b), x = l.configs[F];
             if (typeof x == "function") {
               try {
                 D = x(_);
@@ -1614,7 +1614,7 @@ class Ti {
                 return;
               }
             } else
-              D = ce.require(_);
+              D = le.require(_);
             Vt(D);
           } catch (D) {
             D.name === "PermissionDenied" ? v = D : c[F] && (v = Error(g("Invalid JSON config file: %s", b)));
@@ -1624,7 +1624,7 @@ class Ti {
     function Vt(c, p) {
       Object.keys(c).forEach(function(F) {
         const b = c[F], D = p ? p + "." + F : F;
-        typeof b == "object" && b !== null && !Array.isArray(b) && u["dot-notation"] ? Vt(b, D) : (!Ce(R, D.split(".")) || B(D, l.arrays) && u["combine-arrays"]) && L(D, b);
+        typeof b == "object" && b !== null && !Array.isArray(b) && u["dot-notation"] ? Vt(b, D) : (!Fe(R, D.split(".")) || B(D, l.arrays) && u["combine-arrays"]) && L(D, b);
       });
     }
     function Dr() {
@@ -1635,13 +1635,13 @@ class Ti {
     function Bn(c, p) {
       if (typeof f > "u")
         return;
-      const F = typeof f == "string" ? f : "", b = ce.env();
+      const F = typeof f == "string" ? f : "", b = le.env();
       Object.keys(b).forEach(function(D) {
         if (F === "" || D.lastIndexOf(F, 0) === 0) {
           const _ = D.split("__").map(function(x, $) {
-            return $ === 0 && (x = x.substring(F.length)), ye(x);
+            return $ === 0 && (x = x.substring(F.length)), _e(x);
           });
-          (p && l.configs[_.join(".")] || !p) && !Ce(c, _) && L(_.join("."), b[D]);
+          (p && l.configs[_.join(".")] || !p) && !Fe(c, _) && L(_.join("."), b[D]);
         }
       });
     }
@@ -1667,12 +1667,12 @@ class Ti {
     }
     function Rn(c, p, F, b = !1) {
       Object.keys(F).forEach(function(D) {
-        Ce(c, D.split(".")) || (Fe(c, D.split("."), F[D]), b && (E[D] = !0), (p[D] || []).forEach(function(_) {
-          Ce(c, _.split(".")) || Fe(c, _.split("."), F[D]);
+        Fe(c, D.split(".")) || (we(c, D.split("."), F[D]), b && (E[D] = !0), (p[D] || []).forEach(function(_) {
+          Fe(c, _.split(".")) || we(c, _.split("."), F[D]);
         }));
       });
     }
-    function Ce(c, p) {
+    function Fe(c, p) {
       let F = c;
       u["dot-notation"] || (p = [p.join(".")]), p.slice(0, -1).forEach(function(D) {
         F = F[D] || {};
@@ -1680,21 +1680,21 @@ class Ti {
       const b = p[p.length - 1];
       return typeof F != "object" ? !1 : b in F;
     }
-    function Fe(c, p, F) {
+    function we(c, p, F) {
       let b = c;
       u["dot-notation"] || (p = [p.join(".")]), p.slice(0, -1).forEach(function(I) {
         I = Zn(I), typeof b == "object" && b[I] === void 0 && (b[I] = {}), typeof b[I] != "object" || Array.isArray(b[I]) ? (Array.isArray(b[I]) ? b[I].push({}) : b[I] = [b[I], {}], b = b[I][b[I].length - 1]) : b = b[I];
       });
       const D = Zn(p[p.length - 1]), _ = B(p.join("."), l.arrays), x = Array.isArray(F);
       let $ = u["duplicate-arguments-array"];
-      !$ && B(D, l.nargs) && ($ = !0, (!ae(b[D]) && l.nargs[D] === 1 || Array.isArray(b[D]) && b[D].length === l.nargs[D]) && (b[D] = void 0)), F === on() ? b[D] = on(b[D]) : Array.isArray(b[D]) ? $ && _ && x ? b[D] = u["flatten-duplicate-arrays"] ? b[D].concat(F) : (Array.isArray(b[D][0]) ? b[D] : [b[D]]).concat([F]) : !$ && !!_ == !!x ? b[D] = F : b[D] = b[D].concat([F]) : b[D] === void 0 && _ ? b[D] = x ? F : [F] : $ && !(b[D] === void 0 || B(D, l.counts) || B(D, l.bools)) ? b[D] = [b[D], F] : b[D] = F;
+      !$ && B(D, l.nargs) && ($ = !0, (!ce(b[D]) && l.nargs[D] === 1 || Array.isArray(b[D]) && b[D].length === l.nargs[D]) && (b[D] = void 0)), F === on() ? b[D] = on(b[D]) : Array.isArray(b[D]) ? $ && _ && x ? b[D] = u["flatten-duplicate-arrays"] ? b[D].concat(F) : (Array.isArray(b[D][0]) ? b[D] : [b[D]]).concat([F]) : !$ && !!_ == !!x ? b[D] = F : b[D] = b[D].concat([F]) : b[D] === void 0 && _ ? b[D] = x ? F : [F] : $ && !(b[D] === void 0 || B(D, l.counts) || B(D, l.bools)) ? b[D] = [b[D], F] : b[D] = F;
     }
     function gr(...c) {
       c.forEach(function(p) {
         Object.keys(p || {}).forEach(function(F) {
-          l.aliases[F] || (l.aliases[F] = [].concat(o[F] || []), l.aliases[F].concat(F).forEach(function(b) {
+          l.aliases[F] || (l.aliases[F] = [].concat(i[F] || []), l.aliases[F].concat(F).forEach(function(b) {
             if (/-/.test(b) && u["camel-case-expansion"]) {
-              const D = ye(b);
+              const D = _e(b);
               D !== F && l.aliases[F].indexOf(D) === -1 && (l.aliases[F].push(D), d[D] = !0);
             }
           }), l.aliases[F].concat(F).forEach(function(b) {
@@ -1747,7 +1747,7 @@ class Ti {
     function Er(c) {
       return c = c.replace(/^-{3,}/, "--"), c.match(w) || br(c) ? !1 : !mr(c, /^-+([^=]+?)=[\s\S]*$/, y, /^-+([^=]+?)$/, /^-+([^=]+?)-$/, /^-+([^=]+?\d+)$/, /^-+([^=]+?)\W+.*$/);
     }
-    function ge(c) {
+    function me(c) {
       return !B(c, l.bools) && !B(c, l.counts) && `${c}` in a ? a[c] : Cr(Fr(c));
     }
     function Cr(c) {
@@ -1762,7 +1762,7 @@ class Ti {
       let p = ie.BOOLEAN;
       return B(c, l.strings) ? p = ie.STRING : B(c, l.numbers) ? p = ie.NUMBER : B(c, l.bools) ? p = ie.BOOLEAN : B(c, l.arrays) && (p = ie.ARRAY), p;
     }
-    function ae(c) {
+    function ce(c) {
       return c === void 0;
     }
     function wr() {
@@ -1778,7 +1778,7 @@ class Ti {
     };
   }
 }
-function Wi(t) {
+function Mo(t) {
   const e = [], n = /* @__PURE__ */ Object.create(null);
   let s = !0;
   for (Object.keys(t).forEach(function(r) {
@@ -1786,20 +1786,20 @@ function Wi(t) {
   }); s; ) {
     s = !1;
     for (let r = 0; r < e.length; r++)
-      for (let i = r + 1; i < e.length; i++)
+      for (let o = r + 1; o < e.length; o++)
         if (e[r].filter(function(u) {
-          return e[i].indexOf(u) !== -1;
+          return e[o].indexOf(u) !== -1;
         }).length) {
-          e[r] = e[r].concat(e[i]), e.splice(i, 1), s = !0;
+          e[r] = e[r].concat(e[o]), e.splice(o, 1), s = !0;
           break;
         }
   }
   return e.forEach(function(r) {
-    r = r.filter(function(o, u, a) {
-      return a.indexOf(o) === u;
+    r = r.filter(function(i, u, a) {
+      return a.indexOf(i) === u;
     });
-    const i = r.pop();
-    i !== void 0 && typeof i == "string" && (n[i] = r);
+    const o = r.pop();
+    o !== void 0 && typeof o == "string" && (n[o] = r);
   }), n;
 }
 function on(t) {
@@ -1808,7 +1808,7 @@ function on(t) {
 function Zn(t) {
   return t === "__proto__" ? "___proto___" : t;
 }
-function Mi(t) {
+function ko(t) {
   return typeof t == "string" && (t[0] === "'" || t[0] === '"') && t[t.length - 1] === t[0] ? t.substring(1, t.length - 1) : t;
 }
 /**
@@ -1823,12 +1823,12 @@ var un, an, cn;
 const Kn = process && process.env && process.env.YARGS_MIN_NODE_VERSION ? Number(process.env.YARGS_MIN_NODE_VERSION) : 12, Jn = (an = (un = process == null ? void 0 : process.versions) === null || un === void 0 ? void 0 : un.node) !== null && an !== void 0 ? an : (cn = process == null ? void 0 : process.version) === null || cn === void 0 ? void 0 : cn.slice(1);
 if (Jn && Number(Jn.match(/^([^.]+)/)[1]) < Kn)
   throw Error(`yargs parser supports a minimum Node.js version of ${Kn}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
-const ki = process ? process.env : {}, Rs = new Ti({
+const Io = process ? process.env : {}, Rs = new Wo({
   cwd: process.cwd,
-  env: () => ki,
+  env: () => Io,
   format: gs,
   normalize: vr,
-  resolve: Ee,
+  resolve: Ce,
   // TODO: figure  out a  way to combine ESM and CJS coverage, such  that
   // we can exercise all the lines below:
   require: (t) => {
@@ -1844,14 +1844,14 @@ const ki = process ? process.env : {}, Rs = new Ti({
 Me.detailed = function(t, e) {
   return Rs.parse(t.slice(), e);
 };
-Me.camelCase = ye;
+Me.camelCase = _e;
 Me.decamelize = Ss;
 Me.looksLikeNumber = Bs;
-const Ii = {
-  right: Ui,
-  center: qi
-}, Pi = 0, Ve = 1, zi = 2, Ge = 3;
-class Hi {
+const Po = {
+  right: qo,
+  center: Zo
+}, zo = 0, Ve = 1, Ho = 2, Ge = 3;
+class Vo {
   constructor(e) {
     var n;
     this.width = e.width, this.wrap = (n = e.wrap) !== null && n !== void 0 ? n : !0, this.rows = [];
@@ -1879,10 +1879,10 @@ class Hi {
     return n.forEach((r) => {
       r.length > 1 && Y.stringWidth(r[0]) > s && (s = Math.min(Math.floor(this.width * 0.5), Y.stringWidth(r[0])));
     }), n.forEach((r) => {
-      this.div(...r.map((i, o) => ({
-        text: i.trim(),
-        padding: this.measurePadding(i),
-        width: o === 0 && r.length > 1 ? s : void 0
+      this.div(...r.map((o, i) => ({
+        text: o.trim(),
+        padding: this.measurePadding(o),
+        width: i === 0 && r.length > 1 ? s : void 0
       })));
     }), this.rows[this.rows.length - 1];
   }
@@ -1905,18 +1905,18 @@ class Hi {
   }
   rowToString(e, n) {
     return this.rasterize(e).forEach((s, r) => {
-      let i = "";
-      s.forEach((o, u) => {
+      let o = "";
+      s.forEach((i, u) => {
         const { width: a } = e[u], h = this.negatePadding(e[u]);
-        let f = o;
-        if (h > Y.stringWidth(o) && (f += " ".repeat(h - Y.stringWidth(o))), e[u].align && e[u].align !== "left" && this.wrap) {
-          const m = Ii[e[u].align];
+        let f = i;
+        if (h > Y.stringWidth(i) && (f += " ".repeat(h - Y.stringWidth(i))), e[u].align && e[u].align !== "left" && this.wrap) {
+          const m = Po[e[u].align];
           f = m(f, h), Y.stringWidth(f) < h && (f += " ".repeat((a || 0) - Y.stringWidth(f) - 1));
         }
         const C = e[u].padding || [0, 0, 0, 0];
-        C[Ge] && (i += " ".repeat(C[Ge])), i += Yn(e[u], f, "| "), i += f, i += Yn(e[u], f, " |"), C[Ve] && (i += " ".repeat(C[Ve])), r === 0 && n.length > 0 && (i = this.renderInline(i, n[n.length - 1]));
+        C[Ge] && (o += " ".repeat(C[Ge])), o += Yn(e[u], f, "| "), o += f, o += Yn(e[u], f, " |"), C[Ve] && (o += " ".repeat(C[Ve])), r === 0 && n.length > 0 && (o = this.renderInline(o, n[n.length - 1]));
       }), n.push({
-        text: i.replace(/ +$/, ""),
+        text: o.replace(/ +$/, ""),
         span: e.span
       });
     }), n;
@@ -1924,19 +1924,19 @@ class Hi {
   // if the full 'source' can render in
   // the target line, do so.
   renderInline(e, n) {
-    const s = e.match(/^ */), r = s ? s[0].length : 0, i = n.text, o = Y.stringWidth(i.trimRight());
-    return n.span ? this.wrap ? r < o ? e : (n.hidden = !0, i.trimRight() + " ".repeat(r - o) + e.trimLeft()) : (n.hidden = !0, i + e) : e;
+    const s = e.match(/^ */), r = s ? s[0].length : 0, o = n.text, i = Y.stringWidth(o.trimRight());
+    return n.span ? this.wrap ? r < i ? e : (n.hidden = !0, o.trimRight() + " ".repeat(r - i) + e.trimLeft()) : (n.hidden = !0, o + e) : e;
   }
   rasterize(e) {
     const n = [], s = this.columnWidths(e);
     let r;
-    return e.forEach((i, o) => {
-      i.width = s[o], this.wrap ? r = Y.wrap(i.text, this.negatePadding(i), { hard: !0 }).split(`
-`) : r = i.text.split(`
-`), i.border && (r.unshift("." + "-".repeat(this.negatePadding(i) + 2) + "."), r.push("'" + "-".repeat(this.negatePadding(i) + 2) + "'")), i.padding && (r.unshift(...new Array(i.padding[Pi] || 0).fill("")), r.push(...new Array(i.padding[zi] || 0).fill(""))), r.forEach((u, a) => {
+    return e.forEach((o, i) => {
+      o.width = s[i], this.wrap ? r = Y.wrap(o.text, this.negatePadding(o), { hard: !0 }).split(`
+`) : r = o.text.split(`
+`), o.border && (r.unshift("." + "-".repeat(this.negatePadding(o) + 2) + "."), r.push("'" + "-".repeat(this.negatePadding(o) + 2) + "'")), o.padding && (r.unshift(...new Array(o.padding[zo] || 0).fill("")), r.push(...new Array(o.padding[Ho] || 0).fill(""))), r.forEach((u, a) => {
         n[a] || n.push([]);
         const h = n[a];
-        for (let f = 0; f < o; f++)
+        for (let f = 0; f < i; f++)
           h[f] === void 0 && h.push("");
         h.push(u);
       });
@@ -1948,39 +1948,39 @@ class Hi {
   }
   columnWidths(e) {
     if (!this.wrap)
-      return e.map((o) => o.width || Y.stringWidth(o.text));
+      return e.map((i) => i.width || Y.stringWidth(i.text));
     let n = e.length, s = this.width;
-    const r = e.map((o) => {
-      if (o.width)
-        return n--, s -= o.width, o.width;
-    }), i = n ? Math.floor(s / n) : 0;
-    return r.map((o, u) => o === void 0 ? Math.max(i, Vi(e[u])) : o);
+    const r = e.map((i) => {
+      if (i.width)
+        return n--, s -= i.width, i.width;
+    }), o = n ? Math.floor(s / n) : 0;
+    return r.map((i, u) => i === void 0 ? Math.max(o, Go(e[u])) : i);
   }
 }
 function Yn(t, e, n) {
   return t.border ? /[.']-+[.']/.test(e) ? "" : e.trim().length !== 0 ? n : "  " : "";
 }
-function Vi(t) {
+function Go(t) {
   const e = t.padding || [], n = 1 + (e[Ge] || 0) + (e[Ve] || 0);
   return t.border ? n + 4 : n;
 }
-function Gi() {
+function Uo() {
   return typeof process == "object" && process.stdout && process.stdout.columns ? process.stdout.columns : 80;
 }
-function Ui(t, e) {
+function qo(t, e) {
   t = t.trim();
   const n = Y.stringWidth(t);
   return n < e ? " ".repeat(e - n) + t : t;
 }
-function qi(t, e) {
+function Zo(t, e) {
   t = t.trim();
   const n = Y.stringWidth(t);
   return n >= e ? t : " ".repeat(e - n >> 1) + t;
 }
 let Y;
-function Zi(t, e) {
-  return Y = e, new Hi({
-    width: t?.width || Gi(),
+function Ko(t, e) {
+  return Y = e, new Vo({
+    width: t?.width || Uo(),
     wrap: t?.wrap
   });
 }
@@ -1988,36 +1988,36 @@ const Os = new RegExp("\x1B(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|\\d+;\\d+;
 function Ns(t) {
   return t.replace(Os, "");
 }
-function Ki(t, e) {
+function Jo(t, e) {
   const [n, s] = t.match(Os) || ["", ""];
   t = Ns(t);
   let r = "";
-  for (let i = 0; i < t.length; i++)
-    i !== 0 && i % e === 0 && (r += `
-`), r += t.charAt(i);
+  for (let o = 0; o < t.length; o++)
+    o !== 0 && o % e === 0 && (r += `
+`), r += t.charAt(o);
   return n && s && (r = `${n}${r}${s}`), r;
 }
-function Ji(t) {
-  return Zi(t, {
+function Yo(t) {
+  return Ko(t, {
     stringWidth: (e) => [...e].length,
     stripAnsi: Ns,
-    wrap: Ki
+    wrap: Jo
   });
 }
-function Yi(t, e) {
-  let n = Ee(".", t), s;
+function Qo(t, e) {
+  let n = Ce(".", t), s;
   for (ms(n).isDirectory() || (n = fn(n)); ; ) {
-    if (s = e(n, Rr(n)), s) return Ee(n, s);
+    if (s = e(n, Rr(n)), s) return Ce(n, s);
     if (n = fn(s = n), s === n) break;
   }
 }
-const Qi = {
+const Xo = {
   fs: {
     readFileSync: mn,
     writeFile: Or
   },
   format: gs,
-  resolve: Ee,
+  resolve: Ce,
   exists: (t) => {
     try {
       return ms(t).isFile();
@@ -2026,8 +2026,8 @@ const Qi = {
     }
   }
 };
-let re;
-class Xi {
+let oe;
+class ei {
   constructor(e) {
     e = e || {}, this.directory = e.directory || "./locales", this.updateFiles = typeof e.updateFiles == "boolean" ? e.updateFiles : !0, this.locale = e.locale || "en", this.fallbackToLanguage = typeof e.fallbackToLanguage == "boolean" ? e.fallbackToLanguage : !0, this.cache = /* @__PURE__ */ Object.create(null), this.writeQueue = [];
   }
@@ -2042,24 +2042,24 @@ class Xi {
       directory: this.directory,
       locale: this.locale,
       cb: s
-    })) : s(), re.format.apply(re.format, [this.cache[this.locale][n] || n].concat(e));
+    })) : s(), oe.format.apply(oe.format, [this.cache[this.locale][n] || n].concat(e));
   }
   __n() {
     const e = Array.prototype.slice.call(arguments), n = e.shift(), s = e.shift(), r = e.shift();
-    let i = function() {
+    let o = function() {
     };
-    typeof e[e.length - 1] == "function" && (i = e.pop()), this.cache[this.locale] || this._readLocaleFile();
-    let o = r === 1 ? n : s;
-    this.cache[this.locale][n] && (o = this.cache[this.locale][n][r === 1 ? "one" : "other"]), !this.cache[this.locale][n] && this.updateFiles ? (this.cache[this.locale][n] = {
+    typeof e[e.length - 1] == "function" && (o = e.pop()), this.cache[this.locale] || this._readLocaleFile();
+    let i = r === 1 ? n : s;
+    this.cache[this.locale][n] && (i = this.cache[this.locale][n][r === 1 ? "one" : "other"]), !this.cache[this.locale][n] && this.updateFiles ? (this.cache[this.locale][n] = {
       one: n,
       other: s
     }, this._enqueueWrite({
       directory: this.directory,
       locale: this.locale,
-      cb: i
-    })) : i();
-    const u = [o];
-    return ~o.indexOf("%d") && u.push(r), re.format.apply(re.format, u.concat(e));
+      cb: o
+    })) : o();
+    const u = [i];
+    return ~i.indexOf("%d") && u.push(r), oe.format.apply(oe.format, u.concat(e));
   }
   setLocale(e) {
     this.locale = e;
@@ -2074,25 +2074,25 @@ class Xi {
   }
   _taggedLiteral(e, ...n) {
     let s = "";
-    return e.forEach(function(r, i) {
-      const o = n[i + 1];
-      s += r, typeof o < "u" && (s += "%s");
+    return e.forEach(function(r, o) {
+      const i = n[o + 1];
+      s += r, typeof i < "u" && (s += "%s");
     }), this.__.apply(this, [s].concat([].slice.call(n, 1)));
   }
   _enqueueWrite(e) {
     this.writeQueue.push(e), this.writeQueue.length === 1 && this._processWriteQueue();
   }
   _processWriteQueue() {
-    const e = this, n = this.writeQueue[0], s = n.directory, r = n.locale, i = n.cb, o = this._resolveLocaleFile(s, r), u = JSON.stringify(this.cache[r], null, 2);
-    re.fs.writeFile(o, u, "utf-8", function(a) {
-      e.writeQueue.shift(), e.writeQueue.length > 0 && e._processWriteQueue(), i(a);
+    const e = this, n = this.writeQueue[0], s = n.directory, r = n.locale, o = n.cb, i = this._resolveLocaleFile(s, r), u = JSON.stringify(this.cache[r], null, 2);
+    oe.fs.writeFile(i, u, "utf-8", function(a) {
+      e.writeQueue.shift(), e.writeQueue.length > 0 && e._processWriteQueue(), o(a);
     });
   }
   _readLocaleFile() {
     let e = {};
     const n = this._resolveLocaleFile(this.directory, this.locale);
     try {
-      re.fs.readFileSync && (e = JSON.parse(re.fs.readFileSync(n, "utf-8")));
+      oe.fs.readFileSync && (e = JSON.parse(oe.fs.readFileSync(n, "utf-8")));
     } catch (s) {
       if (s instanceof SyntaxError && (s.message = "syntax error in " + n), s.code === "ENOENT")
         e = {};
@@ -2102,20 +2102,20 @@ class Xi {
     this.cache[this.locale] = e;
   }
   _resolveLocaleFile(e, n) {
-    let s = re.resolve(e, "./", n + ".json");
+    let s = oe.resolve(e, "./", n + ".json");
     if (this.fallbackToLanguage && !this._fileExistsSync(s) && ~n.lastIndexOf("_")) {
-      const r = re.resolve(e, "./", n.split("_")[0] + ".json");
+      const r = oe.resolve(e, "./", n.split("_")[0] + ".json");
       this._fileExistsSync(r) && (s = r);
     }
     return s;
   }
   _fileExistsSync(e) {
-    return re.exists(e);
+    return oe.exists(e);
   }
 }
-function eo(t, e) {
-  re = e;
-  const n = new Xi(t);
+function ti(t, e) {
+  oe = e;
+  const n = new ei(t);
   return {
     __: n.__.bind(n),
     __n: n.__n.bind(n),
@@ -2125,19 +2125,19 @@ function eo(t, e) {
     locale: n.locale
   };
 }
-const to = (t) => eo(t, Qi), no = "require is not supported by ESM", Qn = "loading a directory of commands is not supported yet for ESM";
-let Ae;
+const ni = (t) => ti(t, Xo), si = "require is not supported by ESM", Qn = "loading a directory of commands is not supported yet for ESM";
+let Se;
 try {
-  Ae = jr(import.meta.url);
+  Se = jr(import.meta.url);
 } catch {
-  Ae = process.cwd();
+  Se = process.cwd();
 }
-const so = Ae.substring(0, Ae.lastIndexOf("node_modules"));
-Nr, Lr, yr, so || process.cwd(), Ar, fn, Sr, Br, Ee, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, mn, to({
-  directory: Ee(Ae, "../../../locales"),
+const ri = Se.substring(0, Se.lastIndexOf("node_modules"));
+Nr, Lr, yr, ri || process.cwd(), Ar, fn, Sr, Br, Ce, process.cwd, process.exit, process.nextTick, typeof process.stdout.columns < "u" && process.stdout.columns, mn, ni({
+  directory: Ce(Se, "../../../locales"),
   updateFiles: !1
 });
-var ro = Ls;
+var oi = Ls;
 function Ls(t, e, n) {
   t instanceof RegExp && (t = Xn(t, n)), e instanceof RegExp && (e = Xn(e, n));
   var s = js(t, e, n);
@@ -2155,24 +2155,24 @@ function Xn(t, e) {
 }
 Ls.range = js;
 function js(t, e, n) {
-  var s, r, i, o, u, a = n.indexOf(t), h = n.indexOf(e, a + 1), f = a;
+  var s, r, o, i, u, a = n.indexOf(t), h = n.indexOf(e, a + 1), f = a;
   if (a >= 0 && h > 0) {
     if (t === e)
       return [a, h];
-    for (s = [], i = n.length; f >= 0 && !u; )
-      f == a ? (s.push(f), a = n.indexOf(t, f + 1)) : s.length == 1 ? u = [s.pop(), h] : (r = s.pop(), r < i && (i = r, o = h), h = n.indexOf(e, f + 1)), f = a < h && a >= 0 ? a : h;
-    s.length && (u = [i, o]);
+    for (s = [], o = n.length; f >= 0 && !u; )
+      f == a ? (s.push(f), a = n.indexOf(t, f + 1)) : s.length == 1 ? u = [s.pop(), h] : (r = s.pop(), r < o && (o = r, i = h), h = n.indexOf(e, f + 1)), f = a < h && a >= 0 ? a : h;
+    s.length && (u = [o, i]);
   }
   return u;
 }
-var Ts = ro, io = ao, Ws = "\0SLASH" + Math.random() + "\0", Ms = "\0OPEN" + Math.random() + "\0", wn = "\0CLOSE" + Math.random() + "\0", ks = "\0COMMA" + Math.random() + "\0", Is = "\0PERIOD" + Math.random() + "\0";
+var Ts = oi, ii = ci, Ws = "\0SLASH" + Math.random() + "\0", Ms = "\0OPEN" + Math.random() + "\0", wn = "\0CLOSE" + Math.random() + "\0", ks = "\0COMMA" + Math.random() + "\0", Is = "\0PERIOD" + Math.random() + "\0";
 function ln(t) {
   return parseInt(t, 10) == t ? parseInt(t, 10) : t.charCodeAt(0);
 }
-function oo(t) {
+function ui(t) {
   return t.split("\\\\").join(Ws).split("\\{").join(Ms).split("\\}").join(wn).split("\\,").join(ks).split("\\.").join(Is);
 }
-function uo(t) {
+function ai(t) {
   return t.split(Ws).join("\\").split(Ms).join("{").split(wn).join("}").split(ks).join(",").split(Is).join(".");
 }
 function Ps(t) {
@@ -2181,61 +2181,61 @@ function Ps(t) {
   var e = [], n = Ts("{", "}", t);
   if (!n)
     return t.split(",");
-  var s = n.pre, r = n.body, i = n.post, o = s.split(",");
-  o[o.length - 1] += "{" + r + "}";
-  var u = Ps(i);
-  return i.length && (o[o.length - 1] += u.shift(), o.push.apply(o, u)), e.push.apply(e, o), e;
+  var s = n.pre, r = n.body, o = n.post, i = s.split(",");
+  i[i.length - 1] += "{" + r + "}";
+  var u = Ps(o);
+  return o.length && (i[i.length - 1] += u.shift(), i.push.apply(i, u)), e.push.apply(e, i), e;
 }
-function ao(t) {
-  return t ? (t.substr(0, 2) === "{}" && (t = "\\{\\}" + t.substr(2)), _e(oo(t), !0).map(uo)) : [];
+function ci(t) {
+  return t ? (t.substr(0, 2) === "{}" && (t = "\\{\\}" + t.substr(2)), $e(ui(t), !0).map(ai)) : [];
 }
-function co(t) {
+function li(t) {
   return "{" + t + "}";
 }
-function lo(t) {
+function hi(t) {
   return /^-?0\d/.test(t);
 }
-function ho(t, e) {
+function fi(t, e) {
   return t <= e;
 }
-function fo(t, e) {
+function Di(t, e) {
   return t >= e;
 }
-function _e(t, e) {
+function $e(t, e) {
   var n = [], s = Ts("{", "}", t);
   if (!s) return [t];
-  var r = s.pre, i = s.post.length ? _e(s.post, !1) : [""];
+  var r = s.pre, o = s.post.length ? $e(s.post, !1) : [""];
   if (/\$$/.test(s.pre))
-    for (var o = 0; o < i.length; o++) {
-      var u = r + "{" + s.body + "}" + i[o];
+    for (var i = 0; i < o.length; i++) {
+      var u = r + "{" + s.body + "}" + o[i];
       n.push(u);
     }
   else {
     var a = /^-?\d+\.\.-?\d+(?:\.\.-?\d+)?$/.test(s.body), h = /^[a-zA-Z]\.\.[a-zA-Z](?:\.\.-?\d+)?$/.test(s.body), f = a || h, C = s.body.indexOf(",") >= 0;
     if (!f && !C)
-      return s.post.match(/,.*\}/) ? (t = s.pre + "{" + s.body + wn + s.post, _e(t)) : [t];
+      return s.post.match(/,.*\}/) ? (t = s.pre + "{" + s.body + wn + s.post, $e(t)) : [t];
     var m;
     if (f)
       m = s.body.split(/\.\./);
-    else if (m = Ps(s.body), m.length === 1 && (m = _e(m[0], !1).map(co), m.length === 1))
-      return i.map(function(L) {
+    else if (m = Ps(s.body), m.length === 1 && (m = $e(m[0], !1).map(li), m.length === 1))
+      return o.map(function(L) {
         return s.pre + m[0] + L;
       });
     var d;
     if (f) {
-      var E = ln(m[0]), g = ln(m[1]), l = Math.max(m[0].length, m[1].length), w = m.length == 3 ? Math.abs(ln(m[2])) : 1, y = ho, v = g < E;
-      v && (w *= -1, y = fo);
-      var A = m.some(lo);
+      var E = ln(m[0]), g = ln(m[1]), l = Math.max(m[0].length, m[1].length), w = m.length == 3 ? Math.abs(ln(m[2])) : 1, y = fi, v = g < E;
+      v && (w *= -1, y = Di);
+      var A = m.some(hi);
       d = [];
       for (var R = E; y(R, g); R += w) {
         var M;
         if (h)
           M = String.fromCharCode(R), M === "\\" && (M = "");
         else if (M = String(R), A) {
-          var oe = l - M.length;
-          if (oe > 0) {
-            var se = new Array(oe + 1).join("0");
-            R < 0 ? M = "-" + se + M.slice(1) : M = se + M;
+          var ue = l - M.length;
+          if (ue > 0) {
+            var re = new Array(ue + 1).join("0");
+            R < 0 ? M = "-" + re + M.slice(1) : M = re + M;
           }
         }
         d.push(M);
@@ -2243,22 +2243,22 @@ function _e(t, e) {
     } else {
       d = [];
       for (var H = 0; H < m.length; H++)
-        d.push.apply(d, _e(m[H], !1));
+        d.push.apply(d, $e(m[H], !1));
     }
     for (var H = 0; H < d.length; H++)
-      for (var o = 0; o < i.length; o++) {
-        var u = r + d[H] + i[o];
+      for (var i = 0; i < o.length; i++) {
+        var u = r + d[H] + o[i];
         (!e || f || u) && n.push(u);
       }
   }
   return n;
 }
-const Do = /* @__PURE__ */ bs(io), po = 1024 * 64, Ke = (t) => {
+const pi = /* @__PURE__ */ bs(ii), di = 1024 * 64, Ke = (t) => {
   if (typeof t != "string")
     throw new TypeError("invalid pattern");
-  if (t.length > po)
+  if (t.length > di)
     throw new TypeError("pattern is too long");
-}, go = {
+}, gi = {
   "[:alnum:]": ["\\p{L}\\p{Nl}\\p{Nd}", !0],
   "[:alpha:]": ["\\p{L}\\p{Nl}", !0],
   "[:ascii:]": ["\\x00-\\x7f", !1],
@@ -2273,68 +2273,68 @@ const Do = /* @__PURE__ */ bs(io), po = 1024 * 64, Ke = (t) => {
   "[:upper:]": ["\\p{Lu}", !0],
   "[:word:]": ["\\p{L}\\p{Nl}\\p{Nd}\\p{Pc}", !0],
   "[:xdigit:]": ["A-Fa-f0-9", !1]
-}, we = (t) => t.replace(/[[\]\\-]/g, "\\$&"), mo = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), es = (t) => t.join(""), bo = (t, e) => {
+}, xe = (t) => t.replace(/[[\]\\-]/g, "\\$&"), mi = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), es = (t) => t.join(""), bi = (t, e) => {
   const n = e;
   if (t.charAt(n) !== "[")
     throw new Error("not in a brace expression");
   const s = [], r = [];
-  let i = n + 1, o = !1, u = !1, a = !1, h = !1, f = n, C = "";
-  e: for (; i < t.length; ) {
-    const g = t.charAt(i);
-    if ((g === "!" || g === "^") && i === n + 1) {
-      h = !0, i++;
+  let o = n + 1, i = !1, u = !1, a = !1, h = !1, f = n, C = "";
+  e: for (; o < t.length; ) {
+    const g = t.charAt(o);
+    if ((g === "!" || g === "^") && o === n + 1) {
+      h = !0, o++;
       continue;
     }
-    if (g === "]" && o && !a) {
-      f = i + 1;
+    if (g === "]" && i && !a) {
+      f = o + 1;
       break;
     }
-    if (o = !0, g === "\\" && !a) {
-      a = !0, i++;
+    if (i = !0, g === "\\" && !a) {
+      a = !0, o++;
       continue;
     }
     if (g === "[" && !a) {
-      for (const [l, [w, y, v]] of Object.entries(go))
-        if (t.startsWith(l, i)) {
+      for (const [l, [w, y, v]] of Object.entries(gi))
+        if (t.startsWith(l, o)) {
           if (C)
             return ["$.", !1, t.length - n, !0];
-          i += l.length, v ? r.push(w) : s.push(w), u = u || y;
+          o += l.length, v ? r.push(w) : s.push(w), u = u || y;
           continue e;
         }
     }
     if (a = !1, C) {
-      g > C ? s.push(we(C) + "-" + we(g)) : g === C && s.push(we(g)), C = "", i++;
+      g > C ? s.push(xe(C) + "-" + xe(g)) : g === C && s.push(xe(g)), C = "", o++;
       continue;
     }
-    if (t.startsWith("-]", i + 1)) {
-      s.push(we(g + "-")), i += 2;
+    if (t.startsWith("-]", o + 1)) {
+      s.push(xe(g + "-")), o += 2;
       continue;
     }
-    if (t.startsWith("-", i + 1)) {
-      C = g, i += 2;
+    if (t.startsWith("-", o + 1)) {
+      C = g, o += 2;
       continue;
     }
-    s.push(we(g)), i++;
+    s.push(xe(g)), o++;
   }
-  if (f < i)
+  if (f < o)
     return ["", !1, 0, !1];
   if (!s.length && !r.length)
     return ["$.", !1, t.length - n, !0];
   if (r.length === 0 && s.length === 1 && /^\\?.$/.test(s[0]) && !h) {
     const g = s[0].length === 2 ? s[0].slice(-1) : s[0];
-    return [mo(g), !1, f - n, !1];
+    return [mi(g), !1, f - n, !1];
   }
   const m = "[" + (h ? "^" : "") + es(s) + "]", d = "[" + (h ? "" : "^") + es(r) + "]";
   return [s.length && r.length ? "(" + m + "|" + d + ")" : s.length ? m : d, u, f - n, !0];
-}, $e = (t, { windowsPathsNoEscape: e = !1 } = {}) => e ? t.replace(/\[([^\/\\])\]/g, "$1") : t.replace(/((?!\\).|^)\[([^\/\\])\]/g, "$1$2").replace(/\\([^\/])/g, "$1"), Eo = /* @__PURE__ */ new Set(["!", "?", "+", "*", "@"]), ts = (t) => Eo.has(t), Co = "(?!(?:^|/)\\.\\.?(?:$|/))", Pe = "(?!\\.)", Fo = /* @__PURE__ */ new Set(["[", "."]), wo = /* @__PURE__ */ new Set(["..", "."]), xo = new Set("().*{}+?[]^$\\!"), yo = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), xn = "[^/]", ns = xn + "*?", ss = xn + "+?";
+}, ve = (t, { windowsPathsNoEscape: e = !1 } = {}) => e ? t.replace(/\[([^\/\\])\]/g, "$1") : t.replace(/((?!\\).|^)\[([^\/\\])\]/g, "$1$2").replace(/\\([^\/])/g, "$1"), Ei = /* @__PURE__ */ new Set(["!", "?", "+", "*", "@"]), ts = (t) => Ei.has(t), Ci = "(?!(?:^|/)\\.\\.?(?:$|/))", Pe = "(?!\\.)", Fi = /* @__PURE__ */ new Set(["[", "."]), wi = /* @__PURE__ */ new Set(["..", "."]), xi = new Set("().*{}+?[]^$\\!"), yi = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), xn = "[^/]", ns = xn + "*?", ss = xn + "+?";
 class U {
   type;
   #n;
   #s;
-  #i = !1;
+  #o = !1;
   #e = [];
   #t;
-  #o;
+  #i;
   #a;
   #u = !1;
   #r;
@@ -2343,7 +2343,7 @@ class U {
   // (which really means one child of '')
   #h = !1;
   constructor(e, n, s = {}) {
-    this.type = e, e && (this.#s = !0), this.#t = n, this.#n = this.#t ? this.#t.#n : this, this.#r = this.#n === this ? s : this.#n.#r, this.#a = this.#n === this ? [] : this.#n.#a, e === "!" && !this.#n.#u && this.#a.push(this), this.#o = this.#t ? this.#t.#e.length : 0;
+    this.type = e, e && (this.#s = !0), this.#t = n, this.#n = this.#t ? this.#t.#n : this, this.#r = this.#n === this ? s : this.#n.#r, this.#a = this.#n === this ? [] : this.#n.#a, e === "!" && !this.#n.#u && this.#a.push(this), this.#i = this.#t ? this.#t.#e.length : 0;
   }
   get hasMagic() {
     if (this.#s !== void 0)
@@ -2369,11 +2369,11 @@ class U {
         continue;
       let n = e, s = n.#t;
       for (; s; ) {
-        for (let r = n.#o + 1; !s.type && r < s.#e.length; r++)
-          for (const i of e.#e) {
-            if (typeof i == "string")
+        for (let r = n.#i + 1; !s.type && r < s.#e.length; r++)
+          for (const o of e.#e) {
+            if (typeof o == "string")
               throw new Error("string part in extglob AST??");
-            i.copyIn(s.#e[r]);
+            o.copyIn(s.#e[r]);
           }
         n = s, s = n.#t;
       }
@@ -2397,10 +2397,10 @@ class U {
       return !0;
     if (!this.#t?.isStart())
       return !1;
-    if (this.#o === 0)
+    if (this.#i === 0)
       return !0;
     const e = this.#t;
-    for (let n = 0; n < this.#o; n++) {
+    for (let n = 0; n < this.#i; n++) {
       const s = e.#e[n];
       if (!(s instanceof U && s.type === "!"))
         return !1;
@@ -2415,7 +2415,7 @@ class U {
     if (!this.type)
       return this.#t?.isEnd();
     const e = this.#t ? this.#t.#e.length : 0;
-    return this.#o === e - 1;
+    return this.#i === e - 1;
   }
   copyIn(e) {
     typeof e == "string" ? this.push(e) : this.push(e.clone(this));
@@ -2427,20 +2427,20 @@ class U {
     return n;
   }
   static #l(e, n, s, r) {
-    let i = !1, o = !1, u = -1, a = !1;
+    let o = !1, i = !1, u = -1, a = !1;
     if (n.type === null) {
       let d = s, E = "";
       for (; d < e.length; ) {
         const g = e.charAt(d++);
-        if (i || g === "\\") {
-          i = !i, E += g;
+        if (o || g === "\\") {
+          o = !o, E += g;
           continue;
         }
-        if (o) {
-          d === u + 1 ? (g === "^" || g === "!") && (a = !0) : g === "]" && !(d === u + 2 && a) && (o = !1), E += g;
+        if (i) {
+          d === u + 1 ? (g === "^" || g === "!") && (a = !0) : g === "]" && !(d === u + 2 && a) && (i = !1), E += g;
           continue;
         } else if (g === "[") {
-          o = !0, u = d, a = !1, E += g;
+          i = !0, u = d, a = !1, E += g;
           continue;
         }
         if (!r.noext && ts(g) && e.charAt(d) === "(") {
@@ -2458,15 +2458,15 @@ class U {
     let m = "";
     for (; h < e.length; ) {
       const d = e.charAt(h++);
-      if (i || d === "\\") {
-        i = !i, m += d;
+      if (o || d === "\\") {
+        o = !o, m += d;
         continue;
       }
-      if (o) {
-        h === u + 1 ? (d === "^" || d === "!") && (a = !0) : d === "]" && !(h === u + 2 && a) && (o = !1), m += d;
+      if (i) {
+        h === u + 1 ? (d === "^" || d === "!") && (a = !0) : d === "]" && !(h === u + 2 && a) && (i = !1), m += d;
         continue;
       } else if (d === "[") {
-        o = !0, u = h, a = !1, m += d;
+        i = !0, u = h, a = !1, m += d;
         continue;
       }
       if (ts(d) && e.charAt(h) === "(") {
@@ -2494,10 +2494,10 @@ class U {
   toMMPattern() {
     if (this !== this.#n)
       return this.#n.toMMPattern();
-    const e = this.toString(), [n, s, r, i] = this.toRegExpSource();
+    const e = this.toString(), [n, s, r, o] = this.toRegExpSource();
     if (!(r || this.#s || this.#r.nocase && !this.#r.nocaseMagicOnly && e.toUpperCase() !== e.toLowerCase()))
       return s;
-    const u = (this.#r.nocase ? "i" : "") + (i ? "u" : "");
+    const u = (this.#r.nocase ? "i" : "") + (o ? "u" : "");
     return Object.assign(new RegExp(`^${n}$`, u), {
       _src: n,
       _glob: e
@@ -2580,34 +2580,34 @@ class U {
     if (this.#n === this && this.#D(), !this.type) {
       const a = this.isStart() && this.isEnd(), h = this.#e.map((d) => {
         const [E, g, l, w] = typeof d == "string" ? U.#p(d, this.#s, a) : d.toRegExpSource(e);
-        return this.#s = this.#s || l, this.#i = this.#i || w, E;
+        return this.#s = this.#s || l, this.#o = this.#o || w, E;
       }).join("");
       let f = "";
-      if (this.isStart() && typeof this.#e[0] == "string" && !(this.#e.length === 1 && wo.has(this.#e[0]))) {
-        const E = Fo, g = (
+      if (this.isStart() && typeof this.#e[0] == "string" && !(this.#e.length === 1 && wi.has(this.#e[0]))) {
+        const E = Fi, g = (
           // dots are allowed, and the pattern starts with [ or .
           n && E.has(h.charAt(0)) || // the pattern starts with \., and then [ or .
           h.startsWith("\\.") && E.has(h.charAt(2)) || // the pattern starts with \.\., and then [ or .
           h.startsWith("\\.\\.") && E.has(h.charAt(4))
         ), l = !n && !e && E.has(h.charAt(0));
-        f = g ? Co : l ? Pe : "";
+        f = g ? Ci : l ? Pe : "";
       }
       let C = "";
       return this.isEnd() && this.#n.#u && this.#t?.type === "!" && (C = "(?:$|\\/)"), [
         f + h + C,
-        $e(h),
+        ve(h),
         this.#s = !!this.#s,
-        this.#i
+        this.#o
       ];
     }
     const s = this.type === "*" || this.type === "+", r = this.type === "!" ? "(?:(?!(?:" : "(?:";
-    let i = this.#f(n);
-    if (this.isStart() && this.isEnd() && !i && this.type !== "!") {
+    let o = this.#f(n);
+    if (this.isStart() && this.isEnd() && !o && this.type !== "!") {
       const a = this.toString();
-      return this.#e = [a], this.type = null, this.#s = void 0, [a, $e(this.toString()), !1, !1];
+      return this.#e = [a], this.type = null, this.#s = void 0, [a, ve(this.toString()), !1, !1];
     }
-    let o = !s || e || n || !Pe ? "" : this.#f(!0);
-    o === i && (o = ""), o && (i = `(?:${i})(?:${o})*?`);
+    let i = !s || e || n || !Pe ? "" : this.#f(!0);
+    i === o && (i = ""), i && (o = `(?:${o})(?:${i})*?`);
     let u = "";
     if (this.type === "!" && this.#h)
       u = (this.isStart() && !n ? Pe : "") + ss;
@@ -2615,66 +2615,66 @@ class U {
       const a = this.type === "!" ? (
         // !() must match something,but !(x) can match ''
         "))" + (this.isStart() && !n && !e ? Pe : "") + ns + ")"
-      ) : this.type === "@" ? ")" : this.type === "?" ? ")?" : this.type === "+" && o ? ")" : this.type === "*" && o ? ")?" : `)${this.type}`;
-      u = r + i + a;
+      ) : this.type === "@" ? ")" : this.type === "?" ? ")?" : this.type === "+" && i ? ")" : this.type === "*" && i ? ")?" : `)${this.type}`;
+      u = r + o + a;
     }
     return [
       u,
-      $e(i),
+      ve(o),
       this.#s = !!this.#s,
-      this.#i
+      this.#o
     ];
   }
   #f(e) {
     return this.#e.map((n) => {
       if (typeof n == "string")
         throw new Error("string type in extglob ast??");
-      const [s, r, i, o] = n.toRegExpSource(e);
-      return this.#i = this.#i || o, s;
+      const [s, r, o, i] = n.toRegExpSource(e);
+      return this.#o = this.#o || i, s;
     }).filter((n) => !(this.isStart() && this.isEnd()) || !!n).join("|");
   }
   static #p(e, n, s = !1) {
-    let r = !1, i = "", o = !1;
+    let r = !1, o = "", i = !1;
     for (let u = 0; u < e.length; u++) {
       const a = e.charAt(u);
       if (r) {
-        r = !1, i += (xo.has(a) ? "\\" : "") + a;
+        r = !1, o += (xi.has(a) ? "\\" : "") + a;
         continue;
       }
       if (a === "\\") {
-        u === e.length - 1 ? i += "\\\\" : r = !0;
+        u === e.length - 1 ? o += "\\\\" : r = !0;
         continue;
       }
       if (a === "[") {
-        const [h, f, C, m] = bo(e, u);
+        const [h, f, C, m] = bi(e, u);
         if (C) {
-          i += h, o = o || f, u += C - 1, n = n || m;
+          o += h, i = i || f, u += C - 1, n = n || m;
           continue;
         }
       }
       if (a === "*") {
-        s && e === "*" ? i += ss : i += ns, n = !0;
+        s && e === "*" ? o += ss : o += ns, n = !0;
         continue;
       }
       if (a === "?") {
-        i += xn, n = !0;
+        o += xn, n = !0;
         continue;
       }
-      i += yo(a);
+      o += yi(a);
     }
-    return [i, $e(e), !!n, o];
+    return [o, ve(e), !!n, i];
   }
 }
-const _o = (t, { windowsPathsNoEscape: e = !1 } = {}) => e ? t.replace(/[?*()[\]]/g, "[$&]") : t.replace(/[?*()[\]\\]/g, "\\$&"), z = (t, e, n = {}) => (Ke(e), !n.nocomment && e.charAt(0) === "#" ? !1 : new zt(e, n).match(t)), $o = /^\*+([^+@!?\*\[\(]*)$/, vo = (t) => (e) => !e.startsWith(".") && e.endsWith(t), Ao = (t) => (e) => e.endsWith(t), So = (t) => (t = t.toLowerCase(), (e) => !e.startsWith(".") && e.toLowerCase().endsWith(t)), Bo = (t) => (t = t.toLowerCase(), (e) => e.toLowerCase().endsWith(t)), Ro = /^\*+\.\*+$/, Oo = (t) => !t.startsWith(".") && t.includes("."), No = (t) => t !== "." && t !== ".." && t.includes("."), Lo = /^\.\*+$/, jo = (t) => t !== "." && t !== ".." && t.startsWith("."), To = /^\*+$/, Wo = (t) => t.length !== 0 && !t.startsWith("."), Mo = (t) => t.length !== 0 && t !== "." && t !== "..", ko = /^\?+([^+@!?\*\[\(]*)?$/, Io = ([t, e = ""]) => {
+const _i = (t, { windowsPathsNoEscape: e = !1 } = {}) => e ? t.replace(/[?*()[\]]/g, "[$&]") : t.replace(/[?*()[\]\\]/g, "\\$&"), z = (t, e, n = {}) => (Ke(e), !n.nocomment && e.charAt(0) === "#" ? !1 : new zt(e, n).match(t)), $i = /^\*+([^+@!?\*\[\(]*)$/, vi = (t) => (e) => !e.startsWith(".") && e.endsWith(t), Ai = (t) => (e) => e.endsWith(t), Si = (t) => (t = t.toLowerCase(), (e) => !e.startsWith(".") && e.toLowerCase().endsWith(t)), Bi = (t) => (t = t.toLowerCase(), (e) => e.toLowerCase().endsWith(t)), Ri = /^\*+\.\*+$/, Oi = (t) => !t.startsWith(".") && t.includes("."), Ni = (t) => t !== "." && t !== ".." && t.includes("."), Li = /^\.\*+$/, ji = (t) => t !== "." && t !== ".." && t.startsWith("."), Ti = /^\*+$/, Wi = (t) => t.length !== 0 && !t.startsWith("."), Mi = (t) => t.length !== 0 && t !== "." && t !== "..", ki = /^\?+([^+@!?\*\[\(]*)?$/, Ii = ([t, e = ""]) => {
   const n = zs([t]);
   return e ? (e = e.toLowerCase(), (s) => n(s) && s.toLowerCase().endsWith(e)) : n;
-}, Po = ([t, e = ""]) => {
+}, Pi = ([t, e = ""]) => {
   const n = Hs([t]);
   return e ? (e = e.toLowerCase(), (s) => n(s) && s.toLowerCase().endsWith(e)) : n;
-}, zo = ([t, e = ""]) => {
+}, zi = ([t, e = ""]) => {
   const n = Hs([t]);
   return e ? (s) => n(s) && s.endsWith(e) : n;
-}, Ho = ([t, e = ""]) => {
+}, Hi = ([t, e = ""]) => {
   const n = zs([t]);
   return e ? (s) => n(s) && s.endsWith(e) : n;
 }, zs = ([t]) => {
@@ -2686,20 +2686,20 @@ const _o = (t, { windowsPathsNoEscape: e = !1 } = {}) => e ? t.replace(/[?*()[\]
 }, Vs = typeof process == "object" && process ? typeof process.env == "object" && process.env && process.env.__MINIMATCH_TESTING_PLATFORM__ || process.platform : "posix", rs = {
   win32: { sep: "\\" },
   posix: { sep: "/" }
-}, Vo = Vs === "win32" ? rs.win32.sep : rs.posix.sep;
-z.sep = Vo;
+}, Vi = Vs === "win32" ? rs.win32.sep : rs.posix.sep;
+z.sep = Vi;
 const ee = Symbol("globstar **");
 z.GLOBSTAR = ee;
-const Go = "[^/]", Uo = Go + "*?", qo = "(?:(?!(?:\\/|^)(?:\\.{1,2})($|\\/)).)*?", Zo = "(?:(?!(?:\\/|^)\\.).)*?", Ko = (t, e = {}) => (n) => z(n, t, e);
-z.filter = Ko;
-const X = (t, e = {}) => Object.assign({}, t, e), Jo = (t) => {
+const Gi = "[^/]", Ui = Gi + "*?", qi = "(?:(?!(?:\\/|^)(?:\\.{1,2})($|\\/)).)*?", Zi = "(?:(?!(?:\\/|^)\\.).)*?", Ki = (t, e = {}) => (n) => z(n, t, e);
+z.filter = Ki;
+const X = (t, e = {}) => Object.assign({}, t, e), Ji = (t) => {
   if (!t || typeof t != "object" || !Object.keys(t).length)
     return z;
   const e = z;
-  return Object.assign((s, r, i = {}) => e(s, r, X(t, i)), {
+  return Object.assign((s, r, o = {}) => e(s, r, X(t, o)), {
     Minimatch: class extends e.Minimatch {
-      constructor(r, i = {}) {
-        super(r, X(t, i));
+      constructor(r, o = {}) {
+        super(r, X(t, o));
       }
       static defaults(r) {
         return e.defaults(X(t, r)).Minimatch;
@@ -2707,12 +2707,12 @@ const X = (t, e = {}) => Object.assign({}, t, e), Jo = (t) => {
     },
     AST: class extends e.AST {
       /* c8 ignore start */
-      constructor(r, i, o = {}) {
-        super(r, i, X(t, o));
+      constructor(r, o, i = {}) {
+        super(r, o, X(t, i));
       }
       /* c8 ignore stop */
-      static fromGlob(r, i = {}) {
-        return e.AST.fromGlob(r, X(t, i));
+      static fromGlob(r, o = {}) {
+        return e.AST.fromGlob(r, X(t, o));
       }
     },
     unescape: (s, r = {}) => e.unescape(s, X(t, r)),
@@ -2721,22 +2721,22 @@ const X = (t, e = {}) => Object.assign({}, t, e), Jo = (t) => {
     defaults: (s) => e.defaults(X(t, s)),
     makeRe: (s, r = {}) => e.makeRe(s, X(t, r)),
     braceExpand: (s, r = {}) => e.braceExpand(s, X(t, r)),
-    match: (s, r, i = {}) => e.match(s, r, X(t, i)),
+    match: (s, r, o = {}) => e.match(s, r, X(t, o)),
     sep: e.sep,
     GLOBSTAR: ee
   });
 };
-z.defaults = Jo;
-const Gs = (t, e = {}) => (Ke(t), e.nobrace || !/\{(?:(?!\{).)*\}/.test(t) ? [t] : Do(t));
+z.defaults = Ji;
+const Gs = (t, e = {}) => (Ke(t), e.nobrace || !/\{(?:(?!\{).)*\}/.test(t) ? [t] : pi(t));
 z.braceExpand = Gs;
-const Yo = (t, e = {}) => new zt(t, e).makeRe();
-z.makeRe = Yo;
-const Qo = (t, e, n = {}) => {
+const Yi = (t, e = {}) => new zt(t, e).makeRe();
+z.makeRe = Yi;
+const Qi = (t, e, n = {}) => {
   const s = new zt(e, n);
   return t = t.filter((r) => s.match(r)), s.options.nonull && !t.length && t.push(e), t;
 };
-z.match = Qo;
-const is = /[?*]|[+@!]\(.*?\)|\[|\]/, Xo = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+z.match = Qi;
+const os = /[?*]|[+@!]\(.*?\)|\[|\]/, Xi = (t) => t.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 class zt {
   options;
   set;
@@ -2779,23 +2779,23 @@ class zt {
       this.empty = !0;
       return;
     }
-    this.parseNegate(), this.globSet = [...new Set(this.braceExpand())], n.debug && (this.debug = (...i) => console.error(...i)), this.debug(this.pattern, this.globSet);
-    const s = this.globSet.map((i) => this.slashSplit(i));
+    this.parseNegate(), this.globSet = [...new Set(this.braceExpand())], n.debug && (this.debug = (...o) => console.error(...o)), this.debug(this.pattern, this.globSet);
+    const s = this.globSet.map((o) => this.slashSplit(o));
     this.globParts = this.preprocess(s), this.debug(this.pattern, this.globParts);
-    let r = this.globParts.map((i, o, u) => {
+    let r = this.globParts.map((o, i, u) => {
       if (this.isWindows && this.windowsNoMagicRoot) {
-        const a = i[0] === "" && i[1] === "" && (i[2] === "?" || !is.test(i[2])) && !is.test(i[3]), h = /^[a-z]:/i.test(i[0]);
+        const a = o[0] === "" && o[1] === "" && (o[2] === "?" || !os.test(o[2])) && !os.test(o[3]), h = /^[a-z]:/i.test(o[0]);
         if (a)
-          return [...i.slice(0, 4), ...i.slice(4).map((f) => this.parse(f))];
+          return [...o.slice(0, 4), ...o.slice(4).map((f) => this.parse(f))];
         if (h)
-          return [i[0], ...i.slice(1).map((f) => this.parse(f))];
+          return [o[0], ...o.slice(1).map((f) => this.parse(f))];
       }
-      return i.map((a) => this.parse(a));
+      return o.map((a) => this.parse(a));
     });
-    if (this.debug(this.pattern, r), this.set = r.filter((i) => i.indexOf(!1) === -1), this.isWindows)
-      for (let i = 0; i < this.set.length; i++) {
-        const o = this.set[i];
-        o[0] === "" && o[1] === "" && this.globParts[i][2] === "?" && typeof o[3] == "string" && /^[a-z]:$/i.test(o[3]) && (o[2] = "?");
+    if (this.debug(this.pattern, r), this.set = r.filter((o) => o.indexOf(!1) === -1), this.isWindows)
+      for (let o = 0; o < this.set.length; o++) {
+        const i = this.set[o];
+        i[0] === "" && i[1] === "" && this.globParts[o][2] === "?" && typeof i[3] == "string" && /^[a-z]:$/i.test(i[3]) && (i[2] = "?");
       }
     this.debug(this.pattern, this.set);
   }
@@ -2828,8 +2828,8 @@ class zt {
   // get rid of adjascent ** and resolve .. portions
   levelOneOptimize(e) {
     return e.map((n) => (n = n.reduce((s, r) => {
-      const i = s[s.length - 1];
-      return r === "**" && i === "**" ? s : r === ".." && i && i !== ".." && i !== "." && i !== "**" ? (s.pop(), s) : (s.push(r), s);
+      const o = s[s.length - 1];
+      return r === "**" && o === "**" ? s : r === ".." && o && o !== ".." && o !== "." && o !== "**" ? (s.pop(), s) : (s.push(r), s);
     }, []), n.length === 0 ? [""] : n));
   }
   levelTwoFileOptimize(e) {
@@ -2838,8 +2838,8 @@ class zt {
     do {
       if (n = !1, !this.preserveMultipleSlashes) {
         for (let r = 1; r < e.length - 1; r++) {
-          const i = e[r];
-          r === 1 && i === "" && e[0] === "" || (i === "." || i === "") && (n = !0, e.splice(r, 1), r--);
+          const o = e[r];
+          r === 1 && o === "" && e[0] === "" || (o === "." || o === "") && (n = !0, e.splice(r, 1), r--);
         }
         e[0] === "." && e.length === 2 && (e[1] === "." || e[1] === "") && (n = !0, e.pop());
       }
@@ -2876,10 +2876,10 @@ class zt {
       for (let s of e) {
         let r = -1;
         for (; (r = s.indexOf("**", r + 1)) !== -1; ) {
-          let o = r;
-          for (; s[o + 1] === "**"; )
-            o++;
-          o > r && s.splice(r + 1, o - r);
+          let i = r;
+          for (; s[i + 1] === "**"; )
+            i++;
+          i > r && s.splice(r + 1, i - r);
           let u = s[r + 1];
           const a = s[r + 2], h = s[r + 3];
           if (u !== ".." || !a || a === "." || a === ".." || !h || h === "." || h === "..")
@@ -2889,19 +2889,19 @@ class zt {
           f[r] = "**", e.push(f), r--;
         }
         if (!this.preserveMultipleSlashes) {
-          for (let o = 1; o < s.length - 1; o++) {
-            const u = s[o];
-            o === 1 && u === "" && s[0] === "" || (u === "." || u === "") && (n = !0, s.splice(o, 1), o--);
+          for (let i = 1; i < s.length - 1; i++) {
+            const u = s[i];
+            i === 1 && u === "" && s[0] === "" || (u === "." || u === "") && (n = !0, s.splice(i, 1), i--);
           }
           s[0] === "." && s.length === 2 && (s[1] === "." || s[1] === "") && (n = !0, s.pop());
         }
-        let i = 0;
-        for (; (i = s.indexOf("..", i + 1)) !== -1; ) {
-          const o = s[i - 1];
-          if (o && o !== "." && o !== ".." && o !== "**") {
+        let o = 0;
+        for (; (o = s.indexOf("..", o + 1)) !== -1; ) {
+          const i = s[o - 1];
+          if (i && i !== "." && i !== ".." && i !== "**") {
             n = !0;
-            const a = i === 1 && s[i + 1] === "**" ? ["."] : [];
-            s.splice(i - 1, 2, ...a), s.length === 0 && s.push(""), i -= 2;
+            const a = o === 1 && s[o + 1] === "**" ? ["."] : [];
+            s.splice(o - 1, 2, ...a), s.length === 0 && s.push(""), o -= 2;
           }
         }
       }
@@ -2927,25 +2927,25 @@ class zt {
     return e.filter((n) => n.length);
   }
   partsMatch(e, n, s = !1) {
-    let r = 0, i = 0, o = [], u = "";
-    for (; r < e.length && i < n.length; )
-      if (e[r] === n[i])
-        o.push(u === "b" ? n[i] : e[r]), r++, i++;
-      else if (s && e[r] === "**" && n[i] === e[r + 1])
-        o.push(e[r]), r++;
-      else if (s && n[i] === "**" && e[r] === n[i + 1])
-        o.push(n[i]), i++;
-      else if (e[r] === "*" && n[i] && (this.options.dot || !n[i].startsWith(".")) && n[i] !== "**") {
+    let r = 0, o = 0, i = [], u = "";
+    for (; r < e.length && o < n.length; )
+      if (e[r] === n[o])
+        i.push(u === "b" ? n[o] : e[r]), r++, o++;
+      else if (s && e[r] === "**" && n[o] === e[r + 1])
+        i.push(e[r]), r++;
+      else if (s && n[o] === "**" && e[r] === n[o + 1])
+        i.push(n[o]), o++;
+      else if (e[r] === "*" && n[o] && (this.options.dot || !n[o].startsWith(".")) && n[o] !== "**") {
         if (u === "b")
           return !1;
-        u = "a", o.push(e[r]), r++, i++;
-      } else if (n[i] === "*" && e[r] && (this.options.dot || !e[r].startsWith(".")) && e[r] !== "**") {
+        u = "a", i.push(e[r]), r++, o++;
+      } else if (n[o] === "*" && e[r] && (this.options.dot || !e[r].startsWith(".")) && e[r] !== "**") {
         if (u === "a")
           return !1;
-        u = "b", o.push(n[i]), r++, i++;
+        u = "b", i.push(n[o]), r++, o++;
       } else
         return !1;
-    return e.length === n.length && o;
+    return e.length === n.length && i;
   }
   parseNegate() {
     if (this.nonegate)
@@ -2970,19 +2970,19 @@ class zt {
         R.toLowerCase() === M.toLowerCase() && (n[A] = R, A > v ? n = n.slice(A) : v > A && (e = e.slice(v)));
       }
     }
-    const { optimizationLevel: i = 1 } = this.options;
-    i >= 2 && (e = this.levelTwoFileOptimize(e)), this.debug("matchOne", this, { file: e, pattern: n }), this.debug("matchOne", e.length, n.length);
-    for (var o = 0, u = 0, a = e.length, h = n.length; o < a && u < h; o++, u++) {
+    const { optimizationLevel: o = 1 } = this.options;
+    o >= 2 && (e = this.levelTwoFileOptimize(e)), this.debug("matchOne", this, { file: e, pattern: n }), this.debug("matchOne", e.length, n.length);
+    for (var i = 0, u = 0, a = e.length, h = n.length; i < a && u < h; i++, u++) {
       this.debug("matchOne loop");
-      var f = n[u], C = e[o];
+      var f = n[u], C = e[i];
       if (this.debug(n, f, C), f === !1)
         return !1;
       if (f === ee) {
         this.debug("GLOBSTAR", [n, f, C]);
-        var m = o, d = u + 1;
+        var m = i, d = u + 1;
         if (d === h) {
-          for (this.debug("** at the end"); o < a; o++)
-            if (e[o] === "." || e[o] === ".." || !r.dot && e[o].charAt(0) === ".")
+          for (this.debug("** at the end"); i < a; i++)
+            if (e[i] === "." || e[i] === ".." || !r.dot && e[i].charAt(0) === ".")
               return !1;
           return !0;
         }
@@ -3004,12 +3004,12 @@ globstar while`, e, m, n, d, E), this.matchOne(e.slice(m), n.slice(d), s))
       if (typeof f == "string" ? (g = C === f, this.debug("string match", f, C, g)) : (g = f.test(C), this.debug("pattern match", f, C, g)), !g)
         return !1;
     }
-    if (o === a && u === h)
+    if (i === a && u === h)
       return !0;
-    if (o === a)
+    if (i === a)
       return s;
     if (u === h)
-      return o === a - 1 && e[o] === "";
+      return i === a - 1 && e[i] === "";
     throw new Error("wtf?");
   }
   braceExpand() {
@@ -3023,9 +3023,9 @@ globstar while`, e, m, n, d, E), this.matchOne(e.slice(m), n.slice(d), s))
     if (e === "")
       return "";
     let s, r = null;
-    (s = e.match(To)) ? r = n.dot ? Mo : Wo : (s = e.match($o)) ? r = (n.nocase ? n.dot ? Bo : So : n.dot ? Ao : vo)(s[1]) : (s = e.match(ko)) ? r = (n.nocase ? n.dot ? Po : Io : n.dot ? zo : Ho)(s) : (s = e.match(Ro)) ? r = n.dot ? No : Oo : (s = e.match(Lo)) && (r = jo);
-    const i = U.fromGlob(e, this.options).toMMPattern();
-    return r && typeof i == "object" && Reflect.defineProperty(i, "test", { value: r }), i;
+    (s = e.match(Ti)) ? r = n.dot ? Mi : Wi : (s = e.match($i)) ? r = (n.nocase ? n.dot ? Bi : Si : n.dot ? Ai : vi)(s[1]) : (s = e.match(ki)) ? r = (n.nocase ? n.dot ? Pi : Ii : n.dot ? zi : Hi)(s) : (s = e.match(Ri)) ? r = n.dot ? Ni : Oi : (s = e.match(Li)) && (r = ji);
+    const o = U.fromGlob(e, this.options).toMMPattern();
+    return r && typeof o == "object" && Reflect.defineProperty(o, "test", { value: r }), o;
   }
   makeRe() {
     if (this.regexp || this.regexp === !1)
@@ -3033,23 +3033,23 @@ globstar while`, e, m, n, d, E), this.matchOne(e.slice(m), n.slice(d), s))
     const e = this.set;
     if (!e.length)
       return this.regexp = !1, this.regexp;
-    const n = this.options, s = n.noglobstar ? Uo : n.dot ? qo : Zo, r = new Set(n.nocase ? ["i"] : []);
-    let i = e.map((a) => {
+    const n = this.options, s = n.noglobstar ? Ui : n.dot ? qi : Zi, r = new Set(n.nocase ? ["i"] : []);
+    let o = e.map((a) => {
       const h = a.map((f) => {
         if (f instanceof RegExp)
           for (const C of f.flags.split(""))
             r.add(C);
-        return typeof f == "string" ? Xo(f) : f === ee ? ee : f._src;
+        return typeof f == "string" ? Xi(f) : f === ee ? ee : f._src;
       });
       return h.forEach((f, C) => {
         const m = h[C + 1], d = h[C - 1];
         f !== ee || d === ee || (d === void 0 ? m !== void 0 && m !== ee ? h[C + 1] = "(?:\\/|" + s + "\\/)?" + m : h[C] = s : m === void 0 ? h[C - 1] = d + "(?:\\/|" + s + ")?" : m !== ee && (h[C - 1] = d + "(?:\\/|\\/" + s + "\\/)" + m, h[C + 1] = ee));
       }), h.filter((f) => f !== ee).join("/");
     }).join("|");
-    const [o, u] = e.length > 1 ? ["(?:", ")"] : ["", ""];
-    i = "^" + o + i + u + "$", this.negate && (i = "^(?!" + i + ").+$");
+    const [i, u] = e.length > 1 ? ["(?:", ")"] : ["", ""];
+    o = "^" + i + o + u + "$", this.negate && (o = "^(?!" + o + ").+$");
     try {
-      this.regexp = new RegExp(i, [...r].join(""));
+      this.regexp = new RegExp(o, [...r].join(""));
     } catch {
       this.regexp = !1;
     }
@@ -3069,16 +3069,16 @@ globstar while`, e, m, n, d, E), this.matchOne(e.slice(m), n.slice(d), s))
     this.isWindows && (e = e.split("\\").join("/"));
     const r = this.slashSplit(e);
     this.debug(this.pattern, "split", r);
-    const i = this.set;
-    this.debug(this.pattern, "set", i);
-    let o = r[r.length - 1];
-    if (!o)
-      for (let u = r.length - 2; !o && u >= 0; u--)
-        o = r[u];
-    for (let u = 0; u < i.length; u++) {
-      const a = i[u];
+    const o = this.set;
+    this.debug(this.pattern, "set", o);
+    let i = r[r.length - 1];
+    if (!i)
+      for (let u = r.length - 2; !i && u >= 0; u--)
+        i = r[u];
+    for (let u = 0; u < o.length; u++) {
+      const a = o[u];
       let h = r;
-      if (s.matchBase && a.length === 1 && (h = [o]), this.matchOne(h, a, n))
+      if (s.matchBase && a.length === 1 && (h = [i]), this.matchOne(h, a, n))
         return s.flipNegate ? !0 : !this.negate;
     }
     return s.flipNegate ? !1 : this.negate;
@@ -3089,8 +3089,8 @@ globstar while`, e, m, n, d, E), this.matchOne(e.slice(m), n.slice(d), s))
 }
 z.AST = U;
 z.Minimatch = zt;
-z.escape = _o;
-z.unescape = $e;
+z.escape = _i;
+z.unescape = ve;
 let Us = !1;
 const eu = (t) => {
   Us = t;
@@ -3160,7 +3160,7 @@ const tu = (t) => {
     "apiWithoutMethod",
     "rateLimiter"
   ]
-}, yn = Object.keys(de), su = 1.5, os = 75, us = 85, as = 95, ru = "\x1B]8;;", iu = "\x1B\\", ou = "\x1B]8;;\x1B\\", uu = [...Object.values(de).flat()], Zs = [...yn, ...uu], au = [
+}, yn = Object.keys(de), su = 1.5, is = 75, us = 85, as = 95, ru = "\x1B]8;;", ou = "\x1B\\", iu = "\x1B]8;;\x1B\\", uu = [...Object.values(de).flat()], Zs = [...yn, ...uu], au = [
   "getElementById",
   "getElementsByClassName",
   "getElementsByTagName",
@@ -3183,19 +3183,19 @@ const tu = (t) => {
   maxFileSize: 300,
   topLevelElementOrder: "script-template-style"
 }, lu = (t, e, n) => {
-  const { errors: s, warnings: r } = t.reduce((d, { errors: E, warnings: g }) => ({ errors: d.errors + E, warnings: d.warnings + g }), { errors: 0, warnings: 0 }), i = [], o = { errors: s, warnings: r, linesCount: e, filesCount: n, points: 0 };
-  if (i.push({ info: `Found <bg_err>${Intl.NumberFormat("en-US").format(s)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat("en-US").format(r)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat("en-US").format(e)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat("en-US").format(n)} files</bg_info>` }), !e)
-    return o.points = 0, i.push({ info: `Code Health can not be calculated, because there is no code in the given files
-` }), { codeHealth: o, output: i };
+  const { errors: s, warnings: r } = t.reduce((d, { errors: E, warnings: g }) => ({ errors: d.errors + E, warnings: d.warnings + g }), { errors: 0, warnings: 0 }), o = [], i = { errors: s, warnings: r, linesCount: e, filesCount: n, points: 0 };
+  if (o.push({ info: `Found <bg_err>${Intl.NumberFormat("en-US").format(s)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat("en-US").format(r)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat("en-US").format(e)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat("en-US").format(n)} files</bg_info>` }), !e)
+    return i.points = 0, o.push({ info: `Code Health can not be calculated, because there is no code in the given files
+` }), { codeHealth: i, output: o };
   const u = Math.ceil((1 - (s * su + r) / e) * 100);
-  o.points = u;
+  i.points = u;
   const a = 60, h = r ? Math.max(1, Math.ceil(r / e * a)) : 0, f = s ? Math.max(1, a - Math.ceil(u * a / 100) - h) : 0, C = a - f - h, m = `<bg_ok>${"_".repeat(C)}</bg_ok><bg_warn>${"_".repeat(h)}</bg_warn><bg_err>${"_".repeat(f)}</bg_err>`;
-  return i.push({ info: `Code Health: [${m}] ${u}%
-` }), u < os && i.push({ info: `<bg_err>Code health is LOW: ${u}%</bg_err>
-` }), u >= os && u < us && i.push({ info: `<bg_warn>Code health is MEDIUM ${u}%$</bg_warn>
-` }), u >= us && u < as && i.push({ info: `<bg_info>Code health is OK: ${u}%</bg_info>
-` }), u >= as && i.push({ info: `<bg_ok>Code health is GOOD: ${u}%</bg_ok>
-` }), { codeHealth: o, output: i };
+  return o.push({ info: `Code Health: [${m}] ${u}%
+` }), u < is && o.push({ info: `<bg_err>Code health is LOW: ${u}%</bg_err>
+` }), u >= is && u < us && o.push({ info: `<bg_warn>Code health is MEDIUM ${u}%$</bg_warn>
+` }), u >= us && u < as && o.push({ info: `<bg_info>Code health is OK: ${u}%</bg_info>
+` }), u >= as && o.push({ info: `<bg_ok>Code health is GOOD: ${u}%</bg_ok>
+` }), { codeHealth: i, output: o };
 }, Ks = async (t) => {
   const e = {
     path: "./src",
@@ -3239,11 +3239,11 @@ const tu = (t) => {
 function hu(t) {
   const e = [], n = [];
   return Object.entries(de).forEach(([s, r]) => {
-    if (r.every((i) => t.includes(i)))
+    if (r.every((o) => t.includes(o)))
       e.push(s);
     else {
-      const i = r.filter((o) => t.includes(o));
-      n.push(...i);
+      const o = r.filter((i) => t.includes(i));
+      n.push(...o);
     }
   }), { rulesets: e, individualRules: n };
 }
@@ -3253,8 +3253,8 @@ const fu = (t) => {
 }, Js = async (t) => {
   let e = "";
   if (!t) {
-    const s = Wr(import.meta.url), r = P.dirname(s), i = P.resolve(r, "..");
-    e = P.join(i, "package.json");
+    const s = Wr(import.meta.url), r = P.dirname(s), o = P.resolve(r, "..");
+    e = P.join(o, "package.json");
   }
   return t && (e = P.join(t, "package.json")), JSON.parse(await pe.readFile(e, "utf-8"));
 }, vn = async () => await $n(process?.cwd() || "./") || "", Ys = async (t, e) => {
@@ -3272,31 +3272,31 @@ const fu = (t) => {
     return t.split(`
 `).findIndex((u, a) => a >= n && u.includes(e)) + 1;
   const s = t.split(`
-`).slice(0, n).reduce((o, u) => o + u.length, 0), r = t.indexOf(e, s);
+`).slice(0, n).reduce((i, u) => i + u.length, 0), r = t.indexOf(e, s);
   return t.slice(0, r).split(`
 `).length;
-}, Se = [], pu = () => Se.length = 0, du = (t, e, n) => {
+}, Be = [], pu = () => Be.length = 0, du = (t, e, n) => {
   if (!t)
     return;
   const s = /<([a-z0-9-]+)[^>]*v-if[^>]*>[\s\S]*?<\/\1>|<[^>]*v-if[^>]*\/>/gi;
-  (t.content.match(s) || []).forEach((i) => {
-    const o = i.split(`
-`).length, u = T(t.content, i);
-    if (o > n * 2) {
-      Se.push({
+  (t.content.match(s) || []).forEach((o) => {
+    const i = o.split(`
+`).length, u = T(t.content, o);
+    if (i > n * 2) {
+      Be.push({
         filePath: e,
-        message: `line #${u} <bg_err>has a v-if with ${o} lines</bg_err>`
+        message: `line #${u} <bg_err>has a v-if with ${i} lines</bg_err>`
       });
       return;
     }
-    o > n && Se.push({
+    i > n && Be.push({
       filePath: e,
-      message: `line #${u} <bg_warn>has a v-if with ${o} lines</bg_warn>`
+      message: `line #${u} <bg_warn>has a v-if with ${i} lines</bg_warn>`
     });
   });
 }, gu = () => {
   const t = [];
-  return Se.length > 0 && Se.forEach((e) => {
+  return Be.length > 0 && Be.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ big v-if</text_info>",
@@ -3304,28 +3304,28 @@ const fu = (t) => {
       message: `${e.message} 🚨`
     });
   }), pu(), t;
-}, Be = [], mu = () => Be.length = 0, bu = (t, e, n) => {
+}, Re = [], mu = () => Re.length = 0, bu = (t, e, n) => {
   if (!t)
     return;
   const s = /<([a-z0-9-]+)[^>]*v-show[^>]*>[\s\S]*?<\/\1>|<[^>]*v-show[^>]*\/>/gi;
-  (t.content.match(s) || []).forEach((i) => {
-    const o = i.split(`
-`).length, u = T(t.content, i);
-    if (o > n * 2) {
-      Be.push({
+  (t.content.match(s) || []).forEach((o) => {
+    const i = o.split(`
+`).length, u = T(t.content, o);
+    if (i > n * 2) {
+      Re.push({
         filePath: e,
-        message: `line #${u} <bg_err>has a v-show with ${o} lines</bg_err>`
+        message: `line #${u} <bg_err>has a v-show with ${i} lines</bg_err>`
       });
       return;
     }
-    o > n && Be.push({
+    i > n && Re.push({
       filePath: e,
-      message: `line #${u} <bg_warn>has a v-show with ${o} lines</bg_warn>`
+      message: `line #${u} <bg_warn>has a v-show with ${i} lines</bg_warn>`
     });
   });
 }, Eu = () => {
   const t = [];
-  return Be.length > 0 && Be.forEach((e) => {
+  return Re.length > 0 && Re.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ big v-show</text_info>",
@@ -3368,16 +3368,16 @@ function S(t) {
   };
 }
 const xu = /[.*+?^${}()|[\]\\/]/g;
-function Re(t) {
+function Oe(t) {
   return S(`[${t.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
 function K(t) {
   return S(`[^${t.replace(/[-\\^\]]/g, "\\$&")}]`);
 }
-function be(...t) {
+function Ee(...t) {
   return S(`(?:${t.map((e) => W(e)).join("|")})`);
 }
-const Oe = S(".");
+const Ne = S(".");
 S("\\b\\w+\\b");
 const ne = S("\\w"), q = S("\\b"), yu = S("\\d"), k = S("\\s"), Xs = Object.assign(S("[a-zA-Z]"), {
   lowercase: S("[a-z]"),
@@ -3406,9 +3406,9 @@ const De = "i", j = "g", N = (...t) => {
   const e = N(
     W("/*").and(K("*").times.any(), te(`
 `).as("newline"), W("*").notBefore("/").or(O(K("*")))).and("*/").or(
-      W("//").and(O(Oe))
+      W("//").and(O(Ne))
     ).or(
-      W("<!--").and(O(Oe))
+      W("<!--").and(O(Ne))
     ),
     [j]
   );
@@ -3420,16 +3420,16 @@ const De = "i", j = "g", N = (...t) => {
   const { script: s, template: r } = t;
   if (!s && !r)
     return;
-  const i = 2 * n, o = N(
-    be(
+  const o = 2 * n, i = N(
+    Ee(
       "if",
       'v-if="',
-      O(Oe).groupedAs("condition").and("?").and(O(Oe)).and(":"),
+      O(Ne).groupedAs("condition").and("?").and(O(Ne)).and(":"),
       // ternary
       "="
     ).and(
       O(
-        be(
+        Ee(
           "&&",
           "||",
           K(`"'`)
@@ -3438,18 +3438,18 @@ const De = "i", j = "g", N = (...t) => {
     ),
     [j]
   ), u = N(
-    be("&&", "||"),
+    Ee("&&", "||"),
     [j]
   ), a = (h, f) => {
     h = Z(h);
-    const C = h.match(o);
+    const C = h.match(i);
     C && C.forEach((m) => {
       const d = (m.match(u) || []).length + 1;
       if (d > n) {
         const E = T(h, m);
         Je.push({
           filePath: e,
-          message: `line #${E} ${d > i ? "<bg_err>" : "<bg_warn>"}${f} has a complicated condition with ${d} blocks${d > i ? "</bg_err>" : "</bg_warn>"}`
+          message: `line #${E} ${d > o ? "<bg_err>" : "<bg_warn>"}${f} has a complicated condition with ${d} blocks${d > o ? "</bg_err>" : "</bg_warn>"}`
         });
       }
     });
@@ -3469,10 +3469,10 @@ const De = "i", j = "g", N = (...t) => {
   if (!t)
     return;
   const n = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g, s = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/;
-  [...t.content.matchAll(n)].forEach((i) => {
-    const o = i[1];
-    if (s.test(o)) {
-      const u = T(t.content.trim(), i[0]), a = o.trim(), h = a.length > 20 ? a.slice(0, 20) : a;
+  [...t.content.matchAll(n)].forEach((o) => {
+    const i = o[1];
+    if (s.test(i)) {
+      const u = T(t.content.trim(), o[0]), a = i.trim(), h = a.length > 20 ? a.slice(0, 20) : a;
       Ye.push({
         filePath: e,
         message: `line #${u} side effect detected in computed property <bg_err>(${h})</bg_err>`
@@ -3492,7 +3492,7 @@ const De = "i", j = "g", N = (...t) => {
 }, Qe = [], Ru = () => Qe.length = 0, Ou = (t, e, n) => {
   if (!t)
     return;
-  const s = 2 * n, r = N(q, "if", q, [j, De]), i = N(q, "else", q, [j, De]), o = N(q, "for", q, [j, De]), u = N(q, "while", q, [j, De]), a = N(q, "case", q, [j, De]), h = Z(t.content), f = h.match(r), C = h.match(i), m = h.match(o), d = h.match(u), E = h.match(a), g = (f?.length || 0) + (C?.length || 0) + (m?.length || 0) + (d?.length || 0) + (E?.length || 0);
+  const s = 2 * n, r = N(q, "if", q, [j, De]), o = N(q, "else", q, [j, De]), i = N(q, "for", q, [j, De]), u = N(q, "while", q, [j, De]), a = N(q, "case", q, [j, De]), h = Z(t.content), f = h.match(r), C = h.match(o), m = h.match(i), d = h.match(u), E = h.match(a), g = (f?.length || 0) + (C?.length || 0) + (m?.length || 0) + (d?.length || 0) + (E?.length || 0);
   g > n && Qe.push({ filePath: e, message: `Cyclomatic complexity is ${g > s ? "<bg_err>very high" : "<bg_warn>high"} (${g})${g > s ? "</bg_err>" : "</bg_warn>"}` });
 }, Nu = () => {
   const t = [];
@@ -3507,14 +3507,14 @@ const De = "i", j = "g", N = (...t) => {
 }, Xe = [], Lu = 3, ju = () => Xe.length = 0, Tu = (t, e, n) => {
   if (!t)
     return;
-  const s = N(er.times.atLeast(n).at.lineStart().or(k.times.atLeast(Lu * n).at.lineStart()), [j]), i = Z(t.content).match(s);
-  let o = 0;
-  i?.forEach((u) => {
-    const a = T(t.content, u, o);
+  const s = N(er.times.atLeast(n).at.lineStart().or(k.times.atLeast(Lu * n).at.lineStart()), [j]), o = Z(t.content).match(s);
+  let i = 0;
+  o?.forEach((u) => {
+    const a = T(t.content, u, i);
     Xe.push({
       filePath: e,
       message: `line #${a} <bg_warn>indentation: ${u.length}</bg_warn>`
-    }), o = a;
+    }), i = a;
   });
 }, Wu = () => {
   const t = [];
@@ -3529,8 +3529,8 @@ const De = "i", j = "g", N = (...t) => {
 }, et = [], Mu = () => et.length = 0, ku = (t, e) => {
   if (!t)
     return;
-  const n = t.content.replace(/'[^']*'|"[^"]*"/g, ""), s = Z(n), r = N(q, "else", q, [j]), i = s.match(r);
-  i?.length && et.push({ filePath: e, message: `else clauses found <bg_err>(${i.length})</bg_err>` });
+  const n = t.content.replace(/'[^']*'|"[^"]*"/g, ""), s = Z(n), r = N(q, "else", q, [j]), o = s.match(r);
+  o?.length && et.push({ filePath: e, message: `else clauses found <bg_err>(${o.length})</bg_err>` });
 }, Iu = () => {
   const t = [];
   return et.length > 0 && et.forEach((e) => {
@@ -3541,26 +3541,26 @@ const De = "i", j = "g", N = (...t) => {
       message: `${e.message} 🚨`
     });
   }), Mu(), t;
-}, Ne = [], Pu = 5, zu = 8;
+}, Le = [], Pu = 5, zu = 8;
 function Hu({ funcName: t, funcBody: e, lineNumber: n, filePath: s, max: r }) {
-  const i = e.split(`
-`).length, o = Uu(t);
-  if (i > 2 * r) {
-    Ne.push({ filePath: s, message: `function <bg_err>(${o}#${n})</bg_err> is too long: <bg_err>${i} lines</bg_err>` });
+  const o = e.split(`
+`).length, i = Uu(t);
+  if (o > 2 * r) {
+    Le.push({ filePath: s, message: `function <bg_err>(${i}#${n})</bg_err> is too long: <bg_err>${o} lines</bg_err>` });
     return;
   }
-  i >= r && Ne.push({ filePath: s, message: `function <bg_warn>(${o}#${n})</bg_warn> is too long: <bg_warn>${i} lines</bg_warn>` });
+  o >= r && Le.push({ filePath: s, message: `function <bg_warn>(${i}#${n})</bg_warn> is too long: <bg_warn>${o} lines</bg_warn>` });
 }
 function Vu(t, e) {
   const n = /function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*\([^)]*\)\s*\{/g;
   n.lastIndex = e;
   const s = n.exec(t);
   if (s) {
-    const r = s[1], i = n.lastIndex;
-    let o = 1, u = i;
-    for (; o > 0 && u < t.length; )
-      t[u] === "{" ? o++ : t[u] === "}" && o--, u++;
-    const a = t.slice(i, u - 1).trim();
+    const r = s[1], o = n.lastIndex;
+    let i = 1, u = o;
+    for (; i > 0 && u < t.length; )
+      t[u] === "{" ? i++ : t[u] === "}" && i--, u++;
+    const a = t.slice(o, u - 1).trim();
     return {
       name: r,
       body: a,
@@ -3573,20 +3573,20 @@ function Vu(t, e) {
 function Gu(t, e) {
   const n = /const\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*=\s*(async\s+)?\(([^)]*)\)\s*=>\s*/, s = t.slice(e), r = n.exec(s);
   if (r) {
-    const [, i] = r, o = e + r.index + r[0].length;
-    let u = o, a = "";
-    if (t[o] === "{") {
+    const [, o] = r, i = e + r.index + r[0].length;
+    let u = i, a = "";
+    if (t[i] === "{") {
       let h = 1;
-      for (u = o + 1; u < t.length && h > 0; )
+      for (u = i + 1; u < t.length && h > 0; )
         t[u] === "{" ? h++ : t[u] === "}" && h--, u++;
-      a = t.slice(o + 1, u - 1).trim();
+      a = t.slice(i + 1, u - 1).trim();
     } else {
       for (; u < t.length && t[u] !== ";"; )
         u++;
-      a = t.slice(o, u).trim();
+      a = t.slice(i, u).trim();
     }
     return {
-      name: i,
+      name: o,
       body: a,
       end: u
       // Position after the end of the function body
@@ -3597,30 +3597,30 @@ function Gu(t, e) {
 function Uu(t) {
   return t.replace(/^const\s*/, "");
 }
-const qu = () => Ne.length = 0, Zu = (t, e, n) => {
+const qu = () => Le.length = 0, Zu = (t, e, n) => {
   if (!t)
     return;
   const s = t.content, r = s.length;
-  let i = 0;
-  for (; i < r; ) {
-    let o = "", u = "", a = !1;
-    if (s.slice(i, i + zu) === "function") {
-      const h = Vu(s, i);
-      h && (a = !0, o = h.name, u = h.body, i = h.end);
+  let o = 0;
+  for (; o < r; ) {
+    let i = "", u = "", a = !1;
+    if (s.slice(o, o + zu) === "function") {
+      const h = Vu(s, o);
+      h && (a = !0, i = h.name, u = h.body, o = h.end);
     }
-    if (s.slice(i, i + Pu) === "const") {
-      const h = Gu(s, i);
-      h && (a = !0, o = h.name, u = h.body, i = h.end);
+    if (s.slice(o, o + Pu) === "const") {
+      const h = Gu(s, o);
+      h && (a = !0, i = h.name, u = h.body, o = h.end);
     }
     if (a) {
-      const h = T(s.trim(), o);
-      Hu({ funcName: o, funcBody: u, lineNumber: h, filePath: e, max: n });
+      const h = T(s.trim(), i);
+      Hu({ funcName: i, funcBody: u, lineNumber: h, filePath: e, max: n });
     } else
-      i++;
+      o++;
   }
 }, Ku = (t) => {
   const e = [];
-  return Ne.length > 0 && Ne.forEach((n) => {
+  return Le.length > 0 && Le.forEach((n) => {
     e.push({
       file: n.filePath,
       rule: "<text_info>rrd ~ function size</text_info>",
@@ -3634,12 +3634,12 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   const n = N("<", W("img").or("picture"), [j]), s = t.content.match(n);
   if (s?.length) {
     let r = 0;
-    s.forEach((i) => {
-      const o = T(t.content, i, r), u = i.slice(1);
+    s.forEach((o) => {
+      const i = T(t.content, o, r), u = o.slice(1);
       tt.push({
         filePath: e,
-        message: `line #${o} <bg_warn>${u} element found</bg_warn>`
-      }), r = o;
+        message: `line #${i} <bg_warn>${u} element found</bg_warn>`
+      }), r = i;
     });
   }
 }, Qu = () => {
@@ -3667,23 +3667,23 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `${e.message} 🚨`
     });
   }), Xu(), t;
-}, Le = [], na = () => Le.length = 0, sa = (t, e, n, s) => {
+}, je = [], na = () => je.length = 0, sa = (t, e, n, s) => {
   const r = 2 * s;
-  let i = 0;
-  n ? (i = t.scriptSetup?.content.trim().split(`
-`).length ?? 0, i += t.template?.content.trim().split(`
-`).length ?? 0, i += t.styles?.reduce((o, u) => o + u.content.trim().split(`
-`).length, 0) ?? 0) : i = t.scriptSetup?.content.trim().split(`
-`).length ?? 0, i > r ? Le.push({
+  let o = 0;
+  n ? (o = t.scriptSetup?.content.trim().split(`
+`).length ?? 0, o += t.template?.content.trim().split(`
+`).length ?? 0, o += t.styles?.reduce((i, u) => i + u.content.trim().split(`
+`).length, 0) ?? 0) : o = t.scriptSetup?.content.trim().split(`
+`).length ?? 0, o > r ? je.push({
     filePath: e,
-    message: `<bg_err>huge file (${i} lines)</bg_err>`
-  }) : i > s && Le.push({
+    message: `<bg_err>huge file (${o} lines)</bg_err>`
+  }) : o > s && je.push({
     filePath: e,
-    message: `<bg_warn>large file (${i} lines)</bg_warn>`
+    message: `<bg_warn>large file (${o} lines)</bg_warn>`
   });
 }, ra = () => {
   const t = [];
-  return Le.length > 0 && Le.forEach((e) => {
+  return je.length > 0 && je.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ huge files</text_info>",
@@ -3691,24 +3691,24 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `${e.message} 🚨`
     });
   }), na(), t;
-}, st = [], ia = () => st.length = 0, oa = (t, e) => {
+}, st = [], oa = () => st.length = 0, ia = (t, e) => {
   if (!t)
     return;
   const s = Z(t.content).split(`
 `);
-  let r = 0, i = null;
-  s.forEach((o, u) => {
-    const a = o.trim();
-    if (r += (a.match(/\(/g) || []).length, r -= (a.match(/\)/g) || []).length, a.startsWith("if (") && i === null && (i = u), i !== null && r === 0) {
-      const h = s.slice(i, u + 1).join(" ");
+  let r = 0, o = null;
+  s.forEach((i, u) => {
+    const a = i.trim();
+    if (r += (a.match(/\(/g) || []).length, r -= (a.match(/\)/g) || []).length, a.startsWith("if (") && o === null && (o = u), o !== null && r === 0) {
+      const h = s.slice(o, u + 1).join(" ");
       if (!h.includes("{")) {
         const f = s[u + 1]?.trim();
         (!f || !f.startsWith("{") && !a.endsWith("{")) && st.push({
           filePath: e,
-          message: `line #${i} if statement without curly braces: <bg_err>${h.trim()}</bg_err>`
+          message: `line #${o} if statement without curly braces: <bg_err>${h.trim()}</bg_err>`
         });
       }
-      i = null;
+      o = null;
     }
   });
 }, ua = () => {
@@ -3720,27 +3720,27 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       description: "👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html",
       message: `${e.message} 🚨`
     });
-  }), ia(), t;
+  }), oa(), t;
 }, rt = [], aa = () => rt.length = 0, ca = (t, e) => {
   if (!t)
     return;
   const n = N(
-    te(O(Oe)),
-    be(q),
+    te(O(Ne)),
+    Ee(q),
     O(yu).as("magicNumber"),
-    be(")", tr),
+    Ee(")", tr),
     [j]
   );
   let s, r = 0;
   for (; (s = n.exec(t.content)) !== null; ) {
     if (s[0].trim().startsWith("const") || s[0].trim().startsWith("let"))
       return;
-    const i = s.groups?.magicNumber, o = Number.parseInt(i ?? "0");
-    if (o > 1) {
-      const u = T(t.content, String(o), r);
+    const o = s.groups?.magicNumber, i = Number.parseInt(o ?? "0");
+    if (i > 1) {
+      const u = T(t.content, String(i), r);
       rt.push({
         filePath: e,
-        message: `line #${u} <bg_warn>magic number: ${o}</bg_warn>`
+        message: `line #${u} <bg_warn>magic number: ${i}</bg_warn>`
       }), r = u;
     }
   }
@@ -3754,19 +3754,19 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `magic numbers found (${e.message}) 🚨`
     });
   }), aa(), t;
-}, it = [], ha = () => it.length = 0, fa = (t, e) => {
+}, ot = [], ha = () => ot.length = 0, fa = (t, e) => {
   if (!t)
     return;
   Z(t.content.trim()).split(`
-`).forEach((r, i) => {
-    (r.match(/\?(?![.?])/g) || []).length > 1 && it.push({
+`).forEach((r, o) => {
+    (r.match(/\?(?![.?])/g) || []).length > 1 && ot.push({
       filePath: e,
-      message: `line #${i + 1} has <bg_warn>nested ternary</bg_warn>`
+      message: `line #${o + 1} has <bg_warn>nested ternary</bg_warn>`
     });
   });
 }, Da = () => {
   const t = [];
-  return it.length > 0 && it.forEach((e) => {
+  return ot.length > 0 && ot.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ nested Ternary</text_info>",
@@ -3774,25 +3774,25 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `${e.message} 🚨`
     });
   }), ha(), t;
-}, ot = [], pa = () => ot.length = 0, da = (t, e) => {
+}, it = [], pa = () => it.length = 0, da = (t, e) => {
   if (!t)
     return;
   const n = N(
     q,
-    be(...au.map((r) => W(r))),
+    Ee(...au.map((r) => W(r))),
     "(",
     [j]
   );
   t.content.match(n)?.forEach((r) => {
-    const i = T(t.content.trim(), r);
-    ot.push({
+    const o = T(t.content.trim(), r);
+    it.push({
       filePath: e,
-      message: `line #${i} <bg_warn>Direct DOM access detected: ${r}</bg_warn>`
+      message: `line #${o} <bg_warn>Direct DOM access detected: ${r}</bg_warn>`
     });
   });
 }, ga = () => {
   const t = [];
-  return ot.length > 0 && ot.forEach((e) => {
+  return it.length > 0 && it.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>rrd ~ no direct dom access</text_info>",
@@ -3805,12 +3805,12 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     return;
   const n = /style\s*=\s*['"][^'"]*['"]/g, s = [...t.content.matchAll(n)];
   let r = 0;
-  s?.forEach((i) => {
-    const o = T(t.content.trim(), i[0], r);
+  s?.forEach((o) => {
+    const i = T(t.content.trim(), o[0], r);
     ut.push({
       filePath: e,
-      message: `line #${o} <bg_warn>Found inline style: ${i[0]}</bg_warn>`
-    }), r = o;
+      message: `line #${i} <bg_warn>Found inline style: ${o[0]}</bg_warn>`
+    }), r = i;
   });
 }, Ea = () => {
   const t = [];
@@ -3826,11 +3826,11 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   if (!t)
     return;
   const n = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g;
-  Z(t.content).match(n)?.forEach((i) => {
-    const o = T(t.content, i);
+  Z(t.content).match(n)?.forEach((o) => {
+    const i = T(t.content, o);
     at.push({
       filePath: e,
-      message: `line #${o} <bg_warn>props destructuring found: ${i}</bg_warn>`
+      message: `line #${i} <bg_warn>props destructuring found: ${o}</bg_warn>`
     });
   });
 }, wa = () => {
@@ -3848,11 +3848,11 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     return;
   const n = N(".", W("skipIf").or("skip").or("todo").grouped(), [j]);
   Z(t.content.trim()).split(`
-`).forEach((i, o) => {
-    const u = i.match(n);
+`).forEach((o, i) => {
+    const u = o.match(n);
     u && ct.push({
       filePath: e,
-      message: `line #${o + 1} <bg_warn>skip test found: "${u[0]}"</bg_warn>`
+      message: `line #${i + 1} <bg_warn>skip test found: "${u[0]}"</bg_warn>`
     });
   });
 }, _a = () => {
@@ -3884,11 +3884,11 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   if (!t)
     return;
   const n = /\bvar\s+(\w+(\s*=[^;]*)?|\{[^}]*\}(\s*=[^;]*)?)\s*;?/g;
-  Z(t.content).match(n)?.forEach((i) => {
-    const o = T(t.content, i);
+  Z(t.content).match(n)?.forEach((o) => {
+    const i = T(t.content, o);
     ht.push({
       filePath: e,
-      message: `line #${o} <bg_warn>Avoid using 'var' for variable declarations: ${i}</bg_warn>`
+      message: `line #${i} <bg_warn>Avoid using 'var' for variable declarations: ${o}</bg_warn>`
     });
   });
 }, Ra = () => {
@@ -3902,7 +3902,7 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     });
   }), Sa(), t;
 }, ft = [], Oa = () => ft.length = 0, cs = (t, e, n, s) => {
-  const r = e.split(",").map((i) => i.trim()).filter((i) => i.length > 0);
+  const r = e.split(",").map((o) => o.trim()).filter((o) => o.length > 0);
   r.length > s && ft.push({ filePath: n, message: `function <bg_warn>${t}</bg_warn> has <bg_warn>${r.length}</bg_warn> parameters` });
 }, Na = (t, e, n) => {
   if (!t)
@@ -3941,7 +3941,7 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     k.times.any(),
     "[",
     k.times.any(),
-    O(Re(`'"`), O(ne), Re(`'"`), k.times.any(), te(",", k.times.any())),
+    O(Oe(`'"`), O(ne), Oe(`'"`), k.times.any(), te(",", k.times.any())),
     "]",
     k.times.any(),
     ")",
@@ -3962,13 +3962,13 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     [j]
   );
   let r;
-  const i = /* @__PURE__ */ new Set(), o = Z(t.content);
-  for (; (r = n.exec(o)) !== null; )
-    r[0].replace(/defineProps\(|[)[\]'"\s]/g, "").split(",").forEach((h) => i.add(h));
+  const o = /* @__PURE__ */ new Set(), i = Z(t.content);
+  for (; (r = n.exec(i)) !== null; )
+    r[0].replace(/defineProps\(|[)[\]'"\s]/g, "").split(",").forEach((h) => o.add(h));
   let u;
   for (; (u = s.exec(t.content)) !== null; ) {
     const a = u[1], h = u[2], f = u[3];
-    i.has(f) && h === f && pt.push({
+    o.has(f) && h === f && pt.push({
       filePath: e,
       message: `Prop <bg_warn>(${f})</bg_warn> is being drilled through <bg_warn>${a}</bg_warn> component unmodified.`
     });
@@ -4005,8 +4005,8 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   const s = /\b(?:const|var|let)\s+([a-zA-Z_$][\w$]*)/g;
   let r;
   for (; (r = s.exec(t.content)) !== null; ) {
-    const i = r[1];
-    i.length < n && !Ga.includes(i) && gt.push({ filePath: e, message: `variable: <bg_warn>(${i})</bg_warn>` });
+    const o = r[1];
+    o.length < n && !Ga.includes(o) && gt.push({ filePath: e, message: `variable: <bg_warn>(${o})</bg_warn>` });
   }
 }, qa = (t) => {
   const e = [];
@@ -4021,10 +4021,10 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
 }, mt = [], Za = () => mt.length = 0, Ka = (t, e, n) => {
   if (!t)
     return;
-  const s = N("defineProps", te("<"), te("("), "{", O(K("}")), "}", ["g", "s"]), i = Z(t.content).match(s);
-  if (i?.length) {
-    const o = i[0].split(",").length;
-    o > n && mt.push({ filePath: e, message: `props found <bg_err>(${o})</bg_err>` });
+  const s = N("defineProps", te("<"), te("("), "{", O(K("}")), "}", ["g", "s"]), o = Z(t.content).match(s);
+  if (o?.length) {
+    const i = o[0].split(",").length;
+    i > n && mt.push({ filePath: e, message: `props found <bg_err>(${i})</bg_err>` });
   }
 }, Ja = () => {
   const t = [];
@@ -4039,10 +4039,10 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
 }, bt = [], Ya = () => bt.length = 0, Qa = (t, e) => {
   if (!t)
     return;
-  const n = N('v-for="(', k.times.any(), O(ne).grouped(), k.times.any(), ",", k.times.any(), O(ne).grouped(), k.times.any(), ")", O(k), "in", O(k), O(ne).grouped(), [j]), s = N(':key="', k.times.any(), O(ne).grouped(), k.times.any(), '"', [j]), r = [...t.content.matchAll(n)], i = [...t.content.matchAll(s)];
-  r.forEach((o) => {
-    const [u, a, h, f] = o;
-    i.forEach((C) => {
+  const n = N('v-for="(', k.times.any(), O(ne).grouped(), k.times.any(), ",", k.times.any(), O(ne).grouped(), k.times.any(), ")", O(k), "in", O(k), O(ne).grouped(), [j]), s = N(':key="', k.times.any(), O(ne).grouped(), k.times.any(), '"', [j]), r = [...t.content.matchAll(n)], o = [...t.content.matchAll(s)];
+  r.forEach((i) => {
+    const [u, a, h, f] = i;
+    o.forEach((C) => {
       const m = C[1];
       if (m === h) {
         const d = T(t.content.trim(), m);
@@ -4070,10 +4070,10 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   let s;
   const r = Z(t.content);
   for (; (s = n.exec(r)) !== null; ) {
-    const i = s[0], o = s[1], u = T(r.trim(), i);
+    const o = s[0], i = s[1], u = T(r.trim(), o);
     Et.push({
       filePath: e,
-      message: `line #${u} zero length comparison found <bg_warn>(${o})</bg_warn>`
+      message: `line #${u} zero length comparison found <bg_warn>(${i})</bg_warn>`
     });
   }
 }, nc = () => {
@@ -4086,11 +4086,11 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `${e.message} 🚨`
     });
   }), ec(), t;
-}, Ct = [], sc = ["get", "post", "put", "delete", "patch", "options", "head"], rc = () => Ct.length = 0, ic = (t, e) => {
+}, Ct = [], sc = ["get", "post", "put", "delete", "patch", "options", "head"], rc = () => Ct.length = 0, oc = (t, e) => {
   if (!e.includes("/server/api/"))
     return;
   const n = e.replace(/\.[^/.]+$/, "");
-  if (sc.some((o) => n.toLowerCase().endsWith(`.${o}`)))
+  if (sc.some((i) => n.toLowerCase().endsWith(`.${i}`)))
     return;
   const r = t.source;
   N(
@@ -4104,7 +4104,7 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     filePath: e,
     message: "API route <bg_warn>without HTTP method</bg_warn> specified in filename or content"
   });
-}, oc = () => {
+}, ic = () => {
   const t = [];
   return Ct.length > 0 && Ct.forEach((e) => {
     const n = e.filePath.split("/").pop()?.replace(/\.[^/.]+$/, "");
@@ -4256,8 +4256,8 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   t.forEach((s) => {
     let r;
     for (; (r = n.exec(s.content)) !== null; ) {
-      const i = r[1];
-      hc.includes(i) && wt.push({ filePath: e, message: `<bg_warn>(${i})</bg_warn>` });
+      const o = r[1];
+      hc.includes(o) && wt.push({ filePath: e, message: `<bg_warn>(${o})</bg_warn>` });
     }
   });
 }, pc = () => {
@@ -4270,15 +4270,15 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
       message: `${e.message} 🚨`
     });
   }), fc(), t;
-}, je = [], dc = () => je.length = 0, gc = (t, e) => {
+}, Te = [], dc = () => Te.length = 0, gc = (t, e) => {
   if (!t)
     return;
-  const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, r = N(W("$parent").or("getCurrentInstance"), [j]), i = t.content.match(n), o = t.content.match(s);
-  if (o) {
-    const a = o[1].split(".")[0];
-    if ((i ? i[1] : "").includes(a)) {
+  const n = /defineProps\(([^)]+)\)/, s = /v-model\s*=\s*"([^"]+)"/, r = N(W("$parent").or("getCurrentInstance"), [j]), o = t.content.match(n), i = t.content.match(s);
+  if (i) {
+    const a = i[1].split(".")[0];
+    if ((o ? o[1] : "").includes(a)) {
       const f = T(t.content.trim(), a);
-      je.push({
+      Te.push({
         filePath: e,
         message: `line #${f} <bg_warn>(${a})</bg_warn>`
       });
@@ -4287,14 +4287,14 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   const u = t.content.match(r);
   if (u) {
     const a = T(t.content.trim(), u[0]);
-    je.push({
+    Te.push({
       filePath: e,
       message: `line #${a} <bg_warn>(${u[0]})</bg_warn>`
     });
   }
 }, mc = () => {
   const t = [];
-  return je.length > 0 && je.forEach((e) => {
+  return Te.length > 0 && Te.forEach((e) => {
     t.push({
       file: e.filePath,
       rule: "<text_info>vue-caution ~ implicit parent-child communication</text_info>",
@@ -4387,9 +4387,9 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     O(K(">")),
     ">",
     [j, De]
-  ), r = t.content.match(n), i = t.content.match(s);
-  if (r?.length || i?.length) {
-    const o = r?.length ? r[0] : i?.length ? i[0] : "", u = T(t.content, o);
+  ), r = t.content.match(n), o = t.content.match(s);
+  if (r?.length || o?.length) {
+    const i = r?.length ? r[0] : o?.length ? o[0] : "", u = T(t.content, i);
     vt.push({ filePath: e, message: `line #${u} <bg_err>v-if used with v-for</bg_err>` });
   }
 }, Oc = () => {
@@ -4423,9 +4423,9 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   if (!t)
     return;
   const n = t.content.replace(/<\/?template>/g, ""), s = /<(\w+)(\s[^>]+)?>/g, r = /(\w+(?:-\w+)*)(?:="[^"]*")?/g;
-  let i;
-  for (; (i = s.exec(n)) !== null; ) {
-    const o = i[1], u = i[2];
+  let o;
+  for (; (o = s.exec(n)) !== null; ) {
+    const i = o[1], u = o[2];
     if (u) {
       const h = Array.from(u.matchAll(r), (C) => C[1]).filter((C) => ls.includes(C));
       let f = -1;
@@ -4434,7 +4434,7 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
         if (m !== -1 && m < f) {
           At.push({
             filePath: e,
-            message: `tag has attributes out of order <bg_warn>(${o})</bg_warn>`
+            message: `tag has attributes out of order <bg_warn>(${i})</bg_warn>`
           });
           break;
         }
@@ -4453,11 +4453,11 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     });
   }), Nc(), t;
 }, St = [], Tc = () => St.length = 0, Wc = (t, e, n) => {
-  const s = t.toString(), i = (n === "script-template-style" ? ["script setup", "template", "style scoped"] : ["template", "script setup", "style scoped"]).map((u) => ({
+  const s = t.toString(), o = (n === "script-template-style" ? ["script setup", "template", "style scoped"] : ["template", "script setup", "style scoped"]).map((u) => ({
     name: u,
     index: s.indexOf(`<${u}>`)
   })).filter((u) => u.index !== -1);
-  i.every((u, a) => a === 0 ? !0 : i[a - 1].index < u.index) || St.push({ filePath: e, message: "Top level elements are <bg_warn>not following the correct order.</bg_warn>" });
+  o.every((u, a) => a === 0 ? !0 : o[a - 1].index < u.index) || St.push({ filePath: e, message: "Top level elements are <bg_warn>not following the correct order.</bg_warn>" });
 }, Mc = () => {
   const t = [];
   return St.length > 0 && St.forEach((e) => {
@@ -4474,8 +4474,8 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   const e = P.basename(t);
   if (_n.includes(e.toLowerCase()) || e.startsWith("[") && e.endsWith("].vue"))
     return;
-  const n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), r = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, i = e.match(r);
-  !s?.length && !i?.length && Bt.push({ filePath: t, message: "component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn>" });
+  const n = /^[A-Z][a-zA-Z0-9]+(?:(?<!^)(?=[A-Z]))*.vue$/, s = e.match(n), r = /^([a-z0-9]+-)+[a-z0-9]+\.vue$/, o = e.match(r);
+  !s?.length && !o?.length && Bt.push({ filePath: t, message: "component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn>" });
 }, Pc = () => {
   const t = [];
   return Bt.length > 0 && Bt.forEach((e) => {
@@ -4491,9 +4491,9 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
     return;
   const n = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g;
   [...t.content.matchAll(n)].map((r) => r[1].trim()).forEach((r) => {
-    const i = T(t.content.trim(), r), o = r.split(`
+    const o = T(t.content.trim(), r), i = r.split(`
 `).at(0)?.trim() || "";
-    Rt.push({ filePath: e, message: `line #${i} <bg_warn>(${o})</bg_warn>` });
+    Rt.push({ filePath: e, message: `line #${o} <bg_warn>(${i})</bg_warn>` });
   });
 }, Vc = () => {
   const t = [];
@@ -4512,7 +4512,7 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   Gc.forEach((s) => {
     if (n?.content.includes(`${s}:`)) {
       const r = T(t.source, s);
-      Ot.push({ filePath: e, message: `line #${r} <bg_warn>${s}</bg_warn>` }), hs.some((i) => i.filePath === e) || hs.push({ filePath: e });
+      Ot.push({ filePath: e, message: `line #${r} <bg_warn>${s}</bg_warn>` }), hs.some((o) => o.filePath === e) || hs.push({ filePath: e });
     }
   });
 }, Zc = () => {
@@ -4533,10 +4533,10 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   if (n.startsWith("[") && n.endsWith("].vue"))
     return;
   const r = N(
-    Re("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
+    Oe("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"),
     [j]
-  ), i = s.match(r);
-  (!i || i.length < e) && Nt.push({ filePath: t, message: `${s} is not a <bg_warn>full word.</bg_warn>` });
+  ), o = s.match(r);
+  (!o || o.length < e) && Nt.push({ filePath: t, message: `${s} is not a <bg_warn>full word.</bg_warn>` });
 }, Yc = () => {
   const t = [];
   return Nt.length > 0 && Nt.forEach((e) => {
@@ -4553,8 +4553,8 @@ const qu = () => Ne.length = 0, Zu = (t, e, n) => {
   const n = /<(\w+)([^>]*)>/g;
   let s;
   for (; (s = n.exec(t.content)) !== null; ) {
-    const r = s[1], i = s[2];
-    i.split(/\s+/).filter((u) => u.trim() !== "").length > 1 && i.split(`
+    const r = s[1], o = s[2];
+    o.split(/\s+/).filter((u) => u.trim() !== "").length > 1 && o.split(`
 `).length === 1 && Lt.push({ filePath: e, message: `Element <bg_warn><${r}></bg_warn> should have its attributes on separate lines` });
   }
 }, el = () => {
@@ -4586,7 +4586,7 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
     const r = s[1];
     tl(r).filter((u) => !nl.test(u)).length && jt.push({ filePath: e, message: "prop names are <bg_warn>not camelCased</bg_warn>" });
   }
-}, il = () => {
+}, ol = () => {
   const t = [];
   return jt.length > 0 && jt.forEach((e) => {
     t.push({
@@ -4596,16 +4596,16 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
       message: `${e.message} 🚨`
     });
   }), sl(), t;
-}, Tt = [], ol = () => Tt.length = 0, ul = (t, e) => {
+}, Tt = [], il = () => Tt.length = 0, ul = (t, e) => {
   if (!t)
     return;
   const n = t.template, s = N(
     "<",
     O(ne),
-    te(O(Re(` 	
+    te(O(Oe(` 	
 \r`))),
     O(K("/>")),
-    te(O(Re(` 	
+    te(O(Oe(` 	
 \r`))),
     te("/"),
     ">",
@@ -4613,15 +4613,15 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
   ), r = n?.content.match(s);
   if (r === null)
     return;
-  const i = N(":", O(ne), te(" "), "=", te(" "), K(`'"`), [
+  const o = N(":", O(ne), te(" "), "=", te(" "), K(`'"`), [
     "g"
   ]);
-  r?.forEach((o) => {
-    if (!o.includes(":"))
+  r?.forEach((i) => {
+    if (!i.includes(":"))
       return;
-    const u = o.match(i);
+    const u = i.match(o);
     if (u?.length) {
-      const a = T(t.source, o);
+      const a = T(t.source, i);
       Tt.push({ filePath: e, message: `line #${a} <bg_warn>${u}</bg_warn>` });
     }
   });
@@ -4634,7 +4634,7 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
       description: "👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html",
       message: `${e.message} 🚨`
     });
-  }), ol(), t;
+  }), il(), t;
 }, Wt = [], cl = () => Wt.length = 0, ll = (t, e) => {
   if (!t)
     return;
@@ -4648,10 +4648,10 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
     ">",
     ["g"]
   ), r = n?.content?.match(s);
-  r !== null && r?.forEach((i) => {
-    const o = T(t.source, i), u = i.split(`
+  r !== null && r?.forEach((o) => {
+    const i = T(t.source, o), u = o.split(`
 `).at(-1)?.trim() || "";
-    Wt.push({ filePath: e, message: `line #${o} <bg_warn>${u}</bg_warn>` });
+    Wt.push({ filePath: e, message: `line #${i} <bg_warn>${u}</bg_warn>` });
   });
 }, hl = () => {
   const t = [];
@@ -4666,11 +4666,11 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
 }, An = [], Ue = [], fl = () => An.length = 0, Dl = (t, e, n) => {
   if (!t)
     return;
-  const s = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, i = Z(t.content).match(s);
-  i?.length && i.forEach((o) => {
-    if (o.split(`
+  const s = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs, o = Z(t.content).match(s);
+  o?.length && o.forEach((i) => {
+    if (i.split(`
 `).length > n) {
-      const u = o.split(`
+      const u = i.split(`
 `)[0], a = T(t.content, u);
       An.push({ filePath: e, message: `line #${a} <bg_warn>computed</bg_warn>` }), Ue.push({ filePath: e }), Ue.some((h) => h.filePath === e) || Ue.push({ filePath: e });
     }
@@ -4689,13 +4689,13 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
   if (!t)
     return;
   const s = /{{\s*([\s\S]*?)\s*}}/g;
-  [...t.content.matchAll(s)].map((i) => i[1].trim()).forEach((i) => {
-    if (i.length > n) {
-      const o = T(t.content, i), u = i.split(`
+  [...t.content.matchAll(s)].map((o) => o[1].trim()).forEach((o) => {
+    if (o.length > n) {
+      const i = T(t.content, o), u = o.split(`
 `).at(0)?.trim() || "";
       Mt.push({
         filePath: e,
-        message: `line #${o} <bg_warn>${u}</bg_warn>`
+        message: `line #${i} <bg_warn>${u}</bg_warn>`
       });
     }
   });
@@ -4710,30 +4710,30 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
     });
   }), dl(), t;
 }, bl = (t, e, n, s) => {
-  const r = t.scriptSetup || t.script, i = e.endsWith(".vue"), o = {
+  const r = t.scriptSetup || t.script, o = e.endsWith(".vue"), i = {
     // vue-essential
     simpleProp: () => wc(r, e),
-    singleNameComponent: () => i && _c(e),
-    globalStyle: () => i && Ec(t.styles, e),
-    vforNoKey: () => i && Ac(t.template, e),
-    vifWithVfor: () => i && Rc(t.template, e),
+    singleNameComponent: () => o && _c(e),
+    globalStyle: () => o && Ec(t.styles, e),
+    vforNoKey: () => o && Ac(t.template, e),
+    vifWithVfor: () => o && Rc(t.template, e),
     // vue-strong
     simpleComputed: () => Dl(r, e, s.maxComputedLength),
-    componentFiles: () => i && Hc(r, e),
-    propNameCasing: () => i && rl(r, e),
-    componentFilenameCasing: () => i && Ic(e),
-    selfClosingComponents: () => i && ll(t, e),
-    templateSimpleExpression: () => i && gl(t.template, e, s.maxExpressionLength),
-    quotedAttributeValues: () => i && ul(t, e),
-    directiveShorthands: () => i && qc(t, e),
-    fullWordComponentName: () => i && Jc(e, s.minimumConsonantCount),
-    multiAttributeElements: () => i && Xc(t.template, e),
+    componentFiles: () => o && Hc(r, e),
+    propNameCasing: () => o && rl(r, e),
+    componentFilenameCasing: () => o && Ic(e),
+    selfClosingComponents: () => o && ll(t, e),
+    templateSimpleExpression: () => o && gl(t.template, e, s.maxExpressionLength),
+    quotedAttributeValues: () => o && ul(t, e),
+    directiveShorthands: () => o && qc(t, e),
+    fullWordComponentName: () => o && Jc(e, s.minimumConsonantCount),
+    multiAttributeElements: () => o && Xc(t.template, e),
     // vue-recommended
-    topLevelElementOrder: () => i && Wc(t.source, e, s.topLevelElementOrder),
-    elementAttributeOrder: () => i && Lc(t.template, e),
+    topLevelElementOrder: () => o && Wc(t.source, e, s.topLevelElementOrder),
+    elementAttributeOrder: () => o && Lc(t.template, e),
     // vue-caution
-    implicitParentChildCommunication: () => i && gc(r, e),
-    elementSelectorsWithScoped: () => i && Dc(t.styles, e),
+    implicitParentChildCommunication: () => o && gc(r, e),
+    elementSelectorsWithScoped: () => o && Dc(t.styles, e),
     // rrd
     bigVif: () => du(t.template, e, s.maxVifLines),
     bigVShow: () => bu(t.template, e, s.maxVshowLines),
@@ -4744,36 +4744,36 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
     elseCondition: () => ku(r, e),
     functionSize: () => Zu(r, e, s.maxFunctionSize),
     htmlImageElements: () => hn() && Yu(t.template, e),
-    htmlLink: () => i && ea(t.template, e),
-    hugeFiles: () => sa(t, e, i, s.maxFileSize),
-    ifWithoutCurlyBraces: () => oa(r, e),
+    htmlLink: () => o && ea(t.template, e),
+    hugeFiles: () => sa(t, e, o, s.maxFileSize),
+    ifWithoutCurlyBraces: () => ia(r, e),
     magicNumbers: () => ca(r, e),
     nestedTernary: () => fa(r, e),
     noDirectDomAccess: () => da(r, e),
     noInlineStyles: () => ba(t.template, e),
     noPropDestructure: () => Fa(r, e),
     noSkippedTests: () => ya(r, e),
-    noTsLang: () => i && va(r, e),
+    noTsLang: () => o && va(r, e),
     noVarDeclaration: () => Ba(r, e),
     parameterCount: () => Na(r, e, s.maxParameterCount),
-    plainScript: () => i && Ta(t.script, e),
+    plainScript: () => o && Ta(t.script, e),
     propsDrilling: () => ka(r, e),
     scriptLength: () => za(r, e, s.maxScriptLength),
     shortVariableName: () => Ua(r, e, s.minVariableName),
     tooManyProps: () => Ka(r, e, s.maxPropsCount),
-    vForWithIndexKey: () => i && Qa(t.template, e),
+    vForWithIndexKey: () => o && Qa(t.template, e),
     zeroLengthComparison: () => tc(r, e),
     // security
-    apiWithoutMethod: () => hn() && ic(t, e),
+    apiWithoutMethod: () => hn() && oc(t, e),
     rateLimiter: () => nu() && hn() && cc(t, e)
   };
   n.forEach((u) => {
     u in de && de[u].forEach((a) => {
-      a in o && o[a]();
-    }), u in o && o[u]();
+      a in i && i[a]();
+    }), u in i && i[u]();
   });
 }, El = (t, e, n, s) => {
-  const r = {}, i = {}, o = [], u = ({ file: f, rule: C, title: m, description: d, message: E }) => {
+  const r = {}, o = {}, i = [], u = ({ file: f, rule: C, title: m, description: d, message: E }) => {
     const g = t === "rule" ? C : f;
     r[g] || (r[g] = []), r[g].push({ file: f, rule: C, title: m, description: d, message: E });
   }, a = (f) => {
@@ -4781,20 +4781,20 @@ const jt = [], nl = /^[a-z]+([A-Z][a-z]*)*$/, sl = () => jt.length = 0, rl = (t,
       u(m);
     });
   };
-  return a($c), a(xc), a(Sc), a(Oc), a(Cc), a(Pc), a(Vc), a(Zc), a(Yc), a(el), a(il), a(al), a(hl), a(pl), a(ml), a(Mc), a(jc), a(mc), a(pc), a(gu), a(Eu), a(vu), a(Nu), a(Bu), a(Wu), a(Iu), a(() => Ku(s.maxFunctionSize)), a(Qu), a(ta), a(ra), a(ua), a(la), a(Da), a(ga), a(Ea), a(wa), a(_a), a(Aa), a(Ra), a(() => La(s.maxParameterCount)), a(Wa), a(Ia), a(() => Ha(s.maxScriptLength)), a(() => qa(s.minVariableName)), a(Ja), a(Xa), a(nc), a(oc), a(lc), Object.keys(r).sort((f, C) => {
+  return a($c), a(xc), a(Sc), a(Oc), a(Cc), a(Pc), a(Vc), a(Zc), a(Yc), a(el), a(ol), a(al), a(hl), a(pl), a(ml), a(Mc), a(jc), a(mc), a(pc), a(gu), a(Eu), a(vu), a(Nu), a(Bu), a(Wu), a(Iu), a(() => Ku(s.maxFunctionSize)), a(Qu), a(ta), a(ra), a(ua), a(la), a(Da), a(ga), a(Ea), a(wa), a(_a), a(Aa), a(Ra), a(() => La(s.maxParameterCount)), a(Wa), a(Ia), a(() => Ha(s.maxScriptLength)), a(() => qa(s.minVariableName)), a(Ja), a(Xa), a(nc), a(ic), a(lc), Object.keys(r).sort((f, C) => {
     const m = r[f].length, d = r[C].length;
     return e === "desc" ? d - m : m - d;
   }).forEach((f) => {
-    i[f] = [], r[f].forEach((C, m) => {
+    o[f] = [], r[f].forEach((C, m) => {
       const d = C.message.includes("<bg_err>");
-      if (o.some((E) => E.file === C.file)) {
-        const E = o.find((g) => g.file === C.file);
+      if (i.some((E) => E.file === C.file)) {
+        const E = i.find((g) => g.file === C.file);
         E && d && E.errors++, E && !d && E.warnings++;
       } else
-        o.push({ file: C.file, errors: d ? 1 : 0, warnings: d ? 0 : 1, output: [] });
-      n === "error" && !d || (i[f][m] = { id: "", description: "", message: "", level: d ? "error" : "warning" }, t === "file" && (i[f][m].id = C.rule), t !== "file" && (i[f][m].id = C.file), i[f][m].description = C.description, i[f][m].message = C.message || "🚨");
+        i.push({ file: C.file, errors: d ? 1 : 0, warnings: d ? 0 : 1, output: [] });
+      n === "error" && !d || (o[f][m] = { id: "", description: "", message: "", level: d ? "error" : "warning" }, t === "file" && (o[f][m].id = C.rule), t !== "file" && (o[f][m].id = C.file), o[f][m].description = C.description, o[f][m].message = C.message || "🚨");
     });
-  }), { output: i, health: o };
+  }), { output: o, health: i };
 };
 let qe = 0, gn = 0, nr = [], sr = {};
 const Cl = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".output", "vendor"], Sn = [], fs = async (t, e) => {
@@ -4813,19 +4813,19 @@ const Cl = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
   }
   const s = await pe.readdir(t);
   for (const r of s) {
-    const i = P.join(t, r);
-    if ((await pe.stat(i)).isDirectory() && !Cl.some((a) => i.includes(a)) && !Sn.some((a) => z(i, a))) {
-      const a = await rr(i);
+    const o = P.join(t, r);
+    if ((await pe.stat(o)).isDirectory() && !Cl.some((a) => o.includes(a)) && !Sn.some((a) => z(o, a))) {
+      const a = await rr(o);
       a && e.push(...a);
     }
-    const u = await fs(i, i);
+    const u = await fs(o, o);
     u && e.push(u);
   }
   return e;
-}, Fl = async ({ dir: t, apply: e = [], ignore: n = [], exclude: s = "", groupBy: r = "rule", level: i = "all", sortBy: o = "desc" }) => {
+}, Fl = async ({ dir: t, apply: e = [], ignore: n = [], exclude: s = "", groupBy: r = "rule", level: o = "all", sortBy: i = "desc" }) => {
   qe = 0, gn = 0;
   const u = await $n(t), a = await Ks(u);
-  e = e.length ? e : a.apply.split(","), n = n.length ? n : a.ignore ? a.ignore.split(",") : [], s = s || a.exclude, r = r || a.group, i = i || a.level, o = o || a.sort, sr = a.override;
+  e = e.length ? e : a.apply.split(","), n = n.length ? n : a.ignore ? a.ignore.split(",") : [], s = s || a.exclude, r = r || a.group, o = o || a.level, i = i || a.sort, sr = a.override;
   const h = e.filter((Q) => !n.includes(Q)), { rulesets: f, individualRules: C } = hu(h), m = f.length ? `<bg_info>${f.join(", ")}</bg_info>` : "N/A", d = C.length ? `<bg_info>${C.join(", ")}</bg_info>` : "N/A";
   let E = `      Applying ${f.length} rulesets: ${m}`;
   C.length > 0 && (E += `
@@ -4841,49 +4841,52 @@ const Cl = ["cache", "coverage", "dist", ".git", "node_modules", ".nuxt", ".outp
     info: `${E}
       Ignoring ${g.length} rules: ${l}
       Excluding ${s || "-"}
-      Output level <bg_info>${i}</bg_info>
+      Output level <bg_info>${o}</bg_info>
       Grouping by <bg_info>${r}</bg_info>
-      Sorting <bg_info>${o}</bg_info>`
+      Sorting <bg_info>${i}</bg_info>`
   }), nr = e.filter((Q) => !n.includes(Q)), s && Sn.push(...s.split(",").map((Q) => Q.trim()));
   const M = await rr(t);
   A.push(...M.map((Q) => ({ info: Q }))), A.push({ info: `Found <bg_info>${qe}</bg_info> files` });
-  const { health: oe, output: se } = El(r, o, i, a.override), { codeHealth: H, output: L } = lu(oe, gn, qe);
+  const { health: ue, output: re } = El(r, i, o, a.override), { codeHealth: H, output: L } = lu(ue, gn, qe);
   return !H.errors && !H.warnings && A.push({ info: `
-<bg_ok>No code smells detected!</bg_ok>` }), { output: A, codeHealthOutput: L, reportOutput: se, codeHealth: H };
-}, ir = "\x1B[44m", wl = "\x1B[43m", Te = "\x1B[41m", xl = "\x1B[42m", he = "\x1B[0m", or = "\x1B[33m", ur = "\x1B[36m", kt = "\x1B[0m", Ds = (t) => t.replace(/<bg_err>/g, Te).replace(/<bg_warn>/g, wl).replace(/<bg_info>/g, ir).replace(/<bg_ok>/g, xl).replace(/<\/bg_err>/g, he).replace(/<\/bg_warn>/g, he).replace(/<\/bg_info>/g, he).replace(/<\/bg_ok>/g, he).replace(/<text_warn>/g, or).replace(/<text_info>/g, ur).replace(/<\/text_warn>/g, kt).replace(/<\/text_info>/g, kt), ps = (t) => (e) => {
+<bg_ok>No code smells detected!</bg_ok>` }), { output: A, codeHealthOutput: L, reportOutput: re, codeHealth: H };
+}, or = "\x1B[44m", wl = "\x1B[43m", ge = "\x1B[41m", xl = "\x1B[42m", se = "\x1B[0m", ir = "\x1B[33m", ur = "\x1B[36m", kt = "\x1B[0m", Ds = (t) => t.replace(/<bg_err>/g, ge).replace(/<bg_warn>/g, wl).replace(/<bg_info>/g, or).replace(/<bg_ok>/g, xl).replace(/<\/bg_err>/g, se).replace(/<\/bg_warn>/g, se).replace(/<\/bg_info>/g, se).replace(/<\/bg_ok>/g, se).replace(/<text_warn>/g, ir).replace(/<text_info>/g, ur).replace(/<\/text_warn>/g, kt).replace(/<\/text_info>/g, kt), yl = (t, e) => {
+  const n = t.some((r) => r.startsWith("--ignore") || r.startsWith("-i")), s = t.some((r) => r.startsWith("--apply") || r.startsWith("-a"));
+  n && s && (console.error(`${ge}Cannot use both --ignore and --apply options together.${se}`), process.exit(1)), e.apply && e.ignore && (console.error(`${ge}Cannot use both --ignore and --apply options together in the vue-mess-detector.json config file.${se}`), process.exit(1));
+}, ps = (t) => (e) => {
   if (!e)
     return t === "apply" ? Object.keys(de) : void 0;
   const n = e.split(","), s = [], r = [];
-  return n.forEach((i) => {
-    yn.includes(i) ? s.push(...de[i]) : Object.values(de).some((o) => o.includes(i)) ? s.push(i) : r.push(i);
+  return n.forEach((o) => {
+    yn.includes(o) ? s.push(...de[o]) : Object.values(de).some((i) => i.includes(o)) ? s.push(o) : r.push(o);
   }), r.length > 0 && (console.error(
     `
-${Te}Invalid ${t} values: ${r.join(", ")}${he}. 
-${or}Allowed values are: ${Zs.join(", ")}${kt}
+${ge}Invalid ${t} values: ${r.join(", ")}${se}. 
+${ir}Allowed values are: ${Zs.join(", ")}${kt}
 
 `
   ), process.exit(1)), s;
 };
 function ds(t, e) {
-  return `${ru}file://${P.resolve(t)}${iu}${t}${ou}`;
+  return `${ru}file://${P.resolve(t)}${ou}${t}${iu}`;
 }
-const ar = ["rule", "file"], cr = ["asc", "desc"], lr = ["text", "json", "table"], hr = ["all", "error"], yl = {
+const ar = ["rule", "file"], cr = ["asc", "desc"], lr = ["text", "json", "table"], hr = ["all", "error"], _l = {
   groupBy: ar,
   sortBy: cr,
   outputLevel: hr,
   outputFormat: lr
 }, ze = (t, e) => {
-  const n = yl[e];
+  const n = _l[e];
   return (!Array.isArray(n) || !n.includes(t)) && (console.error(
     `
-Invalid option ${Te}${t}${he} provided for flag ${ur}${e}${kt}. Valid options are: ${ir}${n.join(", ")}${he}.
+Invalid option ${ge}${t}${se} provided for flag ${ur}${e}${kt}. Valid options are: ${or}${n.join(", ")}${se}.
 `
   ), process.exit(1)), t;
-}, _l = process.argv[2] == "analyze" ? process.argv[3] : process.argv[4];
-$n(_l || "./src").then(async (t) => {
+}, $l = process.argv[2] == "analyze" ? process.argv[3] : process.argv[4];
+$n($l || "./src").then(async (t) => {
   const e = await Ks(t);
-  Js().then(
-    (n) => $r(Ni(process.argv)).config(e).command(
+  yl(process.argv, e), Js().then(
+    (n) => $r(Lo(process.argv)).config(e).command(
       "analyze [path]",
       "Analyze Vue files for code smells and best practices",
       (s) => s.positional("path", {
@@ -4939,10 +4942,14 @@ $n(_l || "./src").then(async (t) => {
         describe: "Output file",
         default: "",
         group: "Output:"
+      }).option("healthError", {
+        describe: "Health error threshold",
+        default: 0,
+        group: "Health:"
       }),
       (s) => {
-        const r = s.fileOutput, i = (o) => r ? (pe.appendFile(r, `${o}
-`), o) : (console.log(Ds(o)), Ds(o));
+        const r = s.fileOutput, o = (i) => r ? (pe.appendFile(r, `${i}
+`), i) : (console.log(Ds(i)), Ds(i));
         Fl({
           dir: s.path,
           apply: s.apply,
@@ -4951,50 +4958,50 @@ $n(_l || "./src").then(async (t) => {
           groupBy: s.group,
           level: s.level,
           sortBy: s.sort
-        }).then((o) => {
+        }).then((i) => {
           if (s.output == "text") {
-            [...o.output].forEach((u) => {
-              i(u.info);
+            [...i.output].forEach((u) => {
+              o(u.info);
             });
-            for (const u in o.reportOutput) {
+            for (const u in i.reportOutput) {
               let a = u;
-              s.group === "file" && (a = ds(u)), i(`
-- <text_info> ${a}</text_info>`), o.reportOutput[u].forEach((h) => {
+              s.group === "file" && (a = ds(u)), o(`
+- <text_info> ${a}</text_info>`), i.reportOutput[u].forEach((h) => {
                 let f = h.id;
-                s.group === "rule" && (f = ds(h.id)), i(`   ${f}`), i(`   ${h.description}`), i(`   ${h.message}
+                s.group === "rule" && (f = ds(h.id)), o(`   ${f}`), o(`   ${h.description}`), o(`   ${h.message}
 `);
               });
             }
-            o.codeHealthOutput?.forEach((u) => {
-              i(u.info);
+            i.codeHealthOutput?.forEach((u) => {
+              o(u.info);
             });
           }
           if (s.output == "table") {
-            r && (console.log(`We can not output ${Te}to a file in table mode${he}`), process.exit(1)), [...o.output].forEach((u) => {
-              i(u.info);
+            r && (console.log(`We can not output ${ge}to a file in table mode${se}`), process.exit(1)), [...i.output].forEach((u) => {
+              o(u.info);
             });
-            for (const u in o.reportOutput) {
-              const a = new Bi({
+            for (const u in i.reportOutput) {
+              const a = new Ro({
                 head: ["id", "message"],
                 colWidths: [60, 60],
                 wordWrap: !0,
                 wrapOnWordBoundary: !1
               });
-              i("-".repeat(120)), s.group == "rule" && (i(`<text_info>Rule: ${u}</text_info>`), i(`Description: ${o.reportOutput[u][0].description}`), o.reportOutput[u].forEach((h) => {
-                a.push([i(h.id), i(h.message)]);
-              })), s.group == "file" && (i(`<text_info>File: ${u}</text_info>`), o.reportOutput[u].forEach((h) => {
+              o("-".repeat(120)), s.group == "rule" && (o(`<text_info>Rule: ${u}</text_info>`), o(`Description: ${i.reportOutput[u][0].description}`), i.reportOutput[u].forEach((h) => {
+                a.push([o(h.id), o(h.message)]);
+              })), s.group == "file" && (o(`<text_info>File: ${u}</text_info>`), i.reportOutput[u].forEach((h) => {
                 a.push([`${h.id}
 ${h.description.replace("See: ", `See:
 `)}`, h.message]);
-              })), i(a.toString());
+              })), o(a.toString());
             }
-            o.codeHealthOutput?.forEach((u) => {
-              i(u.info);
+            i.codeHealthOutput?.forEach((u) => {
+              o(u.info);
             });
           }
-          s.output == "json" && i(JSON.stringify(o, null, 2));
-        }).catch((o) => {
-          console.error(`${Te}${o}${he}`);
+          s.output == "json" && o(JSON.stringify(i, null, 2)), i.codeHealth.points < s.healthError && (console.error(`${ge}Health error threshold (${s.healthError}) exceeded: ${i.codeHealth.points}${se}`), process.exit(1));
+        }).catch((i) => {
+          console.error(`${ge}${i}${se}`);
         });
       }
     ).version("version", "Show version number", n.version).alias("version", "v").help().argv
