@@ -1,7 +1,8 @@
+import type { Config } from '../types/Config'
 /* eslint-disable node/prefer-global/process */
 import { BG_ERR, BG_RESET } from '../rules/asceeCodes'
 
-const checkArgs = (argv: string[], config: { apply?: any, ignore?: any }) => {
+const checkArgs = (argv: string[], config: Config) => {
   const hasIgnore = argv.some(arg => arg.startsWith('--ignore') || arg.startsWith('-i'))
   const hasApply = argv.some(arg => arg.startsWith('--apply') || arg.startsWith('-a'))
 
