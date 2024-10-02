@@ -13,7 +13,11 @@ const checkDependency = async (dependencyName: 'vue' | 'nuxt', projectRoot: stri
   const packageJsonPath = path.join(projectPath, 'package.json')
   if (fs.existsSync(packageJsonPath)) {
     const packageJson = await getPackageJson(projectRoot)
-    return Boolean(packageJson.dependencies[dependencyName])
+    return Boolean(
+      packageJson.dependencies?.[dependencyName]
+      || packageJson.devDependencies?.[dependencyName]
+      || packageJson.peerDependencies?.[dependencyName],
+    )
   }
   return false
 }
