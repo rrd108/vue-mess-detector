@@ -115,7 +115,7 @@ jobs:
             npm install
             npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
           fi
-          node -e "const fs = require('fs'); try { JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); } catch (e) { throw new Error('Something went wrong'); }"
+          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
       - if: runner.os == 'Windows'
         name: Create and Run Vue Mess Detector (Windows)
@@ -143,7 +143,7 @@ jobs:
             npm install
             npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
           }
-          node -e "const fs = require('fs'); try { JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); } catch (e) { throw new Error('Something went wrong'); }"
+          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
   test-nuxi:
     runs-on: ${{ matrix.platform }}
@@ -215,7 +215,7 @@ jobs:
             npm install
             npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           fi
-          node -e "const fs = require('fs'); try { JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); } catch (e) { throw new Error('Something went wrong'); }"
+          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
       - if: runner.os == 'Windows'
         name: Create and Run Vue Mess Detector (Windows)
@@ -243,4 +243,4 @@ jobs:
             npm install
             npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           }
-          node -e "const fs = require('fs'); try { JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); } catch (e) { throw new Error('Something went wrong'); }"
+          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
