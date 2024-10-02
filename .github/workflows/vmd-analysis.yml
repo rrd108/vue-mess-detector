@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
+          cache: yarn
 
       - name: Vue Mess Detector Analysis
         uses: brenoepics/vmd-action@v0.0.5

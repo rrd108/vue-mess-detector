@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -49,8 +49,8 @@ jobs:
 
     strategy:
       matrix:
-        platform: [ 'macos-latest', 'ubuntu-latest', 'windows-latest' ]
-        package-manager: [ npm, yarn, pnpm, bun ]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+        package-manager: [npm, yarn, pnpm, bun]
 
     name: Testing Vue with ${{ matrix.package-manager }} on ${{ matrix.platform }}
     steps:
@@ -75,7 +75,7 @@ jobs:
         name: Check PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: '9.9.0'
+          version: 9.9.0
 
       - if: matrix.package-manager == 'yarn'
         name: Check Yarn
@@ -87,7 +87,7 @@ jobs:
         name: Check Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: '1.1.26'
+          bun-version: 1.1.26
 
       - if: runner.os != 'Windows'
         name: Create and Run Vue Mess Detector (Linux/Mac)
@@ -150,8 +150,8 @@ jobs:
     needs: build
     strategy:
       matrix:
-        platform: [ 'macos-latest', 'ubuntu-latest', 'windows-latest' ]
-        package-manager: [ npm, yarn, pnpm, bun ]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+        package-manager: [npm, yarn, pnpm, bun]
 
     name: Testing Nuxt with ${{ matrix.package-manager }} on ${{ matrix.platform }}
     steps:
@@ -175,7 +175,7 @@ jobs:
         name: Check PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 'latest'
+          version: latest
 
       - if: matrix.package-manager == 'yarn'
         name: Check Yarn
@@ -187,7 +187,7 @@ jobs:
         name: Check Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 'latest'
+          bun-version: latest
 
       - if: runner.os != 'Windows'
         name: Create and Run Vue Mess Detector (Linux/Mac)
