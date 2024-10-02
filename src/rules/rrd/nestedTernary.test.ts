@@ -51,7 +51,7 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files with ts optional symbol', () => {
+  it('should not report files with ts optional symbol', () => {
     const script = {
       content: `
       type TestType = { value?: number; name?: string }

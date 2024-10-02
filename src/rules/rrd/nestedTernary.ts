@@ -16,8 +16,16 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
 
   // In here we use `index` as lineNumber becase we are splitting the content by new lines
   lines.forEach((line, index) => {
-    const ternaryCount = (line.match(/\?(?![.?])/g) || []).length
-    if (ternaryCount > 1) {
+    // Remove string literals to avoid false positives
+    const lineWithoutStrings = line.replace(/'[^']*'|"[^"]*"/g, '')
+
+    // Remove nullish coalescing and optional chaining operators
+    const cleanedLine = lineWithoutStrings.replace(/\?\?|\?\./g, '  ')
+
+    // Regex to match nested ternaries
+    const nestedTernaryRegex = /\?[^:?]*\?[^:?]*:[^:?]*:/
+
+    if (nestedTernaryRegex.test(cleanedLine)) {
       results.push({
         filePath,
         message: `line #${index + 1} has <bg_warn>nested ternary</bg_warn>`,
