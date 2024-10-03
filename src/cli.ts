@@ -23,7 +23,7 @@ getProjectRoot(pathArg || './src').then(async (projectRoot) => {
 
   checkArgs(process.argv, config)
 
-  getPackageJson().then(vmdPackageJson => yargs(hideBin(process.argv))
+  getPackageJson(projectRoot).then(vmdPackageJson => yargs(hideBin(process.argv))
     .config(config)
     .command(
       'analyze [path]',

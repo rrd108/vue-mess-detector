@@ -5,21 +5,23 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { normalizePath } from './helpers/normalizePath'
 import { BG_ERR, BG_INFO, BG_RESET, TEXT_INFO, TEXT_RESET } from './rules/asceeCodes'
 
+const runCLI = (...args: string[]) => execa('npx', ['tsx', './src/cli.ts', 'analyze', ...args])
+
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
-    const { stdout } = await execa('yarn', ['analyze'])
+    const { stdout } = await runCLI()
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
     expect(stdout).toContain(`Functions must be shorter than`)
   })
 
   it('should execute without any flags with path', async () => {
-    const { stdout } = await execa('yarn', ['analyze', './'])
+    const { stdout } = await runCLI('./')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should error out when both apply and ignore are used', async () => {
     try {
-      await execa('yarn', ['analyze', '--ignore=vue-strong', '--apply=rrd'])
+      await runCLI('--ignore=vue-strong', '--apply=rrd')
       // If no error is thrown, fail the test
       expect(true).toBe(false)
     }
@@ -31,7 +33,7 @@ describe('yarn analyze command with default configuration', () => {
 
   it('should report error for invalid ignore rulesets and exit with code 1', async () => {
     try {
-      await execa('yarn', ['analyze', '--ignore=gauranga,vue-strong'])
+      await runCLI('--ignore=gauranga,vue-strong')
     }
     catch (error) {
       expect((error as any).stderr).toContain('Invalid ignore values: gauranga')
@@ -40,32 +42,32 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with valid ignore rulesets', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=vue-strong,rrd'])
+    const { stdout, stderr } = await runCLI('--ignore=vue-strong,rrd')
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid ignore rules', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=functionSize'])
+    const { stdout, stderr } = await runCLI('--ignore=functionSize')
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid ignore rulesets and individual rules', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=rrd,nestedTernary'])
+    const { stdout, stderr } = await runCLI('--ignore=rrd,nestedTernary')
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid ignore individual rules and rulesets', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--ignore=functionSize,vue-essential'])
+    const { stdout, stderr } = await runCLI('--ignore=functionSize,vue-essential')
     expect(stderr).not.toContain('Invalid ignore values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should report error for invalid apply rulesets and exit with code 1', async () => {
     try {
-      await execa('yarn', ['analyze', '--apply=gauranga,vue-strong'])
+      await runCLI('--apply=gauranga,vue-strong')
     }
     catch (error) {
       expect((error as any).stderr).toContain('Invalid apply values: gauranga')
@@ -74,58 +76,58 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with valid apply rulesets', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=vue-strong,rrd'])
+    const { stdout, stderr } = await runCLI('--apply=vue-strong,rrd')
     expect(stderr).not.toContain('Invalid apply values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid apply rules', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=nestedTernary,functionSize,topLevelElementOrder'])
+    const { stdout, stderr } = await runCLI('--apply=nestedTernary,functionSize,topLevelElementOrder')
     expect(stderr).not.toContain('Invalid apply values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid apply rulesets and individual rules', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=vue-strong,nestedTernary'])
+    const { stdout, stderr } = await runCLI('--apply=vue-strong,nestedTernary')
     expect(stderr).not.toContain('Invalid apply values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should execute with valid apply individual rules and rulesets', async () => {
-    const { stdout, stderr } = await execa('yarn', ['analyze', '--apply=magicNumbers,vue-essential'])
+    const { stdout, stderr } = await runCLI('--apply=magicNumbers,vue-essential')
     expect(stderr).not.toContain('Invalid apply values')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
   })
 
   it('should output json', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--output=json'])
+    const { stdout } = await runCLI('--output=json')
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
     expect(stdout).toContain(`codeHealthOutput`)
     expect(stdout).toMatch(/"codeHealth":\s*\{\s*"errors":/)
   })
 
   it('should execute with group parameter', async () => {
-    const { stdout } = await execa('yarn', ['analyze', './src/rules/vue-caution', '--group=file'])
+    const { stdout } = await runCLI('./src/rules/vue-caution', '--group=file')
     expect(stdout).toContain(`Functions must be shorter than`)
   })
 
   it('should execute with sort parameter', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--sort=asc'])
+    const { stdout } = await runCLI('--sort=asc')
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
   })
 
   it('should execute with level parameter', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--level=error'])
+    const { stdout } = await runCLI('--level=error')
     expect(stdout).toContain(`Analyzing Vue, TS and JS files in`)
   })
 
   it('should execute with exclude parameter', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--exclude=helpers'])
+    const { stdout } = await runCLI('--exclude=helpers')
     expect(stdout).toContain('Excluding helpers')
   })
 
   it('should execute with exclude wildcard for test files', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--apply=rrd', '--level=error', '--exclude=*.test.ts'])
+    const { stdout } = await runCLI('--apply=rrd', '--level=error', '--exclude=*.test.ts')
     const normalizedStdout = normalizePath(stdout)
     expect(normalizedStdout).toContain('Excluding *.test.ts')
     expect(normalizedStdout).toContain('Analyzing src/rules/rrd/complicatedConditions.ts...')
@@ -134,14 +136,14 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with exclude wildcard for a subdirectory', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/security/*'])
+    const { stdout } = await runCLI('--exclude=src/rules/security/*')
     const normalizedStdout = normalizePath(stdout)
     expect(normalizedStdout).toContain('Excluding src/rules/security/*')
     expect(normalizedStdout).not.toContain('Analyzing src/rules/security/apiWithoutMethod.test.ts...')
   })
 
   it('should execute with multiple exclude patterns', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--exclude=src/rules/*.test.ts,src/rules/rrd/*'])
+    const { stdout } = await runCLI('--exclude=src/rules/*.test.ts,src/rules/rrd/*')
     const normalizedStdout = normalizePath(stdout)
     expect(normalizedStdout).toContain('Excluding src/rules/*.test.ts,src/rules/rrd/*')
     expect(normalizedStdout).not.toContain('Analyzing src/rules/getLineNumber.test.ts...')
@@ -149,14 +151,14 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with table output', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--output=table'])
+    const { stdout } = await runCLI('--output=table')
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
     // expect(stdout).toContain('┌─') // Table border character
   })
 
   it('should error out when invalid value is used for a flag', async () => {
     try {
-      await execa('yarn', ['analyze', '--output=gauranga'])
+      await runCLI('--output=gauranga')
       // If the command doesn't throw, fail the test
       expect(true).toBe(false)
     }
@@ -168,7 +170,7 @@ describe('yarn analyze command with default configuration', () => {
   it('should error out when invalid value is used for healthError', async () => {
     const healthError = 101
     try {
-      await execa('yarn', ['analyze', `--health-error=${healthError}`])
+      await runCLI(`--health-error=${healthError}`)
     }
     catch (error) {
       expect((error as any).stderr).toContain(`${BG_ERR}Health error threshold (${healthError}) exceeded:`)
@@ -193,7 +195,7 @@ describe('yarn analyze command with configuration file', () => {
   })
 
   it('should execute without any flags and path', async () => {
-    const { stdout } = await execa('yarn', ['analyze'])
+    const { stdout } = await runCLI()
     expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
     expect(stdout).toContain(`Applying 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
@@ -201,7 +203,7 @@ describe('yarn analyze command with configuration file', () => {
 
   it('should error out when both apply and ignore are used', async () => {
     try {
-      await execa('yarn', ['analyze', '--ignore=vue-strong']) // apply in config
+      await runCLI('--ignore=vue-strong') // apply in config
     }
     catch (error: any) {
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
@@ -228,7 +230,7 @@ describe('yarn analyze command with conflicting flags in configuration file', ()
 
   it('should error out when both apply and ignore are used', async () => {
     try {
-      await execa('yarn', ['analyze'])
+      await runCLI()
     }
     catch (error: any) {
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together in the vue-mess-detector.json config file.')
@@ -256,7 +258,7 @@ describe('yarn analyze command with override in configuration file', () => {
   })
 
   it('should execute with and use override', async () => {
-    const { stdout } = await execa('yarn', ['analyze', '--apply=functionSize'])
+    const { stdout } = await runCLI('--apply=functionSize')
     expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
   })
 })
