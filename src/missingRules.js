@@ -57,6 +57,19 @@ const main = async () => {
 
     for (const rule of allRules) {
       if (rule.endsWith('index.ts')) {
+        const ruleset = rule.split('/').slice(2, -1).join('/')
+        const rulesetFiles = await findRules(`./src/rules/${ruleset}`)
+        const indexFileContent = await fs.readFile(rule, 'utf8')
+        const ruleNames = rulesetFiles.map(file => file.split('/').pop().replace('.ts', ''))
+        ruleNames.forEach((ruleName) => {
+          if (ruleName == 'index') {
+            return
+          }
+          if (!indexFileContent.includes(ruleName)) {
+            console.log(`❌ ${ruleName} is missing from ${rule}`)
+            errors++
+          }
+        })
         continue
       }
       // check if it has a test file
