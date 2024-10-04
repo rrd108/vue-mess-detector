@@ -2,6 +2,7 @@
 
 These ruleset is the most opinionated with rules that are not part of the _offical_ Vue style guide. They are based on the experience of this repo owner and are meant to help you write better Vue code.
 
+- [Amount of Comments](./amount-of-comments.md)
 - [Big v-if](./big-vif.md)
 - [Big v-show](./big-vshow.md)
 - [Complicated Conditions](./complicated-conditions.md)

@@ -27,6 +27,7 @@ export const RULES = {
     'templateSimpleExpression',
   ],
   'rrd': [
+    'amountOfComments',
     'bigVif',
     'bigVshow',
     'complicatedConditions',
