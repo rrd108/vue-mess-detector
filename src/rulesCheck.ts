@@ -1,7 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getHasServer, getIsNuxt } from './context'
-import { checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { RULES } from './rules/rules'
 import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
@@ -45,6 +45,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     elementSelectorsWithScoped: () => isVueFile && checkElementSelectorsWithScoped(descriptor.styles, filePath),
 
     // rrd
+    amountOfComments: () => checkAmountOfComments(script, filePath),
     bigVif: () => checkBigVif(descriptor.template, filePath, override.maxVifLines),
     bigVShow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
     complicatedConditions: () => checkComplicatedConditions(descriptor, filePath, override.warningThreshold),

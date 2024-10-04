@@ -68,6 +68,7 @@ export default defineConfig({
                 { text: 'Element Selectors in Scoped CSS', link: '/rules/vue-caution/element-selectors-with-scoped' },
               ] },
               { text: 'rrd', link: '/rules/rrd', collapsed: true, items: [
+                { text: 'Amount of Comments', link: '/rules/rrd/amount-of-comments' },
                 { text: 'Big v-if', link: '/rules/rrd/big-vif' },
                 { text: 'Big v-show', link: '/rules/rrd/big-vshow' },
                 { text: 'Complicated Conditions', link: '/rules/rrd/complicated-conditions' },
