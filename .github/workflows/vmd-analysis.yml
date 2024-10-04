@@ -28,4 +28,4 @@ jobs:
           cache: yarn
 
       - name: Vue Mess Detector Analysis
-        uses: brenoepics/vmd-action@v0.0.5
+        uses: brenoepics/vmd-action@v0.0.6
