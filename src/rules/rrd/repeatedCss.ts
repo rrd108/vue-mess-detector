@@ -50,7 +50,7 @@ const checkRepeatedCss = (styles: SFCStyleBlock[] | null, filePath: string) => {
   })
 
   cssProperties.forEach((value, key) => {
-    if (value.length > 1) {
+    if (value.length > 3) {
       value.forEach((item) => {
         results.push({
           filePath: `${item.filePath}`,
@@ -69,7 +69,7 @@ const reportRepeatedCss = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ repeated CSS</text_info>`,
-        description: `👉 <text_warn>Avoid repeating CSS properties with the same value across files. Consider using CSS variables or a common class.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/repeated-css-properties.html`,
+        description: `👉 <text_warn>Avoid repeating CSS properties with the same value more than 3 times across files. Consider using CSS variables or a common class.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/repeated-css-properties.html`,
         message: `${result.message} 🚨`,
       })
     })
