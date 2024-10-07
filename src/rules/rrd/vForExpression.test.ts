@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import { describe, expect, it } from 'vitest'
-import { checkVforExpression, reportVforExpression } from './vforExpression'
+import { checkVForExpression, reportVForExpression } from './vForExpression'
 
 describe('checkVforExpression', () => {
   it('should not report files with v-for has no expression', () => {
@@ -12,8 +12,8 @@ describe('checkVforExpression', () => {
         </template>`,
     } as SFCTemplateBlock
     const fileName = 'vforNoExpression.vue'
-    checkVforExpression(script, fileName)
-    const result = reportVforExpression()
+    checkVForExpression(script, fileName)
+    const result = reportVForExpression()
     expect(result.length).toBe(0)
     expect(result).toStrictEqual([])
   })
@@ -21,15 +21,15 @@ describe('checkVforExpression', () => {
   it('should report files with v-for using an arrow function in expression', () => {
     const expression = 'items.filter((config) => config.level === 2)'
     const template = {
-        content: `<template>
+      content: `<template>
           <div v-for="item in ${expression}" :key="item.id">
             {{ item.name }}
           </div>
         </template>`,
     } as SFCTemplateBlock
     const fileName = 'vforWithArrowFunctionExpression.vue'
-    checkVforExpression(template, fileName)
-    const result = reportVforExpression()
+    checkVForExpression(template, fileName)
+    const result = reportVForExpression()
     expect(result.length).toBe(1)
     expect(result).toStrictEqual([{
       file: fileName,
@@ -49,8 +49,8 @@ describe('checkVforExpression', () => {
       </template>`,
     } as SFCTemplateBlock
     const fileName = 'vforWithNormalFunctionExpression.vue'
-    checkVforExpression(template, fileName)
-    const result = reportVforExpression()
+    checkVForExpression(template, fileName)
+    const result = reportVForExpression()
     expect(result.length).toBe(1)
     expect(result).toStrictEqual([{
       file: fileName,

@@ -8,7 +8,7 @@ const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-const checkVforExpression = (template: SFCTemplateBlock | null, filePath: string) => {
+const checkVForExpression = (template: SFCTemplateBlock | null, filePath: string) => {
   if (!template) {
     return
   }
@@ -32,7 +32,7 @@ const checkVforExpression = (template: SFCTemplateBlock | null, filePath: string
   }
 }
 
-const reportVforExpression = () => {
+const reportVForExpression = () => {
   const offenses: Offense[] = []
 
   if (results.length > 0) {
@@ -51,4 +51,4 @@ const reportVforExpression = () => {
   return offenses
 }
 
-export { checkVforExpression, reportVforExpression }
+export { checkVForExpression, reportVForExpression }

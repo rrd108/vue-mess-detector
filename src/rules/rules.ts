@@ -55,7 +55,7 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
-    'vforExpression',
+    'vForExpression',
     'zeroLengthComparison'
   ],
   'security': [
