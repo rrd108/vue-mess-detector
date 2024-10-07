@@ -1,0 +1,57 @@
+import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import type { FileCheckResult, Offense } from '../../types'
+import { createRegExp } from 'magic-regexp'
+import { skipComments } from '../../helpers/skipComments'
+import getLineNumber from '../getLineNumber'
+
+const results: FileCheckResult[] = []
+
+const resetResults = () => (results.length = 0)
+
+/* TODO use the correct parameter from the following list:
+  - "script: SFCScriptBlock" ~ this rule will apply to ts, js and vue files
+  - "styles: SFCStyleBlock[]" ~ applied only for vue files
+  - "template: SFCTemplateBlock" ~ applied only for vue files
+  - "descriptor: SFCDescriptor" ~ applied only for vue files
+*/
+const checkVforExpression = (script: SFCScriptBlock | null, filePath: string) => {
+  if (!script) {
+    return
+  }
+
+  const regex = createRegExp(/* TODO create your regex here with magic regexp or plain regex */)
+
+  const content = skipComments(script.content)
+  const matches = content.match(regex)
+
+  // TODO add your rule logic, constants, etc here
+
+  matches?.forEach((match) => {
+    const lineNumber = getLineNumber(content, match)
+    results.push({
+      filePath,
+      message: `line #${lineNumber} <bg_warn>/* TODO add your message here*/ </bg_warn>`,
+    })
+  })
+}
+
+const reportVforExpression = () => {
+  const offenses: Offense[] = []
+
+  if (results.length > 0) {
+    results.forEach((result) => {
+      offenses.push({
+        file: result.filePath,
+        rule: `<text_info>rrd ~ vfor Expression</text_info>`,
+        description: `👉 <text_warn>/* TODO tip to fix this issue */.</text_warn> See: https:///* TODO doc link */`,
+        message: `${result.message} 🚨`,
+      })
+    })
+  }
+  
+  resetResults()  
+
+  return offenses
+}
+
+export { checkVforExpression, reportVforExpression}
