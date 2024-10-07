@@ -18,23 +18,45 @@ describe('checkVforExpression', () => {
     expect(result).toStrictEqual([])
   })
 
-  it('should report files with v-for has expression', () => {
+  it('should report files with v-for using an arrow function in expression', () => {
+    const expression = 'items.filter((config) => config.level === 2)'
     const script = {
         content: `<template>
-          <div v-for="item in items.filter((config) => config.level === 2)" :key="item.id">
+          <div v-for="item in ${expression}" :key="item.id">
             {{ item.name }}
           </div>
         </template>`,
     } as SFCScriptBlock
-    const fileName = 'vforWithExpression.vue'
+    const fileName = 'vforWithArrowFunctionExpression.vue'
     checkVforExpression(script, fileName)
     const result = reportVforExpression()
     expect(result.length).toBe(1)
     expect(result).toStrictEqual([{
       file: fileName,
       rule: `<text_info>rrd ~ vfor Expression</text_info>`,
-      description: `👉 <text_warn>/* TODO tip to fix this issue */.</text_warn> See: https:///* TODO add doc link */`,
-      message: `line #/* TODO line number from your content above*/ <bg_warn>/* TODO message from the rule file */</bg_warn> 🚨`,
+      description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
+      message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
+    }])
+  })
+
+  it('should report files with v-for using a normal function in expression', () => {
+    const expression = 'items.filter(function(config) { return config.level === 2 })'
+    const script = {
+      content: `<template>
+        <div v-for="item in ${expression}" :key="item.id">
+          {{ item.name }}
+        </div>
+      </template>`,
+    } as SFCScriptBlock
+    const fileName = 'vforWithNormalFunctionExpression.vue'
+    checkVforExpression(script, fileName)
+    const result = reportVforExpression()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
+      file: fileName,
+      rule: `<text_info>rrd ~ vfor Expression</text_info>`,
+      description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
+      message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
     }])
   })
 })

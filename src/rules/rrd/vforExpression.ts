@@ -1,6 +1,6 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import { createRegExp } from 'magic-regexp'
+import { char, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
 import { skipComments } from '../../helpers/skipComments'
 import getLineNumber from '../getLineNumber'
 
@@ -8,31 +8,28 @@ const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-/* TODO use the correct parameter from the following list:
-  - "script: SFCScriptBlock" ~ this rule will apply to ts, js and vue files
-  - "styles: SFCStyleBlock[]" ~ applied only for vue files
-  - "template: SFCTemplateBlock" ~ applied only for vue files
-  - "descriptor: SFCDescriptor" ~ applied only for vue files
-*/
 const checkVforExpression = (script: SFCScriptBlock | null, filePath: string) => {
   if (!script) {
     return
   }
 
-  const regex = createRegExp(/* TODO create your regex here with magic regexp or plain regex */)
+  const regex = createRegExp('v-for="', oneOrMore(charNotIn('"')), ' in ', exactly(oneOrMore(char), exactly('=>').or('function'), oneOrMore(charNotIn('"'))).groupedAs('expression'), '"', [global])
 
   const content = skipComments(script.content)
-  const matches = content.match(regex)
 
-  // TODO add your rule logic, constants, etc here
-
-  matches?.forEach((match) => {
-    const lineNumber = getLineNumber(content, match)
-    results.push({
-      filePath,
-      message: `line #${lineNumber} <bg_warn>/* TODO add your message here*/ </bg_warn>`,
-    })
-  })
+  let match
+  let lastLine = 0
+  // eslint-disable-next-line no-cond-assign
+  while ((match = regex.exec(content)) !== null) {
+    if (match.groups?.expression) {
+      const lineNumber = getLineNumber(content, match.groups?.expression, lastLine)
+      results.push({
+        filePath,
+        message: `line #${lineNumber} <bg_warn>expression: ${match.groups?.expression} in v-for</bg_warn>`,
+      })
+      lastLine = lineNumber
+    }
+  }
 }
 
 const reportVforExpression = () => {
@@ -43,15 +40,15 @@ const reportVforExpression = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ vfor Expression</text_info>`,
-        description: `👉 <text_warn>/* TODO tip to fix this issue */.</text_warn> See: https:///* TODO doc link */`,
+        description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
         message: `${result.message} 🚨`,
       })
     })
   }
-  
-  resetResults()  
+
+  resetResults()
 
   return offenses
 }
 
-export { checkVforExpression, reportVforExpression}
+export { checkVforExpression, reportVforExpression }
