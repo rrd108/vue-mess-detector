@@ -26,7 +26,7 @@ A Vue component file with more than 300 lines of combined script, template, and 
 
 The default max file size for this rule is **300** lines for the warning threshold, and **twice that value** for the error threshold.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

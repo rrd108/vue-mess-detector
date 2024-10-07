@@ -53,7 +53,7 @@ Move out the `v-if` block to its own component.
 
 The default max v-if lines for this rule is **10**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

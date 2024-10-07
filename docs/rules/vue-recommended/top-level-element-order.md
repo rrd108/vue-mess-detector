@@ -112,7 +112,7 @@ There are two possible values for this rule:
 - `script-template-style`
 - `template-script-style`
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

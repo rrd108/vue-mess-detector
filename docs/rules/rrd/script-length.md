@@ -76,7 +76,7 @@ setupEventListeners()
 ## 🛠 How to override?
 The default max length for this rule is **100** for the warning threshold, and **twice that value** for the error threshold.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
   {

@@ -4,6 +4,6 @@ test
 docs/.vitepress/cache
 docs/.vitepress/dist
 notes.md
-vue-mess-detector.json
+.config/vue-mess-detector.json
 .inProgress
 dist

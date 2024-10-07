@@ -125,7 +125,7 @@ const getOpenBookings = page =>
 ## 🛠 How to override?
 The default max size for this rule is **20**.
   
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

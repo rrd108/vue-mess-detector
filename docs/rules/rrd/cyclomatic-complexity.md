@@ -78,7 +78,7 @@ In the refactored example, the complex nested logic is moved into separate funct
 
 The default complexity moderate threshold for this rule is **5**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

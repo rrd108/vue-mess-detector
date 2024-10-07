@@ -38,7 +38,7 @@ In the refactored example, `userAge`, `maxItems`, and `greetingMessage` are desc
 
 The default max expression length for this rule is **40**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {
