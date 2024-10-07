@@ -72,7 +72,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     scriptLength: () => checkScriptLength(script, filePath, override.maxScriptLength),
     shortVariableName: () => checkShortVariableName(script, filePath, override.minVariableName),
     tooManyProps: () => checkTooManyProps(script, filePath, override.maxPropsCount),
-    vForExpression: () => checkVforExpression(script, filePath),
+    vForExpression: () => checkVforExpression(descriptor.template, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
 

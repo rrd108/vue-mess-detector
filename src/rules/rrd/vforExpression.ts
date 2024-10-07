@@ -1,4 +1,4 @@
-import type { SFCScriptBlock } from '@vue/compiler-sfc'
+import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 import { char, charNotIn, createRegExp, exactly, global, oneOrMore } from 'magic-regexp'
 import { skipComments } from '../../helpers/skipComments'
@@ -8,14 +8,14 @@ const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
-const checkVforExpression = (script: SFCScriptBlock | null, filePath: string) => {
-  if (!script) {
+const checkVforExpression = (template: SFCTemplateBlock | null, filePath: string) => {
+  if (!template) {
     return
   }
 
   const regex = createRegExp('v-for="', oneOrMore(charNotIn('"')), ' in ', exactly(oneOrMore(char), exactly('=>').or('function'), oneOrMore(charNotIn('"'))).groupedAs('expression'), '"', [global])
 
-  const content = skipComments(script.content)
+  const content = skipComments(template.content)
 
   let match
   let lastLine = 0
