@@ -40,7 +40,7 @@ Refactor the component name to use a full word, ensuring it contains at least th
 
 The default mininimum consonant count for this rule is **3**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

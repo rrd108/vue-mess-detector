@@ -52,7 +52,7 @@ This refactor also combines parameters into an object, reducing the cognitive lo
 
 The default max parameter count for this rule is **3**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

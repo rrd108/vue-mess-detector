@@ -52,7 +52,7 @@ In the refactored example, the deeply nested logic is moved into a separate func
 
 The default max tabs for this rule is **5**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

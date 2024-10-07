@@ -57,7 +57,7 @@ if (isEditable && hasAccess && checkCondition(x, y)) {
 
 The default warning threshold for this rule is **4**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {
