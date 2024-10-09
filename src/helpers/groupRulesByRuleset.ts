@@ -29,4 +29,4 @@ export function groupRulesByRuleset(apply: string[]): { rulesets: RuleSetType[],
   })
 
   return { rulesets: rulesets.sort(), individualRules: individualRules.sort() }
-  }
+}
