@@ -191,7 +191,7 @@ describe('yarn analyze command with default configuration', () => {
   })
 })
 
-describe('yarn analyze command with configuration file', () => {
+describe('yarn analyze command with configuration file with apply flag', () => {
   const projectRoot = path.resolve(__dirname, '..')
   const configPath = path.join(projectRoot, '.config', 'vue-mess-detector.json')
   const config = JSON.stringify({
@@ -222,6 +222,23 @@ describe('yarn analyze command with configuration file', () => {
       expect(error.stderr).toContain('Cannot use both --ignore and --apply options together.')
       expect(error.exitCode).toBe(1)
     }
+  })
+})
+
+describe('yarn analyze command with configuration file with ignore flag', async () => {
+  const projectRoot = path.resolve(__dirname, '..')
+  const configPath = path.join(projectRoot, '.config', 'vue-mess-detector.json')
+  const config = JSON.stringify({
+    ignore: 'vue-strong,vue-recommended',
+  }, null, 2)
+
+  it('should execute without any flags and path', async () => {
+    await createConfigFile(configPath, config)
+    const { stdout } = await runCLI()
+    expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
+    expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
+    expect(stdout).toContain(`Ignoring 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
+    await removeConfigFile(configPath)
   })
 })
 
