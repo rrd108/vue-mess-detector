@@ -225,20 +225,26 @@ describe('yarn analyze command with configuration file with apply flag', () => {
   })
 })
 
-describe('yarn analyze command with configuration file with ignore flag', async () => {
+describe('yarn analyze command with configuration file with ignore flag', () => {
   const projectRoot = path.resolve(__dirname, '..')
   const configPath = path.join(projectRoot, '.config', 'vue-mess-detector.json')
   const config = JSON.stringify({
     ignore: 'vue-strong,vue-recommended',
   }, null, 2)
 
-  it('should execute without any flags and path', async () => {
+  beforeAll(async () => {
     await createConfigFile(configPath, config)
+  })
+
+  afterAll(async () => {
+    await removeConfigFile(configPath)
+  })
+
+  it('should execute without any flags and path', async () => {
     const { stdout } = await runCLI()
     expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
-    expect(stdout).toContain(`Ignoring 12 rules`)
-    await removeConfigFile(configPath)
+    expect(stdout).toContain('Ignoring 12 individual rules')
   })
 })
 

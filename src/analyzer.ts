@@ -9,11 +9,13 @@ import { parse } from '@vue/compiler-sfc'
 import { minimatch } from 'minimatch'
 import { setHasServer, setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
+import { FLAT_RULES } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import hasServerDir from './helpers/hasServerDir'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
+import { RULESETS } from './rules/rules'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 
@@ -87,6 +89,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   const config = await getConfig(projectRoot)
 
   // Use config values if not provided in cli params
+  // TODO add support for merging cli and config
   apply = apply.length ? apply : config.apply.split(',')
   ignore = ignore.length ? ignore : config.ignore ? config.ignore.split(',') : []
   exclude = exclude || config.exclude
@@ -96,22 +99,25 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   _override = config.override
 
-  const appliedRules = apply.filter(rule => !ignore.includes(rule))
+  apply = apply.filter(rule => !ignore.includes(rule))
+  const { rulesets, individualRules } = groupRulesByRuleset(apply)
 
-  const { rulesets, individualRules } = groupRulesByRuleset(appliedRules)
+  const rulesetsInIgnore = ignore.filter(rule => RULESETS.includes(rule as RuleSetType))
+  const rulesInIgnore = ignore.filter(rule => FLAT_RULES.includes(rule))
+  const ignoredRulesets = [...new Set([...rulesetsInIgnore, ...RULESETS.filter(ruleset => !rulesets.includes(ruleset))])]
+  const ignoredRules = [...new Set([...rulesInIgnore, ...FLAT_RULES.filter(rule => !individualRules.includes(rule))])]
+
+  const appliedRulesets = rulesets.filter(ruleset => !ignoredRulesets.includes(ruleset as RuleSetType))
+  const appliedRules = individualRules.filter(rule => !ignoredRules.includes(rule))
+  _apply = appliedRules
 
   // Prepare output messages for applied rulesets and rules
-  const rulesetsOutput = rulesets.length ? `<bg_info>${rulesets.join(', ')}</bg_info>` : 'N/A'
-  const indRulesOutput = individualRules.length ? `<bg_info>${individualRules.join(', ')}</bg_info>` : 'N/A'
-
-  let applyingMessage = `      Applying ${rulesets.length} rulesets: ${rulesetsOutput}`
-  if (individualRules.length > 0) {
-    applyingMessage += `\n      Applying ${individualRules.length} individual rules: ${indRulesOutput}`
-  }
+  const appliedRulesetsOutput = appliedRulesets.length ? `<bg_info>${appliedRulesets.join(', ')}</bg_info>` : 'N/A'
+  const appliedRulesOutput = appliedRules.length ? `<bg_info>${appliedRules.join(', ')}</bg_info>` : 'N/A'
 
   // Prepare output message for ignored rulesets
-  const ignoredRulesets = ignore.filter(ruleset => !rulesets.includes(ruleset as RuleSetType))
   const ignoreRulesetsOutput = ignoredRulesets.length ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>` : 'N/A'
+  const ignoredRulesOutput = ignoredRules.length ? `<bg_info>${ignoredRules.join(', ')}</bg_info>` : 'N/A'
 
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
@@ -119,6 +125,11 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   const hasServer = hasServerDir(projectRoot)
   setHasServer(hasServer)
+
+  let applyingMessage = `      Applying ${appliedRulesets.length} rulesets: ${appliedRulesetsOutput}`
+  if (individualRules.length > 0) {
+    applyingMessage += `\n      Applying ${appliedRules.length} individual rules: ${appliedRulesOutput}`
+  }
 
   const output: { info: string }[] = []
 
@@ -130,20 +141,19 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
   output.push({
     info: `${applyingMessage}
-      Ignoring ${ignoredRulesets.length} rules: ${ignoreRulesetsOutput}
+      Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
+      Ignoring ${ignoredRules.length} individual rules: ${ignoredRulesOutput}
       Excluding ${exclude || '-'}
       Output level <bg_info>${level}</bg_info>
       Grouping by <bg_info>${groupBy}</bg_info>
       Sorting <bg_info>${sortBy}</bg_info>`,
   })
 
-  // Filter out ignored rules from the apply list
-  _apply = apply.filter(rule => !ignore.includes(rule))
-
   if (exclude) {
     excludeFiles.push(...exclude.split(',').map(pattern => pattern.trim()))
   }
 
+  // walk through the directory and check the files
   const overview = await walkAsync(dir)
   output.push(...overview.map(info => ({ info })))
 

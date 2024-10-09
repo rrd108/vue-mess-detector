@@ -47,7 +47,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // rrd
     amountOfComments: () => checkAmountOfComments(script, filePath),
     bigVif: () => checkBigVif(descriptor.template, filePath, override.maxVifLines),
-    bigVShow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
+    bigVshow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
     complicatedConditions: () => checkComplicatedConditions(descriptor, filePath, override.warningThreshold),
     cyclomaticComplexity: () => checkCyclomaticComplexity(script, filePath, override.complexityModerate),
     computedSideEffects: () => checkComputedSideEffects(script, filePath),
@@ -82,18 +82,10 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
   }
 
   // Run the checks for each applied rule or ruleset
-  apply.forEach((item) => {
-    if (item in RULES) {
-      // If it's a ruleset, apply all rules in that ruleset
-      RULES[item as keyof typeof RULES].forEach((rule) => {
-        if (rule in ruleChecks) {
-          ruleChecks[rule]()
-        }
-      })
+  apply.forEach((rule) => {
+    if (!(rule in ruleChecks)) {
+      console.error(`Rule ${rule} not found in ruleChecks`)
     }
-    if (item in ruleChecks) {
-      // If it's an individual rule, apply it directly
-      ruleChecks[item]()
-    }
+    ruleChecks[rule]()
   })
 }
