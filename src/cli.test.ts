@@ -237,7 +237,7 @@ describe('yarn analyze command with configuration file with ignore flag', async 
     const { stdout } = await runCLI()
     expect(stdout).toContain(`👉 Using configuration from ${BG_INFO}vue-mess-detector.json${BG_RESET}`)
     expect(stdout).toContain('Analyzing Vue, TS and JS files in ')
-    expect(stdout).toContain(`Ignoring 2 rulesets: ${BG_INFO}vue-recommended, vue-strong${BG_RESET}`)
+    expect(stdout).toContain(`Ignoring 12 rules`)
     await removeConfigFile(configPath)
   })
 })
