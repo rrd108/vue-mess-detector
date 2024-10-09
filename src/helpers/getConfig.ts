@@ -44,6 +44,10 @@ export const getConfig = async (projectRoot: string): Promise<Config> => {
       configFileContent = configFromRoot
     }
 
+    if (configFileContent.ignore) {
+      defaultConfig.apply = ''
+    }
+
     return {
       ...defaultConfig,
       ...configFileContent,
