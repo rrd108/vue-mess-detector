@@ -110,6 +110,12 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Integrations',
+        items: [
+          { text: 'Github Action', link: '/integrations/vmd-action' },
+        ],
+      },
+      {
         items: [
           { text: 'Suggested Readings', link: '/suggested-readings' },
         ],
