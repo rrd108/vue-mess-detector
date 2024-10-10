@@ -1,11 +1,24 @@
 # VMD Action
 
-Here is an example on how to use it on your workflow using `pnpm`, `npm`, `yarn` or `bun`:
+[![Release](https://img.shields.io/github/v/release/brenoepics/vmd-action?include_prereleases&sort=semver&logo=github)](https://github.com/brenoepics/vmd-action/releases)
 
-<details>
-<summary>pnpm</summary>
+:::tip
+  To learn more details about the available options it has, check out the [official documentation](https://github.com/brenoepics/vmd-action).
+:::
 
-```yaml
+This GitHub Action integrates VMD into your CI pipeline, providing several key features:
+
+- **Relative Analysis**: Highlights new issues in pull requests.
+- **PR Comments**: Adds detailed comments on detected issues.
+- **Action Summary**: Summarizes analysis results in the GitHub Actions tab.
+
+## Usage
+
+Here is an example on how to use it on your workflow using `npm`, `pnpm`, `yarn` or `bun`:
+
+::: code-group
+
+```yaml [npm]
 name: VMD Analysis
 
 on:
@@ -29,7 +42,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Vue Mess Detector Analysis
+        uses: brenoepics/vmd-action@v0.0.6
+```
+
+```yaml [pnpm]
+name: VMD Analysis
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  detect-mess:
+    runs-on: ubuntu-latest
+    name: Detect Vue Mess
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4  // [!code ++:5]
         name: Install pnpm
         with:
           run_install: false
@@ -39,18 +85,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'pnpm' // [!code ++]
 
       - name: Vue Mess Detector Analysis
         uses: brenoepics/vmd-action@v0.0.6
 ```
 
-</details>
-
-<details>
-<summary>npm</summary>
-
-```yaml
+```yaml [yarn]
 name: VMD Analysis
 
 on:
@@ -78,17 +119,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'yarn' // [!code ++]
 
       - name: Vue Mess Detector Analysis
         uses: brenoepics/vmd-action@v0.0.6
 ```
 
-</details>
-
-<details>
-<summary>yarn</summary>
-
-```yaml
+```yaml [bun]
 name: VMD Analysis
 
 on:
@@ -112,46 +149,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'yarn'
-
-      - name: Vue Mess Detector Analysis
-        uses: brenoepics/vmd-action@v0.0.6
-```
-
-</details>
-
-<details>
-<summary>bun</summary>
-
-```yaml
-name: VMD Analysis
-
-on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  pull-requests: write
-
-jobs:
-  detect-mess:
-    runs-on: ubuntu-latest
-    name: Detect Vue Mess
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Bun
+      - name: Install Bun // [!code ++:4]
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 'latest'
@@ -159,8 +157,5 @@ jobs:
       - name: Vue Mess Detector Analysis
         uses: brenoepics/vmd-action@v0.0.6
 ```
-</details>
 
-:::tip
-  To learn more details about the available options it has, check out the [official documentation](https://github.com/brenoepics/vmd-action).
 :::
