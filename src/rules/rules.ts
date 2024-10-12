@@ -43,6 +43,7 @@ export const RULES = {
     'magicNumbers',
     'nestedTernary',
     'noDirectDomAccess',
+    'noImportant',
     'noInlineStyles',
     'noPropDestructure',
     'noSkippedTests',
