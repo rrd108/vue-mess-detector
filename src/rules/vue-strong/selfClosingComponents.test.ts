@@ -20,6 +20,25 @@ describe('checkSelfClosingComponents', () => {
     expect(result).toStrictEqual([])
   })
 
+  it('should not report files with self-closing components', () => {
+    const template = `<template>
+      <a
+        href="/path/to/link"
+      ><InsideComponent /></a>
+    </template>`
+    const descriptor = {
+      source: template,
+      template: {
+        content: template,
+      },
+    } as SFCDescriptor
+    const fileName = 'self-close-component.vue'
+    checkSelfClosingComponents(descriptor, fileName)
+    const result = reportSelfClosingComponents()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should not report files where the components self close', () => {
     const template = `<template>
       <MyComponent />
