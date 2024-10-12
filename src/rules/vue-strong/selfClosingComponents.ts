@@ -1,6 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-
 import { charNotIn, createRegExp, letter, linefeed, maybe, oneOrMore, tab, wordChar } from 'magic-regexp'
 import getLineNumber from '../getLineNumber'
 
@@ -25,6 +24,17 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
     '>',
     ['g'],
   )
+
+  // New regex to match self-closing components
+  const regexValidSelfClosingComponent = createRegExp(
+    '<',
+    oneOrMore(letter.uppercase, wordChar),
+    maybe(linefeed, tab),
+    maybe(oneOrMore(charNotIn('>'))),
+    '/>',
+    ['g'],
+  )
+
   const matches = template?.content?.match(regexSelfClosingComponent)
 
   if (matches === null) {
@@ -32,6 +42,12 @@ const checkSelfClosingComponents = (descriptor: SFCDescriptor | null, filePath: 
   }
 
   matches?.forEach((componentTag) => {
+    // Check if the component tag contains a valid self-closing component
+    const validSelfClosingMatches = componentTag.match(regexValidSelfClosingComponent)
+    if (validSelfClosingMatches) {
+      return // Skip this match as it contains a valid self-closing component
+    }
+
     const lineNumber = getLineNumber(descriptor.source, componentTag)
     const lastPart = componentTag.split('\n').at(-1)?.trim() || ''
     results.push({ filePath, message: `line #${lineNumber} <bg_warn>${lastPart}</bg_warn>` })
