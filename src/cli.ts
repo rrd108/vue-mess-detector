@@ -23,7 +23,7 @@ const showHelpAndExit = (yargsInstance: any) => {
 
 let pathArg = './src'
 const analyzeIndex = process.argv.indexOf('analyze')
-if (analyzeIndex !== -1 && !process.argv[analyzeIndex + 1].startsWith('--')) {
+if (analyzeIndex !== -1 && process.argv[analyzeIndex + 1] && !process.argv[analyzeIndex + 1].startsWith('-')) {
   pathArg = process.argv[analyzeIndex + 1]
 }
 
