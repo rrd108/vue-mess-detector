@@ -21,9 +21,13 @@ const showHelpAndExit = (yargsInstance: any) => {
   process.exit(1)
 }
 
-const pathArg = process.argv[2] == 'analyze' ? process.argv[3] : process.argv[4]
+let pathArg = './src'
+const analyzeIndex = process.argv.indexOf('analyze')
+if (analyzeIndex !== -1 && !process.argv[analyzeIndex + 1].startsWith('--')) {
+  pathArg = process.argv[analyzeIndex + 1]
+}
 
-getProjectRoot(pathArg || './src').then(async (projectRoot) => {
+getProjectRoot(pathArg).then(async (projectRoot) => {
   const config = await getConfig(projectRoot)
 
   checkArgs(process.argv, config)
