@@ -14,6 +14,10 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
   // Regex to match elements with attributes
   // eslint-disable-next-line regexp/no-super-linear-backtracking
   const elementRegex = /<(\w+)([^>]*)>/g
+
+  // Regex to match attributes
+  const attributeRegex = /\w+=["'][^"']*["']/g
+
   let match: RegExpExecArray | null
 
   // eslint-disable-next-line no-cond-assign
@@ -21,8 +25,14 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
     const elementTag = match[1]
     const attributesString = match[2]
 
+    const attributes = []
+    let attrMatch
+
     // Check if there are multiple attributes
-    const attributes = attributesString.split(/\s+/).filter(attr => attr.trim() !== '')
+    // eslint-disable-next-line no-cond-assign
+    while ((attrMatch = attributeRegex.exec(attributesString)) !== null) {
+      attributes.push(attrMatch[0])
+    }
 
     if (attributes.length > 1) {
       // Check if attributes are on separate lines
