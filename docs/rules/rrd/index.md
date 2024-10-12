@@ -17,6 +17,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
 - [Nested Ternary](./nested-ternary.md)
+- [No !Important](./no-important.md)
 - [No Direct Dom Access](./no-direct-dom-access.md)
 - [No Inline Styles](./no-inline-styles.md)
 - [No Prop Destructing](./no-prop-destructure.md)

@@ -83,6 +83,7 @@ export default defineConfig({
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },
+                { text: 'No !important', link: '/rules/rrd/no-important' },
                 { text: 'No Direct Dom Access', link: '/rules/rrd/no-direct-dom-access' },
                 { text: 'No Inline Styles', link: '/rules/rrd/no-inline-styles' },
                 { text: 'No Props Destructure', link: '/rules/rrd/no-prop-destructure' },
