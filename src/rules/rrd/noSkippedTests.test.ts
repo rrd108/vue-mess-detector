@@ -13,7 +13,24 @@ describe('checkNoSkippedTests', () => {
       })
       `,
     } as SFCScriptBlock
-    const fileName = 'no-skipped-tests.vue'
+    const fileName = 'no-skipped-tests.test.ts'
+    checkNoSkippedTests(script, fileName)
+    const result = reportNoSkippedTests()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it('should not report non-test files', () => {
+    const script = {
+      content: `
+      const navigateSkip = async () => {
+        const state = getAuthFlow().getState<'onboarding_username'>();
+        const nextState = await state!.actions.skip(null).run();
+        getAuthFlow().handlers[nextState.name](nextState as any);
+      };
+      `,
+    } as SFCScriptBlock
+    const fileName = 'non-test.ts'
     checkNoSkippedTests(script, fileName)
     const result = reportNoSkippedTests()
     expect(result.length).toBe(0)
@@ -30,7 +47,7 @@ describe('checkNoSkippedTests', () => {
         })
         `,
     } as SFCScriptBlock
-    const fileName = 'todo-tests.vue'
+    const fileName = 'todo-tests.test.ts'
     checkNoSkippedTests(script, fileName)
     const result = reportNoSkippedTests()
     expect(result.length).toBe(1)
@@ -56,7 +73,7 @@ describe('checkNoSkippedTests', () => {
         })
         `,
     } as SFCScriptBlock
-    const fileName = 'skipped-tests.vue'
+    const fileName = 'skipped-tests.test.ts'
     checkNoSkippedTests(script, fileName)
     const result = reportNoSkippedTests()
     expect(result.length).toBe(2)
