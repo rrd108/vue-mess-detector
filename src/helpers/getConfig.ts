@@ -17,7 +17,6 @@ const getConfigFileContent = async (filePath: string) => {
 
 export const getConfig = async (projectRoot: string): Promise<Config> => {
   const defaultConfig: Config = {
-    path: undefined,
     apply: Object.values(RULESETS).join(','),
     ignore: '',
     exclude: '',
