@@ -97,23 +97,23 @@ jobs:
             yes "my-package" | head -n 1 | pnpm create vue@latest . --default --typescript
             pnpm add file:${{ github.workspace }}/package/ -D
             pnpm install
-            pnpm vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            pnpm vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "yarn" ]; then
             yes "my-package" | head -n 1 | yarn --cwd . create vue . --default --typescript
             touch ./yarn.lock
             yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
             yarn install
-            yarn vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "bun" ]; then
             yes "my-package" | head -n 1 | bun create vue . --default --typescript --cwd=. --ignore-scripts
             bun add file:${{ github.workspace }}/package/ --dev
             bun install --ignore-scripts
-            bun run vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
           else
             yes "my-package" | head -n 1 | npm create vue@latest -- . --default --typescript
             npm install file:${{ github.workspace }}/package/ --save-dev
             npm install
-            npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
           fi
           node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
@@ -125,23 +125,23 @@ jobs:
             echo "my-package" | pnpm create vue@latest . --default --typescript
             pnpm add file:${{ github.workspace }}/package/ -D
             pnpm install
-            pnpm vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            pnpm vue-mess-detector analyze --output=json --file-output=vmd-output.json
           } elseif ($Env:matrix_package_manager -eq 'yarn') {
             echo "my-package" | yarn create vue . --default --typescript
             touch ./yarn.lock
             yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
             yarn install
-            yarn vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
           } elseif ($Env:matrix_package_manager -eq 'bun') {
             echo "my-package" | bun create vue . --default --typescript --ignore-scripts
             bun add file:${{ github.workspace }}/package/ --d
             bun install --ignore-scripts
-            bun run vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
           } else {
             echo "my-package" | npm create vue@latest -- . --default --typescript
             npm install file:${{ github.workspace }}/package/ --save-dev
             npm install
-            npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
+            npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
           }
           node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
