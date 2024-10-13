@@ -41,7 +41,7 @@ getProjectRoot(pathArg).then(async (projectRoot) => {
         builder: yargs => yargs
           .positional('path', {
             describe: 'path to the Vue files',
-            default: './src',
+            default: pathArg,
           })
           .option('apply', {
             alias: 'a',
