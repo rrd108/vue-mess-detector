@@ -1,7 +1,7 @@
 import type { OverrideConfig } from './Override'
 
 export interface Config {
-  path: string
+  path?: string
   apply: string
   ignore: string
   exclude: string
