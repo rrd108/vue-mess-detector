@@ -1548,15 +1548,10 @@
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.5.10.tgz"
   integrity sha512-VkkBhU97Ki+XJ0xvl4C9YJsIZ2uIlQ7HqPpZOS3m9VCvmROPaChZU6DexdMJqvz9tbgG+4EtFVrSuailUq5KGQ==
 
-"@vue/shared@3.5.12":
+"@vue/shared@3.5.12", "@vue/shared@^3.5.12":
   version "3.5.12"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.12.tgz#f9e45b7f63f2c3f40d84237b1194b7f67de192e3"
   integrity sha512-L2RPSAwUFbgZH20etwrXyVyCBu9OxRSi8T/38QsvnkJyvq2LufW2lDCOzm7t/U9C1mkhJGWYfCuFBCmIuNivrg==
-
-"@vue/shared@^3.5.11":
-  version "3.5.11"
-  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.11.tgz#464b840afc89be9373addff9eeb9dfc98bf3fe2e"
-  integrity sha512-W8GgysJVnFo81FthhzurdRAWP/byq3q2qIw70e0JWblzVhjgOMiC2GyovXrZTFQJnFVryYaKGP3Tc9vYzYm6PQ==
 
 "@vueuse/core@11.1.0", "@vueuse/core@^11.1.0":
   version "11.1.0"
@@ -1709,9 +1704,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 birpc@^0.2.17:
-  version "0.2.17"
-  resolved "https://registry.yarnpkg.com/birpc/-/birpc-0.2.17.tgz#d0bdb90d4d063061156637f03b7b0adea1779734"
-  integrity sha512-+hkTxhot+dWsLpp3gia5AkVHIsKlZybNT5gIYiDlNzJrmYPcTM9k5/w2uaj3IPpd7LlEYpmCj4Jj1nC41VhDFg==
+  version "0.2.19"
+  resolved "https://registry.yarnpkg.com/birpc/-/birpc-0.2.19.tgz#cdd183a4a70ba103127d49765b4a71349da5a0ca"
+  integrity sha512-5WeXXAvTmitV1RqJFppT5QtUiz2p1mRSYU000Jkft5ZUCLJIk4uQriYNO50HknxKwM6jd8utNc66K1qGIwwWBQ==
 
 boolbase@^1.0.0:
   version "1.0.0"
@@ -4620,9 +4615,9 @@ vite@^5.0.0, vite@^5.4.8:
     fsevents "~2.3.3"
 
 vitepress@^1.3.1:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/vitepress/-/vitepress-1.4.0.tgz#5e879230d98e5c4e5aec91daade6945bbc18934b"
-  integrity sha512-JXCv4EsKTDyAFb6C/UjZr7nsGAzZ6mafVk2rx7rG5o8N+B/4QstIk+iEOe/9dKoU6V624UIC6g1pZ+K63rxhlw==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/vitepress/-/vitepress-1.4.1.tgz#59c2f242e6a9efd27388093994a5b8df42e9dcb4"
+  integrity sha512-C2rQ7PMlDVqgsaHOa0uJtgGGWaGv74QMaGL62lxKbtFkYtosJB5HAfZ8+pEbfzzvLemYaYwaiQdFLBlexK2sFw==
   dependencies:
     "@docsearch/css" "^3.6.2"
     "@docsearch/js" "^3.6.2"
@@ -4632,7 +4627,7 @@ vitepress@^1.3.1:
     "@types/markdown-it" "^14.1.2"
     "@vitejs/plugin-vue" "^5.1.4"
     "@vue/devtools-api" "^7.4.6"
-    "@vue/shared" "^3.5.11"
+    "@vue/shared" "^3.5.12"
     "@vueuse/core" "^11.1.0"
     "@vueuse/integrations" "^11.1.0"
     focus-trap "^7.6.0"
@@ -4640,7 +4635,7 @@ vitepress@^1.3.1:
     minisearch "^7.1.0"
     shiki "^1.22.0"
     vite "^5.4.8"
-    vue "^3.5.11"
+    vue "^3.5.12"
 
 vitest@^2.0.0:
   version "2.1.2"
@@ -4699,7 +4694,7 @@ vue-tsc@^2.0.0:
     "@vue/language-core" "2.1.6"
     semver "^7.5.4"
 
-vue@^3.4.27, vue@^3.5.11:
+vue@^3.4.27, vue@^3.5.12:
   version "3.5.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.12.tgz#e08421c601b3617ea2c9ef0413afcc747130b36c"
   integrity sha512-CLVZtXtn2ItBIi/zHZ0Sg1Xkb7+PU32bJJ8Bmy7ts3jxXTcbfsEfBivFYYWz1Hur+lalqGAh65Coin0r+HRUfg==
