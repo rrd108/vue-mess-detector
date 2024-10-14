@@ -25,7 +25,7 @@ The following code contains the use of `!important`, which is discouraged:
   <div class="button">Click Me</div>
 </template>
 
-<style>
+<style scoped>
 .button {
   background-color: blue !important; /* Disallowed */
   color: white;
