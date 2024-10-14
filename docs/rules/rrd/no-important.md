@@ -44,7 +44,7 @@ Refactor your CSS to avoid using `!important` by managing specificity through pr
   <div class="button">Click Me</div>
 </template>
 
-<style>
+<style scoped>
 .button {
   background-color: blue; /* Removed !important */
   color: white;
