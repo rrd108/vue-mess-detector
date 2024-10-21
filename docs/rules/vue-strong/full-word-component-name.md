@@ -1,6 +1,6 @@
 # Full-word Component Names
 
-Checks if the component name is a full word. As this is not easy to detect programatically we jsu check if the name has less then 3 consonants &nbsp;&nbsp;<br />
+Checks if the component name is a full word. As this is not easy to detect programmatically we just check if the name has less then 3 consonants &nbsp;&nbsp;<br />
 👉 https://vuejs.org/style-guide/rules-strongly-recommended.html#full-word-component-names
 
 ## ❓ Why it's good to follow this rule?
@@ -38,9 +38,9 @@ Refactor the component name to use a full word, ensuring it contains at least th
 
 ## 🛠 How to override?
 
-The default mininimum consonant count for this rule is **3**.
+The default minimum consonant count for this rule is **3**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

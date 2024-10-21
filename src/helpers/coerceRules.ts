@@ -28,7 +28,7 @@ const coerceRules = (optionName: 'ignore' | 'apply') => {
 
     if (invalidValues.length > 0) {
       console.error(
-        `\n${BG_ERR}Invalid ${optionName} values: ${invalidValues.join(', ')}${BG_RESET}. \n${TEXT_WARN}Allowed values are: ${FLAT_RULESETS_RULES.join(', ')}${TEXT_RESET}\n\n`,
+        `\n${BG_ERR}Invalid ${optionName} values: ${invalidValues.join(', ')}${BG_RESET}. \n${TEXT_WARN}Allowed values are: ${FLAT_RULESETS_RULES.sort().join(', ')}${TEXT_RESET}\n\n`,
       )
       // eslint-disable-next-line node/prefer-global/process
       process.exit(1)

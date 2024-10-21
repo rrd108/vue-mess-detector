@@ -32,7 +32,7 @@ npm install vue-mess-detector --save-dev
 
 ## 📦 Integrations
 
-- [Github Action](https://github.com/brenoepics/vmd-action) 
+- [Github Action](https://vue-mess-detector.webmania.cc/integrations/vmd-action.html) 
 - [Nuxt Devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
 - [Vscode Extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
 - Vue Devtools (in progress)
@@ -47,7 +47,7 @@ Basic usage:
 npx vue-mess-detector analyze [path] [--flags]
 ```
 
-If you want to store your flags in a configuration file, you can create a `vue-mess-detector.json` file in the root of your project.
+If you want to store your flags in a configuration file, you can create a `.config/vue-mess-detector.json` file in the root of your project.
 
 ## 📚 Documentation
 

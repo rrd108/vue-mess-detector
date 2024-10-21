@@ -1,6 +1,6 @@
 # 💻 rrd Rules
 
-These ruleset is the most opinionated with rules that are not part of the _offical_ Vue style guide. They are based on the experience of this repo owner and are meant to help you write better Vue code.
+These ruleset is the most opinionated with rules that are not part of the _official_ Vue style guide. They are based on the experience of this repo owner and are meant to help you write better Vue code.
 
 - [Amount of Comments](./amount-of-comments.md)
 - [Big v-if](./big-vif.md)
@@ -17,6 +17,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [If Without Curly Braces](./if-without-curly-braces.md)
 - [Magic Numbers](./magic-numbers.md)
 - [Nested Ternary](./nested-ternary.md)
+- [No !Important](./no-important.md)
 - [No Direct Dom Access](./no-direct-dom-access.md)
 - [No Inline Styles](./no-inline-styles.md)
 - [No Prop Destructing](./no-prop-destructure.md)
@@ -30,6 +31,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [Script Length](./script-length.md)
 - [Short Variable Name](./short-variable-name.md)
 - [Too Many Props](./too-many-props.md)
+- [VFor Expression](./v-for-expression.md)
 - [VFor with Index Key](./v-for-with-index-key.md)
 - [Zero Length Comparison](./zero-length-comparison.md)
 

@@ -13,7 +13,7 @@ describe('checkAmountOfComments', () => {
         const result = x + y + z;
       `,
     } as SFCScriptBlock
-    const fileName = 'amounOfComments.vue'
+    const fileName = 'amountOfComments.vue'
     checkAmountOfComments(script, fileName)
     const result = reportAmountOfComments()
     expect(result.length).toBe(0)
@@ -47,7 +47,7 @@ describe('checkAmountOfComments', () => {
         const y = 2;
       `,
     } as SFCScriptBlock
-    const fileName = 'amounOfComments-problem.vue'
+    const fileName = 'amountOfComments-problem.vue'
     checkAmountOfComments(script, fileName)
     const result = reportAmountOfComments()
     expect(result.length).toBe(1)
@@ -85,7 +85,7 @@ describe('checkAmountOfComments', () => {
         </script>
       `,
     } as SFCScriptBlock
-    const fileName = 'amounOfComments-problem.vue'
+    const fileName = 'amountOfComments-problem.vue'
     checkAmountOfComments(script, fileName)
     const result = reportAmountOfComments()
     expect(result.length).toBe(1)

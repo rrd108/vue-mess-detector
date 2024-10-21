@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { checkMultiAttributeElements, reportMultiAttributeElements } from './multiAttributeElements'
 
 describe('multiAttributeElements', () => {
-  it('should not report files where elements have single attributes', () => {
+  it('should not report files when elements have single attribute', () => {
     const template = {
       content: `
         <template>
           <div id="app"></div>
+          <div class="container border"></div>
           <button @click="handleClick">Click me</button>
         </template>
       `,

@@ -83,6 +83,7 @@ export default defineConfig({
                 { text: 'If Without Curly Braces', link: '/rules/rrd/if-without-curly-braces' },
                 { text: 'Magic Numbers', link: '/rules/rrd/magic-numbers' },
                 { text: 'Nested Ternary', link: '/rules/rrd/nested-ternary' },
+                { text: 'No !important', link: '/rules/rrd/no-important' },
                 { text: 'No Direct Dom Access', link: '/rules/rrd/no-direct-dom-access' },
                 { text: 'No Inline Styles', link: '/rules/rrd/no-inline-styles' },
                 { text: 'No Props Destructure', link: '/rules/rrd/no-prop-destructure' },
@@ -96,6 +97,7 @@ export default defineConfig({
                 { text: 'Script Length', link: '/rules/rrd/script-length' },
                 { text: 'Short Variable Name', link: '/rules/rrd/short-variable-name' },
                 { text: 'Too Many Props', link: '/rules/rrd/too-many-props' },
+                { text: 'VFor Expression', link: '/rules/rrd/v-for-expression' },
                 { text: 'VFor with Index Key', link: '/rules/rrd/v-for-with-index-key' },
                 { text: 'Zero Length Comparison', link: '/rules/rrd/zero-length-comparison' },
               ] },
@@ -107,6 +109,12 @@ export default defineConfig({
           },
           { text: 'Contribute', link: '/contribute' },
           { text: 'eslint-plugin-vue Comparison', link: '/eslint-comparison' },
+        ],
+      },
+      {
+        text: 'Integrations',
+        items: [
+          { text: 'Github Action', link: '/integrations/vmd-action' },
         ],
       },
       {

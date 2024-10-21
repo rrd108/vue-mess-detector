@@ -8,7 +8,7 @@ const results: FileCheckResult[] = []
 const resetResults = () => (results.length = 0)
 
 const checkNoSkippedTests = (script: SFCScriptBlock | null, filePath: string) => {
-  if (!script) {
+  if (!script || !filePath.includes('.test')) {
     return
   }
 

@@ -14,7 +14,7 @@ const checkNestedTernary = (script: SFCScriptBlock | null, filePath: string) => 
   const content = skipComments(script.content.trim())
   const lines = content.split('\n')
 
-  // In here we use `index` as lineNumber becase we are splitting the content by new lines
+  // In here we use `index` as lineNumber because we are splitting the content by new lines
   lines.forEach((line, index) => {
     // Remove string literals to avoid false positives
     const lineWithoutStrings = line.replace(/'[^']*'|"[^"]*"/g, '')

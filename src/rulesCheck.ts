@@ -1,8 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getHasServer, getIsNuxt } from './context'
-import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkRepeatedCss, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
-import { RULES } from './rules/rules'
+import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoImportant, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkRepeatedCss, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForExpression, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
@@ -47,7 +46,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // rrd
     amountOfComments: () => checkAmountOfComments(script, filePath),
     bigVif: () => checkBigVif(descriptor.template, filePath, override.maxVifLines),
-    bigVShow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
+    bigVshow: () => checkBigVshow(descriptor.template, filePath, override.maxVshowLines),
     complicatedConditions: () => checkComplicatedConditions(descriptor, filePath, override.warningThreshold),
     cyclomaticComplexity: () => checkCyclomaticComplexity(script, filePath, override.complexityModerate),
     computedSideEffects: () => checkComputedSideEffects(script, filePath),
@@ -61,6 +60,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
     noDirectDomAccess: () => checkNoDirectDomAccess(script, filePath),
+    noImportant: () => checkNoImportant(descriptor.template, filePath),
     noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
     noPropDestructure: () => checkNoPropDestructure(script, filePath),
     noSkippedTests: () => checkNoSkippedTests(script, filePath),
@@ -73,6 +73,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     scriptLength: () => checkScriptLength(script, filePath, override.maxScriptLength),
     shortVariableName: () => checkShortVariableName(script, filePath, override.minVariableName),
     tooManyProps: () => checkTooManyProps(script, filePath, override.maxPropsCount),
+    vForExpression: () => checkVForExpression(descriptor.template, filePath),
     vForWithIndexKey: () => isVueFile && checkVForWithIndexKey(descriptor.template, filePath),
     zeroLengthComparison: () => checkZeroLengthComparison(script, filePath),
 
@@ -82,18 +83,10 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
   }
 
   // Run the checks for each applied rule or ruleset
-  apply.forEach((item) => {
-    if (item in RULES) {
-      // If it's a ruleset, apply all rules in that ruleset
-      RULES[item as keyof typeof RULES].forEach((rule) => {
-        if (rule in ruleChecks) {
-          ruleChecks[rule]()
-        }
-      })
+  apply.forEach((rule) => {
+    if (!(rule in ruleChecks)) {
+      console.error(`Rule ${rule} not found in ruleChecks`)
     }
-    if (item in ruleChecks) {
-      // If it's an individual rule, apply it directly
-      ruleChecks[item]()
-    }
+    ruleChecks[rule]()
   })
 }

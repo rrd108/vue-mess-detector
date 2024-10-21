@@ -27,7 +27,7 @@ describe('checkMagicNumbers', () => {
     expect(result).toStrictEqual([])
   })
 
-  it('should report files with magic number before a closing bracet', () => {
+  it('should report files with magic number before a closing bracket', () => {
     const script = { content: 'if (ms < 100) { ... } else { ... }' } as SFCScriptBlock
     const fileName = 'with-magic-number-before-bracket.vue'
     checkMagicNumbers(script, fileName)

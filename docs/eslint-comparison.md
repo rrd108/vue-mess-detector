@@ -1,6 +1,6 @@
 # eslint-plugin-vue vs Vue Mess Detector
 
-Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are the de facto standard for linting Vue.js code. We highly encourage you to use them. Vue Mess Detector is not ment to replace them, but to complement them.
+Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are the de facto standard for linting Vue.js code. We highly encourage you to use them. Vue Mess Detector is not meant to replace them, but to complement them.
 
 ## Comparison table
 
@@ -9,7 +9,7 @@ Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are t
 | Primary Focus | Linting Vue.js code | Comprehensive code analysis and quality assessment |
 | Type of Tool | ESLint plugin | Standalone analysis tool |
 | Installation | Via `npm`/`yarn` as an ESLint plugin | Via `npm`, `yarn`, `pnpm`, `bun`, or `JSR` registry |
-| Configuration | Uses `.eslintrc` or `eslint.config.js` | Uses command-line options or `vue-mess-detector.json` |
+| Configuration | Uses `.eslintrc` or `eslint.config.js` | Uses command-line options or `.config/vue-mess-detector.json` |
 | Integration | Integrated with ESLint ecosystem | Standalone with various integrations (VSCode, Nuxt devtools, etc.) |
 | Rules/Checks | Primarily syntax and style checks | Broader analysis including code health metrics |
 | Customization | Highly customizable through ESLint | Less customizable through command-line options, and configuration file |

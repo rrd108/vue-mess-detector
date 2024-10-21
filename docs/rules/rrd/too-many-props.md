@@ -53,7 +53,7 @@ In the refactored example, the props are grouped into two objects, meta and inte
 
 The default max props count for this rule is **5**.
 
-You can override through the new `override` option in `vue-mess-detector.json` ⬇️
+You can override through the new `override` option in `.config/vue-mess-detector.json` ⬇️
 
 ```json
 {

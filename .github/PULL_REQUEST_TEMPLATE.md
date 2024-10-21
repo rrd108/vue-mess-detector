@@ -16,4 +16,4 @@ Fixes #
 - [ ] Documentation update
 
 ### Screenshots (if applicable)
-<!-- Add screenshots to help expalin the changes -->
+<!-- Add screenshots to help explain the changes -->

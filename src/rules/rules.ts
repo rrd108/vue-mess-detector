@@ -43,6 +43,7 @@ export const RULES = {
     'magicNumbers',
     'nestedTernary',
     'noDirectDomAccess',
+    'noImportant',
     'noInlineStyles',
     'noPropDestructure',
     'noSkippedTests',
@@ -56,6 +57,7 @@ export const RULES = {
     'shortVariableName',
     'tooManyProps',
     'vForWithIndexKey',
+    'vForExpression',
     'zeroLengthComparison',
   ],
   'security': [
