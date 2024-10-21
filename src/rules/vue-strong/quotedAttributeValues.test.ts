@@ -13,7 +13,7 @@ describe('checkQuotedAttributeValues', () => {
         content: template,
       },
     } as SFCDescriptor
-    const fileName = 'quoted-attribue-value.vue'
+    const fileName = 'quoted-attribute-value.vue'
     checkQuotedAttributeValues(descriptor, fileName)
     const result = reportQuotedAttributeValues()
     expect(result.length).toBe(0)
@@ -30,7 +30,7 @@ describe('checkQuotedAttributeValues', () => {
         content: template,
       },
     } as SFCDescriptor
-    const fileName = 'not-quoted-attribue-value.vue'
+    const fileName = 'not-quoted-attribute-value.vue'
     checkQuotedAttributeValues(descriptor, fileName)
     const result = reportQuotedAttributeValues()
     expect(result.length).toBe(1)

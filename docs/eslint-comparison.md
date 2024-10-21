@@ -1,6 +1,6 @@
 # eslint-plugin-vue vs Vue Mess Detector
 
-Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are the de facto standard for linting Vue.js code. We highly encourage you to use them. Vue Mess Detector is not ment to replace them, but to complement them.
+Eslint and [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue) are the de facto standard for linting Vue.js code. We highly encourage you to use them. Vue Mess Detector is not meant to replace them, but to complement them.
 
 ## Comparison table
 

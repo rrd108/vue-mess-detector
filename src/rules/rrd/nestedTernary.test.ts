@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { checkNestedTernary, reportNestedTernary } from './nestedTernary'
 
 describe('checkNestedTernary', () => {
-  it('should not report files with simle ternary', () => {
+  it('should not report files with simple ternary', () => {
     const script = {
       content: `const today = new Date()
       const isMonday = today.getDay() == 1 ? true : false`,
@@ -26,7 +26,7 @@ describe('checkNestedTernary', () => {
     expect(result).toStrictEqual([])
   })
 
-  it('should not report files when optional chaning is used along with a ternary', () => {
+  it('should not report files when optional chaining is used along with a ternary', () => {
     const script = {
       content: `const countDatasets = this.structure?.volume ? this.structure.volume.length : 0;`,
     } as SFCScriptBlock
