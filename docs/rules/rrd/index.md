@@ -27,6 +27,7 @@ These ruleset is the most opinionated with rules that are not part of the _offic
 - [Parameter Count](./parameter-count.md)
 - [Plain Script](./plain-script.md)
 - [Props Drilling](./props-drilling.md)
+- [Repeated CSS](./repeated-css.md)
 - [Script Length](./script-length.md)
 - [Short Variable Name](./short-variable-name.md)
 - [Too Many Props](./too-many-props.md)
