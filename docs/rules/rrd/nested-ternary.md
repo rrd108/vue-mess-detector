@@ -12,7 +12,7 @@ Checks if the script has nested ternaries.
 ## 😱 Examples of code for which this rule will throw a warning
 
 ::: warning
-The following code contains a nested ternary operato.
+The following code contains a nested ternary operator.
 :::
 
 ```vue

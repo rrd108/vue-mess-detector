@@ -92,7 +92,7 @@ yarn docs:generate
 8. **Add the rule to the documentation**
 
    - Add your new rule to the `docs/rules/RULESET/rule-name.md` file.
-   - Use exsiting rules as a reference for the documentation.
+   - Use existing rules as a reference for the documentation.
    - Add your rule's link to the ruleset's index page at `docs/rules/RULESET/index.md`.
    - Add your rule's link to `docs/.vitepress/config.ts` file's `sidebar` object.
    - Run the missing documentation check to ensure you have added all the necessary documentation:

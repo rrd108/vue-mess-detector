@@ -50,15 +50,15 @@ const checkFile = async (fileName: string, filePath: string) => {
 
 // Recursive function to walk through directories
 const walkAsync = async (dir: string) => {
-  const overwievMessages: string[] = []
+  const overviewMessages: string[] = []
   const file = await fs.stat(dir)
 
   if (!file.isDirectory()) {
     const info = await checkFile(dir, dir)
     if (info) {
-      overwievMessages.push(info)
+      overviewMessages.push(info)
     }
-    return overwievMessages
+    return overviewMessages
   }
 
   const files = await fs.readdir(dir)
@@ -69,17 +69,17 @@ const walkAsync = async (dir: string) => {
       if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(pattern => minimatch(filePath, pattern))) {
         const subDirInfo = await walkAsync(filePath)
         if (subDirInfo) {
-          overwievMessages.push(...subDirInfo)
+          overviewMessages.push(...subDirInfo)
         }
       }
     }
 
     const info = await checkFile(filePath, filePath)
     if (info) {
-      overwievMessages.push(info)
+      overviewMessages.push(info)
     }
   }
-  return overwievMessages
+  return overviewMessages
 }
 
 export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
