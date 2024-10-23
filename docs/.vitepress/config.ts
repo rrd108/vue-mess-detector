@@ -93,6 +93,7 @@ export default defineConfig({
                 { text: 'Parameter Count', link: '/rules/rrd/parameter-count' },
                 { text: 'Plain Script', link: '/rules/rrd/plain-script' },
                 { text: 'Props Drilling', link: '/rules/rrd/props-drilling' },
+                { text: 'Repeated CSS', link: '/rules/rrd/repeated-css' },
                 { text: 'Script Length', link: '/rules/rrd/script-length' },
                 { text: 'Short Variable Name', link: '/rules/rrd/short-variable-name' },
                 { text: 'Too Many Props', link: '/rules/rrd/too-many-props' },
