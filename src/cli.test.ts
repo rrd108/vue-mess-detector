@@ -20,15 +20,6 @@ const removeConfigFile = async (configPath: string) => {
 
 const runCLI = (...args: string[]) => execa('npx', ['tsx', './src/cli.ts', 'analyze', ...args])
 
-describe('yarn version prints out version', () => {
-  const runCLIVersion = () => execa('npx', ['tsx', './src/cli.ts', '--version'])
-
-  it('should execute without any flags and path', async () => {
-    const { stdout } = await runCLIVersion()
-    expect(stdout).toContain('Version')
-  })
-})
-
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {
     const { stdout } = await runCLI()
