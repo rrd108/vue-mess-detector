@@ -140,7 +140,7 @@ describe('yarn analyze command with default configuration', () => {
   })
 
   it('should execute with exclude wildcard for test files', async () => {
-    const { stdout } = await runCLI('--apply=rrd', '--level=error', '--exclude=*.test.ts')
+    const { stdout } = await runCLI('--apply=rrd', '--level=error', '--exclude=*.test.ts', 'src/')
     const normalizedStdout = normalizePath(stdout)
     expect(normalizedStdout).toContain('Excluding *.test.ts')
     expect(normalizedStdout).toContain('Analyzing src/rules/rrd/complicatedConditions.ts...')
