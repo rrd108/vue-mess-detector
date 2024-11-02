@@ -1,0 +1,57 @@
+name: Documentation Release
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          
+      - name: Install dependencies
+        run: yarn install
+        
+      - name: Check missing docs
+        run: yarn docs:missing
+        
+      - name: Build documentation
+        run: yarn docs:build
+        
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+      - name: Deploy to server
+        run: |
+          rsync --progress -azh \
+            --delete --exclude='error/' --exclude='stats/' --exclude='.htaccess' --exclude='robots.txt' \
+            ./docs/.vitepress/dist/ \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./web/
+            
+      - name: Update release file
+        run: |
+          current_datetime=$(date "+%Y-%m-%d %H:%M:%S %Z")
+          echo "Last release: $current_datetime" > ./docs/.release
+          
+      - name: Commit release file
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/.release
+          git commit -m "Update docs release timestamp [skip ci]" || echo "No changes to commit"
+          git push
