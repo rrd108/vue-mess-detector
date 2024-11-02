@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
-    "@types/node": "^20.13.0",
+    "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
