@@ -15,12 +15,12 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
     return { codeHealth, output }
   }
 
-  const codeHealthPoints = Math.ceil((1 - (errors * ERROR_WEIGHT + warnings) / linesCount) * 100)
+  const codeHealthPoints = Math.ceil((1 - Math.min(1, (errors * ERROR_WEIGHT + warnings) / linesCount)) * 100)
   codeHealth.points = codeHealthPoints
 
   const BAR_WIDTH = 60
-  const yellowLength = !warnings ? 0 : Math.max(1, Math.ceil(warnings / linesCount * BAR_WIDTH))
-  const redLength = !errors ? 0 : Math.max(1, BAR_WIDTH - Math.ceil(codeHealthPoints * BAR_WIDTH / 100) - yellowLength)
+  const yellowLength = !warnings ? 0 : Math.max(1, Math.ceil(Math.min(1, warnings / linesCount) * BAR_WIDTH))
+  const redLength = !errors ? 0 : Math.max(0, BAR_WIDTH - Math.ceil(codeHealthPoints * BAR_WIDTH / 100) - yellowLength)
   const greenLength = BAR_WIDTH - redLength - yellowLength
 
   const healthBar = `<bg_ok>${'_'.repeat(greenLength)}</bg_ok><bg_warn>${'_'.repeat(yellowLength)}</bg_warn><bg_err>${'_'.repeat(redLength)}</bg_err>`

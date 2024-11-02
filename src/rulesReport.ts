@@ -1,7 +1,7 @@
 import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunction, SortBy } from './types'
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
-import { reportAmountOfComments, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoDirectDomAccess, reportNoImportant, reportNoInlineStyles, reportNoPropDestructure, reportNoSkippedTests, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForExpression, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
+import { reportAmountOfComments, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoDirectDomAccess, reportNoImportant, reportNoInlineStyles, reportNoPropDestructure, reportNoSkippedTests, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportRepeatedCss, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForExpression, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
 import { reportApiWithoutMethod, reportRateLimiter } from './rules/security'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
@@ -84,6 +84,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(() => reportParameterCount(override.maxParameterCount))
   processOffenses(reportPlainScript)
   processOffenses(reportPropsDrilling)
+  processOffenses(reportRepeatedCss)
   processOffenses(() => reportScriptLength(override.maxScriptLength))
   processOffenses(() => reportShortVariableName(override.minVariableName))
   processOffenses(reportTooManyProps)

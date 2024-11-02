@@ -52,6 +52,7 @@ export const RULES = {
     'parameterCount',
     'plainScript',
     'propsDrilling',
+    'repeatedCss',
     'scriptLength',
     'shortVariableName',
     'tooManyProps',
