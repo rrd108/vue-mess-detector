@@ -1,7 +1,6 @@
 import type { NodePath } from '@babel/traverse'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import * as parser from '@babel/parser'
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
 import { parseScript } from '../../helpers/parseScript'
