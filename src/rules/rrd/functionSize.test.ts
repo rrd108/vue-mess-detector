@@ -53,7 +53,7 @@ describe('checkFunctionSize', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files where no function exceeds the limit', () => {
+  it('should not report files where no function exceeds the limit', () => {
     const script = {
       content: `
         <script setup>
@@ -62,7 +62,6 @@ describe('checkFunctionSize', () => {
           const someVal = 100
 
           function func() {
-            // ...
             // ...
             // ...
             // ...
@@ -156,7 +155,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
       description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function <bg_warn>(${funcName}#2)</bg_warn> is too long: <bg_warn>23 lines</bg_warn> 🚨`,
+      message: `function <bg_warn>(${funcName}#2)</bg_warn> is too long: <bg_warn>25 lines</bg_warn> 🚨`,
     }])
   })
 
@@ -233,12 +232,12 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
       description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function <bg_warn>(dummyRegularFunction#2)</bg_warn> is too long: <bg_warn>29 lines</bg_warn> 🚨`,
+      message: `function <bg_warn>(dummyRegularFunction#2)</bg_warn> is too long: <bg_warn>31 lines</bg_warn> 🚨`,
     }, {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
       description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function <bg_warn>(dummyArrowFunction#34)</bg_warn> is too long: <bg_warn>23 lines</bg_warn> 🚨`,
+      message: `function <bg_warn>(dummyArrowFunction#34)</bg_warn> is too long: <bg_warn>25 lines</bg_warn> 🚨`,
     }])
   })
 
@@ -299,7 +298,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
       description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function <bg_err>(getOpenBookings#2)</bg_err> is too long: <bg_err>41 lines</bg_err> 🚨`,
+      message: `function <bg_warn>(getOpenBookings#2)</bg_warn> is too long: <bg_warn>39 lines</bg_warn> 🚨`,
     }])
   })
 
@@ -347,7 +346,7 @@ describe('checkFunctionSize', () => {
       file: fileName,
       rule: `<text_info>rrd ~ function size</text_info>`,
       description: `👉 <text_warn>Functions must be shorter than ${maxSize} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/function-size.html`,
-      message: `function <bg_warn>(createFiles#10)</bg_warn> is too long: <bg_warn>20 lines</bg_warn> 🚨`,
+      message: `function <bg_warn>(createFiles#10)</bg_warn> is too long: <bg_warn>22 lines</bg_warn> 🚨`,
     }])
   })
 })
