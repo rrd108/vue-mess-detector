@@ -1,42 +1,65 @@
+import type { NodePath } from '@babel/traverse'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
 import type { FileCheckResult, Offense } from '../../types'
+import traverse from '@babel/traverse'
+import * as t from '@babel/types'
+import { getFunctionParams } from '../../helpers/getFunctionParams'
+import { parseScript } from '../../helpers/parseScript'
 
 const results: FileCheckResult[] = []
 
-const resetResults = () => (results.length = 0)
-
-// Function used in both scenarios (regular and arrow function) to count parameters
-const checkParameters = (funcName: string, params: string, filePath: string, maxParameterCount: number) => {
-  const paramsArray = params
-    .split(',')
-    .map(param => param.trim())
-    .filter(param => param.length > 0)
-  if (paramsArray.length > maxParameterCount) {
-    results.push({ filePath, message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsArray.length}</bg_warn> parameters` })
+function checkParameters(name: string, params: t.Identifier[], filePath: string, startLine: number, maxParameterCount: number) {
+  if (params.length > maxParameterCount) {
+    results.push({
+      filePath,
+      message: `function <bg_warn>${name}#${startLine}</bg_warn> has <bg_warn>${params.length}</bg_warn> parameters`,
+    })
   }
 }
+
+const resetResults = () => (results.length = 0)
 
 const checkParameterCount = (script: SFCScriptBlock | null, filePath: string, maxParameterCount: number) => {
   if (!script) {
     return
   }
 
-  // regular expression to match both regular and arrow functions and capture their params
-  const regex = /function\s+([\w$]+)\s*\(([^)]*)\)\s*\{|const\s+([\w$]+)\s*=\s*\(([^)]*)\)\s*=>\s*\{/g
-  let match
+  // Clean up script content
+  const content = script.content.trim().replace(/<script\b[^>]*>|<\/script>/gi, '')
+  const ast = parseScript(content)
 
-  // eslint-disable-next-line no-cond-assign
-  while ((match = regex.exec(script.content)) !== null) {
-    if (match[1]) {
-      // Regular function
-      checkParameters(match[1], match[2], filePath, maxParameterCount) // match[2] are the params for current regular function
-    }
-    if (match[3]) {
-      // Arrow function
-      checkParameters(match[3], match[4], filePath, maxParameterCount) // match[4] are the params for current arrow function
-    }
-  }
+  // Walk through the AST and check each type of function
+  traverse(ast, {
+    // Regular functions: function myFunc(a, b, c) { ... }
+    FunctionDeclaration(path: NodePath<t.FunctionDeclaration>) {
+      const info = getFunctionParams(path)
+      if (info) {
+        checkParameters(info.name, info.params, filePath, info.startLine, maxParameterCount)
+      }
+    },
+
+    // Arrow functions: const myFunc = (a, b, c) => { ... }
+    ArrowFunctionExpression(path: NodePath<t.ArrowFunctionExpression>) {
+      if (t.isVariableDeclarator(path.parent)) {
+        const info = getFunctionParams(path)
+        if (info) {
+          checkParameters(info.name, info.params, filePath, info.startLine, maxParameterCount)
+        }
+      }
+    },
+
+    // Function expressions: const myFunc = function(a, b, c) { ... }
+    FunctionExpression(path: NodePath<t.FunctionExpression>) {
+      const parentName = t.isVariableDeclarator(path.parent) && t.isIdentifier(path.parent.id)
+        ? path.parent.id.name
+        : undefined
+
+      const info = getFunctionParams(path, parentName)
+      if (info) {
+        checkParameters(info.name, info.params, filePath, info.startLine, maxParameterCount)
+      }
+    },
+  })
 }
 
 const reportParameterCount = (maxParameterCount: number) => {
@@ -54,7 +77,6 @@ const reportParameterCount = (maxParameterCount: number) => {
   }
 
   resetResults()
-
   return offenses
 }
 

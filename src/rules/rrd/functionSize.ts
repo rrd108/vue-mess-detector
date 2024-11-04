@@ -4,8 +4,8 @@ import type { FileCheckResult, Offense } from '../../types'
 import * as parser from '@babel/parser'
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
+import { parseScript } from '../../helpers/parseScript'
 
-// Parameters needed to track and report function size violations
 interface AddFunctionToFilesParams {
   funcName: string // Name of the function being analyzed
   startLine: number // Starting line of the function in the file
@@ -35,26 +35,6 @@ function addFunctionToFiles({ funcName, startLine, endLine, filePath, max }: Add
     results.push({
       filePath,
       message: `function <bg_warn>(${funcName}#${startLine})</bg_warn> is too long: <bg_warn>${lineCount} lines</bg_warn>`,
-    })
-  }
-}
-
-/**
- * Converts JavaScript/TypeScript code into an AST (Abstract Syntax Tree)
- * First attempts to parse with TypeScript and JSX support
- * Falls back to basic JavaScript parsing if TypeScript parsing fails
- */
-function parseScript(content: string) {
-  try {
-    return parser.parse(content, {
-      sourceType: 'module',
-      plugins: ['typescript', 'jsx'],
-    })
-  }
-  catch {
-    // Fallback to script parsing without TypeScript
-    return parser.parse(content, {
-      sourceType: 'module',
     })
   }
 }
