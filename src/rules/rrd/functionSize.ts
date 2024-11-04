@@ -1,175 +1,117 @@
+import type { NodePath } from '@babel/traverse'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
-import getLineNumber from '../getLineNumber'
+import traverse from '@babel/traverse'
+import * as t from '@babel/types'
+import { parseScript } from '../../helpers/parseScript'
 
 interface AddFunctionToFilesParams {
-  funcName: string
-  funcBody: string
-  lineNumber: number
-  filePath: string
-  max: number
+  funcName: string // Name of the function being analyzed
+  startLine: number // Starting line of the function in the file
+  endLine: number // Ending line of the function in the file
+  filePath: string // Path to the file being analyzed
+  max: number // Maximum allowed lines for a function
 }
 
 const results: FileCheckResult[] = []
 
-const CONST_KEYWORD_LENGTH = 'const'.length
-const FUNCTION_KEYWORD_LENGTH = 'function'.length
-
-function addFunctionToFiles({ funcName, funcBody, lineNumber, filePath, max }: AddFunctionToFilesParams) {
-  const lineCount = funcBody.split('\n').length
-
-  const cleanedFuncName = cleanFunctionName(funcName)
+/**
+ * Analyzes a function's size and adds violations to the results array
+ * - If size > 2*max: Reports as error (red highlight)
+ * - If max <= size <= 2*max: Reports as warning (yellow highlight)
+ */
+function addFunctionToFiles({ funcName, startLine, endLine, filePath, max }: AddFunctionToFilesParams) {
+  const lineCount = endLine - startLine + 1
 
   if (lineCount > 2 * max) {
-    results.push({ filePath, message: `function <bg_err>(${cleanedFuncName}#${lineNumber})</bg_err> is too long: <bg_err>${lineCount} lines</bg_err>` })
+    results.push({
+      filePath,
+      message: `function <bg_err>(${funcName}#${startLine})</bg_err> is too long: <bg_err>${lineCount} lines</bg_err>`,
+    })
     return
   }
   if (lineCount >= max) {
-    results.push({ filePath, message: `function <bg_warn>(${cleanedFuncName}#${lineNumber})</bg_warn> is too long: <bg_warn>${lineCount} lines</bg_warn>` })
+    results.push({
+      filePath,
+      message: `function <bg_warn>(${funcName}#${startLine})</bg_warn> is too long: <bg_warn>${lineCount} lines</bg_warn>`,
+    })
   }
-}
-
-function parseRegularFunction(content: string, startIndex: number) {
-  // eslint-disable-next-line regexp/prefer-w
-  const functionRegex = /function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*\([^)]*\)\s*\{/g
-  functionRegex.lastIndex = startIndex // Start search from the given index
-
-  const match = functionRegex.exec(content)
-
-  if (match) {
-    const name = match[1]
-    const bodyStartIndex = functionRegex.lastIndex
-    let braceCount = 1 // To track the opening brace we just found
-    let currentIndex = bodyStartIndex
-
-    while (braceCount > 0 && currentIndex < content.length) {
-      if (content[currentIndex] === '{') {
-        braceCount++
-      }
-      else if (content[currentIndex] === '}') {
-        braceCount--
-      }
-      currentIndex++
-    }
-
-    const body = content.slice(bodyStartIndex, currentIndex - 1).trim() // Extract the function body
-
-    return {
-      name,
-      body,
-      end: currentIndex, // Returns the position after the matched function
-    }
-  }
-  else {
-    return null
-  }
-}
-
-function parseArrowFunction(content: string, index: number) {
-  // Define regex to match arrow functions with or without curly braces
-  // eslint-disable-next-line regexp/prefer-w, regexp/no-unused-capturing-group
-  const regex = /const\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*=\s*(async\s+)?\(([^)]*)\)\s*=>\s*/
-
-  // Extract the substring starting from the current index
-  const substring = content.slice(index)
-  const match = regex.exec(substring)
-
-  if (match) {
-    const [, name] = match
-    const bodyStartIndex = index + match.index + match[0].length // Calculate the start index of the function body
-    let bodyEndIndex = bodyStartIndex
-    let body = ''
-
-    if (content[bodyStartIndex] === '{') {
-      // If the function body starts with '{', we are dealing with a block arrow function
-      let braceCount = 1 // Start with 1 to account for the opening brace
-      bodyEndIndex = bodyStartIndex + 1 // Move past the opening brace
-
-      while (bodyEndIndex < content.length && braceCount > 0) {
-        // Traverse the content to find the closing brace
-        if (content[bodyEndIndex] === '{') {
-          braceCount++
-        }
-        else if (content[bodyEndIndex] === '}') {
-          braceCount--
-        }
-        bodyEndIndex++ // Move to the next character
-      }
-
-      // Extract the function body, excluding the final closing brace
-      body = content.slice(bodyStartIndex + 1, bodyEndIndex - 1).trim()
-    }
-    else {
-      // If the function body does not start with '{', it's a concise body arrow function
-      while (bodyEndIndex < content.length && content[bodyEndIndex] !== ';') {
-        // Traverse until we find the end of the concise body (usually a semicolon)
-        bodyEndIndex++
-      }
-
-      // Extract the function body up to the semicolon or end of content
-      body = content.slice(bodyStartIndex, bodyEndIndex).trim()
-    }
-
-    return {
-      name,
-      body,
-      end: bodyEndIndex, // Position after the end of the function body
-    }
-  }
-  else {
-    return null
-  }
-}
-
-// Cleans the function name by removing any leading 'const' keyword.
-function cleanFunctionName(funcName: string): string {
-  return funcName.replace(/^const\s*/, '')
 }
 
 const resetResults = () => (results.length = 0)
 
+/**
+ * Main function to analyze function sizes in a Vue component's script block
+ * Uses Babel to parse the code and traverse the AST to find all function definitions
+ *
+ * @param script - The script block from a Vue component
+ * @param filePath - Path to the file being analyzed
+ * @param max - Maximum allowed function size in lines
+ */
 const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string, max: number) => {
   if (!script) {
     return
   }
 
-  const content = script.content
-  const length = content.length
-  let index = 0
+  // Clean up script content by removing script tags
+  const content = script.content.trim().replace(/<script\b[^>]*>|<\/script>/gi, '')
+  // Parse the code into an AST for analysis
+  const ast = parseScript(content)
 
-  while (index < length) {
-    let funcName = ''
-    let funcBody = ''
-    let isFunction = false
+  // Walk through the AST and check each type of function definition
+  traverse(ast, {
+    // Handles regular function declarations: function myFunc() { ... }
+    FunctionDeclaration(path: NodePath<t.FunctionDeclaration>) {
+      const name = path.node.id?.name || 'anonymous'
+      const startLine = path.node.loc?.start.line || 0
+      const endLine = path.node.loc?.end.line || 0
 
-    // Check for function declarations
-    if (content.slice(index, index + FUNCTION_KEYWORD_LENGTH) === 'function') {
-      const regularFunctionInfo = parseRegularFunction(content, index)
-      if (regularFunctionInfo) {
-        isFunction = true
-        funcName = regularFunctionInfo.name
-        funcBody = regularFunctionInfo.body
-        index = regularFunctionInfo.end
+      addFunctionToFiles({
+        funcName: name,
+        startLine,
+        endLine,
+        filePath,
+        max,
+      })
+    },
+
+    // Handles arrow functions: const myFunc = () => { ... }
+    ArrowFunctionExpression(path: NodePath<t.ArrowFunctionExpression>) {
+      // Only check named arrow functions (those assigned to variables)
+      if (t.isVariableDeclarator(path.parent)) {
+        const name = t.isIdentifier(path.parent.id) ? path.parent.id.name : 'anonymous'
+        const startLine = path.node.loc?.start.line || 0
+        const endLine = path.node.loc?.end.line || 0
+
+        addFunctionToFiles({
+          funcName: name,
+          startLine,
+          endLine,
+          filePath,
+          max,
+        })
       }
-    }
-    if (content.slice(index, index + CONST_KEYWORD_LENGTH) === 'const') { // Check for arrow functions
-      const arrowFunctionInfo = parseArrowFunction(content, index)
-      if (arrowFunctionInfo) {
-        isFunction = true
-        funcName = arrowFunctionInfo.name
-        funcBody = arrowFunctionInfo.body
-        index = arrowFunctionInfo.end // move the index past the end of the function
-      }
-    }
+    },
 
-    if (isFunction) {
-      const lineNumber = getLineNumber(content.trim(), funcName)
-      addFunctionToFiles({ funcName, funcBody, lineNumber, filePath, max })
-    }
-    else {
-      index++
-    }
-  }
+    // Handles function expressions: const myFunc = function() { ... }
+    FunctionExpression(path: NodePath<t.FunctionExpression>) {
+      let name = 'anonymous'
+      if (t.isVariableDeclarator(path.parent) && t.isIdentifier(path.parent.id)) {
+        name = path.parent.id.name
+      }
+
+      const startLine = path.node.loc?.start.line || 0
+      const endLine = path.node.loc?.end.line || 0
+
+      addFunctionToFiles({
+        funcName: name,
+        startLine,
+        endLine,
+        filePath,
+        max,
+      })
+    },
+  })
 }
 
 const reportFunctionSize = (max: number) => {

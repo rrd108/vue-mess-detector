@@ -1,7 +1,10 @@
+import type { NodePath } from '@babel/traverse'
 import type { SFCScriptBlock } from '@vue/compiler-sfc'
-
 import type { FileCheckResult, Offense } from '../../types'
-import getLineNumber from '../getLineNumber'
+import traverse from '@babel/traverse'
+import * as t from '@babel/types'
+import { hasSideEffects } from '../../helpers/hasSideEffects'
+import { parseScript } from '../../helpers/parseScript'
 
 const results: FileCheckResult[] = []
 
@@ -12,23 +15,36 @@ const checkComputedSideEffects = (script: SFCScriptBlock | null, filePath: strin
     return
   }
 
-  const computedRegex = /computed\s*\(\s*\(\s*\)\s*=>\s*\{([\s\S]*?)\}\s*\)/g
-  // eslint-disable-next-line regexp/no-unused-capturing-group
-  const sideEffectRegex = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/
+  const content = script.content.trim().replace(/<script\b[^>]*>|<\/script>/gi, '')
+  const ast = parseScript(content)
 
-  const matches = [...script.content.matchAll(computedRegex)]
+  traverse(ast, {
+    CallExpression(path: NodePath<t.CallExpression>) {
+      // Check if this is a computed() call
+      if (t.isIdentifier(path.node.callee) && path.node.callee.name === 'computed') {
+        const [arg] = path.node.arguments
 
-  matches.forEach((match) => {
-    const computedBody = match[1]
-    if (sideEffectRegex.test(computedBody)) {
-      const lineNumber = getLineNumber(script.content.trim(), match[0])
-      const trimmedBody = computedBody.trim()
-      const truncatedBody = trimmedBody.length > 20 ? trimmedBody.slice(0, 20) : trimmedBody
-      results.push({
-        filePath,
-        message: `line #${lineNumber} side effect detected in computed property <bg_err>(${truncatedBody})</bg_err>`,
-      })
-    }
+        // Check if the argument is an arrow function
+        if (t.isArrowFunctionExpression(arg)) {
+          const functionBody = t.isBlockStatement(arg.body) ? arg.body : t.blockStatement([t.returnStatement(arg.body)])
+
+          if (hasSideEffects(functionBody)) {
+            const loc = path.node.loc
+            if (loc) {
+              const lineNumber = loc.start.line
+              // Get the computed function's code for the message
+              const computedCode = script.content.slice(path.node.start!, path.node.end!)
+              const truncatedCode = computedCode.length > 20 ? `${computedCode.slice(0, 20)}...` : computedCode
+
+              results.push({
+                filePath,
+                message: `line #${lineNumber} side effect detected in computed property <bg_err>(${truncatedCode.trim()})</bg_err>`,
+              })
+            }
+          }
+        }
+      }
+    },
   })
 }
 

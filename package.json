@@ -52,6 +52,8 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "@babel/parser": "^7.26.2",
+    "@babel/traverse": "^7.25.9",
     "@vue/compiler-sfc": "^3.4.27",
     "cli-table3": "^0.6.5",
     "html-tags": "^4.0.0",
@@ -62,6 +64,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
+    "@types/babel__traverse": "7.x",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
