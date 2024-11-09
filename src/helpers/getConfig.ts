@@ -19,6 +19,7 @@ export const getConfig = async (projectRoot: string): Promise<Config> => {
   const defaultConfig: Config = {
     apply: Object.values(RULESETS).join(','),
     ignore: '',
+    fileIgnoreRules: {},
     exclude: '',
     group: 'rule',
     level: 'all',
@@ -53,6 +54,10 @@ export const getConfig = async (projectRoot: string): Promise<Config> => {
       override: {
         ...defaultConfig.override,
         ...configFileContent?.override,
+      },
+      fileIgnoreRules: {
+        ...defaultConfig.fileIgnoreRules,
+        ...configFileContent?.fileIgnoreRules,
       },
     }
   }
