@@ -23,10 +23,24 @@ let filesCount = 0
 let linesCount = 0
 let _apply: string[] = []
 let _override: OverrideConfig = {} as OverrideConfig
+let _fileIgnoreRules: { [key: string]: string } = {}
 
 // Directories to skip during analysis
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
+
+const check_file_ignore_rules = (filePath: string, fileIgnoreRules: { [key: string]: string }) => {
+  let apply = [..._apply]
+
+  for (const [pattern, rules] of Object.entries(fileIgnoreRules)) {
+    if (minimatch(filePath, pattern, { matchBase: true })) {
+      const ignoreRules = rules.split(',').map(rule => rule.trim())
+      apply = apply.filter(rule => !ignoreRules.includes(rule))
+    }
+  }
+
+  return apply
+}
 
 const checkFile = async (fileName: string, filePath: string) => {
   if (excludeFiles.some(pattern => minimatch(filePath, pattern, { matchBase: true }))) {
@@ -43,7 +57,9 @@ const checkFile = async (fileName: string, filePath: string) => {
       descriptor.script = { content } as SFCScriptBlock
     }
 
-    checkRules(descriptor, filePath, _apply, _override)
+    const apply = check_file_ignore_rules(filePath, _fileIgnoreRules)
+
+    checkRules(descriptor, filePath, apply, _override)
     return `Analyzing ${filePath}...`
   }
 }
@@ -82,7 +98,7 @@ const walkAsync = async (dir: string) => {
   return overviewMessages
 }
 
-export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc' }: AnalyzeParams): Promise<AnalyzeOutput> => {
+export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', groupBy = 'rule', level = 'all', sortBy = 'desc', fileIgnoreRules = {} }: AnalyzeParams): Promise<AnalyzeOutput> => {
   filesCount = 0
   linesCount = 0
   const projectRoot = await getProjectRoot(dir)
@@ -96,6 +112,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
   groupBy = groupBy || config.group
   level = level || config.level
   sortBy = sortBy || config.sort
+  _fileIgnoreRules = { ...config.fileIgnoreRules, ...fileIgnoreRules }
 
   _override = config.override
 
@@ -143,6 +160,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
     info: `${applyingMessage}
       Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
       Ignoring ${ignoredRules.length} individual rules: ${ignoredRulesOutput}
+      Ignoring file-specific rules: ${Object.entries(fileIgnoreRules).map(([file, rules]) => `${file}: ${rules}`).join(', ')}
       Excluding ${exclude || '-'}
       Output level <bg_info>${level}</bg_info>
       Grouping by <bg_info>${groupBy}</bg_info>
