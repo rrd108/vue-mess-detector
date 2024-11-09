@@ -29,7 +29,7 @@ let _fileIgnoreRules: { [key: string]: string } = {}
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
 
-const check_file_ignore_rules = (filePath: string, fileIgnoreRules: { [key: string]: string }) => {
+const checkFileIgnoreRules = (filePath: string, fileIgnoreRules: { [key: string]: string }) => {
   let apply = [..._apply]
 
   for (const [pattern, rules] of Object.entries(fileIgnoreRules)) {
@@ -57,7 +57,7 @@ const checkFile = async (fileName: string, filePath: string) => {
       descriptor.script = { content } as SFCScriptBlock
     }
 
-    const apply = check_file_ignore_rules(filePath, _fileIgnoreRules)
+    const apply = checkFileIgnoreRules(filePath, _fileIgnoreRules)
 
     checkRules(descriptor, filePath, apply, _override)
     return `Analyzing ${filePath}...`
