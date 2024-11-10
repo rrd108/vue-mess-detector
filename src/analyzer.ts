@@ -15,7 +15,7 @@ import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import hasServerDir from './helpers/hasServerDir'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
-import { RULESETS } from './rules/rules'
+import { RULES, RULESETS } from './rules/rules'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 
@@ -30,12 +30,25 @@ const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', 
 const excludeFiles: string[] = []
 
 const checkFileIgnoreRules = (filePath: string, fileIgnoreRules: { [key: string]: string }) => {
-  let apply = [..._apply]
+  let apply = [..._apply] // Here we get a list of rules only - no rule sets
 
   for (const [pattern, rules] of Object.entries(fileIgnoreRules)) {
     if (minimatch(filePath, pattern, { matchBase: true })) {
       const ignoreRules = rules.split(',').map(rule => rule.trim())
-      apply = apply.filter(rule => !ignoreRules.includes(rule))
+      // Expand ignoreRules by replacing rulesets with individual rules
+      const expandedIgnoreRules = ignoreRules.flatMap((rule) => {
+        if (RULESETS.includes(rule as RuleSetType)) {
+          return RULES[rule as RuleSetType]
+        }
+        else {
+          return rule
+        }
+      })
+
+      // Remove duplicates by converting to a Set and back to an array
+      const uniqueIgnoreRules = Array.from(new Set(expandedIgnoreRules))
+
+      apply = apply.filter(rule => !uniqueIgnoreRules.includes(rule))
     }
   }
 
