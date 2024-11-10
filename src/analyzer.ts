@@ -14,8 +14,8 @@ import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import hasServerDir from './helpers/hasServerDir'
-import { checkFileIgnoreRules } from './helpers/setupFileIgnoreList'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
+import { checkFileIgnoreRules } from './helpers/setupFileIgnoreList'
 import { RULESETS } from './rules/rules'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
@@ -148,7 +148,7 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
     info: `${applyingMessage}
       Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
       Ignoring ${ignoredRules.length} individual rules: ${ignoredRulesOutput}
-      Ignoring file-specific rules: ${Object.entries(fileIgnoreRules).map(([file, rules]) => `${file}: ${rules}`).join(', ')}
+      Ignoring file-specific rules: ${Object.entries(_fileIgnoreRules).map(([file, rules]) => `${file}: ${rules}`).join(', ')}
       Excluding ${exclude || '-'}
       Output level <bg_info>${level}</bg_info>
       Grouping by <bg_info>${groupBy}</bg_info>
