@@ -14,8 +14,9 @@ import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
 import hasServerDir from './helpers/hasServerDir'
+import { checkFileIgnoreRules } from './helpers/ignoreListHelper'
 import { isNuxtProject, isVueProject } from './helpers/projectTypeChecker'
-import { RULES, RULESETS } from './rules/rules'
+import { RULESETS } from './rules/rules'
 import { checkRules } from './rulesCheck'
 import { reportRules } from './rulesReport'
 
@@ -28,32 +29,6 @@ let _fileIgnoreRules: { [key: string]: string } = {}
 // Directories to skip during analysis
 const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
-
-const checkFileIgnoreRules = (filePath: string, fileIgnoreRules: { [key: string]: string }) => {
-  let apply = [..._apply] // Here we get a list of rules only - no rule sets
-
-  for (const [pattern, rules] of Object.entries(fileIgnoreRules)) {
-    if (minimatch(filePath, pattern, { matchBase: true })) {
-      const ignoreRules = rules.split(',').map(rule => rule.trim())
-      // Expand ignoreRules by replacing rulesets with individual rules
-      const expandedIgnoreRules = ignoreRules.flatMap((rule) => {
-        if (RULESETS.includes(rule as RuleSetType)) {
-          return RULES[rule as RuleSetType]
-        }
-        else {
-          return rule
-        }
-      })
-
-      // Remove duplicates by converting to a Set and back to an array
-      const uniqueIgnoreRules = Array.from(new Set(expandedIgnoreRules))
-
-      apply = apply.filter(rule => !uniqueIgnoreRules.includes(rule))
-    }
-  }
-
-  return apply
-}
 
 const checkFile = async (fileName: string, filePath: string) => {
   if (excludeFiles.some(pattern => minimatch(filePath, pattern, { matchBase: true }))) {
@@ -70,7 +45,7 @@ const checkFile = async (fileName: string, filePath: string) => {
       descriptor.script = { content } as SFCScriptBlock
     }
 
-    const apply = checkFileIgnoreRules(filePath, _fileIgnoreRules)
+    const apply = checkFileIgnoreRules(filePath, _fileIgnoreRules, _apply)
 
     checkRules(descriptor, filePath, apply, _override)
     return `Analyzing ${filePath}...`
