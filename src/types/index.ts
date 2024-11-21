@@ -27,6 +27,7 @@ export interface AnalyzeParams {
   groupBy: GroupBy
   level: OutputLevel
   sortBy: SortBy
+  fileIgnoreRules?: { [key: string]: string }
 }
 
 export interface Offense {

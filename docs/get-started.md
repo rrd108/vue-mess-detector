@@ -113,9 +113,15 @@ If you want to store your flags in a configuration file, you can create a `.conf
 ```json
 {
   "apply": "vue-strong,rrd",
-  "level": "error"
+  "level": "error",
+  "fileIgnoreRules": {
+    "src/main.ts": "tooManyProps,computedSideEffects",
+    "src/router/index.ts": "noConsole,multiAttributeElements"
+  }
 }
 ```
+
+Note that fileIgnoreRules is only available in the json file configuration. This field allows you to ignore specific rules for specific files.
 
 You can override the limits for multiple rules using our new `override` field in the config file:
 
