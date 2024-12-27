@@ -2,6 +2,8 @@
 
 A comprehensive code analysis and quality assessment tool that provides actionable insights into code health, helping developers identify and resolve potential issues in Vue.js and Nuxt.js projects.
 
+If you like this project, please consider giving it a star ⭐️
+
 ## 👥 Core Team
 
 <table>
