@@ -11,10 +11,24 @@ jobs:
       contents: read
       id-token: write # The OIDC ID token is used for authentication with JSR.
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code at release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }} # Use the tag that triggered the event
+
+      - name: Get the release tag name
+        id: get_tag
+        run: |
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: yarn
-      - run: yarn install
-      - run: npx jsr publish --allow-dirty
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Publish to JSR with version from tag
+        run: npx jsr publish --allow-dirty --tag ${{ steps.get_tag.outputs.tag }}
