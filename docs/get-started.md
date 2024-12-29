@@ -97,7 +97,7 @@ Options:
 
 | Option      | Description                                                  | Default   | Example                              |
 | ----------- | ------------------------------------------------------------ | --------- | ------------------------------------ |
-| `[path]`    | Specify directory or file to analyze                         | `./src`   | `./src/components/AppHeader.vue`     |
+| `[path]`    | Specify directory or file to analyze                         | `./`   | `./src/components/AppHeader.vue`     |
 | `--exclude` | Exclude directories or files (comma-separated, supports wildcards) | None      | `--exclude=components,Gauranga.vue,*.test.ts`  |
 | `--apply`   | Apply **only** specific rulesets or rules (comma-separated)  | All rules | `--apply=vue-essential,magicNumbers` |
 | `--ignore`  | Ignore **only** specific rulesets or rules (comma-separated) | -         | `--ignore=vue-caution,functionSize`  |
@@ -113,9 +113,15 @@ If you want to store your flags in a configuration file, you can create a `.conf
 ```json
 {
   "apply": "vue-strong,rrd",
-  "level": "error"
+  "level": "error",
+  "fileIgnoreRules": {
+    "src/main.ts": "tooManyProps,computedSideEffects",
+    "src/router/index.ts": "noConsole,multiAttributeElements"
+  }
 }
 ```
+
+Note that fileIgnoreRules is only available in the json file configuration. This field allows you to ignore specific rules for specific files.
 
 You can override the limits for multiple rules using our new `override` field in the config file:
 

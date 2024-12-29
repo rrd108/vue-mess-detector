@@ -78,8 +78,6 @@ if [ $PREV_STEP -eq 1 ];then
     echo "👉 Creating a new release on GitHub"
     gh release create "v$new_version" --notes "$release_notes"
 
-    # npx jsr publish
-    # echo "👉 Published the new version to JSR"
   else
     echo -e $'\n' "${RED} \u2a2f Repository is not clean. ${NC} Please commit or stash your changes before running this script." $'\n'
     exit 1

@@ -12,6 +12,7 @@ import { getConfig } from './helpers/getConfig'
 import { getEscapedLink } from './helpers/getEscapedLink'
 import { getPackageJson } from './helpers/getPackageJson'
 import getProjectRoot from './helpers/getProjectRoot'
+import { getVersion } from './helpers/getVersion'
 import { validateOption } from './helpers/validateOption'
 import { BG_ERR, BG_RESET, tags2Ascee } from './rules/asceeCodes'
 import { GROUP_BY, OUTPUT_FORMATS, OUTPUT_LEVELS, SORT_BY } from './types'
@@ -21,7 +22,7 @@ const showHelpAndExit = (yargsInstance: any) => {
   process.exit(1)
 }
 
-let pathArg = './src'
+let pathArg = './'
 const analyzeIndex = process.argv.indexOf('analyze')
 if (analyzeIndex !== -1 && process.argv[analyzeIndex + 1] && !process.argv[analyzeIndex + 1].startsWith('-')) {
   pathArg = process.argv[analyzeIndex + 1]
@@ -211,7 +212,7 @@ getProjectRoot(pathArg).then(async (projectRoot) => {
           })
         },
       })
-      .version('version', 'Show version number', vmdPackageJson.version)
+      .version('version', 'Show version number', getVersion(vmdPackageJson))
       .alias('version', 'v')
       .help()
 
