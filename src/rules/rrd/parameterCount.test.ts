@@ -22,7 +22,7 @@ describe('checkParameterCount', () => {
     expect(result).toStrictEqual([])
   })
 
-  it.todo('should not report files where functions do not exceed the recommended limit with destructuring', () => {
+  it('should not report files where functions do not exceed the recommended limit with destructuring', () => {
     const script = {
       content: `
         <script setup>
@@ -67,7 +67,7 @@ describe('checkParameterCount', () => {
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
       description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
+      message: `function <bg_warn>${funcName}#6</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
     }])
   })
 
@@ -98,12 +98,12 @@ describe('checkParameterCount', () => {
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
       description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>dummyFuncOne</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
+      message: `function <bg_warn>dummyFuncOne#2</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
     }, {
       file: filename,
       rule: `<text_info>rrd ~ parameter count</text_info>`,
       description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>dummyFuncTwo</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
+      message: `function <bg_warn>dummyFuncTwo#6</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
     }])
   })
 })

@@ -43,6 +43,36 @@ describe('checkComputedSideEffects', () => {
     expect(result).toStrictEqual([])
   })
 
+  it('should not report files when a non reactive value is changed', () => {
+    const script = {
+      content: `
+        <script setup>
+        import { ref, computed } from 'vue';
+
+        const str1 = ref('abc');
+
+        const str2 = computed(() => {
+          const inner = 'def';
+          return str1.value + inner;
+        });
+        </script>
+
+        <template>
+          <div>
+            <p>Test</p>
+            <p>{{ str1 }}</p>
+            <p>{{ str2 }}</p>
+          </div>
+        </template>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'no-side-effects-non-reactive.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
   it('should report files with array mutation side effects in computed properties', () => {
     const script = {
       content: `
@@ -66,7 +96,7 @@ describe('checkComputedSideEffects', () => {
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #6 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
+      message: `line #6 side effect detected in computed property <bg_err>(const computedValue...)</bg_err> 🚨`,
     }])
   })
 
@@ -93,7 +123,7 @@ describe('checkComputedSideEffects', () => {
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #6 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
+      message: `line #6 side effect detected in computed property <bg_err>(const computedValue...)</bg_err> 🚨`,
     }])
   })
 
@@ -126,12 +156,12 @@ describe('checkComputedSideEffects', () => {
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #7 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
+      message: `line #7 side effect detected in computed property <bg_err>(const computedValue1...)</bg_err> 🚨`,
     }, {
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #12 side effect detected in computed property <bg_err>(otherVariable.value )</bg_err> 🚨`,
+      message: `line #12 side effect detected in computed property <bg_err>(const computedValue2...)</bg_err> 🚨`,
     }])
   })
 
@@ -152,7 +182,7 @@ describe('checkComputedSideEffects', () => {
       file: fileName,
       rule: `<text_info>rrd ~ computed side effects</text_info>`,
       description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #1 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
+      message: `line #1 side effect detected in computed property <bg_err>(dValue = computed(()...)</bg_err> 🚨`,
     }])
   })
 })
