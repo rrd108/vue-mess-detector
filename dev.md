@@ -5,7 +5,7 @@
 ```
 yarn build
 git status
-./deploy.sh minor publish
+yarn release minor publish
 ```
 
 TODO: for JSR: set up GH Action see: https://github.com/rrd108/vue-mess-detector/issues/77
