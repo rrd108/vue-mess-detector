@@ -1,6 +1,7 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
 import type { FileCheckResult, Offense } from '../../types'
 // import { charNotIn, createRegExp, exactly, oneOrMore, wordChar } from 'magic-regexp'
+import getLineNumber from '../getLineNumber'
 
 const results: FileCheckResult[] = []
 
@@ -54,11 +55,15 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
       attributes.push(attrMatch[0])
     }
 
+    let from = 0
     if (attributes.length > 1) {
       // Check if attributes are on separate lines
       const attributeLines = attributesString.split('\n').length
       if (attributeLines === 1) {
-        results.push({ filePath, message: `Element <bg_warn><${elementTag}></bg_warn> should have its attributes on separate lines` })
+        const lineNumber = getLineNumber(template.content, elementTag, from)
+
+        results.push({ filePath, message: `line #${lineNumber} element <bg_warn><${elementTag}></bg_warn> should have its attributes on separate lines` })
+        from = lineNumber
       }
     }
   }
