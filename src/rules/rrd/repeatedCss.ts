@@ -51,9 +51,6 @@ const reportRepeatedCss = () => {
 
   cssProperties.forEach((files, cssValue) => {
     if (files.size > 3) {
-      console.log(Array.from(files).join(', '))
-      console.log(cssValue)
-
       offenses.push({
         file: Array.from(files).join(', '),
         rule: `<text_info>rrd ~ repeated CSS</text_info>`,
