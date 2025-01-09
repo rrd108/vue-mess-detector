@@ -1,6 +1,6 @@
 import type { SFCTemplateBlock } from '@vue/compiler-sfc'
-
 import type { FileCheckResult, Offense } from '../../types'
+// import { charNotIn, createRegExp, exactly, oneOrMore, wordChar } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 
@@ -11,10 +11,30 @@ const checkMultiAttributeElements = (template: SFCTemplateBlock | null, filePath
     return
   }
 
-  // Regex to match elements with attributes
-  // eslint-disable-next-line regexp/no-super-linear-backtracking
-  const elementRegex = /<(\w+)([^>]*)>/g
+  /*
+  Using magic regex here is not working / too slow
+  const elementRegex = createRegExp(
+    '<',
+    oneOrMore(wordChar.or('-')).groupedAs('tag'),
+    oneOrMore(charNotIn('>')).groupedAs('attrs'),
+    '>',
+    ) */
 
+  // Regex to match elements with attributes, allowing for hyphens in element names
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
+  const elementRegex = /<([\w-]+)([^>]*)>/g
+
+  /*
+  Using magic regex here is not working / too slow
+  const attributeRegex = createRegExp(
+    oneOrMore(wordChar),
+    '=',
+    exactly('"').or('\''),
+    oneOrMore(charNotIn('"'),
+    charNotIn('\''),
+    exactly('"').or('\''),
+    ),
+    ) */
   // Regex to match attributes
   const attributeRegex = /\w+=["'][^"']*["']/g
 
