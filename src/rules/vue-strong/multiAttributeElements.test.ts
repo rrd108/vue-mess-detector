@@ -37,7 +37,7 @@ describe('multiAttributeElements', () => {
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `Element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
+      message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
     }])
   })
 
@@ -58,7 +58,7 @@ describe('multiAttributeElements', () => {
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `Element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
+      message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
     }])
   })
 
@@ -79,12 +79,12 @@ describe('multiAttributeElements', () => {
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `Element <bg_warn><div></bg_warn> should have its attributes on separate lines 🚨`,
+      message: `line #3 element <bg_warn><div></bg_warn> should have its attributes on separate lines 🚨`,
     }, {
       file: filename,
       rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
       description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `Element <bg_warn><button></bg_warn> should have its attributes on separate lines 🚨`,
+      message: `line #4 element <bg_warn><button></bg_warn> should have its attributes on separate lines 🚨`,
     }])
   })
 })
