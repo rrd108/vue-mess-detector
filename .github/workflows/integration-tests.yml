@@ -105,7 +105,7 @@ jobs:
             yarn install
             yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "bun" ]; then
-            yes "my-package" | head -n 1 | bun create vue . --default --typescript --cwd=. --ignore-scripts
+            yes "my-package" | head -n 1 | bun create vue . --default --typescript --ignore-scripts
             bun add file:${{ github.workspace }}/package/ --dev
             bun install --ignore-scripts
             bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
