@@ -2517,20 +2517,6 @@ eslint-plugin-vue@^10.0.0:
     semver "^7.6.3"
     xml-name-validator "^4.0.0"
 
-eslint-plugin-vue@^9.12.0:
-  version "9.33.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.33.0.tgz#de33eba8f78e1d172c59c8ec7fbfd60c6ca35c39"
-  integrity sha512-174lJKuNsuDIlLpjeXc5E2Tss8P44uIimAfGD0b90k0NoirJqpG7stLuU9Vp/9ioTOrQdWVREc4mRd1BD+CvGw==
-  dependencies:
-    "@eslint-community/eslint-utils" "^4.4.0"
-    globals "^13.24.0"
-    natural-compare "^1.4.0"
-    nth-check "^2.1.1"
-    postcss-selector-parser "^6.0.15"
-    semver "^7.6.3"
-    vue-eslint-parser "^9.4.3"
-    xml-name-validator "^4.0.0"
-
 eslint-plugin-yml@^1.17.0:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-1.17.0.tgz#5e1e0ca307c7a2c6db2273696c528c3487538466"
@@ -2923,7 +2909,7 @@ glob@^7.1.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-globals@^13.19.0, globals@^13.24.0:
+globals@^13.19.0:
   version "13.24.0"
   resolved "https://registry.npmjs.org/globals/-/globals-13.24.0.tgz"
   integrity sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==
@@ -4984,7 +4970,7 @@ vue-eslint-parser@^10.1.1:
     lodash "^4.17.21"
     semver "^7.6.3"
 
-vue-eslint-parser@^9.1.0, vue-eslint-parser@^9.4.3:
+vue-eslint-parser@^9.1.0:
   version "9.4.3"
   resolved "https://registry.npmjs.org/vue-eslint-parser/-/vue-eslint-parser-9.4.3.tgz"
   integrity sha512-2rYRLWlIpaiN8xbPiDyXZXRgLGOtWxERV7ND5fFAv5qo1D2N9Fu9MNajBNc6o13lZ+24DAWCkQCvj4klgmcITg==
