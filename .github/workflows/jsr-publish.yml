@@ -31,4 +31,4 @@ jobs:
         run: yarn install
 
       - name: Publish to JSR with version from tag
-        run: npx jsr publish --allow-dirty --tag ${{ steps.get_tag.outputs.tag }}
+        run: npx jsr@0.8.0 publish --allow-dirty --tag ${{ steps.get_tag.outputs.tag }}
