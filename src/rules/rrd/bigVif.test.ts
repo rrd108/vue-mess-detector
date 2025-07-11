@@ -49,4 +49,33 @@ describe('checkBigVif', () => {
       message: `line #1 <bg_warn>has a v-if with 14 lines</bg_warn> 🚨`,
     }])
   })
+
+  it('should report user-provided 13-line v-if as a warning (demonstrates false positive)', () => {
+    const template = {
+      content: `<div
+          v-if="generalErrors.length"
+          class="text-red-500 mt-4"
+        >
+          <ul>
+            <li
+              v-for="(error) in generalErrors"
+              :key="error"
+            >
+              {{ error }}
+            </li>
+          </ul>
+        </div>`,
+    } as SFCTemplateBlock
+    const fileName = 'userFalsePositiveVif.vue'
+    const maxVifLines = DEFAULT_OVERRIDE_CONFIG.maxVifLines // This will be 10
+    checkBigVif(template, fileName, maxVifLines)
+    const result = reportBigVif()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
+      file: fileName,
+      rule: `<text_info>rrd ~ big v-if</text_info>`,
+      description: `👉 <text_warn>Big v-if can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vif.html`,
+      message: `line #1 <bg_warn>has a v-if with 13 lines</bg_warn> 🚨`,
+    }])
+  })
 })
