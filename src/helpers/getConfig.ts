@@ -22,7 +22,7 @@ const getConfigFileContent = async (filePath: string) => {
 
   try {
     const configFile = await fs.readFile(filePath, 'utf-8')
-    const getConfigFileContent = JSON.parse(configFile)
+    const getConfigFileContent = JSON.parse(configFile.trim())
     return getConfigFileContent
   }
   catch (error: Error) {
