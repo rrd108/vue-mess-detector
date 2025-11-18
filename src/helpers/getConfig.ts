@@ -4,13 +4,30 @@ import path from 'node:path'
 import { RULESETS } from '../rules/rules'
 import { DEFAULT_OVERRIDE_CONFIG } from './constants'
 
+export const checkFileExists = async (filePath: string): Promise<boolean> => {
+  try {
+    await fs.access(filePath, fs.constants.F_OK)
+    return true
+  }
+  catch {
+    return false
+  }
+}
+
 const getConfigFileContent = async (filePath: string) => {
+  // Early return if the config file does not exist
+  if (!await checkFileExists(filePath)) {
+    return null
+  }
+
   try {
     const configFile = await fs.readFile(filePath, 'utf-8')
     const getConfigFileContent = JSON.parse(configFile)
     return getConfigFileContent
   }
-  catch {
+  catch (error: Error) {
+    // This error is only thrown if there is an issue reading or during JSON.parse().
+    console.error(`Failed to read config file at "${filePath}". Error: ${error.message}`)
     return null
   }
 }
