@@ -9,7 +9,7 @@ import { parse } from '@vue/compiler-sfc'
 import { minimatch } from 'minimatch'
 import { setHasServer, setIsNuxt } from './context'
 import { calculateCodeHealth } from './helpers/calculateCodeHealth'
-import { FLAT_RULES } from './helpers/constants'
+import { FLAT_RULES, SKIP_DIRS } from './helpers/constants'
 import { getConfig } from './helpers/getConfig'
 import getProjectRoot from './helpers/getProjectRoot'
 import { groupRulesByRuleset } from './helpers/groupRulesByRuleset'
@@ -26,8 +26,6 @@ let _apply: string[] = []
 let _override: OverrideConfig = {} as OverrideConfig
 let _fileIgnoreRules: { [key: string]: string } = {}
 
-// Directories to skip during analysis
-const skipDirs = ['cache', 'coverage', 'dist', '.git', 'node_modules', '.nuxt', '.output', 'vendor']
 const excludeFiles: string[] = []
 
 const checkFile = async (fileName: string, filePath: string) => {
@@ -70,7 +68,7 @@ const walkAsync = async (dir: string) => {
     const filePath = path.join(dir, fileName)
     const stats = await fs.stat(filePath)
     if (stats.isDirectory()) {
-      if (!skipDirs.some(dir => filePath.includes(dir)) && !excludeFiles.some(pattern => minimatch(filePath, pattern))) {
+      if (!SKIP_DIRS.some(dir => filePath.includes(dir)) && !excludeFiles.some(pattern => minimatch(filePath, pattern))) {
         const subDirInfo = await walkAsync(filePath)
         if (subDirInfo) {
           overviewMessages.push(...subDirInfo)
