@@ -67,6 +67,7 @@ const walkAsync = async (dir: string) => {
   for (const fileName of files) {
     const filePath = path.join(dir, fileName)
     const stats = await fs.stat(filePath)
+
     if (stats.isDirectory()) {
       if (!SKIP_DIRS.some(dir => filePath.includes(dir)) && !excludeFiles.some(pattern => minimatch(filePath, pattern))) {
         const subDirInfo = await walkAsync(filePath)
@@ -75,12 +76,14 @@ const walkAsync = async (dir: string) => {
         }
       }
     }
-
-    const info = await checkFile(filePath, filePath)
-    if (info) {
-      overviewMessages.push(info)
+    else {
+      const info = await checkFile(fileName, filePath)
+      if (info) {
+        overviewMessages.push(info)
+      }
     }
   }
+
   return overviewMessages
 }
 
