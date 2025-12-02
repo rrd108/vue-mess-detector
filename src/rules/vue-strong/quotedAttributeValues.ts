@@ -15,7 +15,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
 
   const template = descriptor.template
 
-  const regexTempltaTag = createRegExp(
+  const regexTemplateTag = createRegExp(
     '<',
     oneOrMore(wordChar),
     maybe(oneOrMore(charIn(' \t\n\r'))),
@@ -25,7 +25,7 @@ const checkQuotedAttributeValues = (descriptor: SFCDescriptor | null, filePath: 
     '>',
     ['g'],
   )
-  const matches = template?.content.match(regexTempltaTag)
+  const matches = template?.content.match(regexTemplateTag)
 
   if (matches === null) {
     return

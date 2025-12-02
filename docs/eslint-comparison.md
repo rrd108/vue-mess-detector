@@ -43,7 +43,7 @@ The tools differ significantly in their integration capabilities. `eslint-plugin
 
 ## Customization
 
-The types of checks and customization options also vary between the tools. `eslint-plugin-vue` primarily focuses on syntax and style checks, offering high customizability through ESLint. `Vue Mess Detector`, with its broader analysis capabilities, and more opiniated rules and approach.
+The types of checks and customization options also vary between the tools. `eslint-plugin-vue` primarily focuses on syntax and style checks, offering high customizability through ESLint. `Vue Mess Detector`, with its broader analysis capabilities, and more opinionated rules and approach.
 
 ## Output formats and grouping
 
