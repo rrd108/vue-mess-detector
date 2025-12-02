@@ -72,7 +72,7 @@ yarn rules:generate
      yarn test ruleName
      ```
 
-7. **Add the new rule to the analizer**
+7. **Add the new rule to the analyzer**
 
    - Add your new `ruleName` entry to function call to `src/rules/rules.ts`.
    - Add an `export` statement for your new rule in `src/rules/RULESET/index.ts`.

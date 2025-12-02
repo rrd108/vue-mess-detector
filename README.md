@@ -34,7 +34,7 @@ npm install vue-mess-detector --save-dev
 
 ## 📦 Integrations
 
-- [Github Action](https://vue-mess-detector.webmania.cc/integrations/vmd-action.html) 
+- [GitHub Action](https://vue-mess-detector.webmania.cc/integrations/vmd-action.html) 
 - [Nuxt Devtools](https://github.com/rrd108/vue-mess-detector-nuxt-devtools)
 - [Vscode Extension](https://marketplace.visualstudio.com/items?itemName=WebMania.vue-mess-detector)
 - Vue Devtools (in progress)
