@@ -24,6 +24,23 @@ export const DOM_METHODS = [
   'querySelectorAll',
 ]
 
+// Directories to skip during analysis
+export const SKIP_DIRS = [
+  '.config',
+  '.git',
+  '.idea',
+  '.nuxt',
+  '.output',
+  '.storybook',
+  'cache',
+  'coverage',
+  'dist',
+  'helm',
+  'node_modules',
+  'public',
+  'vendor',
+]
+
 // Name rules
 export const IGNORE_NAME_RULES = ['index.vue', 'app.vue']
 
