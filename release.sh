@@ -4,6 +4,13 @@ RED='\e[1;41m'
 GREEN='\e[1;42m'
 NC='\033[0m' # No Color
 
+# Check if jq is installed
+if ! command -v jq &> /dev/null
+then
+    echo "jq could not be found, please install it to continue"
+    exit
+fi
+
 # Check if a version type (minor or patch) is provided as a command-line argument
 if [ -z "$1" ]; then
   echo "Usage: $0 patch|minor"
