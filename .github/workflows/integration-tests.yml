@@ -32,7 +32,7 @@ jobs:
         run: yarn build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: vue-mess-detector
           retention-days: 1
@@ -60,7 +60,7 @@ jobs:
           mkdir ./test-repo
 
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: vue-mess-detector
           path: ./package
@@ -161,7 +161,7 @@ jobs:
           mkdir ./test-repo
 
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: vue-mess-detector
           path: ./package
