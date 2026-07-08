@@ -28,6 +28,7 @@ export const RULES = {
   ],
   'rrd': [
     'amountOfComments',
+    'composableFileName',
     'bigVif',
     'bigVshow',
     'complicatedConditions',
