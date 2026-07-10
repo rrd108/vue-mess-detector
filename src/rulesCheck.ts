@@ -2,7 +2,7 @@ import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getHasServer, getIsNuxt } from './context'
 import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComposableFileName, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoAxiosFetchInNuxt, checkNoDirectDomAccess, checkNoImportant, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkRepeatedCss, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForExpression, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
-import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
+import { checkApiWithoutMethod, checkRateLimiter, checkRuntimeConfigLeak } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
 import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
@@ -82,6 +82,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // security
     apiWithoutMethod: () => getIsNuxt() && checkApiWithoutMethod(descriptor, filePath),
     rateLimiter: () => getHasServer() && getIsNuxt() && checkRateLimiter(descriptor, filePath),
+    runtimeConfigLeak: () => getIsNuxt() && checkRuntimeConfigLeak(descriptor, filePath),
   }
 
   // Run the checks for each applied rule or ruleset
