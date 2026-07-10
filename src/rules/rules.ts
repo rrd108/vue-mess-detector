@@ -42,6 +42,7 @@ export const RULES = {
     'ifWithoutCurlyBraces',
     'magicNumbers',
     'nestedTernary',
+    'noAxiosFetchInNuxt',
     'noDirectDomAccess',
     'noImportant',
     'noInlineStyles',
