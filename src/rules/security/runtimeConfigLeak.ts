@@ -145,7 +145,8 @@ const checkRuntimeConfigLeak = (descriptor: SFCDescriptor, filePath: string) => 
         const varName = varMatch[1]
         // Check if that variable is accessed without .public
         // Matches: config.apiKey  or  config['apiKey']  but not  config.public.apiKey
-        const varAccessPattern = new RegExp(`${varName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\.\\s*(?!public\\b)['"]?\\w+['"]?`)
+        const escapedVar = varName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const varAccessPattern = new RegExp(`${escapedVar}\\s*\\.\\s*(?!public\\b)['"]?\\w+['"]?|${escapedVar}\\s*\\[\\s*['"](?!public\\b)['"]?\\w+['"]?\\s*\\]`)
         if (varAccessPattern.test(content)) {
           results.push({
             filePath,
