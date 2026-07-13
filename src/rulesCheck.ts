@@ -1,7 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import type { OverrideConfig } from './types/Override'
 import { getHasServer, getIsNuxt } from './context'
-import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoDirectDomAccess, checkNoImportant, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkRepeatedCss, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForExpression, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
+import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedConditions, checkComputedSideEffects, checkCyclomaticComplexity, checkDeepIndentation, checkElseCondition, checkFunctionSize, checkHtmlImageElements, checkHtmlLink, checkHugeFiles, checkIfWithoutCurlyBraces, checkMagicNumbers, checkNestedTernary, checkNoAxiosFetchInNuxt, checkNoDirectDomAccess, checkNoImportant, checkNoInlineStyles, checkNoPropDestructure, checkNoSkippedTests, checkNoTsLang, checkNoVarDeclaration, checkParameterCount, checkPlainScript, checkPropsDrilling, checkRepeatedCss, checkScriptLength, checkShortVariableName, checkTooManyProps, checkVForExpression, checkVForWithIndexKey, checkZeroLengthComparison } from './rules/rrd'
 import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
@@ -59,6 +59,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     ifWithoutCurlyBraces: () => checkIfWithoutCurlyBraces(script, filePath),
     magicNumbers: () => checkMagicNumbers(script, filePath),
     nestedTernary: () => checkNestedTernary(script, filePath),
+    noAxiosFetchInNuxt: () => getIsNuxt() && checkNoAxiosFetchInNuxt(script, filePath),
     noDirectDomAccess: () => checkNoDirectDomAccess(script, filePath),
     noImportant: () => checkNoImportant(descriptor.template, filePath),
     noInlineStyles: () => checkNoInlineStyles(descriptor.template, filePath),
