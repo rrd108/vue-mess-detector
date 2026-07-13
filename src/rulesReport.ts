@@ -110,8 +110,9 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   })
 
   sortedKeys.forEach((key) => {
-    output[key] = []
-    offensesGrouped[key].forEach((offense, i) => {
+    const groupItems: { id: string, description: string, message: string, level: string }[] = []
+
+    offensesGrouped[key].forEach((offense) => {
       const isError = offense.message.includes('<bg_err>')
       // if health already has the file, push the error
       if (health.some(h => h.file === offense.file)) {
@@ -131,18 +132,24 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
         return
       }
 
-      output[key][i] = { id: '', description: '', message: '', level: isError ? 'error' : 'warning' }
+      const item = { id: '', description: '', message: '', level: isError ? 'error' : 'warning' }
 
       if (groupBy === 'file') {
-        output[key][i].id = offense.rule
+        item.id = offense.rule
       }
 
       if (groupBy !== 'file') {
-        output[key][i].id = offense.file
+        item.id = offense.file
       }
-      output[key][i].description = offense.description
-      output[key][i].message = offense.message || '🚨'
+      item.description = offense.description
+      item.message = offense.message || '🚨'
+      groupItems.push(item)
     })
+
+    // Only add the group to the output if it has at least one visible offense
+    if (groupItems.length > 0) {
+      output[key] = groupItems
+    }
   })
 
   return { output, health }
