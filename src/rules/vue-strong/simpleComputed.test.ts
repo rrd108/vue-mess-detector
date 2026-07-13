@@ -96,4 +96,32 @@ describe('checkSimpleComputed', () => {
       message: `line #2 <bg_warn>computed</bg_warn> 🚨`,
     }])
   })
+
+  it('should report files with deeply nested computed properties (#358)', () => {
+    const script = {
+      content: `<script setup>
+      const foo = computed(() => {
+        if (bar) {
+          if (baz) {
+            if (qux) {
+              return 1
+            }
+          }
+        }
+        return 0
+      })
+    </script>`,
+    } as SFCScriptBlock
+    const fileName = 'nested-computed.vue'
+    const maxComputedLength = DEFAULT_OVERRIDE_CONFIG.maxComputedLength
+    checkSimpleComputed(script, fileName, maxComputedLength)
+    const result = reportSimpleComputed()
+    expect(result.length).toBe(1)
+    expect(result).toStrictEqual([{
+      file: fileName,
+      rule: `<text_info>vue-strong ~ complicated computed property</text_info>`,
+      description: `👉 <text_warn>Refactor the computed properties to smaller ones.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/simple-computed.html`,
+      message: `line #2 <bg_warn>computed</bg_warn> 🚨`,
+    }])
+  })
 })

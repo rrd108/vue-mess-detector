@@ -13,23 +13,44 @@ const checkSimpleComputed = (script: SFCScriptBlock | null, filePath: string, ma
     return
   }
 
-  // eslint-disable-next-line regexp/prefer-w, regexp/strict, regexp/no-useless-flag
-  const regex = /const\s+([a-zA-Z0-9_$]+)\s*=\s*computed\(\s*\(\)\s*=>\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}\s*\)/gs
+  // Match only the opening of a block-body computed; the body is captured by
+  // balanced brace counting below so arbitrarily deep nesting is detected.
+  // eslint-disable-next-line regexp/prefer-w
+  const startRegex = /const\s+[a-zA-Z0-9_$]+\s*=\s*computed\(\s*\(\)\s*=>\s*\{/g
 
   const content = skipComments(script.content)
-  const matches = content.match(regex)
-  if (matches?.length) {
-    matches.forEach((match) => {
-      if (match.split('\n').length > maxComputedLength) {
-        const firstLine = match.split('\n')[0]
-        const lineNumber = getLineNumber(script.content, firstLine)
-        results.push({ filePath, message: `line #${lineNumber} <bg_warn>computed</bg_warn>` })
-        complicatedComputedFiles.push({ filePath })
-        if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
-          complicatedComputedFiles.push({ filePath })
-        }
+
+  let startMatch: RegExpExecArray | null = startRegex.exec(content)
+  while (startMatch !== null) {
+    // startRegex.lastIndex points at the character right after the opening '{'.
+    let braceCount = 1
+    let currentIndex = startRegex.lastIndex
+
+    while (braceCount > 0 && currentIndex < content.length) {
+      if (content[currentIndex] === '{') {
+        braceCount++
       }
-    })
+      else if (content[currentIndex] === '}') {
+        braceCount--
+      }
+      currentIndex++
+    }
+
+    const block = content.slice(startMatch.index, currentIndex)
+
+    if (block.split('\n').length > maxComputedLength) {
+      const firstLine = block.split('\n')[0]
+      const lineNumber = getLineNumber(script.content, firstLine)
+      results.push({ filePath, message: `line #${lineNumber} <bg_warn>computed</bg_warn>` })
+      complicatedComputedFiles.push({ filePath })
+      if (!complicatedComputedFiles.some(file => file.filePath === filePath)) {
+        complicatedComputedFiles.push({ filePath })
+      }
+    }
+
+    // Resume scanning after the consumed computed block.
+    startRegex.lastIndex = currentIndex
+    startMatch = startRegex.exec(content)
   }
 }
 
