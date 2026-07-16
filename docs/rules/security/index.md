@@ -4,6 +4,7 @@ A set of rules focused on ensuring the security and integrity of your project, c
 
 - [API Without HTTP Method](./api-without-method.md)
 - [Rate Limiter](./rate-limiter.md)
+- [v-html Without Sanitization](./v-html-sanitization.md)
 
 ## ❓ Why it's good to follow this ruleset?
 
