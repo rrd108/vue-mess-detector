@@ -5,7 +5,7 @@ import { checkAmountOfComments, checkBigVif, checkBigVshow, checkComplicatedCond
 import { checkApiWithoutMethod, checkRateLimiter } from './rules/security'
 import { checkElementSelectorsWithScoped, checkImplicitParentChildCommunication } from './rules/vue-caution'
 import { checkGlobalStyle, checkSimpleProp, checkSingleNameComponent, checkVforNoKey, checkVifWithVfor } from './rules/vue-essential'
-import { checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
+import { checkComponentOptionsOrder, checkElementAttributeOrder, checkTopLevelElementOrder } from './rules/vue-recommended'
 import { checkComponentFilenameCasing, checkComponentFiles, checkDirectiveShorthands, checkFullWordComponentName, checkMultiAttributeElements, checkPropNameCasing, checkQuotedAttributeValues, checkSelfClosingComponents, checkSimpleComputed, checkTemplateSimpleExpression } from './rules/vue-strong'
 
 export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: string[], override: OverrideConfig) => {
@@ -38,6 +38,7 @@ export const checkRules = (descriptor: SFCDescriptor, filePath: string, apply: s
     // vue-recommended
     topLevelElementOrder: () => isVueFile && checkTopLevelElementOrder(descriptor.source, filePath, override.topLevelElementOrder),
     elementAttributeOrder: () => isVueFile && checkElementAttributeOrder(descriptor.template, filePath),
+    componentOptionsOrder: () => isVueFile && checkComponentOptionsOrder(script, filePath),
 
     // vue-caution
     implicitParentChildCommunication: () => isVueFile && checkImplicitParentChildCommunication(script, filePath),

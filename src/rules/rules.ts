@@ -11,6 +11,7 @@ export const RULES = {
     'vifWithVfor',
   ],
   'vue-recommended': [
+    'componentOptionsOrder',
     'elementAttributeOrder',
     'topLevelElementOrder',
   ],

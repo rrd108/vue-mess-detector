@@ -5,7 +5,7 @@ import { reportAmountOfComments, reportBigVif, reportBigVshow, reportComplicated
 import { reportApiWithoutMethod, reportRateLimiter } from './rules/security'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
-import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
+import { reportComponentOptionsOrder, reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
 import { reportComponentFilenameCasing, reportComponentFiles, reportDirectiveShorthands, reportFullWordComponentName, reportMultiAttributeElements, reportPropNameCasing, reportQuotedAttributeValues, reportSelfClosingComponents, reportSimpleComputed, reportTemplateSimpleExpression } from './rules/vue-strong'
 
 export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel, override: OverrideConfig) => {
@@ -51,6 +51,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   processOffenses(reportTemplateSimpleExpression)
 
   // vue-recommended rules
+  processOffenses(reportComponentOptionsOrder)
   processOffenses(reportTopLevelElementOrder)
   processOffenses(reportElementAttributeOrder)
 
