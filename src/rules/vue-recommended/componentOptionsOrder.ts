@@ -30,9 +30,9 @@ type Category = (typeof CATEGORIES)[number]
 
 const CATEGORY_PATTERNS: { category: Category, regex: RegExp }[] = [
   { category: 'imports', regex: /^\s*import\s/m },
-  { category: 'defineProps', regex: /(?:withDefaults\(\s*)?defineProps\s*\(/ },
+  { category: 'defineProps', regex: /(?:withDefaults\(\s*)?defineProps\s*(?:<[^>]*>\s*)?\(/ },
   { category: 'defineEmits', regex: /defineEmits\s*(?:<[^>]*>\s*)?\(/ },
-  { category: 'defineModel', regex: /defineModel\s*\(/ },
+  { category: 'defineModel', regex: /defineModel\s*(?:<[^>]*>\s*)?\(/ },
   { category: 'composables', regex: /(?:const|let)\s+\w+\s*=\s*use[A-Z]\w*\s*\(/ },
   { category: 'reactive state', regex: /(?:const|let)\s+\w+\s*=\s*(?:ref|reactive|shallowRef|shallowReactive|customRef|toRef|toRefs)\s*\(/ },
   { category: 'computed', regex: /(?:const|let)\s+\w+\s*=\s*computed\s*\(/ },

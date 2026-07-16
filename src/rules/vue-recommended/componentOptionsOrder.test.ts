@@ -137,4 +137,52 @@ function increment() {
     const result = reportComponentOptionsOrder()
     expect(result.length).toBe(1)
   })
+
+  it('should detect type-only defineProps placed after reactive state', () => {
+    const script = {
+      content: `<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+const props = defineProps<{ msg: string }>()
+</script>`,
+    } as SFCScriptBlock
+    const filename = 'type-defineProps-after-ref.vue'
+    checkComponentOptionsOrder(script, filename)
+    const result = reportComponentOptionsOrder()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('defineProps should come before')
+  })
+
+  it('should detect type-only defineModel placed after reactive state', () => {
+    const script = {
+      content: `<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+const model = defineModel<string>()
+</script>`,
+    } as SFCScriptBlock
+    const filename = 'type-defineModel-after-ref.vue'
+    checkComponentOptionsOrder(script, filename)
+    const result = reportComponentOptionsOrder()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('defineModel should come before')
+  })
+
+  it('should not report type-only defineProps and defineModel in correct order', () => {
+    const script = {
+      content: `<script setup>
+import { ref } from 'vue'
+
+const props = defineProps<{ msg: string }>()
+const model = defineModel<string>()
+const count = ref(0)
+</script>`,
+    } as SFCScriptBlock
+    const filename = 'type-correct-order.vue'
+    checkComponentOptionsOrder(script, filename)
+    const result = reportComponentOptionsOrder()
+    expect(result.length).toBe(0)
+  })
 })
