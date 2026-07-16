@@ -8,10 +8,23 @@ const resetResults = () => (results.length = 0)
 
 // Function used in both scenarios (regular and arrow function) to count parameters
 const checkParameters = (funcName: string, params: string, filePath: string, maxParameterCount: number) => {
-  const paramsArray = params
-    .split(',')
-    .map(param => param.trim())
-    .filter(param => param.length > 0)
+  // Split params by commas, respecting destructuring nesting ({}, [])
+  // so that e.g. ({ a, b, c }) counts as 1 parameter, not 3
+  const paramsArray: string[] = []
+  let current = ''
+  let depth = 0
+  for (const char of params) {
+    if (char === '{' || char === '[' || char === '(') depth++
+    else if (char === '}' || char === ']' || char === ')') depth--
+    if (char === ',' && depth === 0) {
+      paramsArray.push(current.trim())
+      current = ''
+    } else {
+      current += char
+    }
+  }
+  if (current.trim().length > 0) paramsArray.push(current.trim())
+
   if (paramsArray.length > maxParameterCount) {
     results.push({ filePath, message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsArray.length}</bg_warn> parameters` })
   }
