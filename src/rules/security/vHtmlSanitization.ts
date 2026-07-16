@@ -25,12 +25,8 @@ const checkVHtmlSanitization = (descriptor: SFCDescriptor, filePath: string) => 
 
   // Check if DOMPurifier or sanitize-html is imported/used in the script
   const scriptContent = script?.content || ''
-  const hasSanitizer =
-    scriptContent.includes('DOMPurify') ||
-    scriptContent.includes('sanitize-html') ||
-    scriptContent.includes('dompurify') ||
-    scriptContent.includes('sanitizeHtml') ||
-    scriptContent.includes('xss')
+  const hasSanitizer = ['DOMPurify', 'sanitize-html', 'dompurify', 'sanitizeHtml', 'xss']
+    .some(sanitizer => scriptContent.includes(sanitizer))
 
   if (hasSanitizer) {
     return
