@@ -65,6 +65,7 @@ export const RULES = {
   'security': [
     'apiWithoutMethod',
     'rateLimiter',
+    'strictTransportSecurity',
   ],
 }
 

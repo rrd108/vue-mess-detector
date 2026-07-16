@@ -104,6 +104,7 @@ export default defineConfig({
               { text: 'Security', link: '/rules/security', collapsed: true, items: [
                 { text: 'API Without Method', link: '/rules/security/api-without-method' },
                 { text: 'Rate Limiter', link: '/rules/security/rate-limiter' },
+                { text: 'Strict Transport Security', link: '/rules/security/strict-transport-security' },
               ] },
             ],
           },

@@ -2,7 +2,7 @@ import type { GroupBy, Health, Offense, OffensesGrouped, OutputLevel, ReportFunc
 import type { OverrideConfig } from './types/Override'
 import type { ReportOutput } from './types/ReportOutput'
 import { reportAmountOfComments, reportBigVif, reportBigVshow, reportComplicatedConditions, reportComposableFileName, reportComputedSideEffects, reportCyclomaticComplexity, reportDeepIndentation, reportElseCondition, reportFunctionSize, reportHtmlImageElements, reportHtmlLink, reportHugeFiles, reportIfWithoutCurlyBraces, reportMagicNumbers, reportNestedTernary, reportNoAxiosFetchInNuxt, reportNoDirectDomAccess, reportNoImportant, reportNoInlineStyles, reportNoPropDestructure, reportNoSkippedTests, reportNoTsLang, reportNoVarDeclaration, reportParameterCount, reportPlainScript, reportPropsDrilling, reportRepeatedCss, reportScriptLength, reportShortVariableName, reportTooManyProps, reportVForExpression, reportVForWithIndexKey, reportZeroLengthComparison } from './rules/rrd'
-import { reportApiWithoutMethod, reportRateLimiter } from './rules/security'
+import { reportApiWithoutMethod, reportRateLimiter, reportStrictTransportSecurity } from './rules/security'
 import { reportElementSelectorsWithScoped, reportImplicitParentChildCommunication } from './rules/vue-caution'
 import { reportGlobalStyle, reportSimpleProp, reportSingleNameComponent, reportVforNoKey, reportVifWithVfor } from './rules/vue-essential'
 import { reportElementAttributeOrder, reportTopLevelElementOrder } from './rules/vue-recommended'
@@ -97,6 +97,7 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
   // security rules
   processOffenses(reportApiWithoutMethod)
   processOffenses(reportRateLimiter)
+  processOffenses(reportStrictTransportSecurity)
 
   // Sort offenses grouped by key based on the `sortBy` parameter
   const sortedKeys = Object.keys(offensesGrouped).sort((a, b) => {
