@@ -14,16 +14,20 @@ const checkParameters = (funcName: string, params: string, filePath: string, max
   let current = ''
   let depth = 0
   for (const char of params) {
-    if (char === '{' || char === '[' || char === '(') depth++
-    else if (char === '}' || char === ']' || char === ')') depth--
+    if (char === '{' || char === '[' || char === '(')
+      depth++
+    else if (char === '}' || char === ']' || char === ')')
+      depth--
     if (char === ',' && depth === 0) {
       paramsArray.push(current.trim())
       current = ''
-    } else {
+    }
+    else {
       current += char
     }
   }
-  if (current.trim().length > 0) paramsArray.push(current.trim())
+  if (current.trim().length > 0)
+    paramsArray.push(current.trim())
 
   if (paramsArray.length > maxParameterCount) {
     results.push({ filePath, message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsArray.length}</bg_warn> parameters` })
