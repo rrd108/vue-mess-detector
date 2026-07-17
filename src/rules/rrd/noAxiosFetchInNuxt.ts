@@ -17,16 +17,18 @@ const checkNoAxiosFetchInNuxt = (script: SFCScriptBlock | null, filePath: string
   // Collect all matches with their positions for ordered processing
   // Match 'axios.' (method calls like axios.get, axios.post) — avoids import statements
   // Match 'fetch(' (function calls), excluding $fetch (Nuxt's built-in)
-  type Match = { display: string, search: string, index: number }
+  interface Match { display: string, search: string, index: number }
   const allMatches: Match[] = []
 
   const axiosRegex = /\baxios\./g
   let m: RegExpExecArray | null
+  // eslint-disable-next-line no-cond-assign
   while ((m = axiosRegex.exec(content)) !== null) {
     allMatches.push({ display: 'axios', search: 'axios.', index: m.index })
   }
 
   const fetchRegex = /\bfetch\(/g
+  // eslint-disable-next-line no-cond-assign
   while ((m = fetchRegex.exec(content)) !== null) {
     const idx = m.index
     // Skip $fetch — Nuxt's built-in composable
