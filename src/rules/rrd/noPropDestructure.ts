@@ -13,8 +13,10 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
     return
   }
 
-  // eslint-disable-next-line regexp/no-super-linear-backtracking
-  const regex = /(?:const|let)\s*\{\s*([^}]+?)\s*\}\s*=\s*(?:defineProps|props)\s*\(\s*(?:(?:\[[^\]]*\]|\{[^}]*\})\s*)?\)/g
+  // Vue 3.5 makes variables destructured directly from the defineProps macro
+  // reactive at compile time. Destructuring a runtime props object still loses
+  // reactivity, so only report that unsafe form.
+  const regex = /(?:const|let)\s*\{[^}]+\}\s*=\s*props\b/g
 
   const content = skipComments(script.content)
   const matches = content.match(regex)
@@ -36,7 +38,7 @@ const reportNoPropDestructure = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        description: `👉 <text_warn>Avoid destructuring a runtime props object because it loses reactivity. Access \`props.propName\` instead, or destructure directly from \`defineProps()\` in Vue 3.5+.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
         message: `${result.message} 🚨`,
       })
     })
