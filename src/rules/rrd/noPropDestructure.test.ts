@@ -2,131 +2,102 @@ import type { SFCScriptBlock } from '@vue/compiler-sfc'
 import { describe, expect, it } from 'vitest'
 import { checkNoPropDestructure, reportNoPropDestructure } from './noPropDestructure'
 
+const description = `👉 <text_warn>Avoid destructuring a runtime props object because it loses reactivity. Access \`props.propName\` instead, or destructure directly from \`defineProps()\` in Vue 3.5+.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`
+
 describe('checkNoPropDestructure', () => {
-  it('should not report files without props destructuring', () => {
+  it('does not report access through the props object', () => {
     const script = {
       content: `
       <script setup>
         const props = defineProps();
-        const myProp = props.myprop;
+        const myProp = props.myProp;
       </script>
       `,
     } as SFCScriptBlock
-    const fileName = 'noPropDestructure.vue'
-    checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(0)
-    expect(result).toStrictEqual([])
+
+    checkNoPropDestructure(script, 'safe-props-access.vue')
+
+    expect(reportNoPropDestructure()).toStrictEqual([])
   })
 
-  it('should report files with single props destructuring using defineProps', () => {
+  it('does not report Vue 3.5 reactive props destructure', () => {
     const script = {
       content: `
       <script setup>
-        const { propA } = defineProps();
+        const { propA = 'default', propB } = defineProps<{ propA?: string, propB: string }>();
       </script>
       `,
     } as SFCScriptBlock
-    const fileName = 'noPropDestructure-single.vue'
+
+    checkNoPropDestructure(script, 'reactive-props-destructure.vue')
+
+    expect(reportNoPropDestructure()).toStrictEqual([])
+  })
+
+  it('reports destructuring from a runtime props object', () => {
+    const script = {
+      content: `
+      <script setup>
+        const props = defineProps();
+        const { propA } = props;
+      </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'runtime-props-destructure.vue'
+
     checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(1)
-    expect(result).toStrictEqual([
+
+    expect(reportNoPropDestructure()).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
+        description,
+        message: `line #4 <bg_warn>props destructuring found: const { propA } = props</bg_warn> 🚨`,
       },
     ])
   })
 
-  it('should report files with multiple props destructuring instances using defineProps', () => {
+  it('reports multiple runtime destructures including defaults', () => {
     const script = {
       content: `
       <script setup>
-        const { propA } = defineProps();
-        const { propB } = defineProps();
+        const props = defineProps();
+        const { propA = 'default' } = props;
+        let { propB } = props;
       </script>
       `,
     } as SFCScriptBlock
-    const fileName = 'noPropDestructure-multiple.vue'
+    const fileName = 'multiple-runtime-props-destructures.vue'
+
     checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(2)
-    expect(result).toStrictEqual([
+
+    expect(reportNoPropDestructure()).toStrictEqual([
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
+        description,
+        message: `line #4 <bg_warn>props destructuring found: const { propA = 'default' } = props</bg_warn> 🚨`,
       },
       {
         file: fileName,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #4 <bg_warn>props destructuring found: const { propB } = defineProps()</bg_warn> 🚨`,
+        description,
+        message: `line #5 <bg_warn>props destructuring found: let { propB } = props</bg_warn> 🚨`,
       },
     ])
   })
 
-  it('should report files with props destructuring and default values using defineProps', () => {
+  it('does not report destructuring unrelated values', () => {
     const script = {
       content: `
       <script setup>
-        const { propA = 'default', propB } = defineProps();
+        const { value } = ref('value');
       </script>
       `,
     } as SFCScriptBlock
-    const fileName = 'noPropDestructure-default.vue'
-    checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(1)
-    expect(result).toStrictEqual([
-      {
-        file: fileName,
-        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 <bg_warn>props destructuring found: const { propA = 'default', propB } = defineProps()</bg_warn> 🚨`,
-      },
-    ])
-  })
 
-  it('should not report files with destructuring of other variables', () => {
-    const script = {
-      content: `
-      <script setup>
-        const { someVar } = ref('value');
-      </script>
-      `,
-    } as SFCScriptBlock
-    const fileName = 'noPropDestructure-other-vars.vue'
-    checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(0)
-    expect(result).toStrictEqual([])
-  })
+    checkNoPropDestructure(script, 'unrelated-destructure.vue')
 
-  it('should report files where props are destructured and used in expressions', () => {
-    const script = {
-      content: `
-      <script setup>
-        const { propA } = defineProps();
-        console.log(propA);
-      </script>
-      `,
-    } as SFCScriptBlock
-    const fileName = 'noPropDestructure-expressions.vue'
-    checkNoPropDestructure(script, fileName)
-    const result = reportNoPropDestructure()
-    expect(result.length).toBe(1)
-    expect(result).toStrictEqual([
-      {
-        file: fileName,
-        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring props in the setup function. Use \`props.propName\` instead of \`const { propName } = defineProps()\`.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
-        message: `line #3 <bg_warn>props destructuring found: const { propA } = defineProps()</bg_warn> 🚨`,
-      },
-    ])
+    expect(reportNoPropDestructure()).toStrictEqual([])
   })
 })
