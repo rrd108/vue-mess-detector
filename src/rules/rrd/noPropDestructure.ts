@@ -15,8 +15,9 @@ const checkNoPropDestructure = (script: SFCScriptBlock | null, filePath: string)
 
   // Vue 3.5 makes variables destructured directly from the defineProps macro
   // reactive at compile time. Destructuring a runtime props object still loses
-  // reactivity, so only report that unsafe form.
-  const regex = /(?:const|let)\s*\{[^}]+\}\s*=\s*props\b/g
+  // reactivity, so only report that unsafe form. Allow an optional TypeScript
+  // type annotation between the pattern and the assignment (e.g. `: Props`).
+  const regex = /(?:const|let)\s*\{[^}]+\}\s*(?::[^=]+)?=\s*props\b/g
 
   const content = skipComments(script.content)
   const matches = content.match(regex)

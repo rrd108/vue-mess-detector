@@ -87,6 +87,29 @@ describe('checkNoPropDestructure', () => {
     ])
   })
 
+  it('reports typed runtime props destructuring', () => {
+    const script = {
+      content: `
+      <script setup lang="ts">
+        const props = defineProps<{ propA: string }>();
+        const { propA }: { propA: string } = props;
+      </script>
+      `,
+    } as SFCScriptBlock
+    const fileName = 'typed-runtime-props-destructure.vue'
+
+    checkNoPropDestructure(script, fileName)
+
+    expect(reportNoPropDestructure()).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
+        description,
+        message: `line #4 <bg_warn>props destructuring found: const { propA }: { propA: string } = props</bg_warn> 🚨`,
+      },
+    ])
+  })
+
   it('does not report destructuring unrelated values', () => {
     const script = {
       content: `
