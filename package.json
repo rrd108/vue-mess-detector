@@ -58,7 +58,7 @@
     "html-tags": "^4.0.0",
     "magic-regexp": "^0.10.0",
     "minimatch": "^10.0.1",
-    "yargs": "^17.7.2"
+    "yargs": "^18.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.0.0",
