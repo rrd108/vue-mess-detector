@@ -1,6 +1,6 @@
 # Runtime Props Destructuring Breaks Reactivity
 
-Vue 3.5 introduced Reactive Props Destructure: variables destructured directly from the `defineProps()` compiler macro remain reactive. Destructuring a runtime `props` object still creates plain variables and loses reactivity.
+Vue 3.5 introduced reactive props destructuring: variables destructured directly from the `defineProps()` compiler macro remain reactive. Destructuring a runtime `props` object still creates plain variables and loses reactivity.
 
 ## 📖 What is unsafe props destructuring?
 

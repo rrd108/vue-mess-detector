@@ -39,7 +39,7 @@ const reportNoPropDestructure = () => {
       offenses.push({
         file: result.filePath,
         rule: `<text_info>rrd ~ no Prop Destructure</text_info>`,
-        description: `👉 <text_warn>Avoid destructuring a runtime props object because it loses reactivity. Access \`props.propName\` instead, or destructure directly from \`defineProps()\` in Vue 3.5+.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-props-destructure.html`,
+        description: `👉 <text_warn>Avoid destructuring a runtime props object because it loses reactivity. Access \`props.propName\` instead, or destructure directly from \`defineProps()\` in Vue 3.5+.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-prop-destructure.html`,
         message: `${result.message} 🚨`,
       })
     })
