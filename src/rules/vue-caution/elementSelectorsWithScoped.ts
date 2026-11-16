@@ -8,21 +8,42 @@ const results: FileCheckResult[] = []
 
 const resetResults = () => (results.length = 0)
 
+// the text before each `{` that is not inside a declaration (handles nesting and at-rules)
+const selectorPreludeRegex = /([^{};]+)\{/g
+
+/**
+ * Returns the tag name when the selector's last compound (the one Vue adds the scope attribute to)
+ * is a bare element selector, optionally with pseudo-classes, e.g. `button`, `.card > a:hover`.
+ * Compounds qualified with a class, id or attribute (`div.box`, `.header`, `#main`) are not reported.
+ */
+const getElementTag = (selector: string) => {
+  const withoutArguments = selector.replace(/\([^()]*\)/g, '()')
+  const compound = withoutArguments.trim().split(/\s*[>+~]\s*|\s+/).pop() ?? ''
+  if (/[.#[]/.test(compound)) {
+    return undefined
+  }
+  const tag = compound.match(/^[a-z][a-z0-9]*/i)?.[0].toLowerCase()
+  return tag && htmlTags.includes(tag as HtmlTags) ? tag : undefined
+}
+
 const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePath: string) => {
   if (!styles) {
     return
   }
 
-  const elementSelectorRegex = /([a-z]+)\s*\{[^}]*\}/gi
-
-  styles.forEach((style) => {
-    let match
-    // eslint-disable-next-line no-cond-assign
-    while ((match = elementSelectorRegex.exec(style.content)) !== null) {
-      const selector = match[1] as HtmlTags
-      if (htmlTags.includes(selector)) {
-        results.push({ filePath, message: `<bg_warn>(${selector})</bg_warn>` })
+  styles.filter(style => style.scoped).forEach((style) => {
+    const css = style.content.replace(/\/\*[\s\S]*?\*\//g, '')
+    for (const [, prelude] of css.matchAll(selectorPreludeRegex)) {
+      const selectorList = prelude.trim()
+      if (selectorList.startsWith('@')) {
+        continue
       }
+      selectorList.split(',').forEach((selector) => {
+        const tag = getElementTag(selector)
+        if (tag) {
+          results.push({ filePath, message: `<bg_warn>(${tag})</bg_warn>` })
+        }
+      })
     }
   })
 }
