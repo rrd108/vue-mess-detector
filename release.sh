@@ -79,7 +79,7 @@ if [ $PREV_STEP -eq 1 ];then
     git commit -m "Bump version to $new_version"
 
     echo "👉 Pushing new version to git: $new_version"
-    git push origin main
+    git push vue-mess-detector main
     git push vue-mess-detector "v$new_version"
 
     echo "👉 Creating a new release on GitHub"
