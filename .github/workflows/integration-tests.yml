@@ -164,6 +164,9 @@ jobs:
 
       - name: Create and Run Vue Mess Detector
         shell: bash
+        env:
+          # pnpm 11+ fails when dependency build scripts (e.g. esbuild) are skipped
+          PNPM_CONFIG_STRICT_DEP_BUILDS: 'false'
         run: |
           if [ "${{ matrix.package-manager }}" == "pnpm" ]; then
             pnpm dlx nuxi@latest init test-repo --package-manager pnpm --git-init -t content
