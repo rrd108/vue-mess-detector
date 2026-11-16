@@ -13,7 +13,7 @@ The following code doesn't specify the HTTP method in the filename or content.
 :::
 
 ```ts
-// /src/server/api/users.ts
+// server/api/users.ts
 export default defineEventHandler(async event => {
   return [
     { id:1, name: 'rrd', email: 'rrd@webmania.cc' },
@@ -28,7 +28,7 @@ Specify the HTTP method in the filename (e.g., `users.get.ts`) or include a meth
 :::
 
 ```ts
-// /src/server/api/users.ts
+// server/api/users.ts
 export default defineEventHandler(async event => {
   if (event.node.req.method !== 'GET') {
     return [

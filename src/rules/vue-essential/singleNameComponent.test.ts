@@ -69,4 +69,10 @@ describe('checkSingleNameComponent', () => {
       message: `Component name is <bg_err>single word</bg_err> 🚨`,
     }])
   })
+
+  it('ignores Nuxt error.vue', () => {
+    checkSingleNameComponent('app/error.vue')
+    const result = reportSingleNameComponent()
+    expect(result.length).toBe(0)
+  })
 })

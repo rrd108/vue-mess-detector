@@ -84,4 +84,10 @@ describe('checkComponentFilenameCasing', () => {
       message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn> 🚨`,
     }])
   })
+
+  it('ignores Nuxt error.vue', () => {
+    checkComponentFilenameCasing('app/error.vue')
+    const result = reportComponentFilenameCasing()
+    expect(result.length).toBe(0)
+  })
 })

@@ -9,7 +9,8 @@ const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'options', 'head'
 const resetResults = () => (results.length = 0)
 
 const checkApiWithoutMethod = (descriptor: SFCDescriptor, filePath: string) => {
-  if (!filePath.includes('/server/api/')) {
+  // matches both absolute (/project/server/api/) and relative (server/api/) paths
+  if (!/(?:^|[\\/])server[\\/]api[\\/]/.test(filePath)) {
     return
   }
 

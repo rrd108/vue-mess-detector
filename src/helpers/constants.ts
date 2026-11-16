@@ -42,7 +42,7 @@ export const SKIP_DIRS = [
 ]
 
 // Name rules
-export const IGNORE_NAME_RULES = ['index.vue', 'app.vue']
+export const IGNORE_NAME_RULES = ['index.vue', 'app.vue', 'error.vue']
 
 // Override Config ~ Default
 export const DEFAULT_OVERRIDE_CONFIG: OverrideConfig = {

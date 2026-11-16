@@ -54,4 +54,25 @@ describe('checkApiWithoutMethod', () => {
       message: `API route <bg_warn>without HTTP method</bg_warn> specified in filename or content 🚨`,
     }])
   })
+
+  it('should report relative server/api paths (run from Nuxt project root)', () => {
+    const descriptor = {
+      filename: 'server/api/users.ts',
+      source: `export default defineEventHandler(() => [])`,
+    } as SFCDescriptor
+    checkApiWithoutMethod(descriptor, descriptor.filename)
+    const result = reportApiWithoutMethod()
+    expect(result.length).toBe(1)
+    expect(result[0].file).toBe('server/api/users.ts')
+  })
+
+  it('should not report files outside server/api', () => {
+    const descriptor = {
+      filename: 'app/myserver/api/users.ts',
+      source: `export default defineEventHandler(() => [])`,
+    } as SFCDescriptor
+    checkApiWithoutMethod(descriptor, descriptor.filename)
+    const result = reportApiWithoutMethod()
+    expect(result.length).toBe(0)
+  })
 })
