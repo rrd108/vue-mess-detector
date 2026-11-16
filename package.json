@@ -37,6 +37,9 @@
     "dist",
     "index.d.ts"
   ],
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=23"
+  },
   "scripts": {
     "build": "vite build && cp ./src/cliStart.js ./dist/",
     "analyze": "node ./dist/cliStart.js analyze",
