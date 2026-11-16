@@ -95,23 +95,23 @@ jobs:
         working-directory: ./test-repo
         run: |
           if [ "${{ matrix.package-manager }}" == "pnpm" ]; then
-            yes "my-package" | head -n 1 | pnpm create vue@latest . --default --typescript
+            echo "my-package" | pnpm create vue@latest . --default --typescript
             pnpm add file:../package/ -D
             pnpm install
             pnpm vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "yarn" ]; then
-            yes "my-package" | head -n 1 | yarn --cwd . create vue . --default --typescript
+            echo "my-package" | yarn --cwd . create vue . --default --typescript
             touch ./yarn.lock
             yarn add vue-mess-detector@file:../package/ -D
             yarn install
             yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "bun" ]; then
-            yes "my-package" | head -n 1 | bun create vue . --default --typescript
+            echo "my-package" | bun create vue . --default --typescript
             bun add file:../package/ --dev
             bun install --ignore-scripts
             bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
           else
-            yes "my-package" | head -n 1 | npm create vue@latest -- . --default --typescript
+            echo "my-package" | npm create vue@latest -- . --default --typescript
             npm install file:../package/ --save-dev
             npm install
             npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
