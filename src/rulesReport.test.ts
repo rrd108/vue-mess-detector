@@ -36,7 +36,7 @@ describe('reportRules — empty groups not displayed (issue #346)', () => {
 
   it('should include error-level groups even when level=error', () => {
     // computedSideEffects produces <bg_err> messages (errors)
-    const script = { content: 'const c = computed(() => { let total = 0; total = 1; return total })' } as SFCScriptBlock
+    const script = { content: 'const c = computed(() => { someVariable.value = 1; return someVariable })' } as SFCScriptBlock
     const fileName = 'test-with-error.vue'
     checkComputedSideEffects(script, fileName)
 

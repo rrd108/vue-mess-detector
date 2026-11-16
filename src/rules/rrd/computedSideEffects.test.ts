@@ -155,4 +155,104 @@ describe('checkComputedSideEffects', () => {
       message: `line #1 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
     }])
   })
+
+  it('should not report a local variable named set (#621)', () => {
+    const script = {
+      content: `
+        const currentSet = computed(() => {
+            const set = usingDefault.value ? "Using default atom data" :
+                                             "Using user atom data";
+            return \`\${set}\${modified.value ? " (modified)" : ""}\`;
+        });
+      `,
+    } as SFCScriptBlock
+    const fileName = 'EditAtomData.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it('should not report local declarations or loop counters (#621)', () => {
+    const script = {
+      content: `
+        const noComputeCompositions = computed(() => {
+
+            // Disable if no structures
+            if(countAccumulated.value === 0) return true;
+
+            // Disabled if any specie is not represented in any component
+            for(let j=0; j < ns; ++j) {
+                let n = 0;
+                for(let i=0; i < nc; ++i) n += count.value[i*ns+j];
+                if(n === 0) return true;
+            }
+            return false;
+        });
+      `,
+    } as SFCScriptBlock
+    const fileName = 'AnalyzeStructureSetsCtrl.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it('should still report mutating method calls like .set(', () => {
+    const script = {
+      content: `
+        const computedValue = computed(() => {
+          lookup.set(key, value)
+          return lookup
+        })
+      `,
+    } as SFCScriptBlock
+    const fileName = 'with-map-set.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('side effect detected in computed property')
+  })
+
+  it('should report property assignments, compound assignments and increments', () => {
+    const script = {
+      content: `
+        const computedA = computed(() => {
+          obj.x = 1
+          return obj
+        })
+
+        const computedB = computed(() => {
+          foo.value += 1
+          return foo.value
+        })
+
+        const computedC = computed(() => {
+          foo.value++
+          return foo.value
+        })
+      `,
+    } as SFCScriptBlock
+    const fileName = 'with-property-mutations.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(3)
+  })
+
+  it('should report assignments to identifiers declared outside the computed', () => {
+    const script = {
+      content: `
+        let count = 0
+        const computedValue = computed(() => {
+          count = count + 1
+          return count
+        })
+      `,
+    } as SFCScriptBlock
+    const fileName = 'with-outer-assignment.vue'
+    checkComputedSideEffects(script, fileName)
+    const result = reportComputedSideEffects()
+    expect(result.length).toBe(1)
+    expect(result[0].message).toContain('side effect detected in computed property')
+  })
 })

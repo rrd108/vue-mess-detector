@@ -51,3 +51,18 @@ someVariable.value = 'new value'
 ```
 
 In this fixed example, we've removed the side effect from the computed property. The `computedValue` now only returns the current value of `someVariable` without modifying it. We've added a separate function `updateSomeVariable()` to handle the state modification when needed.
+
+## 🙌 Examples of code that will not be flagged
+
+Local `const`/`let` declarations, comparisons, and mutations of those local variables are not treated as side effects:
+
+```vue
+<script setup>
+import { computed } from 'vue'
+
+const currentSet = computed(() => {
+  const set = usingDefault.value ? 'Using default atom data' : 'Using user atom data'
+  return `${set}${modified.value ? ' (modified)' : ''}`
+})
+</script>
+```
