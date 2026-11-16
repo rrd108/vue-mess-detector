@@ -45,6 +45,7 @@ jobs:
 
   test-create-vue:
     runs-on: ${{ matrix.platform }}
+    timeout-minutes: 15
     needs: build
 
     strategy:
@@ -89,64 +90,37 @@ jobs:
         with:
           bun-version: 1.4.4
 
-      - if: runner.os != 'Windows'
-        name: Create and Run Vue Mess Detector (Linux/Mac)
+      - name: Create and Run Vue Mess Detector
+        shell: bash
         working-directory: ./test-repo
         run: |
           if [ "${{ matrix.package-manager }}" == "pnpm" ]; then
             yes "my-package" | head -n 1 | pnpm create vue@latest . --default --typescript
-            pnpm add file:${{ github.workspace }}/package/ -D
+            pnpm add file:../package/ -D
             pnpm install
             pnpm vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "yarn" ]; then
             yes "my-package" | head -n 1 | yarn --cwd . create vue . --default --typescript
             touch ./yarn.lock
-            yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
+            yarn add vue-mess-detector@file:../package/ -D
             yarn install
             yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "bun" ]; then
             yes "my-package" | head -n 1 | bun create vue . --default --typescript
-            bun add file:${{ github.workspace }}/package/ --dev
+            bun add file:../package/ --dev
             bun install --ignore-scripts
             bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
           else
             yes "my-package" | head -n 1 | npm create vue@latest -- . --default --typescript
-            npm install file:${{ github.workspace }}/package/ --save-dev
+            npm install file:../package/ --save-dev
             npm install
             npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
           fi
           node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
 
-      - if: runner.os == 'Windows'
-        name: Create and Run Vue Mess Detector (Windows)
-        working-directory: ./test-repo
-        run: |
-          if ($Env:matrix_package_manager -eq 'pnpm') {
-            echo "my-package" | pnpm create vue@latest . --default --typescript
-            pnpm add file:${{ github.workspace }}/package/ -D
-            pnpm install
-            pnpm vue-mess-detector analyze --output=json --file-output=vmd-output.json
-          } elseif ($Env:matrix_package_manager -eq 'yarn') {
-            echo "my-package" | yarn create vue . --default --typescript
-            touch ./yarn.lock
-            yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
-            yarn install
-            yarn vue-mess-detector analyze --output=json --file-output=vmd-output.json
-          } elseif ($Env:matrix_package_manager -eq 'bun') {
-            echo "my-package" | bun create vue . --default --typescript --ignore-scripts
-            bun add file:${{ github.workspace }}/package/ --d
-            bun install --ignore-scripts
-            bun run vue-mess-detector analyze --output=json --file-output=vmd-output.json
-          } else {
-            echo "my-package" | npm create vue@latest -- . --default --typescript
-            npm install file:${{ github.workspace }}/package/ --save-dev
-            npm install
-            npx vue-mess-detector analyze --output=json --file-output=vmd-output.json
-          }
-          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
-
   test-nuxi:
     runs-on: ${{ matrix.platform }}
+    timeout-minutes: 15
     needs: build
     strategy:
       matrix:
@@ -189,58 +163,30 @@ jobs:
         with:
           bun-version: latest
 
-      - if: runner.os != 'Windows'
-        name: Create and Run Vue Mess Detector (Linux/Mac)
+      - name: Create and Run Vue Mess Detector
+        shell: bash
         working-directory: ./test-repo
         run: |
           if [ "${{ matrix.package-manager }}" == "pnpm" ]; then
             (cd .. && pnpm dlx nuxi@latest init test-repo --package-manager pnpm --git-init -t themes/content-wind)
-            pnpm add file:${{ github.workspace }}/package/ -D
+            pnpm add file:../package/ -D
             pnpm install
             pnpm vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "yarn" ]; then
             (cd .. && yarn dlx nuxi@latest init test-repo --package-manager yarn --git-init -t themes/content-wind --no-install)
             touch yarn.lock
-            yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
+            yarn add vue-mess-detector@file:../package/ -D
             yarn install
             yarn vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           elif [ "${{ matrix.package-manager }}" == "bun" ]; then
             (cd .. && bun x nuxi@latest init test-repo --package-manager bun --git-init -t themes/content-wind)
-            bun add file:${{ github.workspace }}/package/ --dev
+            bun add file:../package/ --dev
             bun install --ignore-scripts
             bun run vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           else
             (cd .. && npx nuxi@latest init test-repo --package-manager npm --git-init -t themes/content-wind)
-            npm install file:${{ github.workspace }}/package/ --save-dev
+            npm install file:../package/ --save-dev
             npm install
             npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
           fi
-          node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
-
-      - if: runner.os == 'Windows'
-        name: Create and Run Vue Mess Detector (Windows)
-        working-directory: ./test-repo
-        run: |
-          if ($Env:matrix_package_manager -eq 'pnpm') {
-            (cd .. && pnpm dlx nuxi@latest init test-repo --package-manager pnpm --git-init -t themes/content-wind)
-            pnpm add file:${{ github.workspace }}/package/ -D
-            pnpm install
-            pnpm vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
-          } elseif ($Env:matrix_package_manager -eq 'yarn') {
-            (cd .. && yarn dlx nuxi@latest init test-repo --package-manager yarn --git-init -t themes/content-wind --no-install)
-            touch ./yarn.lock
-            yarn add vue-mess-detector@file:${{ github.workspace }}/package/ -D
-            yarn install
-            yarn vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
-          } elseif ($Env:matrix_package_manager -eq 'bun') {
-            (cd .. && bun x nuxi@latest init test-repo --package-manager bun --git-init -t themes/content-wind)
-            bun add file:${{ github.workspace }}/package/ --dev
-            bun install --ignore-scripts
-            bun run vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
-          } else {
-            (cd .. && npx nuxi@latest init test-repo --package-manager npm --git-init -t themes/content-wind)
-            npm install file:${{ github.workspace }}/package/ --save-dev
-            npm install
-            npx vue-mess-detector analyze ./ --output=json --file-output=vmd-output.json
-          }
           node -e "const fs = require('fs'); try { const data = JSON.parse(fs.readFileSync('vmd-output.json', 'utf8')); console.log(JSON.stringify(data, null, 2)); } catch (e) { throw new Error('Something went wrong'); }"
