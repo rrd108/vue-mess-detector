@@ -3,7 +3,14 @@ import inquirer from 'inquirer' // it cause some error when this file is ts
 import { camelToKebab } from '../helpers/caseTransform.js'
 
 // For some reason If I try to import a constant and use it in `questions` it doesnt work...
-const RULESETS = ['vue-essential', 'vue-strong', 'vue-recommended', 'vue-caution', 'rrd', 'security']
+const RULESETS = [
+  'vue-essential',
+  'vue-strong',
+  'vue-recommended',
+  'vue-caution',
+  'rrd',
+  'security',
+]
 
 const inProgressPath = './.inProgress'
 
@@ -29,15 +36,17 @@ const getQuestions = async () => {
     const inProgressRules = content.split('\n').filter(Boolean)
 
     if (inProgressRules.length > 0) {
-      return [{
-        type: 'list',
-        name: 'choice',
-        message: 'Select the rule for doc generation:',
-        choices: [
-          ...inProgressRules,
-          { name: 'Other rule', value: 'new' },
-        ],
-      }]
+      return [
+        {
+          type: 'list',
+          name: 'choice',
+          message: 'Select the rule for doc generation:',
+          choices: [
+            ...inProgressRules,
+            { name: 'Other rule', value: 'new' },
+          ],
+        },
+      ]
     }
   }
   catch (error) {

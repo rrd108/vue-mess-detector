@@ -42,12 +42,14 @@ describe('composableFileName', () => {
     checkComposableFileName(script, filename)
     const result = reportComposableFileName()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ composable file name</text_info>`,
-      description: `👉 <text_warn>Composable file name should match the exported function name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/composable-file-name.html`,
-      message: `file: <bg_warn>(useCounter.ts)</bg_warn> exports <bg_warn>(useCount)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ composable file name</text_info>`,
+        description: `👉 <text_warn>Composable file name should match the exported function name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/composable-file-name.html`,
+        message: `file: <bg_warn>(useCounter.ts)</bg_warn> exports <bg_warn>(useCount)</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should not check files that do not start with "use"', () => {

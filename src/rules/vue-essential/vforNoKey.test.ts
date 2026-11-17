@@ -76,12 +76,14 @@ describe('checkVforNoKey', () => {
     checkVforNoKey(script, fileName)
     const result = reportVforNoKey()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ v-for has no key</text_info>`,
-      description: `👉 <text_warn>Add a \`:key\` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
-      message: `v-for used <bg_err>without a key</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ v-for has no key</text_info>`,
+        description: `👉 <text_warn>Add a \`:key\` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
+        message: `v-for used <bg_err>without a key</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report files where v-for has no key property with complex expression', () => {
@@ -100,11 +102,13 @@ describe('checkVforNoKey', () => {
     checkVforNoKey(script, fileName)
     const result = reportVforNoKey()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ v-for has no key</text_info>`,
-      description: `👉 <text_warn>Add a \`:key\` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
-      message: `v-for used <bg_err>without a key</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ v-for has no key</text_info>`,
+        description: `👉 <text_warn>Add a \`:key\` property to all v-for.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vfor-no-key.html`,
+        message: `v-for used <bg_err>without a key</bg_err> 🚨`,
+      },
+    ])
   })
 })

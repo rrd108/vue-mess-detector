@@ -18,12 +18,14 @@ describe('checkElseCondition', () => {
     checkElseCondition(script, fileName)
     const result = reportElseCondition()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ else conditions</text_info>`,
-      description: `👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
-      message: `else clauses found <bg_err>(1)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ else conditions</text_info>`,
+        description: `👉 <text_warn>Try to rewrite the conditions in a way that the else clause is not necessary.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/else-condition.html`,
+        message: `else clauses found <bg_err>(1)</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should not report files with else conditions in comments', () => {

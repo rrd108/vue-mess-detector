@@ -48,11 +48,13 @@ describe('checkHtmlLink', () => {
     checkHtmlLink(template, fileName)
     const result = reportHtmlLink()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ html link</text_info>`,
-      description: `👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
-      message: `2 <bg_warn>html link found</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ html link</text_info>`,
+        description: `👉 <text_warn>Use router-link or NuxtLink.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/html-link.html`,
+        message: `2 <bg_warn>html link found</bg_warn> 🚨`,
+      },
+    ])
   })
 })

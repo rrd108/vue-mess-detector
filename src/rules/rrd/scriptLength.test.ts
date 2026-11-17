@@ -26,11 +26,13 @@ describe('checkScriptLength', () => {
     checkScriptLength(longScript, fileName, maxLength)
     const result = reportScriptLength(maxLength)
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ Long <script> blocks</text_info>`,
-      description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${maxLength} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
-      message: `<bg_warn>(104 lines)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ Long <script> blocks</text_info>`,
+        description: `👉 <text_warn>Try to refactor out the logic into composable functions or other files and keep the script block's length under ${maxLength} lines.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/script-length.html`,
+        message: `<bg_warn>(104 lines)</bg_warn> 🚨`,
+      },
+    ])
   })
 })

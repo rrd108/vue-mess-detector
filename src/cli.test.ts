@@ -18,7 +18,12 @@ const removeConfigFile = async (configPath: string) => {
   await fs.rmdir(path.dirname(configPath))
 }
 
-const runCLI = (...args: string[]) => execa('npx', ['tsx', './src/cli.ts', 'analyze', ...args])
+const runCLI = (...args: string[]) => execa('npx', [
+  'tsx',
+  './src/cli.ts',
+  'analyze',
+  ...args,
+])
 
 describe('yarn analyze command with default configuration', () => {
   it('should execute without any flags and path', async () => {

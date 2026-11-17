@@ -33,12 +33,14 @@ describe('multiAttributeElements', () => {
     checkMultiAttributeElements(template, filename)
     const result = reportMultiAttributeElements()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
-      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+        description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+        message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
+      },
+    ])
   })
 
   it('should report component name properly', () => {
@@ -54,12 +56,14 @@ describe('multiAttributeElements', () => {
     checkMultiAttributeElements(template, filename)
     const result = reportMultiAttributeElements()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
-      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+        description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+        message: `line #3 element <bg_warn><${element}></bg_warn> should have its attributes on separate lines 🚨`,
+      },
+    ])
   })
 
   it('should report files where multiple elements have multiple attributes on the same line', () => {
@@ -75,16 +79,19 @@ describe('multiAttributeElements', () => {
     checkMultiAttributeElements(template, filename)
     const result = reportMultiAttributeElements()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
-      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `line #3 element <bg_warn><div></bg_warn> should have its attributes on separate lines 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
-      description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
-      message: `line #4 element <bg_warn><button></bg_warn> should have its attributes on separate lines 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+        description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+        message: `line #3 element <bg_warn><div></bg_warn> should have its attributes on separate lines 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ multi-attribute elements</text_info>`,
+        description: `👉 <text_warn>Elements with multiple attributes should span multiple lines, with one attribute per line.</text_warn>`,
+        message: `line #4 element <bg_warn><button></bg_warn> should have its attributes on separate lines 🚨`,
+      },
+    ])
   })
 })

@@ -28,12 +28,14 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     const result = reportSimpleProp()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ simple prop</text_info>`,
-      description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
-      message: `<bg_err>Props type</bg_err> not defined 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        message: `<bg_err>Props type</bg_err> not defined 🚨`,
+      },
+    ])
   })
 
   it('should report files with simple props definition with spaces', () => {
@@ -46,12 +48,14 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     const result = reportSimpleProp()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ simple prop</text_info>`,
-      description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
-      message: `<bg_err>Props type</bg_err> not defined 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        message: `<bg_err>Props type</bg_err> not defined 🚨`,
+      },
+    ])
   })
 
   it('should report files with simple props definition with comments', () => {
@@ -64,12 +68,14 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     const result = reportSimpleProp()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ simple prop</text_info>`,
-      description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
-      message: `<bg_err>Props type</bg_err> not defined 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        message: `<bg_err>Props type</bg_err> not defined 🚨`,
+      },
+    ])
   })
 
   it('should report files with simple props definition with new line', () => {
@@ -86,12 +92,14 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     const result = reportSimpleProp()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ simple prop</text_info>`,
-      description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
-      message: `<bg_err>Props type</bg_err> not defined 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        message: `<bg_err>Props type</bg_err> not defined 🚨`,
+      },
+    ])
   })
 
   it('should report files with simple props definition with new line and comments', () => {
@@ -108,12 +116,14 @@ describe('checkSimpleProp', () => {
     checkSimpleProp(script, fileName)
     const result = reportSimpleProp()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ simple prop</text_info>`,
-      description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
-      message: `<bg_err>Props type</bg_err> not defined 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ simple prop</text_info>`,
+        description: `👉 <text_warn>Add at least type definition.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/simple-prop.html`,
+        message: `<bg_err>Props type</bg_err> not defined 🚨`,
+      },
+    ])
   })
 })
 

@@ -62,12 +62,14 @@ describe('checkComputedSideEffects', () => {
     checkComputedSideEffects(script, fileName)
     const result = reportComputedSideEffects()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ computed side effects</text_info>`,
-      description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #6 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        message: `line #6 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report files with assignment side effects in computed properties', () => {
@@ -89,12 +91,14 @@ describe('checkComputedSideEffects', () => {
     checkComputedSideEffects(script, fileName)
     const result = reportComputedSideEffects()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ computed side effects</text_info>`,
-      description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #6 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        message: `line #6 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report multiple side effects in different computed properties', () => {
@@ -122,17 +126,20 @@ describe('checkComputedSideEffects', () => {
     checkComputedSideEffects(script, fileName)
     const result = reportComputedSideEffects()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ computed side effects</text_info>`,
-      description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #7 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
-    }, {
-      file: fileName,
-      rule: `<text_info>rrd ~ computed side effects</text_info>`,
-      description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #12 side effect detected in computed property <bg_err>(otherVariable.value )</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        message: `line #7 side effect detected in computed property <bg_err>(someArray.value.push)</bg_err> 🚨`,
+      },
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        message: `line #12 side effect detected in computed property <bg_err>(otherVariable.value )</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report files with assignment side effects in computed properties in js/ts files', () => {
@@ -148,11 +155,13 @@ describe('checkComputedSideEffects', () => {
     checkComputedSideEffects(script, fileName)
     const result = reportComputedSideEffects()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ computed side effects</text_info>`,
-      description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
-      message: `line #1 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ computed side effects</text_info>`,
+        description: `👉 <text_warn>Avoid side effects in computed properties. Computed properties should only derive and return a value.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/computed-side-effects.html`,
+        message: `line #1 side effect detected in computed property <bg_err>(someVariable.value =)</bg_err> 🚨`,
+      },
+    ])
   })
 })

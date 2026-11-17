@@ -56,11 +56,13 @@ describe('checkNoTsLang', () => {
     checkNoTsLang(script, fileName)
     const result = reportNoTsLang()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no ts lang</text_info>`,
-      description: `👉 <text_warn>Use typescript instead of javascript.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-ts-lang.html`,
-      message: `<bg_warn>component uses js instead of ts</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no ts lang</text_info>`,
+        description: `👉 <text_warn>Use typescript instead of javascript.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-ts-lang.html`,
+        message: `<bg_warn>component uses js instead of ts</bg_warn> 🚨`,
+      },
+    ])
   })
 })

@@ -4,7 +4,9 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/cli.ts'),
@@ -13,7 +15,23 @@ export default defineConfig({
       formats: ['es'], // Use only 'es'
     },
     rollupOptions: {
-      external: ['yargs', 'yargs/helpers', 'node:module', 'node:fs/promises', 'node:fs', 'fs', 'node:path', 'path', '@vue/compiler-sfc', 'vue', 'util', 'assert', 'node:url', 'url', 'os'],
+      external: [
+        'yargs',
+        'yargs/helpers',
+        'node:module',
+        'node:fs/promises',
+        'node:fs',
+        'fs',
+        'node:path',
+        'path',
+        '@vue/compiler-sfc',
+        'vue',
+        'util',
+        'assert',
+        'node:url',
+        'url',
+        'os',
+      ],
       output: {
         globals: {
           'yargs': 'yargs',

@@ -12,8 +12,13 @@ export const ESCAPE_MIDDLE: string = '\u001B\\'
 export const ESCAPE_END: string = '\u001B]8;;\u001B\\'
 
 // In case you need to display all allowed rules/rulesets ⬇️
-export const FLAT_RULES: string[] = [...Object.values(RULES).flat()]
-export const FLAT_RULESETS_RULES: string[] = [...RULESETS, ...FLAT_RULES]
+export const FLAT_RULES: string[] = [
+  ...Object.values(RULES).flat(),
+]
+export const FLAT_RULESETS_RULES: string[] = [
+  ...RULESETS,
+  ...FLAT_RULES,
+]
 
 // Direct DOM access methods
 export const DOM_METHODS = [

@@ -12,9 +12,13 @@ const checkScriptLength = (script: SFCScriptBlock | null, filePath: string, maxL
 
   const lines = script.content.split('\n')
   if (lines.length > maxLength) {
-    results.push({ filePath, message: `${lines.length > maxLength * 2 ? '<bg_err>' : '<bg_warn>'}(${
+    results.push({ filePath, message: `${lines.length > maxLength * 2
+      ? '<bg_err>'
+      : '<bg_warn>'}(${
       lines.length
-    } lines)${lines.length > maxLength * 2 ? '</bg_err>' : '</bg_warn>'}` })
+    } lines)${lines.length > maxLength * 2
+      ? '</bg_err>'
+      : '</bg_warn>'}` })
   }
 }
 

@@ -95,13 +95,22 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   // Use config values if not provided in cli params
   // TODO add support for merging cli and config
-  apply = apply.length ? apply : config.apply.split(',')
-  ignore = ignore.length ? ignore : config.ignore ? config.ignore.split(',') : []
+  apply = apply.length
+    ? apply
+    : config.apply.split(',')
+  ignore = ignore.length
+    ? ignore
+    : config.ignore
+      ? config.ignore.split(',')
+      : []
   exclude = exclude || config.exclude
   groupBy = groupBy || config.group
   level = level || config.level
   sortBy = sortBy || config.sort
-  _fileIgnoreRules = { ...config.fileIgnoreRules, ...fileIgnoreRules }
+  _fileIgnoreRules = {
+    ...config.fileIgnoreRules,
+    ...fileIgnoreRules,
+  }
 
   _override = config.override
 
@@ -110,20 +119,38 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   const rulesetsInIgnore = ignore.filter(rule => RULESETS.includes(rule as RuleSetType))
   const rulesInIgnore = ignore.filter(rule => FLAT_RULES.includes(rule))
-  const ignoredRulesets = [...new Set([...rulesetsInIgnore, ...RULESETS.filter(ruleset => !rulesets.includes(ruleset))])]
-  const ignoredRules = [...new Set([...rulesInIgnore, ...FLAT_RULES.filter(rule => !individualRules.includes(rule))])]
+  const ignoredRulesets = [
+    ...new Set([
+      ...rulesetsInIgnore,
+      ...RULESETS.filter(ruleset => !rulesets.includes(ruleset)),
+    ]),
+  ]
+  const ignoredRules = [
+    ...new Set([
+      ...rulesInIgnore,
+      ...FLAT_RULES.filter(rule => !individualRules.includes(rule)),
+    ]),
+  ]
 
   const appliedRulesets = rulesets.filter(ruleset => !ignoredRulesets.includes(ruleset as RuleSetType))
   const appliedRules = individualRules.filter(rule => !ignoredRules.includes(rule))
   _apply = appliedRules
 
   // Prepare output messages for applied rulesets and rules
-  const appliedRulesetsOutput = appliedRulesets.length ? `<bg_info>${appliedRulesets.join(', ')}</bg_info>` : 'N/A'
-  const appliedRulesOutput = appliedRules.length ? `<bg_info>${appliedRules.join(', ')}</bg_info>` : 'N/A'
+  const appliedRulesetsOutput = appliedRulesets.length
+    ? `<bg_info>${appliedRulesets.join(', ')}</bg_info>`
+    : 'N/A'
+  const appliedRulesOutput = appliedRules.length
+    ? `<bg_info>${appliedRules.join(', ')}</bg_info>`
+    : 'N/A'
 
   // Prepare output message for ignored rulesets
-  const ignoreRulesetsOutput = ignoredRulesets.length ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>` : 'N/A'
-  const ignoredRulesOutput = ignoredRules.length ? `<bg_info>${ignoredRules.join(', ')}</bg_info>` : 'N/A'
+  const ignoreRulesetsOutput = ignoredRulesets.length
+    ? `<bg_info>${ignoredRulesets.join(', ')}</bg_info>`
+    : 'N/A'
+  const ignoredRulesOutput = ignoredRules.length
+    ? `<bg_info>${ignoredRules.join(', ')}</bg_info>`
+    : 'N/A'
 
   const isVue = await isVueProject(projectRoot)
   const isNuxt = await isNuxtProject(projectRoot)
@@ -141,10 +168,14 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
 
   output.push({ info: `<bg_info>Analyzing Vue, TS and JS files in ${dir}</bg_info>` })
 
-  const configMessage = config.isDefault ? `👉 Using <bg_info>default</bg_info> configuration` : `👉 Using configuration from <bg_info>vue-mess-detector.json</bg_info>`
+  const configMessage = config.isDefault
+    ? `👉 Using <bg_info>default</bg_info> configuration`
+    : `👉 Using configuration from <bg_info>vue-mess-detector.json</bg_info>`
   output.push({ info: configMessage })
 
-  output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue ? '?' : ''}</bg_info>` })
+  output.push({ info: `      Project type: <bg_info>${isNuxt ? 'Nuxt' : ''}${isVue ? 'Vue' : ''}${!isNuxt && !isVue
+    ? '?'
+    : ''}</bg_info>` })
   output.push({
     info: `${applyingMessage}
       Ignoring ${ignoredRulesets.length} rulesets: ${ignoreRulesetsOutput}
@@ -174,5 +205,10 @@ export const analyze = async ({ dir, apply = [], ignore = [], exclude = '', grou
     output.push({ info: `\n<bg_ok>No code smells detected!</bg_ok>` })
   }
 
-  return { output, codeHealthOutput, reportOutput, codeHealth }
+  return {
+    output,
+    codeHealthOutput,
+    reportOutput,
+    codeHealth,
+  }
 }

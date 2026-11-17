@@ -23,7 +23,9 @@ const getElementTag = (selector: string) => {
     return undefined
   }
   const tag = compound.match(/^[a-z][a-z0-9]*/i)?.[0].toLowerCase()
-  return tag && htmlTags.includes(tag as HtmlTags) ? tag : undefined
+  return tag && htmlTags.includes(tag as HtmlTags)
+    ? tag
+    : undefined
 }
 
 const checkElementSelectorsWithScoped = (styles: SFCStyleBlock[] | null, filePath: string) => {

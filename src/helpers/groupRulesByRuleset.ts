@@ -28,5 +28,8 @@ export function groupRulesByRuleset(apply: string[]): { rulesets: RuleSetType[],
     individualRules.push(...appliedRulesInSet)
   })
 
-  return { rulesets: rulesets.sort(), individualRules: individualRules.sort() }
+  return {
+    rulesets: rulesets.sort(),
+    individualRules: individualRules.sort(),
+  }
 }

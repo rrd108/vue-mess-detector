@@ -117,10 +117,18 @@ const main = async () => {
       }
     }
 
-    console.log(`${rulesCount == testFiles ? '✅' : '👆'} ${testFiles} test files found in ${srcDirectory}`)
-    console.log(`${rulesCount == rulesInRulesFile ? '✅' : '👆'} ${rulesInRulesFile} rules found in ${rulesFile}`)
-    console.log(`${rulesCount == rulesInCheckFile ? '✅' : '👆'} ${rulesInCheckFile} rules found in ${rulesCheckFile}`)
-    console.log(`${rulesCount == rulesInReportFile ? '✅' : '👆'} ${rulesInReportFile} rules found in ${rulesReportFile}`)
+    console.log(`${rulesCount == testFiles
+      ? '✅'
+      : '👆'} ${testFiles} test files found in ${srcDirectory}`)
+    console.log(`${rulesCount == rulesInRulesFile
+      ? '✅'
+      : '👆'} ${rulesInRulesFile} rules found in ${rulesFile}`)
+    console.log(`${rulesCount == rulesInCheckFile
+      ? '✅'
+      : '👆'} ${rulesInCheckFile} rules found in ${rulesCheckFile}`)
+    console.log(`${rulesCount == rulesInReportFile
+      ? '✅'
+      : '👆'} ${rulesInReportFile} rules found in ${rulesReportFile}`)
 
     if (errors) {
       console.error(`\n${errors} errors were found during the check.\n`)

@@ -182,7 +182,10 @@ getProjectRoot(pathArg).then(async (projectRoot) => {
                   log(`<text_info>Rule: ${group}</text_info>`)
                   log(`Description: ${result.reportOutput[group][0].description}`)
                   result.reportOutput[group].forEach((line) => {
-                    table.push([log(line.id), log(line.message)])
+                    table.push([
+                      log(line.id),
+                      log(line.message),
+                    ])
                   })
                 }
                 if (argv.group == 'file') {

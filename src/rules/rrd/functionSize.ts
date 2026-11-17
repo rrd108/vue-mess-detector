@@ -164,7 +164,13 @@ const checkFunctionSize = (script: SFCScriptBlock | null, filePath: string, max:
 
     if (isFunction) {
       const lineNumber = getLineNumber(content.trim(), funcName)
-      addFunctionToFiles({ funcName, funcBody, lineNumber, filePath, max })
+      addFunctionToFiles({
+        funcName,
+        funcBody,
+        lineNumber,
+        filePath,
+        max,
+      })
     }
     else {
       index++

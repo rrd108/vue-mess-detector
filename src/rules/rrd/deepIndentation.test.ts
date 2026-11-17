@@ -28,12 +28,14 @@ describe('checkDeepIndentation', () => {
     checkDeepIndentation(script, fileName, maxTabs)
     const result = reportDeepIndentation()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ deep indentation</text_info>`,
-      description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
-      message: `line #1 <bg_warn>indentation: 5</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ deep indentation</text_info>`,
+        description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
+        message: `line #1 <bg_warn>indentation: 5</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with deep space indentation', () => {
@@ -43,11 +45,13 @@ describe('checkDeepIndentation', () => {
     checkDeepIndentation(script, fileName, maxTabs)
     const result = reportDeepIndentation()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ deep indentation</text_info>`,
-      description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
-      message: `line #1 <bg_warn>indentation: 15</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ deep indentation</text_info>`,
+        description: `👉 <text_warn>Try to refactor your component to child components, to avoid deep indentations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/deep-indentation.html`,
+        message: `line #1 <bg_warn>indentation: 15</bg_warn> 🚨`,
+      },
+    ])
   })
 })

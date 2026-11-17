@@ -4,7 +4,15 @@ import { createRegExp, exactly, oneOrMore } from 'magic-regexp'
 
 const results: FileCheckResult[] = []
 
-const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'options', 'head']
+const HTTP_METHODS = [
+  'get',
+  'post',
+  'put',
+  'delete',
+  'patch',
+  'options',
+  'head',
+]
 
 const resetResults = () => (results.length = 0)
 

@@ -32,12 +32,14 @@ describe('checkNoAxiosFetchInNuxt', () => {
     checkNoAxiosFetchInNuxt(script, fileName)
     const result = reportNoAxiosFetchInNuxt()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no axios or fetch in nuxt</text_info>`,
-      description: `👉 <text_warn>Avoid using axios or fetch directly in Nuxt. Use useFetch, useAsyncData, or $fetch instead for proper SSR and data handling.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-axios-fetch-in-nuxt.html`,
-      message: `line #3 <bg_warn>Direct HTTP call detected: axios</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no axios or fetch in nuxt</text_info>`,
+        description: `👉 <text_warn>Avoid using axios or fetch directly in Nuxt. Use useFetch, useAsyncData, or $fetch instead for proper SSR and data handling.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-axios-fetch-in-nuxt.html`,
+        message: `line #3 <bg_warn>Direct HTTP call detected: axios</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files that use fetch directly', () => {
@@ -53,12 +55,14 @@ describe('checkNoAxiosFetchInNuxt', () => {
     checkNoAxiosFetchInNuxt(script, fileName)
     const result = reportNoAxiosFetchInNuxt()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no axios or fetch in nuxt</text_info>`,
-      description: `👉 <text_warn>Avoid using axios or fetch directly in Nuxt. Use useFetch, useAsyncData, or $fetch instead for proper SSR and data handling.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-axios-fetch-in-nuxt.html`,
-      message: `line #2 <bg_warn>Direct HTTP call detected: fetch</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no axios or fetch in nuxt</text_info>`,
+        description: `👉 <text_warn>Avoid using axios or fetch directly in Nuxt. Use useFetch, useAsyncData, or $fetch instead for proper SSR and data handling.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-axios-fetch-in-nuxt.html`,
+        message: `line #2 <bg_warn>Direct HTTP call detected: fetch</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report multiple instances of axios and fetch', () => {

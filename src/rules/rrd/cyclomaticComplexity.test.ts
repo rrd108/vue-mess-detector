@@ -27,12 +27,14 @@ describe('checkCyclomaticComplexity', () => {
     checkCyclomaticComplexity(script, fileName, complexityModerate)
     const result = reportCyclomaticComplexity()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
-      description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `Cyclomatic complexity is <bg_warn>high (6)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
+        description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+        message: `Cyclomatic complexity is <bg_warn>high (6)</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report scripts with high complexity', () => {
@@ -45,11 +47,13 @@ describe('checkCyclomaticComplexity', () => {
     checkCyclomaticComplexity(script, fileName, complexityModerate)
     const result = reportCyclomaticComplexity()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
-      description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
-      message: `Cyclomatic complexity is <bg_err>very high (11)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ cyclomatic complexity</text_info>`,
+        description: `👉 <text_warn>Try to reduce complexity.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/cyclomatic-complexity.html`,
+        message: `Cyclomatic complexity is <bg_err>very high (11)</bg_err> 🚨`,
+      },
+    ])
   })
 })

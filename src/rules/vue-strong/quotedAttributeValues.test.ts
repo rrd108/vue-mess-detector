@@ -34,11 +34,13 @@ describe('checkQuotedAttributeValues', () => {
     checkQuotedAttributeValues(descriptor, fileName)
     const result = reportQuotedAttributeValues()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-strong ~ quoted attribute values</text_info>`,
-      description: `👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
-      message: `line #2 <bg_warn>:style={</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-strong ~ quoted attribute values</text_info>`,
+        description: `👉 <text_warn>Always use quotes for attribute values.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/quoted-attribute-values.html`,
+        message: `line #2 <bg_warn>:style={</bg_warn> 🚨`,
+      },
+    ])
   })
 })

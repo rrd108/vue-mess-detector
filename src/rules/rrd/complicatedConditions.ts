@@ -48,7 +48,11 @@ const checkComplicatedConditions = (descriptor: SFCDescriptor, filePath: string,
           const lineNumber = getLineNumber(content, match)
           results.push({
             filePath,
-            message: `line #${lineNumber} ${conditionBlocks > ERROR_THRESHOLD ? '<bg_err>' : '<bg_warn>'}${type} has a complicated condition with ${conditionBlocks} blocks${conditionBlocks > ERROR_THRESHOLD ? '</bg_err>' : '</bg_warn>'}`,
+            message: `line #${lineNumber} ${conditionBlocks > ERROR_THRESHOLD
+              ? '<bg_err>'
+              : '<bg_warn>'}${type} has a complicated condition with ${conditionBlocks} blocks${conditionBlocks > ERROR_THRESHOLD
+              ? '</bg_err>'
+              : '</bg_warn>'}`,
           })
         }
       })
