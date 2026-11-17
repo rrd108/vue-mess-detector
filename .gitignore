@@ -7,3 +7,5 @@ notes.md
 .config/vue-mess-detector.json
 .inProgress
 dist
+# npm auth token
+.npmrc
