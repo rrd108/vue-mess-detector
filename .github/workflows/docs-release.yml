@@ -43,7 +43,7 @@ jobs:
           cat >> ~/.ssh/config <<EOF
           Host vmd_balarama
               HostName ${{ secrets.SSH_HOST }}
-              User vmd_webmania
+              User webmania_vmd
               StrictHostKeyChecking accept-new
           EOF
           chmod 600 ~/.ssh/config
