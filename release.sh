@@ -65,7 +65,10 @@ if [ $PREV_STEP -eq 1 ];then
     release_notes=$(git log "${last_release}..HEAD" --pretty="%s" | awk -v prefix="* " '/^(feat|fix|docs|test|chore|refactor|style)/{print prefix $0}')
 
     echo "👉 Publishing the new version to npmjs.com"
-    yarn publish --new-version "$1"
+    if ! yarn publish --new-version "$1"; then
+      echo -e $'\n' "${RED} \u2a2f Publishing to npm failed. ${NC} Nothing was pushed to git or GitHub." $'\n'
+      exit 1
+    fi
 
     # Capture the new version number
     new_version=$(node -p "require('./package.json').version")
