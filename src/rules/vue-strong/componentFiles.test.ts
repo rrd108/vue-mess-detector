@@ -36,16 +36,19 @@ describe('checkComponentFiles', () => {
     checkComponentFiles(script, filename)
     const result = reportComponentFiles()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ component files</text_info>`,
-      description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
-      message: `line #2 <bg_warn>(TodoList)</bg_warn> 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>vue-strong ~ component files</text_info>`,
-      description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
-      message: `line #6 <bg_warn>(TodoItem)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ component files</text_info>`,
+        description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+        message: `line #2 <bg_warn>(TodoList)</bg_warn> 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ component files</text_info>`,
+        description: `👉 <text_warn>Whenever a build system is available to concatenate files, each component should be in its own file.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-files.html`,
+        message: `line #6 <bg_warn>(TodoItem)</bg_warn> 🚨`,
+      },
+    ])
   })
 })

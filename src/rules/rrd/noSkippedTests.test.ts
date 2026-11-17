@@ -51,12 +51,14 @@ describe('checkNoSkippedTests', () => {
     checkNoSkippedTests(script, fileName)
     const result = reportNoSkippedTests()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no skipped tests</text_info>`,
-      description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
-      message: `line #2 <bg_warn>skip test found: ".todo"</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no skipped tests</text_info>`,
+        description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
+        message: `line #2 <bg_warn>skip test found: ".todo"</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with skipped tests', () => {
@@ -77,16 +79,19 @@ describe('checkNoSkippedTests', () => {
     checkNoSkippedTests(script, fileName)
     const result = reportNoSkippedTests()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no skipped tests</text_info>`,
-      description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
-      message: `line #2 <bg_warn>skip test found: ".skip"</bg_warn> 🚨`,
-    }, {
-      file: fileName,
-      rule: `<text_info>rrd ~ no skipped tests</text_info>`,
-      description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
-      message: `line #6 <bg_warn>skip test found: ".skipIf"</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no skipped tests</text_info>`,
+        description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
+        message: `line #2 <bg_warn>skip test found: ".skip"</bg_warn> 🚨`,
+      },
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no skipped tests</text_info>`,
+        description: `👉 <text_warn>Skipped or todo tests were found. These should be addressed before merging.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-skipped-tests.html`,
+        message: `line #6 <bg_warn>skip test found: ".skipIf"</bg_warn> 🚨`,
+      },
+    ])
   })
 })

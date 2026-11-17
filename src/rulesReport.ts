@@ -15,12 +15,20 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
 
   // Helper function to add offenses
   const addOffense = ({ file, rule, title, description, message }: Offense) => {
-    const groupKey = groupBy === 'rule' ? rule : file
+    const groupKey = groupBy === 'rule'
+      ? rule
+      : file
 
     if (!offensesGrouped[groupKey]) {
       offensesGrouped[groupKey] = []
     }
-    offensesGrouped[groupKey].push({ file, rule, title, description, message })
+    offensesGrouped[groupKey].push({
+      file,
+      rule,
+      title,
+      description,
+      message,
+    })
   }
 
   // Helper function to process offenses from a report function
@@ -126,14 +134,24 @@ export const reportRules = (groupBy: GroupBy, sortBy: SortBy, level: OutputLevel
         }
       }
       else {
-        health.push({ file: offense.file, errors: isError ? 1 : 0, warnings: isError ? 0 : 1, output: [] })
+        health.push({
+          file: offense.file,
+          errors: isError ? 1 : 0,
+          warnings: isError ? 0 : 1,
+          output: [],
+        })
       }
 
       if (level === 'error' && !isError) {
         return
       }
 
-      const item = { id: '', description: '', message: '', level: isError ? 'error' : 'warning' }
+      const item = {
+        id: '',
+        description: '',
+        message: '',
+        level: isError ? 'error' : 'warning',
+      }
 
       if (groupBy === 'file') {
         item.id = offense.rule

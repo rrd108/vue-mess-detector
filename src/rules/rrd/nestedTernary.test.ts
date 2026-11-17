@@ -74,12 +74,14 @@ describe('checkNestedTernary', () => {
     checkNestedTernary(script, fileName)
     const result = reportNestedTernary()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
-      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
-      message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+        description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+        message: `line #2 has <bg_warn>nested ternary</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with nested ternary, even when optional chaining is present', () => {
@@ -92,12 +94,14 @@ describe('checkNestedTernary', () => {
     checkNestedTernary(script, fileName)
     const result = reportNestedTernary()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
-      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
-      message: `line #1 has <bg_warn>nested ternary</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+        description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+        message: `line #1 has <bg_warn>nested ternary</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with nested ternary, even when nullish coalescing is present', () => {
@@ -110,11 +114,13 @@ describe('checkNestedTernary', () => {
     checkNestedTernary(script, fileName)
     const result = reportNestedTernary()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ nested Ternary</text_info>`,
-      description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
-      message: `line #1 has <bg_warn>nested ternary</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ nested Ternary</text_info>`,
+        description: `👉 <text_warn>Break the nested ternary into standalone ternaries, if statements, && operators, or a dedicated function.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/nested-ternary.html`,
+        message: `line #1 has <bg_warn>nested ternary</bg_warn> 🚨`,
+      },
+    ])
   })
 })

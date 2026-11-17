@@ -31,12 +31,14 @@ describe('checkVforExpression', () => {
     checkVForExpression(template, fileName)
     const result = reportVForExpression()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ vfor Expression</text_info>`,
-      description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
-      message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ vfor Expression</text_info>`,
+        description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
+        message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with v-for using a normal function in expression', () => {
@@ -52,11 +54,13 @@ describe('checkVforExpression', () => {
     checkVForExpression(template, fileName)
     const result = reportVForExpression()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ vfor Expression</text_info>`,
-      description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
-      message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ vfor Expression</text_info>`,
+        description: `👉 <text_warn>Move out the expression to a calculated property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/vfor-expression.html`,
+        message: `line #2 <bg_warn>expression: ${expression} in v-for</bg_warn> 🚨`,
+      },
+    ])
   })
 })

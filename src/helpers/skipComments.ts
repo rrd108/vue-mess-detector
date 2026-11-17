@@ -16,6 +16,8 @@ export const skipComments = (content: string) => {
 
   return content.replace(regex, (match) => {
     const newlines = match.match(/\n/g)
-    return newlines ? newlines.join('') : ''
+    return newlines
+      ? newlines.join('')
+      : ''
   })
 }

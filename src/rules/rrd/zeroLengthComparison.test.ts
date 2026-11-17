@@ -34,12 +34,14 @@ describe('checkZeroLengthComparison', () => {
     checkZeroLengthComparison(script, fileName)
     const result = reportZeroLengthComparison()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
-      description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
-      message: `line #2 zero length comparison found <bg_warn>(results)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
+        description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
+        message: `line #2 zero length comparison found <bg_warn>(results)</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with with zero-length comparison in template', () => {
@@ -65,11 +67,13 @@ describe('checkZeroLengthComparison', () => {
     checkZeroLengthComparison(script, fileName)
     const result = reportZeroLengthComparison()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
-      description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
-      message: `line #11 zero length comparison found <bg_warn>(trophies)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ Zero Length Comparison</text_info>`,
+        description: `👉 <text_warn>In JavaScript, any number greater than 0 is truthy, so you can directly use the length property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/zero-length-comparison.html`,
+        message: `line #11 zero length comparison found <bg_warn>(trophies)</bg_warn> 🚨`,
+      },
+    ])
   })
 })

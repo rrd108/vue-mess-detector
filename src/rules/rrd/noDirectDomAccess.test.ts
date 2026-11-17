@@ -40,12 +40,14 @@ describe('checkNoDirectDomAccess', () => {
     checkNoDirectDomAccess(script, fileName)
     const result = reportNoDirectDomAccess()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no direct dom access</text_info>`,
-      description: `👉 <text_warn>Avoid direct DOM manipulation in Vue components. Use refs or Vue's template syntax instead.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-direct-dom-access.html`,
-      message: `line #3 <bg_warn>Direct DOM access detected: getElementById(</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no direct dom access</text_info>`,
+        description: `👉 <text_warn>Avoid direct DOM manipulation in Vue components. Use refs or Vue's template syntax instead.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-direct-dom-access.html`,
+        message: `line #3 <bg_warn>Direct DOM access detected: getElementById(</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with direct DOM access using querySelector', () => {
@@ -65,12 +67,14 @@ describe('checkNoDirectDomAccess', () => {
     checkNoDirectDomAccess(script, fileName)
     const result = reportNoDirectDomAccess()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ no direct dom access</text_info>`,
-      description: `👉 <text_warn>Avoid direct DOM manipulation in Vue components. Use refs or Vue's template syntax instead.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-direct-dom-access.html`,
-      message: `line #5 <bg_warn>Direct DOM access detected: querySelector(</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ no direct dom access</text_info>`,
+        description: `👉 <text_warn>Avoid direct DOM manipulation in Vue components. Use refs or Vue's template syntax instead.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/no-direct-dom-access.html`,
+        message: `line #5 <bg_warn>Direct DOM access detected: querySelector(</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report multiple instances of direct DOM access', () => {

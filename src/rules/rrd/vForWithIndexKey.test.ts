@@ -47,12 +47,14 @@ describe('checkVForWithIndexKey', () => {
     checkVForWithIndexKey(template, fileName)
     const result = reportVForWithIndexKey()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
-      description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
-      message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
+        description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
+        message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with index but using other names as key', () => {
@@ -69,12 +71,14 @@ describe('checkVForWithIndexKey', () => {
     checkVForWithIndexKey(template, fileName)
     const result = reportVForWithIndexKey()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
-      description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
-      message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
+        description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
+        message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with index but using other names as key v2', () => {
@@ -91,11 +95,13 @@ describe('checkVForWithIndexKey', () => {
     checkVForWithIndexKey(template, fileName)
     const result = reportVForWithIndexKey()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
-      description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
-      message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ VFor With Index Key</text_info>`,
+        description: `👉 <text_warn>Avoid using index as key in v-for loops.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/v-for-with-index-key.html`,
+        message: `line #2 <bg_warn>index is being used as :key in v-for</bg_warn> 🚨`,
+      },
+    ])
   })
 })

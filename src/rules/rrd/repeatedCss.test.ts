@@ -127,12 +127,14 @@ describe('checkRepeatedCss', () => {
 
     const result = reportRepeatedCss()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: 'component1.vue, component2.vue, component3.vue, component4.vue, component5.vue',
-      rule: `<text_info>rrd ~ repeated CSS</text_info>`,
-      description: `👉 <text_warn>Avoid repeating CSS properties with the same value more than 3 times across files. Consider using CSS variables or a common class.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/repeated-css.html`,
-      message: 'repeated CSS: (color:red;) in 5 files 🚨',
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: 'component1.vue, component2.vue, component3.vue, component4.vue, component5.vue',
+        rule: `<text_info>rrd ~ repeated CSS</text_info>`,
+        description: `👉 <text_warn>Avoid repeating CSS properties with the same value more than 3 times across files. Consider using CSS variables or a common class.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/repeated-css.html`,
+        message: 'repeated CSS: (color:red;) in 5 files 🚨',
+      },
+    ])
   })
 
   it('should not report when css is repeated in 3 or fewer files', () => {

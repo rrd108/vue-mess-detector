@@ -48,12 +48,14 @@ describe('checkImplicitParentChildCommunication', () => {
     } as SFCScriptBlock
     const filename = 'props-mutation.vue'
     const lineNumber = 3
-    const offenses = [{
-      file: filename,
-      rule: `<text_info>vue-caution ~ implicit parent-child communication</text_info>`,
-      description: `👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
-      message: `line #${lineNumber} <bg_warn>(todo)</bg_warn> 🚨`,
-    }]
+    const offenses = [
+      {
+        file: filename,
+        rule: `<text_info>vue-caution ~ implicit parent-child communication</text_info>`,
+        description: `👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
+        message: `line #${lineNumber} <bg_warn>(todo)</bg_warn> 🚨`,
+      },
+    ]
     checkImplicitParentChildCommunication(script, filename)
     const result = reportImplicitParentChildCommunication()
     expect(result.length).toBe(1)
@@ -95,12 +97,14 @@ describe('checkImplicitParentChildCommunication', () => {
     } as SFCScriptBlock
     const filename = 'parent-instance.vue'
     const lineNumber = 2
-    const offenses = [{
-      file: filename,
-      rule: `<text_info>vue-caution ~ implicit parent-child communication</text_info>`,
-      description: `👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
-      message: `line #${lineNumber} <bg_warn>(getCurrentInstance)</bg_warn> 🚨`,
-    }]
+    const offenses = [
+      {
+        file: filename,
+        rule: `<text_info>vue-caution ~ implicit parent-child communication</text_info>`,
+        description: `👉 <text_warn>Avoid implicit parent-child communication to maintain clear and predictable component behavior.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-caution/implicit-parent-child-communication.html`,
+        message: `line #${lineNumber} <bg_warn>(getCurrentInstance)</bg_warn> 🚨`,
+      },
+    ]
     checkImplicitParentChildCommunication(script, filename)
     const result = reportImplicitParentChildCommunication()
     expect(result.length).toBe(1)

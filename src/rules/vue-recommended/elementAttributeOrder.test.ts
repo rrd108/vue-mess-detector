@@ -30,12 +30,14 @@ describe('checkElementAttributeOrder', () => {
     checkElementAttributeOrder(template, filename)
     const result = reportElementAttributeOrder()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
-      description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
-      message: `tag has attributes out of order <bg_warn>(input)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
+        description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+        message: `tag has attributes out of order <bg_warn>(input)</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should not report files where elements attribute order is incorrect 2', () => {
@@ -50,11 +52,13 @@ describe('checkElementAttributeOrder', () => {
     checkElementAttributeOrder(template, filename)
     const result = reportElementAttributeOrder()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
-      description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
-      message: `tag has attributes out of order <bg_warn>(div)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-recommended ~ element attribute order</text_info>`,
+        description: `👉 <text_warn>The attributes of elements (including components) should be ordered consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/element-attribute-order.html`,
+        message: `tag has attributes out of order <bg_warn>(div)</bg_warn> 🚨`,
+      },
+    ])
   })
 })

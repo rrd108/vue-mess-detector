@@ -15,7 +15,9 @@ const checkComponentFiles = (script: SFCScriptBlock | null, filePath: string) =>
   // regular expression to match `.component('anyString', { ... })` pattern
   const regex = /app\.component\('([^']+)',\s*\{[^}]*\}\)/g
 
-  const matches = [...script.content.matchAll(regex)].map(match => match[1].trim())
+  const matches = [
+    ...script.content.matchAll(regex),
+  ].map(match => match[1].trim())
 
   matches.forEach((match) => {
     const lineNumber = getLineNumber(script.content.trim(), match)

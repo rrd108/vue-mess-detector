@@ -55,12 +55,14 @@ describe('checkPropsDrilling', () => {
     checkPropsDrilling(script, filePath)
     const result = reportPropsDrilling()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filePath,
-      rule: `<text_info>rrd ~ props drilling</text_info>`,
-      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
-      message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filePath,
+        rule: `<text_info>rrd ~ props drilling</text_info>`,
+        description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+        message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
+      },
+    ])
   })
 
   it('should report multiple drilled props in the same file', () => {
@@ -77,16 +79,19 @@ describe('checkPropsDrilling', () => {
     checkPropsDrilling(script, filePath)
     const result = reportPropsDrilling()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filePath,
-      rule: `<text_info>rrd ~ props drilling</text_info>`,
-      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
-      message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
-    }, {
-      file: filePath,
-      rule: `<text_info>rrd ~ props drilling</text_info>`,
-      description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
-      message: `Prop <bg_warn>(title)</bg_warn> is being drilled through <bg_warn>AnotherComponent</bg_warn> component unmodified. 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filePath,
+        rule: `<text_info>rrd ~ props drilling</text_info>`,
+        description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+        message: `Prop <bg_warn>(items)</bg_warn> is being drilled through <bg_warn>ChildComponent</bg_warn> component unmodified. 🚨`,
+      },
+      {
+        file: filePath,
+        rule: `<text_info>rrd ~ props drilling</text_info>`,
+        description: `👉 <text_warn>Props should not be forwarded unmodified. Consider refactoring.</text_warn>`,
+        message: `Prop <bg_warn>(title)</bg_warn> is being drilled through <bg_warn>AnotherComponent</bg_warn> component unmodified. 🚨`,
+      },
+    ])
   })
 })

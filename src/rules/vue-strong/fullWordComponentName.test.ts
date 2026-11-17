@@ -46,12 +46,14 @@ describe('fullWordComponentName', () => {
     checkFullWordComponentName(filename, minimumConsonantCount)
     const result = reportFullWordComponentName()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
-      description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
-      message: `${componentName} is not a <bg_warn>full word.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
+        description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
+        message: `${componentName} is not a <bg_warn>full word.</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files where filename has less than three consonants ', () => {
@@ -61,11 +63,13 @@ describe('fullWordComponentName', () => {
     checkFullWordComponentName(filename, minimumConsonantCount)
     const result = reportFullWordComponentName()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
-      description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
-      message: `${componentName} is not a <bg_warn>full word.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-strong ~ full-word component names</text_info>`,
+        description: `👉 <text_warn>Component names should prefer full words over abbreviations.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/full-word-component-name.html`,
+        message: `${componentName} is not a <bg_warn>full word.</bg_warn> 🚨`,
+      },
+    ])
   })
 })

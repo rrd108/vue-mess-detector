@@ -16,8 +16,12 @@ const checkVForWithIndexKey = (template: SFCTemplateBlock | null, filePath: stri
   const vForRegex = createRegExp('v-for="(', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ',', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), ')', oneOrMore(whitespace), 'in', oneOrMore(whitespace), oneOrMore(wordChar).grouped(), [global])
   const keyRegex = createRegExp(':key="', whitespace.times.any(), oneOrMore(wordChar).grouped(), whitespace.times.any(), '"', [global])
 
-  const matches = [...template.content.matchAll(vForRegex)]
-  const keyMatches = [...template.content.matchAll(keyRegex)]
+  const matches = [
+    ...template.content.matchAll(vForRegex),
+  ]
+  const keyMatches = [
+    ...template.content.matchAll(keyRegex),
+  ]
 
   matches.forEach((match) => {
     // eslint-disable-next-line unused-imports/no-unused-vars

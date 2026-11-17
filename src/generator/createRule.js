@@ -7,7 +7,14 @@ const questions = [
     type: 'list',
     name: 'ruleset',
     message: 'What ruleset this rule will belongs to?',
-    choices: ['vue-essential', 'vue-strong', 'vue-recommended', 'vue-caution', 'rrd', 'security'],
+    choices: [
+      'vue-essential',
+      'vue-strong',
+      'vue-recommended',
+      'vue-caution',
+      'rrd',
+      'security',
+    ],
   },
   {
     type: 'input',

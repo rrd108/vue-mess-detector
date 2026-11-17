@@ -64,7 +64,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.0.0",
+    "@antfu/eslint-config": "^10.0.0",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

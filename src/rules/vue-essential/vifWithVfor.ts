@@ -37,7 +37,9 @@ const checkVifWithVfor = (template: SFCTemplateBlock | null, filePath: string) =
   const matches2 = template.content.match(regex2)
 
   if (matches1?.length || matches2?.length) {
-    const match = matches1?.length ? matches1[0] : matches2?.length ? matches2[0] : ''
+    const match = matches1?.length
+      ? matches1[0]
+      : matches2?.length ? matches2[0] : ''
     const lineNumber = getLineNumber(template.content, match)
     results.push({ filePath, message: `line #${lineNumber} <bg_err>v-if used with v-for</bg_err>` })
   }

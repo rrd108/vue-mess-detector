@@ -40,11 +40,13 @@ describe('checkVifWithVfor', () => {
     checkVifWithVfor(script, fileName)
     const result = reportVifWithVfor()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-essential ~ v-if used with v-for</text_info>`,
-      description: `👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
-      message: `line #3 <bg_err>v-if used with v-for</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-essential ~ v-if used with v-for</text_info>`,
+        description: `👉 <text_warn>Move out the v-if to a computed property.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/vif-with-vfor.html`,
+        message: `line #3 <bg_err>v-if used with v-for</bg_err> 🚨`,
+      },
+    ])
   })
 })

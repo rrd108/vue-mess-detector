@@ -65,24 +65,28 @@ describe('checkComponentFilenameCasing', () => {
     checkComponentFilenameCasing('components/myheader.vue')
     const result = reportComponentFilenameCasing()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: 'components/myheader.vue',
-      rule: `<text_info>vue-strong ~ component name is not PascalCase and not kebab-case</text_info>`,
-      description: `👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
-      message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: 'components/myheader.vue',
+        rule: `<text_info>vue-strong ~ component name is not PascalCase and not kebab-case</text_info>`,
+        description: `👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
+        message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('detects single mixed case component file names', () => {
     checkComponentFilenameCasing('components/myHeader.vue')
     const result = reportComponentFilenameCasing()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: 'components/myHeader.vue',
-      rule: `<text_info>vue-strong ~ component name is not PascalCase and not kebab-case</text_info>`,
-      description: `👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
-      message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: 'components/myHeader.vue',
+        rule: `<text_info>vue-strong ~ component name is not PascalCase and not kebab-case</text_info>`,
+        description: `👉 <text_warn>Rename the component to use PascalCase or kebab-case file name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/component-filename-casing.html`,
+        message: `component name is <bg_warn>not PascalCase, nor kebab-case.</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('ignores Nuxt error.vue', () => {

@@ -62,12 +62,14 @@ describe('checkSingleNameComponent', () => {
     checkSingleNameComponent('components/Header.vue')
     const result = reportSingleNameComponent()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: 'components/Header.vue',
-      rule: `<text_info>vue-essential ~ single name component</text_info>`,
-      description: `👉 <text_warn>Rename the component to use multi-word name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
-      message: `Component name is <bg_err>single word</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: 'components/Header.vue',
+        rule: `<text_info>vue-essential ~ single name component</text_info>`,
+        description: `👉 <text_warn>Rename the component to use multi-word name.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-essential/single-name-component.html`,
+        message: `Component name is <bg_err>single word</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('ignores Nuxt error.vue', () => {

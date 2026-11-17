@@ -95,12 +95,14 @@ describe('checkPropNameCasing', () => {
     checkPropNameCasing(script, fileName)
     const result = reportPropNameCasing()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
-      description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
-      message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
+        description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
+        message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with PascalCase props name', () => {
@@ -116,12 +118,14 @@ describe('checkPropNameCasing', () => {
     checkPropNameCasing(script, fileName)
     const result = reportPropNameCasing()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
-      description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
-      message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
+        description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
+        message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files with none camelCased props name', () => {
@@ -139,11 +143,13 @@ describe('checkPropNameCasing', () => {
     checkPropNameCasing(script, fileName)
     const result = reportPropNameCasing()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
-      description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
-      message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>vue-strong ~ prop names are not camelCased</text_info>`,
+        description: `👉 <text_warn>Rename the props to camelCase.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-strong/prop-name-casing.html`,
+        message: `prop names are <bg_warn>not camelCased</bg_warn> 🚨`,
+      },
+    ])
   })
 })

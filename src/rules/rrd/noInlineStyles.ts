@@ -14,7 +14,9 @@ const checkNoInlineStyles = (template: SFCTemplateBlock | null, filePath: string
 
   const regex = /style\s*=\s*['"][^'"]*['"]/g
 
-  const matches = [...template.content.matchAll(regex)]
+  const matches = [
+    ...template.content.matchAll(regex),
+  ]
   let from = 0
   matches?.forEach((match) => {
     const lineNumber = getLineNumber(template.content.trim(), match[0], from)

@@ -38,11 +38,13 @@ describe('plainScript', () => {
     checkPlainScript(script, filename)
     const result = reportPlainScript()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ Plain <script> blocks</text_info>`,
-      description: `👉 <text_warn> Consider using <script setup> to leverage the new SFC <script> syntax.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
-      message: `<bg_warn>Plain <script> block</bg_warn> found 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ Plain <script> blocks</text_info>`,
+        description: `👉 <text_warn> Consider using <script setup> to leverage the new SFC <script> syntax.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/plain-script.html`,
+        message: `<bg_warn>Plain <script> block</bg_warn> found 🚨`,
+      },
+    ])
   })
 })

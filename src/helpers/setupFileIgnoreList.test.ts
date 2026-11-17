@@ -35,7 +35,12 @@ describe('checkFileIgnoreRules', () => {
     const fileIgnoreRules = {
       'test/file/path': 'vue-caution', // ruleSet1 contains rule1 and rule2
     }
-    const _apply = ['rule1', 'rule2', 'elementSelectorsWithScoped', 'implicitParentChildCommunication']
+    const _apply = [
+      'rule1',
+      'rule2',
+      'elementSelectorsWithScoped',
+      'implicitParentChildCommunication',
+    ]
     const result = checkFileIgnoreRules(filePath, fileIgnoreRules, _apply)
     expect(result).toEqual(['rule1', 'rule2']) // Should remove 'elementSelectorsWithScoped' and 'implicitParentChildCommunication'
   })

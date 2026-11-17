@@ -5,9 +5,15 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   const { errors, warnings } = health.reduce((acc, { errors, warnings }) => ({ errors: acc.errors + errors, warnings: acc.warnings + warnings }), { errors: 0, warnings: 0 })
 
   const output: { info: string }[] = []
-  const codeHealth = { errors, warnings, linesCount, filesCount, points: 0 }
+  const codeHealth = {
+    errors,
+    warnings,
+    linesCount,
+    filesCount,
+    points: 0,
+  }
 
-  output.push({ info: `Found <bg_err>${Intl.NumberFormat('en-US').format(errors)} errors</bg_err>, and <bg_warn>${Intl.NumberFormat('en-US').format(warnings)} warnings</bg_warn>, <bg_info>${Intl.NumberFormat('en-US').format(linesCount)} lines</bg_info> of code in <bg_info>${Intl.NumberFormat('en-US').format(filesCount)} files</bg_info>` })
+  output.push({ info: `Found <bg_err>${new Intl.NumberFormat('en-US').format(errors)} errors</bg_err>, and <bg_warn>${new Intl.NumberFormat('en-US').format(warnings)} warnings</bg_warn>, <bg_info>${new Intl.NumberFormat('en-US').format(linesCount)} lines</bg_info> of code in <bg_info>${new Intl.NumberFormat('en-US').format(filesCount)} files</bg_info>` })
 
   if (!linesCount) {
     codeHealth.points = 0
@@ -19,8 +25,12 @@ export const calculateCodeHealth = (health: Health[], linesCount: number, filesC
   codeHealth.points = codeHealthPoints
 
   const BAR_WIDTH = 60
-  const yellowLength = !warnings ? 0 : Math.max(1, Math.ceil(Math.min(1, warnings / linesCount) * BAR_WIDTH))
-  const redLength = !errors ? 0 : Math.max(0, BAR_WIDTH - Math.ceil(codeHealthPoints * BAR_WIDTH / 100) - yellowLength)
+  const yellowLength = !warnings
+    ? 0
+    : Math.max(1, Math.ceil(Math.min(1, warnings / linesCount) * BAR_WIDTH))
+  const redLength = !errors
+    ? 0
+    : Math.max(0, BAR_WIDTH - Math.ceil(codeHealthPoints * BAR_WIDTH / 100) - yellowLength)
   const greenLength = BAR_WIDTH - redLength - yellowLength
 
   const healthBar = `<bg_ok>${'_'.repeat(greenLength)}</bg_ok><bg_warn>${'_'.repeat(yellowLength)}</bg_warn><bg_err>${'_'.repeat(redLength)}</bg_err>`

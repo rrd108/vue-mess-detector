@@ -42,12 +42,14 @@ describe('checkTooManyProps', () => {
     checkTooManyProps(script, fileName, maxPropsCount)
     const result = reportTooManyProps()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ too many props</text_info>`,
-      description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
-      message: `props found <bg_err>(6)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ too many props</text_info>`,
+        description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+        message: `props found <bg_err>(6)</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report files with more then 5 props with annotations', () => {
@@ -59,11 +61,13 @@ describe('checkTooManyProps', () => {
     checkTooManyProps(script, fileName, maxPropsCount)
     const result = reportTooManyProps()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ too many props</text_info>`,
-      description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
-      message: `props found <bg_err>(6)</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ too many props</text_info>`,
+        description: `👉 <text_warn>Try to refactor your code to use less properties.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/too-many-props.html`,
+        message: `props found <bg_err>(6)</bg_err> 🚨`,
+      },
+    ])
   })
 })

@@ -71,12 +71,14 @@ describe('ifWithoutCurlyBraces', () => {
     checkIfWithoutCurlyBraces(script, filename)
     const result = reportIfWithoutCurlyBraces()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
-      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #2 if statement without curly braces: <bg_err>${statement}</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+        description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+        message: `line #2 if statement without curly braces: <bg_err>${statement}</bg_err> 🚨`,
+      },
+    ])
   })
 
   it('should report files where multiple if statements do not use curly braces', () => {
@@ -92,16 +94,19 @@ describe('ifWithoutCurlyBraces', () => {
     checkIfWithoutCurlyBraces(script, filename)
     const result = reportIfWithoutCurlyBraces()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
-      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #2 if statement without curly braces: <bg_err>if (isLoading) doSomething();</bg_err> 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>rrd ~ if without curly braces</text_info>`,
-      description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
-      message: `line #3 if statement without curly braces: <bg_err>if (isError) handleError();</bg_err> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+        description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+        message: `line #2 if statement without curly braces: <bg_err>if (isLoading) doSomething();</bg_err> 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ if without curly braces</text_info>`,
+        description: `👉 <text_warn>All if statements must be enclosed in curly braces for better readability and maintainability.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/if-without-curly-braces.html`,
+        message: `line #3 if statement without curly braces: <bg_err>if (isError) handleError();</bg_err> 🚨`,
+      },
+    ])
   })
 })

@@ -63,12 +63,14 @@ describe('checkParameterCount', () => {
     checkParameterCount(script, filename, maxParameterCount)
     const result = reportParameterCount(maxParameterCount)
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ parameter count</text_info>`,
+        description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+        message: `function <bg_warn>${funcName}</bg_warn> has <bg_warn>${paramsCount}</bg_warn> parameters 🚨`,
+      },
+    ])
   })
 
   it('should report files where multiple functions exceed the recommended limit', () => {
@@ -94,16 +96,19 @@ describe('checkParameterCount', () => {
     checkParameterCount(script, filename, maxParameterCount)
     const result = reportParameterCount(maxParameterCount)
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>dummyFuncOne</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>rrd ~ parameter count</text_info>`,
-      description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
-      message: `function <bg_warn>dummyFuncTwo</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ parameter count</text_info>`,
+        description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+        message: `function <bg_warn>dummyFuncOne</bg_warn> has <bg_warn>5</bg_warn> parameters 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ parameter count</text_info>`,
+        description: `👉 <text_warn>Max number of function parameters should be ${maxParameterCount}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/parameter-count.html`,
+        message: `function <bg_warn>dummyFuncTwo</bg_warn> has <bg_warn>4</bg_warn> parameters 🚨`,
+      },
+    ])
   })
 })

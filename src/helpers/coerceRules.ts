@@ -7,7 +7,9 @@ const coerceRules = (optionName: 'ignore' | 'apply') => {
   return (arg?: string) => {
     // If no argument is provided, return all rules for `apply` option or undefined for `ignore`
     if (!arg) {
-      return optionName === 'apply' ? Object.keys(RULES) : undefined
+      return optionName === 'apply'
+        ? Object.keys(RULES)
+        : undefined
     }
 
     const values = arg.split(',')

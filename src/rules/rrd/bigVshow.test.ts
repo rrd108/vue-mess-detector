@@ -42,11 +42,13 @@ describe('checkBigVshow', () => {
     checkBigVshow(template, fileName, maxVshowLines)
     const result = reportBigVshow()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: fileName,
-      rule: `<text_info>rrd ~ big v-show</text_info>`,
-      description: `👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
-      message: `line #1 <bg_warn>has a v-show with 14 lines</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: fileName,
+        rule: `<text_info>rrd ~ big v-show</text_info>`,
+        description: `👉 <text_warn>Big v-show can be moved out to its own component.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/big-vshow.html`,
+        message: `line #1 <bg_warn>has a v-show with 14 lines</bg_warn> 🚨`,
+      },
+    ])
   })
 })

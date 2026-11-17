@@ -16,14 +16,18 @@ const checkComputedSideEffects = (script: SFCScriptBlock | null, filePath: strin
   // eslint-disable-next-line regexp/no-unused-capturing-group
   const sideEffectRegex = /\b(set|push|pop|shift|unshift|splice|reverse|sort)\b|(?<!=)=(?!=)/
 
-  const matches = [...script.content.matchAll(computedRegex)]
+  const matches = [
+    ...script.content.matchAll(computedRegex),
+  ]
 
   matches.forEach((match) => {
     const computedBody = match[1]
     if (sideEffectRegex.test(computedBody)) {
       const lineNumber = getLineNumber(script.content.trim(), match[0])
       const trimmedBody = computedBody.trim()
-      const truncatedBody = trimmedBody.length > 20 ? trimmedBody.slice(0, 20) : trimmedBody
+      const truncatedBody = trimmedBody.length > 20
+        ? trimmedBody.slice(0, 20)
+        : trimmedBody
       results.push({
         filePath,
         message: `line #${lineNumber} side effect detected in computed property <bg_err>(${truncatedBody})</bg_err>`,

@@ -55,17 +55,20 @@ describe('importantUsed', () => {
     checkNoImportant(template, filename)
     const result = reportNoImportant()
     expect(result.length).toBe(2)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rdd ~ no !important</text_info>`,
-      description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
-      message: `line #${2} <bg_warn>Found !important</bg_warn> 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>rdd ~ no !important</text_info>`,
-      description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
-      message: `line #${6} <bg_warn>Found !important</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rdd ~ no !important</text_info>`,
+        description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
+        message: `line #${2} <bg_warn>Found !important</bg_warn> 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>rdd ~ no !important</text_info>`,
+        description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
+        message: `line #${6} <bg_warn>Found !important</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report css files when there is use of !important', () => {
@@ -80,11 +83,13 @@ describe('importantUsed', () => {
     checkNoImportant(template, filename)
     const result = reportNoImportant()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rdd ~ no !important</text_info>`,
-      description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
-      message: `line #${2} <bg_warn>Found !important</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rdd ~ no !important</text_info>`,
+        description: `👉 <text_warn>Avoid !important as it complicates CSS management and disrupts natural cascading.</text_warn>`,
+        message: `line #${2} <bg_warn>Found !important</bg_warn> 🚨`,
+      },
+    ])
   })
 })

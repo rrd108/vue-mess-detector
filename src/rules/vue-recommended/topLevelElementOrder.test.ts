@@ -76,12 +76,14 @@ describe('checkTopLevelElementOrder', () => {
     checkTopLevelElementOrder(script.content, filename, topLevelElementOrder)
     const result = reportTopLevelElementOrder()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
-      description: `👉 <text_warn>Single-File Components should always order <script setup>, <template>, and <style scoped> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
-      message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
+        description: `👉 <text_warn>Single-File Components should always order <script setup>, <template>, and <style scoped> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+        message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files where one top-level element order is missing', () => {
@@ -102,11 +104,13 @@ describe('checkTopLevelElementOrder', () => {
     checkTopLevelElementOrder(script.content, filename, topLevelElementOrder)
     const result = reportTopLevelElementOrder()
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
-      description: `👉 <text_warn>Single-File Components should always order <script setup>, <template>, and <style scoped> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
-      message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>vue-recommended ~ top level element order</text_info>`,
+        description: `👉 <text_warn>Single-File Components should always order <script setup>, <template>, and <style scoped> tags consistently.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/vue-recommended/top-level-element-order.html`,
+        message: `Top level elements are <bg_warn>not following the correct order.</bg_warn> 🚨`,
+      },
+    ])
   })
 })

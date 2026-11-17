@@ -35,12 +35,14 @@ describe('shortVariableName', () => {
     checkShortVariableName(script, filename, minVariableName)
     const result = reportShortVariableName(minVariableName)
     expect(result.length).toBe(1)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ short variable names</text_info>`,
-      description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: <bg_warn>(${variable})</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ short variable names</text_info>`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        message: `variable: <bg_warn>(${variable})</bg_warn> 🚨`,
+      },
+    ])
   })
 
   it('should report files where more than one variable are too short', () => {
@@ -60,21 +62,25 @@ describe('shortVariableName', () => {
     checkShortVariableName(script, filename, minVariableName)
     const result = reportShortVariableName(minVariableName)
     expect(result.length).toBe(3)
-    expect(result).toStrictEqual([{
-      file: filename,
-      rule: `<text_info>rrd ~ short variable names</text_info>`,
-      description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: <bg_warn>(age)</bg_warn> 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>rrd ~ short variable names</text_info>`,
-      description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: <bg_warn>(gps)</bg_warn> 🚨`,
-    }, {
-      file: filename,
-      rule: `<text_info>rrd ~ short variable names</text_info>`,
-      description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
-      message: `variable: <bg_warn>(lng)</bg_warn> 🚨`,
-    }])
+    expect(result).toStrictEqual([
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ short variable names</text_info>`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        message: `variable: <bg_warn>(age)</bg_warn> 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ short variable names</text_info>`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        message: `variable: <bg_warn>(gps)</bg_warn> 🚨`,
+      },
+      {
+        file: filename,
+        rule: `<text_info>rrd ~ short variable names</text_info>`,
+        description: `👉 <text_warn>Variable names must have a minimum length of ${minVariableName}.</text_warn> See: https://vue-mess-detector.webmania.cc/rules/rrd/short-variable-name.html`,
+        message: `variable: <bg_warn>(lng)</bg_warn> 🚨`,
+      },
+    ])
   })
 })
