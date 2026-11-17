@@ -37,13 +37,23 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Configure vmd_balarama SSH alias
+        run: |
+          mkdir -p ~/.ssh
+          cat >> ~/.ssh/config <<EOF
+          Host vmd_balarama
+              HostName ${{ secrets.SSH_HOST }}
+              User vmd_webmania
+              StrictHostKeyChecking accept-new
+          EOF
+          chmod 600 ~/.ssh/config
+
       - name: Deploy to server
         run: |
           rsync --progress -azh \
             --delete --exclude='error/' --exclude='stats/' --exclude='.htaccess' --exclude='robots.txt' \
             ./docs/.vitepress/dist/ \
-            -e "ssh -o StrictHostKeyChecking=no" \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./web/
+            vmd_balarama:./web/
 
       - name: Update release file
         run: |
