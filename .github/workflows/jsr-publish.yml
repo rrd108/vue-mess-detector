@@ -17,7 +17,7 @@ jobs:
       id-token: write # The OIDC ID token is used for authentication with JSR.
     steps:
       - name: Checkout code at release tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag || github.ref }} # Use the tag that triggered the event
 
